@@ -1,0 +1,78 @@
+.mylistDeliver {
+  width: 560px;
+  height: 180px;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  padding: 10px;
+}
+.mylistDeliver .mylistDeliver-header {
+  display: flex;
+  align-items: center;
+  width: 560px;
+  height: 24px;
+}
+.mylistDeliver .mylistDeliver-header .mylistDeliver-title-text {
+  font-size: 18px;
+  margin-left: 15px;
+}
+.mylistDeliver .mylistDeliver-content {
+  display: flex;
+  width: 560px;
+  justify-content: center;
+  align-items: center;
+}
+.mylistDeliver .mylistDeliver-content .mylistDeliver-status {
+  width: 410px;
+  padding: 20px;
+  padding-bottom: 0;
+  margin-top: 15px;
+}
+.mylistDeliver .mylistDeliver-content .mylistDeliver-status .mylistDeliver-status-group {
+  display: flex;
+  justify-content: space-between;
+}
+.mylistDeliver .mylistDeliver-content .mylistDeliver-status .mylistDeliver-status-group .mylistDeliver-status-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mylistDeliver .mylistDeliver-content .mylistDeliver-status .mylistDeliver-status-group .mylistDeliver-status-stage .mylistDeliver-status-title {
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+.mylistDeliver .mylistDeliver-content .mylistDeliver-status .mylistDeliver-progress {
+  margin-left: 25px;
+  width: 320px;
+}
+.mylistDeliver .mylistDeliver-content .mylistDeliver-status .mylistDeliver-progress::-webkit-progress-bar {
+  background-color: white;
+}
+.mylistDeliver .mylistDeliver-content .mylistDeliver-status .mylistDeliver-progress::-webkit-progress-value {
+  background-color: black;
+}
+.mylistDeliver .mylistDeliver-time {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85px;
+  height: 85px;
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #c6c6c6;
+}
+.mylistDeliver .mylistDeliver-time .mylistDeliver-time-title {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.mylistDeliver .mylistDeliver-time .mylistDeliver-time-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mylistDeliver .mylistDeliver-time .mylistDeliver-time-group .mylistDeliver-time-minute {
+  font-size: 14px;
+  margin-left: 5px;
+}

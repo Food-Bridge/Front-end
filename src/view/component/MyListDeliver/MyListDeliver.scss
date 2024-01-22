@@ -1,0 +1,89 @@
+.mylistDeliver {
+  width: 560px;
+  height: 180px;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  padding: 10px;
+
+  .mylistDeliver-header {
+    display: flex;
+    align-items: center;
+    width: 560px;
+    height: 24px;
+
+    .mylistDeliver-title-text {
+      font-size: 18px;
+      margin-left: 15px;
+    }
+  }
+
+  .mylistDeliver-content {
+    display: flex;
+    width: 560px;
+    justify-content: center;
+    align-items: center;
+
+    .mylistDeliver-status {
+      width: 410px;
+      padding: 20px;
+      padding-bottom: 0;
+      margin-top: 15px;
+
+      .mylistDeliver-status-group {
+        display: flex;
+        justify-content: space-between;
+        .mylistDeliver-status-stage {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .mylistDeliver-status-title {
+            margin-bottom: 6px;
+            font-size: 16px;
+          }
+        }
+      }
+      .mylistDeliver-progress {
+        margin-left: 25px;
+        width: 320px;
+
+        &::-webkit-progress-bar {
+          background-color: white;
+        }
+
+        &::-webkit-progress-value {
+          background-color: black;
+        }
+      }
+    }
+  }
+  .mylistDeliver-time {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 85px;
+    height: 85px;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #c6c6c6;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #c6c6c6;
+
+    .mylistDeliver-time-title {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .mylistDeliver-time-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .mylistDeliver-time-minute {
+        font-size: 14px;
+        margin-left: 5px;
+      }
+    }
+  }
+}
