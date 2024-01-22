@@ -1,0 +1,48 @@
+.menublock {
+  display: flex;
+  width: 560px;
+  height: 200px;
+  padding: 10px;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  text-align: left;
+}
+.menublock .menublock-content {
+  width: 380px;
+  margin: 10px 20px;
+}
+.menublock .menublock-content .menublock-title {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+.menublock .menublock-content .menublock-title .menublock-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 30px;
+  border: 1px solid #8d8d8d;
+  border-radius: 50px;
+  box-shadow: 2px 2px 2px #8d8d8d;
+}
+.menublock .menublock-content .menublock-title .menublock-tag .menublock-tag-title {
+  font-size: 14px;
+}
+.menublock .menublock-content .menublock-title .menublock-name {
+  font-size: 24px;
+  margin-left: 10px;
+}
+.menublock .menublock-content .menublock-price {
+  font-size: 24px;
+  margin-top: 25px;
+}
+.menublock .menublock-content .menublock-info {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.menublock .menublock-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 5px;
+}
