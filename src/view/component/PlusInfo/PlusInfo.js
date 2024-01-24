@@ -1,9 +1,9 @@
 import './PlusInfo.scss'
 
-export default function PlusInfo() {
+export default function PlusInfo({text}) {
   return (
     <button className='plusinfo'>
-      <p className='plusinfo-text'>매장정보</p>
+      <p className='plusinfo-text'>{text}</p>
     </button>
   )
 }
