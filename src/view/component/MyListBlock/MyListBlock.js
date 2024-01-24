@@ -1,12 +1,12 @@
 import './MyListBlock.scss'
-import { IoSettingsOutline } from "react-icons/io5";
 
-export default function MyListBlock() {
+
+export default function MyListBlock({icon,text}) {
   return (
     <button className='mylistBlock'>
       <div className='mylistBlock-content'>
-        <IoSettingsOutline size='35'/>
-        <h2 className='mylistBlock-text'>설정</h2>
+        {icon}
+        <h2 className='mylistBlock-text'>{text}</h2>
       </div>
     </button>
   );
