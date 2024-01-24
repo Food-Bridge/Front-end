@@ -1,4 +1,4 @@
-import './MenuBlock.css';
+import './MenuBlock.scss';
 
 import chickenImg from '../../../data/chicken.jpg';
 

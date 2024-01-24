@@ -1,4 +1,4 @@
-import './CouponDownloaded.css';
+import './CouponDownloaded.scss';
 import { TfiDownload } from "react-icons/tfi";
 
 export default function CouponDownloaded() {

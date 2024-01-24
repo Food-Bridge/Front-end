@@ -1,4 +1,4 @@
-import './PlusInfo.css'
+import './PlusInfo.scss'
 
 export default function PlusInfo() {
   return (

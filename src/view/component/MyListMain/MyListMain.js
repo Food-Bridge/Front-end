@@ -1,4 +1,4 @@
-import './MyListMain.css';
+import './MyListMain.scss';
 
 import { TfiReceipt } from 'react-icons/tfi';
 import { HiOutlineChatBubbleLeftEllipsis } from 'react-icons/hi2';
