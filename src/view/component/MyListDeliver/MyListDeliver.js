@@ -2,7 +2,7 @@ import { CiLocationOn } from 'react-icons/ci';
 import { CiClock2 } from 'react-icons/ci';
 import { HiOutlineXMark } from 'react-icons/hi2';
 
-import './MyListDeliver.css';
+import './MyListDeliver.scss';
 
 export default function MyListDeliver() {
   return (
@@ -29,7 +29,7 @@ export default function MyListDeliver() {
               <CiLocationOn size='24' />
             </div>
           </div>
-          <progress className='mylistDeliver-progress' value='1' max='2' />
+          <progress className='mylistDeliver-progress' value='1' max='2'></progress>
         </div>
         <div className='mylistDeliver-time'>
           <h3 className='mylistDeliver-time-title'>남은 시간</h3>
