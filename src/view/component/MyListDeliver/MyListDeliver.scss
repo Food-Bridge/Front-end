@@ -19,8 +19,8 @@
 
   .mylistDeliver-content {
     display: flex;
-    width: 560px;
-    justify-content: center;
+    width: 520px;
+    justify-content: space-between;
     align-items: center;
 
     .mylistDeliver-status {
@@ -46,13 +46,20 @@
       .mylistDeliver-progress {
         margin-left: 25px;
         width: 320px;
+        -webkit-appearance: none;
+
+        &::-webkit-progress-inner-element {
+          border: 1px solid black;
+          border-radius: 50px;
+        }
 
         &::-webkit-progress-bar {
-          background-color: white;
+          background-color: transparent;
         }
 
         &::-webkit-progress-value {
           background-color: black;
+          border-radius: 50px;
         }
       }
     }
