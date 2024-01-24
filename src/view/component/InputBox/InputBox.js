@@ -1,4 +1,4 @@
-import './InputBox.css'
+import './InputBox.scss'
 
 export default function InputBox() {
   return (

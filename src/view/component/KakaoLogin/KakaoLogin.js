@@ -1,4 +1,4 @@
-import './KakaoLogin.css';
+import './KakaoLogin.scss';
 import logo from '../../../data/KakaoLogo.png';
 
 export default function KakaoBox() {
