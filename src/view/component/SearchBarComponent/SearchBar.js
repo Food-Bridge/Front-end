@@ -22,8 +22,11 @@ function SearchBar({location, count}) {
             <div className='searchBar-etcIcon'>
                 <CiHeart className='searchBar-heartIcon'/>
                 <div className='searchBar-shopCount'>
-                    <CiShoppingBasket className='searchBar-shopIcon'/>
-                    <div className='searchBar-countBlock'><h1 className='searchBar-countText'>{count}</h1></div>
+                    <CiShoppingBasket className='searchBar-shopIcon'>
+                        <div className='searchBar-countBlock'>
+                            <h1 className='searchBar-countText'>{count}</h1>
+                        </div>
+                    </CiShoppingBasket>
                 </div>
             </div>
         </div>
