@@ -1,0 +1,66 @@
+.menuBar {
+    width: 100%;
+
+    .menuBar-frame {
+        width: 600px;
+        margin: 0 auto;
+
+        .menuBar-margin{
+            width: 450px;
+            display: flex;
+            margin: 0 auto;
+            margin-bottom: 10px;
+            align-items: center;
+            justify-content: space-between;
+
+            .menuBar-home {
+                font-size: 14px;
+            }
+            .menuBar-deliver {
+                font-size: 14px;
+            }
+            .menuBar-commu {
+                font-size: 14px;
+            }
+        }
+        .menuBar-position {
+            // position: relative;
+            
+            .menuBar-line {
+                position: relative;
+                width: 600px;
+                height: 1px;
+                border: 2px solid lightgray;
+                border-radius: 50px;
+
+                .menuBar-pageLine1 {
+                    position: absolute;
+                    width: 100px;
+                    height: 1px;
+                    border: 2px solid;
+                    border-radius: 50px;
+                    top: -2px;
+                    left: 30px;
+                }
+                .menuBar-pageLine2 {
+                    position: absolute;
+                    width: 100px;
+                    height: 1px;
+                    border: 2px solid;
+                    border-radius: 50px;
+                    top: -2px;
+                    left: 228px;
+                }
+                .menuBar-pageLine3 {
+                    position: absolute;
+                    width: 100px;
+                    height: 1px;
+                    border: 2px solid;
+                    border-radius: 50px;
+                    top: -2px;
+                    left: 450px;
+                }
+            }
+        }
+    }
+}
