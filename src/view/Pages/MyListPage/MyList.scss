@@ -20,13 +20,20 @@
         height: 120px;
         border-radius: 50%;
       }
+      .mylistUser-profileInput {
+        display: none;
+      }
       .mylistUser-profileBtn {
+        display: flex;
         background-color: #c6c6c6;
         width: 42px;
         height: 20px;
         border-radius: 10px;
         font-size: 12px;
         margin-top: -10px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer
       }
     }
     .mylistUser-group {
