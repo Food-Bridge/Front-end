@@ -9,7 +9,12 @@
   box-shadow: 2px 2px 2px #c6c6c6;
 
   .plusinfo-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 12px;
-    
+    .plusinfo-arrow {
+      margin-left: 4px;
+    }
   }
 }
