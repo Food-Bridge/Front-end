@@ -1,9 +1,16 @@
-import './PlusInfo.scss'
+import './PlusInfo.scss';
 
-export default function PlusInfo({text}) {
+import { IoIosArrowForward } from 'react-icons/io';
+
+export default function PlusInfo({ text, arrow }) {
   return (
     <button className='plusinfo'>
-      <p className='plusinfo-text'>{text}</p>
+      <p className='plusinfo-text'>
+        {text}
+        {arrow && (
+          <IoIosArrowForward className='plusinfo-arrow' color='#8d8d8d' />
+        )}
+      </p>
     </button>
-  )
+  );
 }
