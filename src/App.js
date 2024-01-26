@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import Category from './view/component/Category/Category';
+import GoogleBtn from './view/component/GoogleBtn/GoogleBtn';
+import LogInBtn from './view/component/LogInBtn/LogInBtn';
+import LogoBar from './view/component/LogoBar/LogoBar';
+import MenuBar from './view/component/MenuBar/MenuBar';
+import SearchBar from './view/component/SearchBar/SearchBar';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <LogoBar /> */}
+      {/* <MenuBar name={"menuBar-pageLine1"}/> */}
+      {/* <SearchBar location={"강남구"} count={"1"}/> */}
+      {/* <GoogleBtn/> */}
+      {/* <LogInBtn /> */}
+      <Category />
     </div>
   );
 }
