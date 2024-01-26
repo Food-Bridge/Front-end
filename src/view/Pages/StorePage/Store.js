@@ -25,10 +25,13 @@ export default function Store({ count }) {
     <div className='store'>
       <div className='store-main'>
         <img className='store-img' src={storeImg} alt='chicken img'></img>
-        <CiShoppingBasket className='store-basket' size='30' color='white' />
-        <div className='store-basketCount'>
-          <h1 className='store-basketText'>{count}</h1>
+        <div className='store-basket'>
+          <CiShoppingBasket size='30' color='white' />
+          <div className='store-basketCount'>
+            <h1 className='store-basketText'>{count}</h1>
+          </div>
         </div>
+
         <div className='store-title'>
           <h1 className='store-name'>000치킨 00점</h1>
           <div className='store-icon'>
@@ -51,7 +54,7 @@ export default function Store({ count }) {
       <div className='store-menu'>
         <h2 className='store-menuTitle'>인기메뉴</h2>
         <div className='store-menuBlocks'>
-          <MenuBlock popular={true}/>
+          <MenuBlock popular={true} />
           <MenuBlock />
           <MenuBlock />
         </div>

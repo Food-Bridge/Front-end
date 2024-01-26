@@ -8,18 +8,22 @@
       height: 300px;
       margin-bottom: 20px;
     }
+
     .store-basket {
-      position: absolute;
-      top: 40px;
-      left: 560px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 40px;
+      top: -310px;
+      left: 550px;
       background-color: rgba(141, 141, 141, 0.5);
+      border-radius: 5px;
     }
     .store-basketCount {
-      position: absolute;
-      top: 40px;
-      left: 560px;
-      margin-top: 0px;
-      margin-left: 18px;
+      position: relative;
+      margin-left: -5px;
+      margin-bottom: 10px;
       width: 14px;
       height: 14px;
       background-color: red;
