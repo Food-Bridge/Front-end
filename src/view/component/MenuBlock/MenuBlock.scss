@@ -6,6 +6,8 @@
   border: 1px solid #c6c6c6;
   border-radius: 5px;
   text-align: left;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 2px #c6c6c6;
 
   .menublock-content {
     width: 380px;
@@ -25,6 +27,7 @@
         border: 1px solid #8d8d8d;
         border-radius: 50px;
         box-shadow: 2px 2px 2px #8d8d8d;
+        margin-right: 10px;
 
         .menublock-tag-title {
           font-size: 14px;
@@ -33,7 +36,6 @@
 
       .menublock-name {
         font-size: 24px;
-        margin-left: 10px;
       }
     }
 

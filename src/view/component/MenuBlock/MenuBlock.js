@@ -2,14 +2,17 @@ import './MenuBlock.scss';
 
 import chickenImg from '../../../data/chicken.jpg';
 
-export default function MenuBlock() {
+export default function MenuBlock({ popular }) {
   return (
     <button className='menublock'>
       <div className='menublock-content'>
         <div className='menublock-title'>
-          <div className='menublock-tag'>
-            <p className='menublock-tag-title'>인기</p>
-          </div>
+          {popular && (
+            <div className='menublock-tag'>
+              <p className='menublock-tag-title'>인기</p>
+            </div>
+          )}
+
           <h1 className='menublock-name'>반반 치킨</h1>
         </div>
         <h2 className='menublock-price'>21,900원</h2>
