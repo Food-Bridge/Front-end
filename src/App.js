@@ -20,6 +20,7 @@ import MyList from './view/pages/MyListPage/MyList.js';
 import SignIn from './view/pages/SignInPage/SignIn.js';
 import SignUp from './view/pages/SignUpPage/SignUp.js';
 import Store from './view/pages/StorePage/Store.js';
+
 function App() {
   return (
     <div className='App'>
@@ -44,8 +45,8 @@ function App() {
       {/*pages*/}
       {/* <MyList />
       <SignIn />
-      <SignUp /> */}
-      <Store count={1}/>
+      <SignUp /> 
+      <Store count={1}/>*/}
     </div>
   );
 }
