@@ -1,9 +1,10 @@
+import { useState } from 'react';
+
 import MyListBlock from '../../component/MyListBlock/MyListBlock';
 import MyListDeliver from '../../component/MyListDeliver/MyListDeliver';
 import MyListMain from '../../component/MyListMain/MyListMain';
 import PlusInfo from '../../component/PlusInfo/PlusInfo';
 import './MyList.scss';
-import profileImg from '../../../data/profile.jpg';
 
 import { CiDiscount1, CiGift } from 'react-icons/ci';
 import { IoSettingsOutline } from 'react-icons/io5';
@@ -11,12 +12,35 @@ import { GoMegaphone } from 'react-icons/go';
 import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 
 export default function MyList() {
+  const [image, setImage] = useState(
+    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+  );
+
+  const onChangeImage = (event) => {
+    const { files } = event.target;
+    const uploadFile = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadFile);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  };
+
   return (
     <div className='mylist'>
       <div className='mylistUser'>
         <div className='mylistUser-profile'>
-          <img className='mylistUser-profileImg' src={profileImg} />
-          <button className='mylistUser-profileBtn'>편집</button>
+          <img className='mylistUser-profileImg' src={image} />
+          <input
+            className='mylistUser-profileInput'
+            id='file'
+            type='file'
+            accept='image/*'
+            onChange={onChangeImage}
+          />
+          <label for='file' className='mylistUser-profileBtn'>
+              편집
+          </label>
         </div>
         <div className='mylistUser-group'>
           <div className='mylistUser-id'>
