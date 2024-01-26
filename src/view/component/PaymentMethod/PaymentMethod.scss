@@ -1,0 +1,63 @@
+.PaymentMethod {
+
+    .paymentMethod-frame {
+        width: 560px;
+        height: 140px;
+        border-radius: 10px;
+        border: 1px solid #8D8D8D;
+
+        .paymentMethod-title {
+            width: 75px;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .paymentMethod-margin {
+            display: flex;
+            height: 60px;
+            margin-top: 20px;
+            margin-left: 20px;
+            flex-direction: column;
+            justify-content:space-between;
+
+            .paymentMethod-direct {
+                display: flex;
+
+                .paymentMethod-directRadio {
+                    width: 24px;
+                    height: 24px;
+                }
+                .paymentMethod-directText {
+                    font-size: 16px;
+                    margin-left: 10px;
+                    font-weight: 400;
+                }
+            }
+            .paymentMethod-toss {
+                display: flex;
+
+                .paymentMethod-tossRadio {
+                    width: 24px;
+                    height: 24px;
+                }
+                .paymentMethod-tossText {
+                    font-size: 16px;
+                    margin-left: 10px;
+                    font-weight: 400;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .paymentMethod-tossLogo {
+                        width: 30px;
+                        height: 24px;
+                    }
+                }
+            }  
+        }
+        
+    }
+}
