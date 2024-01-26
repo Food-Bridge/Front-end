@@ -1,0 +1,41 @@
+.storeDeliverTogo {
+  width: 600px;
+
+  .storeDeliverTogo-header {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #c6c6c6;
+    margin-bottom: 20px;
+
+    .storeDeliverTogo-underline {
+      border-bottom: 2px solid black;
+    }
+    .storeDeliverTogo-title {
+      width: 145px;
+      font-size: 18px;
+      text-align: center;
+      padding: 5px;
+    }
+  }
+  .storeDeliverTogo-contents {
+    width: 600px;
+
+    .storeDeliverTogo-detail {
+      display: flex;
+      margin: 0 20px 10px 20px;
+
+      .storeDeliverTogo-detailTitle {
+        font-size: 14px;
+        width: 100px;
+      }
+      .storeDeliverTogo-detailContent {
+        font-size: 12px;
+      }
+    }
+    .storeDeliverTogo-info {
+      position: relative;
+      top: -85px;
+      left: 500px;
+    }
+  }
+}
