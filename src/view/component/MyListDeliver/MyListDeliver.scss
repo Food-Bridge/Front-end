@@ -15,6 +15,7 @@
     .mylistDeliver-title-text {
       font-size: 18px;
       margin-left: 15px;
+      font-weight: 600;
     }
   }
 
@@ -47,7 +48,7 @@
       .mylistDeliver-progress {
         margin-left: 25px;
         width: 320px;
-        -webkit-appearance: none;
+        appearance: none;
 
         &::-webkit-progress-inner-element {
           border: 1px solid black;
