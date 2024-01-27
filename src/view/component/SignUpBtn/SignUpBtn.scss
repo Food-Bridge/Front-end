@@ -1,0 +1,43 @@
+.SignUpBtn {
+    width: 300px;
+    height: 50px;
+    border: 1px solid #BFBFBF;
+    // background-color: rgb(0, 0, 0);
+    border-radius: 5px;
+
+    .signUpBtn-frame1 {
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0);
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+
+        .signUpBtn-text1 {
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            font-family: 'Pretendard-Regular';
+            font-weight: 400;
+            font-style: normal;
+        }
+    }
+    .signUpBtn-frame2 {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        border: 1px solid lightgray;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+
+        .signUpBtn-text2 {
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+            text-align: center;
+            font-family: 'Pretendard-Regular';
+            font-weight: 400;
+            font-style: normal;
+        }
+    }
+}
