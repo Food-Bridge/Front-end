@@ -1,11 +1,11 @@
 import './Store.scss';
-import StoreDeliverTogo from '../../component/StoreDeliverTogo/StoreDeliverTogo';
-import MenuBlock from '../../component/MenuBlock/MenuBlock.js';
+import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
+import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 
 import storeImg from '../../../data/chicken2.jpg';
 import { CiShoppingBasket, CiPhone, CiHeart } from 'react-icons/ci';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
-import PlusInfo from '../../component/PlusInfo/PlusInfo';
+import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 
 export default function Store({ count }) {
   function roundRates(number) {

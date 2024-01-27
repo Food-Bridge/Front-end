@@ -1,19 +1,21 @@
-import Category from './view/component/Category/Category.js';
-import Coupon from './view/component/Coupon/Coupon.js';
-import CouponDownloaded from './view/component/CouponDownloaded/CouponDownloaded.js';
-import GoogleBtn from './view/component/GoogleBtn/GoogleBtn.js';
-import InputBox from './view/component/InputBox/InputBox.js';
-import KakaoLogin from './view/component/KakaoLogin/KakaoLogin.js';
-import LogInBtn from './view/component/LogInBtn/LogInBtn.js';
-import LogoBar from './view/component/LogoBar/LogoBar.js';
-import MenuBar from './view/component/MenuBar/MenuBar.js';
-import MenuBlock from './view/component/MenuBlock/MenuBlock.js';
-import MyListBlock from './view/component/MyListBlock/MyListBlock.js';
-import MyListDeliver from './view/component/MyListDeliver/MyListDeliver.js';
-import MyListMain from './view/component/MyListMain/MyListMain.js';
-import PlusInfo from './view/component/PlusInfo/PlusInfo.js';
-import SearchBar from './view/component/SearchBar/SearchBar.js';
-import StoreDeliverTogo from './view/component/StoreDeliverTogo/StoreDeliverTogo.js';
+import Category from './view/components/Category/Category.js';
+import Coupon from './view/components/Coupon/Coupon.js';
+import GoogleBtn from './view/components/GoogleBtn/GoogleBtn.js';
+import InputBox from './view/components/InputBox/InputBox.js';
+import KakaoLogin from './view/components/KakaoLogin/KakaoLogin.js';
+import LogInBtn from './view/components/LogInBtn/LogInBtn.js';
+import LogoBar from './view/components/LogoBar/LogoBar.js';
+import MenuBar from './view/components/MenuBar/MenuBar.js';
+import MenuBlock from './view/components/MenuBlock/MenuBlock.js';
+import MyListBlock from './view/components/MyListBlock/MyListBlock.js';
+import MyListDeliver from './view/components/MyListDeliver/MyListDeliver.js';
+import MyListMain from './view/components/MyListMain/MyListMain.js';
+import PaymentMenu from './view/components/PaymentMenu/PaymentMenu.js';
+import PlusInfo from './view/components/PlusInfo/PlusInfo.js';
+import SearchBar from './view/components/SearchBar/SearchBar.js';
+import SearchRank from './view/components/SearchRank/SearchRank.js';
+import SearchRecord from './view/components/SearchRecord/SearchRecord.js';
+import StoreDeliverTogo from './view/components/StoreDeliverTogo/StoreDeliverTogo.js';
 
 // pages
 import MyList from './view/pages/MyListPage/MyList.js';
@@ -41,6 +43,10 @@ function App() {
       <PlusInfo />
       <SearchBar />
       <StoreDeliverTogo /> */}
+      <PaymentMenu />
+      <SearchRank rank='1' text='그릭요거트' type='up' />
+      <SearchRecord text='치킨' />
+      <Coupon />
 
       {/*pages*/}
       {/* <MyList />
