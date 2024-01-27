@@ -1,0 +1,76 @@
+.paymentMenu {
+  display: flex;
+  width: 560px;
+  height: 150px;
+  margin-top: 20px;
+  border-bottom: 1px solid #c6c6c6;
+
+  .paymentMenu-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin-left: 20px;
+  }
+  .paymentMenu-content {
+    height: 150px;
+    margin: 0 10px;
+    .paymentMenu-header {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: center;
+      .paymentMenu-title {
+        width: 400px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .paymentMenu-delete {
+        font-size: 20px;
+      }
+    }
+    .paymentMenu-detail {
+      width: 400px;
+      margin-bottom: 10px;
+      color: #8d8d8d;
+    }
+    .paymentMenu-price {
+      width: 400px;
+      font-weight: 600;
+    }
+    .paymentMenu-button {
+      display: flex;
+      position: relative;
+      bottom: -20px;
+      justify-content: right;
+
+      .paymentMenu-optionBtn {
+        border: 1px solid #c6c6c6;
+        border-radius: 5px;
+        font-size: 12px;
+        width: 60px;
+        height: 25px;
+      }
+      .paymentMenu-quantity {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #c6c6c6;
+        border-radius: 5px;
+        padding: 0 5px;
+        width: 90px;
+        height: 25px;
+        margin: 0 10px;
+
+        .paymentMenu-minus {
+        }
+        .paymentMenu-quantityNum {
+          width: 30px;
+          text-align: center;
+          border: none;
+
+        }
+        .paymentMenu-plus {
+        }
+      }
+    }
+  }
+}
