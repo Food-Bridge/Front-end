@@ -1,7 +1,15 @@
+import { useState } from 'react';
+
 import './Coupon.scss';
 import { TfiDownload } from "react-icons/tfi";
 
 export default function Coupon() {
+  const [couponClass, setCouponClass] = useState('coupon-right')
+  
+  const downloadCoupon = () => {
+    setCouponClass(couponClass + ' downloaded')
+  }
+
   return (
     <div className='coupon'>
       <div className='coupon-left'>
@@ -18,8 +26,8 @@ export default function Coupon() {
           <p className='coupon-info'>2024 / 01 / 31 까지 사용 가능</p>
         </div>
       </div>
-      <button className='coupon-right'>
-        <TfiDownload size="35" color='black' />
+      <button className={couponClass} onClick = {downloadCoupon}>
+        <TfiDownload size="35"/>
       </button>
     </div>
   );
