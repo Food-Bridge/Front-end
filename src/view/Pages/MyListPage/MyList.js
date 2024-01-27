@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import MyListBlock from '../../component/MyListBlock/MyListBlock';
-import MyListDeliver from '../../component/MyListDeliver/MyListDeliver';
-import MyListMain from '../../component/MyListMain/MyListMain';
-import PlusInfo from '../../component/PlusInfo/PlusInfo';
+import MyListBlock from '../../components/MyListBlock/MyListBlock';
+import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
+import MyListMain from '../../components/MyListMain/MyListMain';
+import PlusInfo from '../../components/PlusInfo/PlusInfo';
 import './MyList.scss';
 
 import { CiDiscount1, CiGift } from 'react-icons/ci';
@@ -39,7 +39,7 @@ export default function MyList() {
             onChange={onChangeImage}
           />
           <label for='file' className='mylistUser-profileBtn'>
-              편집
+            편집
           </label>
         </div>
         <div className='mylistUser-group'>
