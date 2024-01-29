@@ -1,13 +1,32 @@
+import { useState } from 'react';
+
 import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
+import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 
-import storeImg from '../../../data/chicken2.jpg';
-import { CiShoppingBasket, CiPhone, CiHeart } from 'react-icons/ci';
+import { CiShoppingBasket, CiPhone } from 'react-icons/ci';
+import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
+
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 
 export default function Store({ count }) {
+  const SliderData = [
+    {
+      image:
+        'https://images.unsplash.com/photo-1575932444877-5106bee2a599?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+    {
+      image:
+        'https://images.unsplash.com/photo-1627662168781-4345690f0bb3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+    {
+      image:
+        'https://images.unsplash.com/photo-1549759594-0d842f402b4d?q=80&w=949&auto= format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+  ];
+
   function roundRates(number) {
     return Math.round(number * 2) / 2;
   }
@@ -21,22 +40,41 @@ export default function Store({ count }) {
     rateStars.push(<FaStarHalf color='#ffc700' />);
   }
 
+  const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+  const [isLike, setIsLike] = useState(false);
+
+  const showNumber = () => {
+    setShowPhoneNumber(!showPhoneNumber);
+  };
+
+  const pressLike = () => {
+    setIsLike(!isLike);
+  };
+
   return (
     <div className='store'>
       <div className='store-main'>
-        <img className='store-img' src={storeImg} alt='chicken img'></img>
-        <div className='store-basket'>
+        <ImageSlider className='store-img' slides={SliderData} />
+        <button className='store-basket'>
           <CiShoppingBasket size='30' color='white' />
           <div className='store-basketCount'>
             <h1 className='store-basketText'>{count}</h1>
           </div>
-        </div>
+        </button>
 
         <div className='store-title'>
           <h1 className='store-name'>000치킨 00점</h1>
           <div className='store-icon'>
-            <CiPhone size='30' />
-            <CiHeart size='30' color='red' />
+            <button className='store-phone' onClick={showNumber}>
+              <CiPhone size='30' />
+            </button>
+            <button className='store-like ' onClick={pressLike}>
+              {isLike ? (
+                <IoIosHeart size='30' color='red' />
+              ) : (
+                <IoIosHeartEmpty size='30' color='red' />
+              )}
+            </button>
           </div>
         </div>
         <p className='store-rate'>
@@ -59,6 +97,13 @@ export default function Store({ count }) {
           <MenuBlock />
         </div>
       </div>
+
+      {showPhoneNumber && (
+        <div className='store-popup'>
+          <p className='store-popupText'> 010-1234-5678</p>
+        </div>
+      )}
+
     </div>
   );
 }
