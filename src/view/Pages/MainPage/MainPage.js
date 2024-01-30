@@ -1,4 +1,5 @@
 import './MainPage.scss';
+import { useNavigate } from 'react-router-dom';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
@@ -21,6 +22,13 @@ export default function MainPage() {
         'https://images.unsplash.com/photo-1549759594-0d842f402b4d?q=80&w=949&auto= format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     },
   ];
+
+  const navigate = useNavigate()
+
+  const handleClickCoupon = () => {
+    navigate('user/coupon/')
+  }
+
   return (
     <div className='main'>
       <SearchBar className='main-searchBar' location='강남구' count='1' />
@@ -55,7 +63,7 @@ export default function MainPage() {
       </div>
       <div className='main-title'>
         <h1 className='main-text'>할인 쿠폰</h1>
-        <PlusInfo text='더보기' arrow='true' />
+        <PlusInfo text='더보기' arrow='true' onClick={handleClickCoupon}/>
       </div>
       <div className='main-group'>
         <img
