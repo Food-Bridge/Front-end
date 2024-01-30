@@ -6,7 +6,7 @@ import LogoBar from './view/components/LogoBar/LogoBar';
 import MainPage from './view/pages/MainPage/MainPage';
 import MyList from './view/pages/MyListPage/MyList';
 import Store from './view/pages/StorePage/Store'
-// import StoreList from './view/pages/StoreListPage/StoreList'
+import StoreList from './view/pages/StoreListPage/StoreList'
 import SignIn from './view/pages/SignInPage/SignIn';
 import SignUp from './view/pages/SignUpPage/SignUp';
 
@@ -26,6 +26,7 @@ function App() {
           <Route path='user/coupon/' element={<CouponList />} />
 
           <Route path='store/:store_id/' element={<Store />} />
+          <Route path='storeList/' element={<StoreList />} />
         </Routes>
       </Router>
     </div>
