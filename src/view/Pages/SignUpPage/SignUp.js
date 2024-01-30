@@ -1,9 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import LogoBar from '../../components/LogoBar/LogoBar';
+import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  const [emailValue, setEmail] = useState('');
+  const [passwordValue, setPassword] = useState('');
+  const [password2Value, setPassword2] = useState('');
+  const [phoneNumberValue, setPhoneNumber] = useState('');
+
+  const navigate = useNavigate();
+  const [signedUp, setSignedUp] = useState(false);
+
+  const handleSignUp = () => {
+    setSignedUp(true);
+
+    navigate('/logIn');
+  };
+
+  const saveUserEmail = (event) => {
+    setEmail(event.target.value);
+  };
+  const saveUserPassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const saveUserPassword2 = (event) => {
+    setPassword2(event.target.value);
+  };
+  const saveUserPhoneNumber = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+
+  const userNameValue = '김00';
+
   return (
     <>
       <LogoBar />
@@ -18,6 +50,8 @@ function SignUp() {
                   type='text'
                   placeholder='example@example.com'
                   className='singUp-emailInput'
+                  value={emailValue}
+                  onChange={saveUserEmail}
                 />
               </div>
               <div className='signUp-passwdForm'>
@@ -27,11 +61,15 @@ function SignUp() {
                     type='text'
                     placeholder='영문/숫자/특수문자 혼합 8~20자'
                     className='singUp-passwdInput'
+                    value={passwordValue}
+                    onChange={saveUserPassword}
                   />
                   <input
                     type='text'
                     placeholder='비밀번호를 한번 더 입력해주세요'
                     className='singUp-passwdInput2'
+                    value={password2Value}
+                    onChange={saveUserPassword2}
                   />
                 </div>
               </div>
@@ -41,16 +79,42 @@ function SignUp() {
                   type='text'
                   placeholder=' "-"를 제외한 숫자만 입력해주세요'
                   className='singUp-numberInput'
+                  value={phoneNumberValue}
+                  onChange={saveUserPhoneNumber}
                 />
               </div>
             </div>
             <div className='signUp-btn'>
               <div className='signUp-line'></div>
-              <SignUpBtn
-                className='SignUpBtnComp'
-                className1={'signUpBtn-frame1'}
-                className2={'signUpBtn-text1'}
-              />
+
+              <div
+                onClick={() => {
+                  axios
+                    .post('http://127.0.0.1:8000/users/signup/', {
+                      email: emailValue,
+                      username: userNameValue,
+                      password: passwordValue,
+                      password2: password2Value,
+                      phone_number: phoneNumberValue,
+                      is_seller: false,
+                    })
+                    .then(function (response) {
+                      console.log(response);
+                      handleSignUp()
+                    })
+                    .catch(function (error) {
+                      console.log(error.response.data);
+                    });
+                }}
+              >
+                <button>
+                  <SignUpBtn
+                    className='SignUpBtnComp'
+                    className1={'signUpBtn-frame1'}
+                    className2={'signUpBtn-text1'}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </header>
