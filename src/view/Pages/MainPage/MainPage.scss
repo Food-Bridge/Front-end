@@ -1,0 +1,36 @@
+.main {
+  .main-searchBar {
+    margin: 20px;
+  }
+  .main-imageSlider {
+    margin: 20px auto;
+  }
+  .main-title {
+    display: flex;
+    margin: 20px;
+    .main-text {
+      font-size: 16px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+  }
+
+  .main-group {
+    display: flex;
+    width: 560px;
+    margin: 0 20px;
+    justify-content: space-between;
+
+    .main-storeImg {
+      width: 175px;
+      height: 125px;
+      object-fit: cover;
+    }
+
+    .main-couponImg {
+      width: 270px;
+      height: 120px;
+      object-fit: cover;
+    }
+  }
+}
