@@ -38,7 +38,6 @@ function SignUp() {
 
   return (
     <>
-      <LogoBar />
       <div className='SignUp'>
         <header className='signUp-frame'>
           <h1 className='signUp-title'>이메일로 회원가입</h1>
