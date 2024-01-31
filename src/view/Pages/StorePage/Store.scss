@@ -2,36 +2,6 @@
   .store-main {
     width: 600px;
     margin: 20px 0;
-
-    .store-basket {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      width: 40px;
-      top: 30px;
-      left: 550px;
-      background-color: rgba(141, 141, 141, 0.5);
-      border-radius: 5px;
-    }
-    .store-basketCount {
-      position: absolute;
-      left: 25px;
-      top: 0px;
-      width: 14px;
-      height: 14px;
-      background-color: red;
-      border-radius: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .store-basketText {
-        color: white;
-        font-size: 10px;
-        position: absolute;
-      }
-    }
     .store-title {
       margin: 0 20px;
       display: flex;
