@@ -33,7 +33,7 @@ export default function MainPage() {
     <div className='main'>
       <SearchBar className='main-searchBar' location='강남구' count='1' />
       <ImageSlider className='main-imageSlider' slides={SliderData} />
-      <MenuBar />
+      <MenuBar name='menuBar-pageLine1'/>
       <div className='main-title'>
         <h1 className='main-text'>이달의 인기 맛집</h1>
         <PlusInfo text='더보기' arrow='true' />
