@@ -5,11 +5,12 @@ import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 
-import { CiShoppingBasket, CiPhone } from 'react-icons/ci';
+import { CiPhone } from 'react-icons/ci';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
+import Basket from '../../components/Basket/Basket.js';
 
 export default function Store({ count }) {
   const SliderData = [
@@ -55,12 +56,7 @@ export default function Store({ count }) {
     <div className='store'>
       <div className='store-main'>
         <ImageSlider className='store-img' slides={SliderData} />
-        <button className='store-basket'>
-          <CiShoppingBasket size='30' color='white' />
-          <div className='store-basketCount'>
-            <h1 className='store-basketText'>{count}</h1>
-          </div>
-        </button>
+        <Basket count='1'/>
 
         <div className='store-title'>
           <h1 className='store-name'>000치킨 00점</h1>
