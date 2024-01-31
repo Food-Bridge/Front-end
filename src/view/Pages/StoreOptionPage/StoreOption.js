@@ -4,9 +4,9 @@ import './StoreOption.scss';
 
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
-
-import chicken from '../../../data/chicken.jpg';
 import Basket from '../../components/Basket/Basket';
+import chicken from '../../../data/chicken.jpg';
+import { IoIosArrowBack } from 'react-icons/io';
 
 export default function StoreOption({ popular }) {
   const [quantity, setQuantity] = useState(Number(1));
@@ -22,8 +22,12 @@ export default function StoreOption({ popular }) {
   return (
     <div className='storeOption'>
       <div className='storeOption-header'>
+        
+
+        <Basket className='storeOption-basket' count='1' /><button className='storeOption-backContainer'>
+          <IoIosArrowBack className='storeOption-back' size='30' />
+        </button>
         <img src={chicken} className='storeOption-img' />
-        <Basket count='1' />
       </div>
       <div className='storeOption-title'>
         {popular && (
@@ -41,22 +45,24 @@ export default function StoreOption({ popular }) {
       <MenuOptionBtn />
       <MenuCheckBox />
       <div className='storeOption-footer'>
-        <div className='storeOption-footerL'><div className='storeOption-quantity'>
-          <button className='storeOption-minus' onClick={decreaseQunatity}>
-            -
-          </button>
-          <p className='storeOption-quantityNum'>{quantity}</p>
-          <button className='storeOption-plus' onClick={increaseQuantity}>
-            +
-          </button>
+        <div className='storeOption-footerL'>
+          <div className='storeOption-quantity'>
+            <button className='storeOption-minus' onClick={decreaseQunatity}>
+              -
+            </button>
+            <p className='storeOption-quantityNum'>{quantity}</p>
+            <button className='storeOption-plus' onClick={increaseQuantity}>
+              +
+            </button>
+          </div>
+          <div className='storeOption-least'>
+            <h1 className='storeOption-leastTitle'>최소 주문 금액</h1>
+            <p className='storeOption-leastPrice'>15,000원</p>
+          </div>
         </div>
-        <div className='storeOption-least'>
-          <h1 className='storeOption-leastTitle'>최소 주문 금액</h1>
-          <p className='storeOption-leastPrice'>15,000원</p>
-        </div></div>
-        
+
         <button className='storeOption-add'>22,800원 담기</button>
       </div>
-      </div>
+    </div>
   );
 }

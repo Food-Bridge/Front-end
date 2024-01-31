@@ -23,18 +23,30 @@
       font-size: 14px;
       color: #8d8d8d;
     }
-    .store-detail {
+    .store-detailContainer {
       display: flex;
-      align-items: end;
-      margin: 0 20px;
+      justify-content: space-between;
+      height: 25px;
+      .store-detail {
+        display: flex;
+        align-items: end;
+        margin: 0 20px;
 
-      .store-detailText {
-        font-size: 14px;
-        margin-right: 7px;
+        .store-detailText {
+          font-size: 14px;
+          margin-right: 7px;
+        }
+        .store-detailNum {
+          font-size: 12px;
+          margin-right: 12px;
+        }
       }
-      .store-detailNum {
-        font-size: 12px;
-        margin-right: 12px;
+      .store-popup {
+        width: 200px;
+        padding: 0 10px;
+        .store-popupText {
+          text-align: right;
+        }
       }
     }
   }
@@ -43,17 +55,6 @@
     .store-menuTitle {
       font-size: 18px;
       margin-bottom: 10px;
-    }
-  }
-
-  .store-popup {
-    width: 200px;
-    height: 25px;
-    position: absolute;
-    top: 380px;
-    left: 380px;
-    .store-popupText {
-      text-align: right;
     }
   }
 }
