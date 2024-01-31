@@ -1,11 +1,23 @@
 .storeOption {
   width: 600px;
   .storeOption-header {
+    margin: 20px 0;
+    .storeOption-backContainer {
+      position: relative;
+      .storeOption-back {
+        position: absolute;
+        top: -180px;
+        left: 20px;
+        width: 40px;
+        background-color: rgba(141, 141, 141, 0.5);
+        border-radius: 5px;
+        z-index: 10;
+      }
+    }
     .storeOption-img {
       width: 600px;
       height: 200px;
       object-fit: cover;
-      margin-bottom: 20px;
     }
   }
   .storeOption-title {
