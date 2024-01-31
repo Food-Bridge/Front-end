@@ -1,0 +1,29 @@
+.basket {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 80px;
+  left: 780px;
+  width: 40px;
+  background-color: rgba(141, 141, 141, 0.5);
+  border-radius: 5px;
+}
+.basket-count {
+  position: absolute;
+  left: 25px;
+  top: 0px;
+  width: 14px;
+  height: 14px;
+  background-color: red;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .basket-text {
+    color: white;
+    font-size: 10px;
+    position: absolute;
+  }
+}
