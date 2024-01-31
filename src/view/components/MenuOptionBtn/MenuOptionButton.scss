@@ -1,0 +1,42 @@
+.menuOptionBtn {
+  width: 560px;
+  padding: 0 20px;
+  margin-top: 20px;
+  border-bottom: 1px solid #c6c6c6;
+  .menuOptionBtn-header {
+    display: flex;
+    align-items: end;
+    margin-bottom: 20px;
+    .menuOptionBtn-title {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    .menuOptionBtn-info {
+      font-size: 14px;
+      color: red;
+    }
+  }
+  .menuOptionBtn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    .menuOptionBtn-choice {
+      display: flex;
+      align-items: center;
+      .menuOptionBtn-button {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #8d8d8d;
+        border-radius: 50px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      .menuOptionBtn-option {
+      }
+    }
+    .menuOptionBtn-price {
+      font-weight: 600;
+    }
+  }
+}
