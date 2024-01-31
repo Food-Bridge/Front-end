@@ -55,8 +55,8 @@ export default function Store({ count }) {
   return (
     <div className='store'>
       <div className='store-main'>
+        <Basket count='1' />
         <ImageSlider className='store-img' slides={SliderData} />
-        <Basket count='1'/>
 
         <div className='store-title'>
           <h1 className='store-name'>000치킨 00점</h1>
@@ -76,12 +76,19 @@ export default function Store({ count }) {
         <p className='store-rate'>
           {rate} {rateStars}
         </p>
-        <div className='store-detail'>
-          <h2 className='store-detailText'>찜</h2>
-          <p className='store-detailNum'>354</p>
-          <h2 className='store-detailText'>리뷰</h2>
-          <p className='store-detailNum'>1503</p>
-          <PlusInfo text='더보기' arrow='true' />
+        <div className='store-detailContainer'>
+          <div className='store-detail'>
+            <h2 className='store-detailText'>찜</h2>
+            <p className='store-detailNum'>354</p>
+            <h2 className='store-detailText'>리뷰</h2>
+            <p className='store-detailNum'>1503</p>
+            <PlusInfo text='더보기' arrow='true' />
+          </div>
+          {showPhoneNumber && (
+            <div className='store-popup'>
+              <p className='store-popupText'> 010-1234-5678</p>
+            </div>
+          )}
         </div>
       </div>
       <StoreDeliverTogo />
@@ -93,13 +100,6 @@ export default function Store({ count }) {
           <MenuBlock />
         </div>
       </div>
-
-      {showPhoneNumber && (
-        <div className='store-popup'>
-          <p className='store-popupText'> 010-1234-5678</p>
-        </div>
-      )}
-
     </div>
   );
 }
