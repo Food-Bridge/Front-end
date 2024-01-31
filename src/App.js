@@ -26,7 +26,7 @@ function App() {
           <Route path='user/coupon/' element={<CouponList />} />
 
           <Route path='store/:store_id/' element={<Store />} />
-          <Route path='store/' element={<StoreOption popular />} />
+          <Route path='store/' element={<StoreOption popular/>} />
         </Routes>
       </Router>
     </div>
