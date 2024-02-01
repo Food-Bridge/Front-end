@@ -5,10 +5,10 @@ import CouponList from './view/pages/CouponListPage/CouponList'
 import LogoBar from './view/components/LogoBar/LogoBar';
 import MainPage from './view/pages/MainPage/MainPage';
 import MyList from './view/pages/MyListPage/MyList';
-import Store from './view/pages/StorePage/Store'
-import StoreList from './view/pages/StoreListPage/StoreList'
-import SignIn from './view/pages/SignInPage/SignIn';
+import Store from './view/pages/StorePage/Store';
+import StoreList from './view/pages/StoreListPage/StoreList';
 import SignUp from './view/pages/SignUpPage/SignUp';
+import SignIn from './view/pages/SignInPage/SignIn';
 
 
 function App() {
