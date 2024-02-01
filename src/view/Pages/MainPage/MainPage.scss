@@ -1,9 +1,12 @@
 .main {
   .main-searchBar {
     margin: 20px;
+    z-index: 100;
   }
   .main-imageSlider {
     margin: 20px auto;
+    z-index: 1;
+
   }
   .main-title {
     display: flex;

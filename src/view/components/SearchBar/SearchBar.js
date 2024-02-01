@@ -1,39 +1,66 @@
-import React from 'react';
-import "./SearchBar.scss";
-import { CiLocationOn, CiHeart, CiShoppingBasket } from "react-icons/ci";
-import { RiArrowDropDownFill } from "react-icons/ri";
-import { IoIosSearch } from "react-icons/io";
+import React, { useState } from 'react';
+import './SearchBar.scss';
+import { CiLocationOn, CiHeart, CiShoppingBasket } from 'react-icons/ci';
+import { RiArrowDropDownFill } from 'react-icons/ri';
+import { IoIosSearch } from 'react-icons/io';
 
-function SearchBar({location, count}) {
+function SearchBar({ count }) {
+  const locations = [
+    '서울시 강남구 역삼로 111',
+    '서울시 강남구 역삼로 222',
+    '서울시 관악구 봉천로 333',
+  ];
+
+  const [location, setLocation] = useState(locations[0])
+  
+  const [showList, setShowList] = useState(false);
+
+  const handleShowList = () => {
+    setShowList(!showList);
+  };
+
   return (
     <div className='SearchBar'>
       <header className='searchBar-frame'>
         <div className='searchBar-margin'>
-            <div className='searchBar-location'>
-                <CiLocationOn className='searchBar-locaIcon'/>
-                <h1 className='searchBar-locaName'>{location}</h1>
-                <RiArrowDropDownFill className='searchBar-arrowIcon'/>
+          <button className='searchBar-location' onClick={handleShowList}>
+            <CiLocationOn className='searchBar-locaIcon' />
+            <h1 className='searchBar-locaName'>{location.split(' ').slice(1,2).join(' ')}</h1>
+            <RiArrowDropDownFill className='searchBar-arrowIcon' />
+          </button>
+          <div className='searchBar-input'>
+            <div className='searchBar-inputBox'>
+              <IoIosSearch className='searchBar-searchIcon' />
             </div>
-            <div className='searchBar-input'>
-                <div className='searchBar-inputBox'>
-                    <IoIosSearch className='searchBar-searchIcon'/>
+          </div>
+          <div className='searchBar-etcIcon'>
+            <CiHeart className='searchBar-heartIcon' />
+            <div className='searchBar-shopCount'>
+              <CiShoppingBasket className='searchBar-shopIcon'>
+                <div className='searchBar-countBlock'>
+                  <h1 className='searchBar-countText'>{count}</h1>
                 </div>
+              </CiShoppingBasket>
             </div>
-            <div className='searchBar-etcIcon'>
-                <CiHeart className='searchBar-heartIcon'/>
-                <div className='searchBar-shopCount'>
-                    <CiShoppingBasket className='searchBar-shopIcon'>
-                        <div className='searchBar-countBlock'>
-                            <h1 className='searchBar-countText'>{count}</h1>
-                        </div>
-                    </CiShoppingBasket>
-                </div>
-            </div>
-        </div>
-
+          </div>
+        </div>{showList && (
+          <div className='searchBar-locaList'>
+            {locations.map((address, index) => (
+              <button
+                key={index}
+                className={`searchBar-loca ${
+                  location === address ? 'selected' : ''
+                }`}
+                onClick={() => setLocation(address)}
+              >
+                {locations[index]}
+              </button>
+            ))}
+          </div>
+        )}
       </header>
     </div>
-  )
+  );
 }
 
-export default SearchBar
+export default SearchBar;
