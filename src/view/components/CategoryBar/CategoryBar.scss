@@ -1,0 +1,13 @@
+.CategoryBar {
+    width: 600px;
+    
+    .categoryBar-category {
+        width: 560px;
+        margin-left: 20px;
+
+        .categoryBar-categoryComp {
+            margin-top: 20px;
+            display: flex;
+        }
+    }
+}

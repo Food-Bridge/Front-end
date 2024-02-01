@@ -9,6 +9,8 @@ import Store from './view/pages/StorePage/Store'
 import StoreOption from './view/pages/StoreOptionPage/StoreOption'
 import SignIn from './view/pages/SignInPage/SignIn';
 import SignUp from './view/pages/SignUpPage/SignUp';
+import StoreCardList from './view/components/StoreCardList/StoreCardList';
+import StoreList from './view/pages/StoreListPage/StoreList';
 
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
 
           <Route path='store/:store_id/' element={<Store />} />
           <Route path='store/' element={<StoreOption popular/>} />
+          <Route path='storeList/' element={<StoreList />}/>
+          
         </Routes>
       </Router>
     </div>
