@@ -1,11 +1,11 @@
 import React from 'react'
 import './StoreTag.scss'
 
-function StoreTag({storeTag}) {
+function StoreTag({className, tagName}) {
   return (
-    <div className='StoreTag'>
+    <div className={className}>
         <header className='storeTag-frame'>
-            <div className='storeTag-text'># {storeTag}</div>
+            <div className='storeTag-text'># {tagName}</div>
         </header>
     </div>
   )
