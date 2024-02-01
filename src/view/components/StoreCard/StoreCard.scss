@@ -1,0 +1,109 @@
+.StoreCard {
+    width: 271px;
+    height: 210px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+.StoreCard-margin {
+    width: 271px;
+    height: 210px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+    .storeCard-frame {
+        width: 270px;
+        height: 145px;
+
+        .storeCard-imgFrame {
+            width: 270px;
+            height: 145px;
+            display: flex;
+
+            .storeCard-img1 {
+                width: 175px;
+                height: 145px;
+                margin-right: 5px;
+                background-color: lightgray;
+                border-top-left-radius: 5px;
+            }
+
+            .storeCard-imgFrame2 {
+                width: 90px;
+                height: 145px;
+
+                .storeCard-imgBlock2 {
+                    width: 90px;
+                    height: 70px;
+                    margin-bottom: 5px;
+                    background-color: lightgray; 
+                    border-top-right-radius: 5px;                   
+                }
+                .storeCard-imgBlock3 {
+                    width: 90px;
+                    height: 70px;
+                    background-color: lightgray;
+                }
+            }
+        }
+        .storeCard-textFrame {
+            width: 270px;
+            display: flex;
+            margin-left: 5px;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .storeCard-storeInfo1 {
+                width: 255px;
+                display: flex;
+                justify-content: space-between;
+
+                .storeCard-storeName {
+                    font-size: 16px;
+                }
+                .storeCard-storeScore {
+                    font-size: 16px;
+                    display: flex;
+                    align-items: center;
+
+                    .storeCard-starIcon {
+                        color: rgb(249, 166, 0);
+                    }
+                }
+            }
+
+            .storeCard-storeInfo2 {
+                margin-top: 5px;
+                display: flex;
+                flex-direction: column;
+             
+                .storeCard-leastPrice {
+                    display: flex;
+
+                    .storeCard-leastTitle {
+                        font-size: 14px;
+                        color: gray;
+                    }
+                    .storeCard-leastCount {
+                        font-size: 14px;
+                    }
+                }
+                .storeCard-deliverPrice {
+                    display: flex;
+
+                    .storeCard-deliverTitle {
+                        font-size: 14px;
+                        color: gray;
+                    }
+                    .storeCard-deliverCount {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
