@@ -9,8 +9,8 @@ import Store from './view/pages/StorePage/Store'
 import StoreOption from './view/pages/StoreOptionPage/StoreOption'
 import SignIn from './view/pages/SignInPage/SignIn';
 import SignUp from './view/pages/SignUpPage/SignUp';
-import StoreCardList from './view/components/StoreCardList/StoreCardList';
 import StoreList from './view/pages/StoreListPage/StoreList';
+import Search from './view/pages/SearchPage/Search'
 
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
         <LogoBar />
         <Routes>
           <Route path='/' element={<MainPage />} />
+          <Route path='search/' element={<Search />} />
 
           <Route path='users/signin/' element={<SignIn />} />
           <Route path='users/signup/' element={<SignUp />} />
