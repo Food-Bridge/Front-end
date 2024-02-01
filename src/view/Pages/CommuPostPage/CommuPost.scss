@@ -1,0 +1,21 @@
+.CommuPost {
+
+    .commuPost-menuBar {
+        margin-top: 20px;
+    }
+
+    .commuPost-TagBar {
+        // margin-top: 20px;
+    }
+    .commuPost-postSection {
+        margin-top: 20px;
+        margin-left: 20px;
+
+        .commuPost-title {
+            font-size: 18px;
+        }
+        .commuPost-postList {
+            margin-top: 20px;
+        }
+    }
+}
