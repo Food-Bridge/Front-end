@@ -1,0 +1,19 @@
+.StoreCardList {
+    width: 600px;
+
+    .storeCardList-card {
+        width: 600px;
+        margin-left: 20px;
+        
+
+        .storeCardList-cardComp {
+            display: flex;
+        }
+        .storeCardList-cardComp2 {
+            display: flex;
+        }
+        .storeCardList-cardComp3 {
+            display: flex;
+        }
+    }
+}

@@ -33,7 +33,6 @@ function SignIn() {
 
   return (
     <>
-      <LogoBar />
       <div className='SignIn'>
         <header className='signIn-frame'>
           <h1 className='signIn-title'>로그인</h1>
