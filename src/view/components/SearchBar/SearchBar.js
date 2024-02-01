@@ -3,20 +3,26 @@ import './SearchBar.scss';
 import { CiLocationOn, CiHeart, CiShoppingBasket } from 'react-icons/ci';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import { IoIosSearch } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 function SearchBar({ count }) {
+  const navigate = useNavigate()
   const locations = [
     '서울시 강남구 역삼로 111',
     '서울시 강남구 역삼로 222',
     '서울시 관악구 봉천로 333',
   ];
 
-  const [location, setLocation] = useState(locations[0])
-  
+  const [location, setLocation] = useState(locations[0]);
+
   const [showList, setShowList] = useState(false);
 
   const handleShowList = () => {
     setShowList(!showList);
+  };
+
+  const handleSearchClick = () => {
+    navigate('/search/');
   };
 
   return (
@@ -25,13 +31,15 @@ function SearchBar({ count }) {
         <div className='searchBar-margin'>
           <button className='searchBar-location' onClick={handleShowList}>
             <CiLocationOn className='searchBar-locaIcon' />
-            <h1 className='searchBar-locaName'>{location.split(' ').slice(1,2).join(' ')}</h1>
+            <h1 className='searchBar-locaName'>
+              {location.split(' ').slice(1, 2).join(' ')}
+            </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
           <div className='searchBar-input'>
-            <div className='searchBar-inputBox'>
+            <button className='searchBar-inputBox' onClick={handleSearchClick}>
               <IoIosSearch className='searchBar-searchIcon' />
-            </div>
+            </button>
           </div>
           <div className='searchBar-etcIcon'>
             <CiHeart className='searchBar-heartIcon' />
@@ -43,7 +51,8 @@ function SearchBar({ count }) {
               </CiShoppingBasket>
             </div>
           </div>
-        </div>{showList && (
+        </div>
+        {showList && (
           <div className='searchBar-locaList'>
             {locations.map((address, index) => (
               <button
