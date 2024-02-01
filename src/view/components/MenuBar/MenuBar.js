@@ -9,10 +9,10 @@ function MenuBar({name}) {
         navigate('/');
       };
     const handleStoreClick = () => {
-    navigate('/storeList');
+        navigate('/storeList');
     };
     const handleCommuClick = () => {
-    navigate('/commu');
+        navigate('/commuPost');
     };
 
     return (
