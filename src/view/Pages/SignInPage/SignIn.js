@@ -19,7 +19,10 @@ function SignIn() {
   const handleLogin = () => {
     setSignedIn(true);
 
-    navigate('/signup');
+    navigate('/');
+  };
+  const handleSignUp = () => {
+    navigate('/users/signup/');
   };
 
   const saveUserEmail = (event) => {
@@ -74,7 +77,7 @@ function SignIn() {
                 >
                   <LogInBtn />
                 </div>
-                <div className='signIn-signUpBtn'>
+                <div className='signIn-signUpBtn' onClick={handleSignUp}>
                   <SignUpBtn
                     className1={'signUpBtn-frame2'}
                     className2={'signUpBtn-text2'}
