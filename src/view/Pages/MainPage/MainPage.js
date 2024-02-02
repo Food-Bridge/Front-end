@@ -6,6 +6,7 @@ import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import CommunityCard from '../../components/CommunityCard/CommunityCard';
 import PlusInfo from '../../components/PlusInfo/PlusInfo';
+import { MiniPostData } from '../../../data/MiniPostData/MiniPostData';
 
 export default function MainPage() {
   const SliderData = [
@@ -59,8 +60,9 @@ export default function MainPage() {
         <PlusInfo text='더보기' arrow='true' />
       </div>
       <div className='main-group'>
-        <CommunityCard />
-        <CommunityCard />
+          {MiniPostData.map((el) => {
+            return <CommunityCard user={el.user} location={el.location} img={el.img} text={el.text} className={el.className}/>
+          })}
       </div>
       <div className='main-title'>
         <h1 className='main-text'>할인 쿠폰</h1>
