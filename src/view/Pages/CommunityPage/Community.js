@@ -18,8 +18,8 @@ function Community() {
 
   return (
     <div className='Community'>
-        <SearchBar location={"강남구"}/>
-        <SliderTime className="storeList-img1" slides={SliderImgData} />
+        <SearchBar />
+        <div className='community-imageSlider'><SliderTime className="storeList-img1" slides={SliderImgData} /></div>
         <div className='community-menuBar'><MenuBar name={"menuBar-pageLine3"}/></div>
         <div className='community-weekSection'>
             <div className='community-weekHeader'>
