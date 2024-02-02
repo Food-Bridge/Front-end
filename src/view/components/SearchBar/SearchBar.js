@@ -24,6 +24,10 @@ function SearchBar({ count }) {
   const handleSearchClick = () => {
     navigate('/search/');
   };
+  
+  const handleControlClick = () => {
+    navigate('/location/')
+  }
 
   return (
     <div className='SearchBar'>
@@ -65,6 +69,7 @@ function SearchBar({ count }) {
                 {locations[index]}
               </button>
             ))}
+            <button className='searchBar-loca control' onClick={handleControlClick}>+ 주소 관리</button>
           </div>
         )}
       </header>
