@@ -12,6 +12,7 @@ import SignUp from './view/pages/SignUpPage/SignUp';
 import StoreList from './view/pages/StoreListPage/StoreList';
 import Search from './view/pages/SearchPage/Search'
 import CommuPost from './view/pages/CommuPostPage/CommuPost';
+import Community from './view/pages/CommunityPage/Community';
 
 
 function App() {
@@ -31,10 +32,10 @@ function App() {
 
           <Route path='store/:store_id/' element={<Store />} />
           <Route path='store/' element={<StoreOption popular/>} />
-          <Route path='storeList/' element={<StoreList />}/>
+          <Route path='storeList/' element={<StoreList />} />
           
-
-          <Route path='commuPost/' element={<CommuPost />}/>
+          <Route path='commu/' element={<Community />} />
+          <Route path='commuPost/' element={<CommuPost />} />
         </Routes>
       </Router>
     </div>
