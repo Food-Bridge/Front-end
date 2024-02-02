@@ -13,9 +13,9 @@ function CommuPost() {
     <div className='CommuPost'>
         <SearchBar location={"강남구"}/>
         <div className='commuPost-menuBar'><MenuBar name={"menuBar-pageLine3"}/></div>
-        <div className='commuPost-TagBar'><StoreTagList /></div>
+        <div className='commuPost-tagBar'><StoreTagList /></div>
         <div className='commuPost-postSection'>
-          <div className='commuPost-Title'>주간 인기 글</div>
+          <div className='commuPost-title'>주간 인기 글</div>
           <div className='commuPost-postList'>
             {postCardData.map((el) => {
                 return <PostCard postImg={el.img} postWriting={el.post} postTitle={el.title}/>
