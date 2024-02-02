@@ -16,7 +16,7 @@ function StoreList() {
     <div className='StoreList'>
       <div className='storeList-header'>
         <div className="storeList-searchBar"><SearchBar location={"강남구"}/></div>
-        <SliderTime className="storeList-img1" slides={SliderImgData} />
+        <div className='storeList-imageSlider'><SliderTime className="storeList-img1" slides={SliderImgData} /></div>
         <div className="storeList-menuBar"><MenuBar name={"menuBar-pageLine2"}/></div>
       </div>
       <div className='storeList-category'>
