@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
-import LogoBar from '../../components/LogoBar/LogoBar';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [emailValue, setEmail] = useState('');
@@ -71,7 +70,9 @@ function SignUp() {
                     onChange={saveUserPassword}
                   />
                   <input
-                    type='text'
+                    type='password'
+                    id='password'
+                    ref={passwordRef}
                     placeholder='비밀번호를 한번 더 입력해주세요'
                     className='singUp-passwdInput2'
                     value={password2Value}
