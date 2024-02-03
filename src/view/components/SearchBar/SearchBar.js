@@ -6,7 +6,7 @@ import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
 function SearchBar({ count }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const locations = [
     '서울시 강남구 역삼로 111',
     '서울시 강남구 역삼로 222',
@@ -24,10 +24,10 @@ function SearchBar({ count }) {
   const handleSearchClick = () => {
     navigate('/search/');
   };
-  
+
   const handleControlClick = () => {
-    navigate('/location/')
-  }
+    navigate(`address/`);
+  };
 
   return (
     <div className='SearchBar'>
@@ -69,7 +69,12 @@ function SearchBar({ count }) {
                 {locations[index]}
               </button>
             ))}
-            <button className='searchBar-loca control' onClick={handleControlClick}>+ 주소 관리</button>
+            <button
+              className='searchBar-loca control'
+              onClick={handleControlClick}
+            >
+              + 주소 관리
+            </button>
           </div>
         )}
       </header>
