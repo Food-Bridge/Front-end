@@ -7,12 +7,12 @@ function MenuBar({name}) {
 
     const handleHomeClick = () => {
         navigate('/');
-      };
+    };
     const handleStoreClick = () => {
-    navigate('/storeList');
+        navigate('/storeList');
     };
     const handleCommuClick = () => {
-    navigate('/commu');
+        navigate('/commu');
     };
 
     return (

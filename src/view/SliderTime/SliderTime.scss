@@ -1,0 +1,24 @@
+.SliderTime {
+    width: 600px;
+    height: 130px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  
+    .slide {
+      display: flex;
+      transition: transform 0.5s ease;
+      &.active {
+        transform: translateX(0);
+      }
+      &:not(.active) {
+        transform: translateX(100%);
+      }
+  
+      img {
+        width: 600px;
+        height: 300px;
+        object-fit: cover;
+      }
+    }
+  }

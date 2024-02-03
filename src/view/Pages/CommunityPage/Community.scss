@@ -1,0 +1,108 @@
+.Community {
+
+    .community-imageSlider {
+        margin-top: 20px;
+    }
+    .community-menuBar {
+        margin-top: 20px;
+    }
+    .community-tagBar {
+        margin-top: 20px;
+    }
+    .community-weekSection {
+        width: 560px;
+        height: 200px;
+        display: flex;
+        margin-top: 20px;
+        margin-left: 20px;
+        flex-direction: column;
+        // background-color: rgb(215, 139, 39);
+
+
+        .community-weekHeader {
+            width: 560px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .community-weekTitle {
+                font-size: 16px;
+            }
+            .community-weekMoreBtn {
+                width: 70px;
+                height: 30px;
+                border: 1px solid gray;
+                border-radius: 50px;
+                font-size: 14px;
+            }
+        }
+        .community-weekMiniPost {
+            display: flex;
+            margin-top: 10px;
+        }
+    }
+    .community-dailySection {
+        width: 560px;
+        height: 200px;
+        display: flex;
+        margin-top: 20px;
+        margin-left: 20px;
+        flex-direction: column;
+
+        .community-dailyHeader {
+            width: 560px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .community-dailyTitle {
+                font-size: 16px;
+            }
+            .community-dailyMoreBtn {
+                width: 70px;
+                height: 30px;
+                border: 1px solid gray;
+                border-radius: 50px;
+                font-size: 14px;
+            }
+        }
+        .community-dailyMiniPost {
+            display: flex;
+            margin-top: 10px;
+        }
+    }
+    .community-newestSection {
+        width: 560px;
+        height: 200px;
+        display: flex;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        flex-direction: column;
+
+        .community-newestHeader {
+            width: 560px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .community-newestTitle {
+                font-size: 16px;
+            }
+            .community-newestMoreBtn {
+                width: 70px;
+                height: 30px;
+                border: 1px solid gray;
+                border-radius: 50px;
+                font-size: 14px;
+            }
+        }
+        .community-newestMiniPost {
+            display: flex;
+            margin-top: 10px;
+        }
+    }
+}
