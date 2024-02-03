@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import LogoBar from '../../components/LogoBar/LogoBar';
@@ -11,13 +11,18 @@ function SignUp() {
   const [password2Value, setPassword2] = useState('');
   const [phoneNumberValue, setPhoneNumber] = useState('');
 
+  const [userIdInput, setUserIdInput] = useState('')
+  const [userPwInput, setUserPwInput] = useState('')
+  const [isShowPwChecked, setShowPwChecked] = useState(false)
+  const passwordRef = useRef(null)
+
   const navigate = useNavigate();
   const [signedUp, setSignedUp] = useState(false);
 
   const handleSignUp = () => {
     setSignedUp(true);
 
-    navigate('/logIn');
+    navigate('/users/signin/');
   };
 
   const saveUserEmail = (event) => {
@@ -57,7 +62,9 @@ function SignUp() {
                 <h1 className='signUp-passwdText'>비밀번호</h1>
                 <div className='signUp-inputFlex'>
                   <input
-                    type='text'
+                    type='password'
+                    id='password'
+                    ref={passwordRef}
                     placeholder='영문/숫자/특수문자 혼합 8~20자'
                     className='singUp-passwdInput'
                     value={passwordValue}

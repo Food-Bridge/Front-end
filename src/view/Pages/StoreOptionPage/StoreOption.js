@@ -22,9 +22,8 @@ export default function StoreOption({ popular }) {
   return (
     <div className='storeOption'>
       <div className='storeOption-header'>
-        
-
-        <Basket className='storeOption-basket' count='1' /><button className='storeOption-backContainer'>
+        <Basket className='storeOption-basket' count='1' />
+        <button className='storeOption-backContainer'>
           <IoIosArrowBack className='storeOption-back' size='30' />
         </button>
         <img src={chicken} className='storeOption-img' />
