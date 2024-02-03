@@ -34,8 +34,8 @@ function App() {
           <Route path='location/' element={<Location />} />
           <Route path='location/search/' element={<LocationSearch />} />
 
-          <Route path='store/:store_id/' element={<Store />} />
-          <Route path='store/' element={<StoreOption popular/>} />
+          <Route path='store/' element={<Store />} />
+          <Route path='option/' element={<StoreOption popular/>} />
           <Route path='storeList/' element={<StoreList />} />
           
           <Route path='commu/' element={<Community />} />

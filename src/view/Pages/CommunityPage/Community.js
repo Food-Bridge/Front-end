@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './Community.scss'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import MenuBar from '../../components/MenuBar/MenuBar'
-import StoreTagList from '../../components/StoreTagList/StoreTagList'
 import SliderTime from '../../SliderTime/SliderTime'
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData'
 import CommunityCard from '../../components/CommunityCard/CommunityCard'
