@@ -30,8 +30,8 @@ function App() {
           <Route path='user/' element={<MyList />} />
           <Route path='user/coupon/' element={<CouponList />} />
 
-          <Route path='store/:store_id/' element={<Store />} />
-          <Route path='store/' element={<StoreOption popular/>} />
+          <Route path='store/' element={<Store />} />
+          <Route path='option/' element={<StoreOption popular/>} />
           <Route path='storeList/' element={<StoreList />} />
           
           <Route path='commu/' element={<Community />} />
