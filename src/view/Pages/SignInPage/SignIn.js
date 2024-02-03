@@ -1,38 +1,45 @@
 import React, { useState } from 'react';
 import './SignIn.scss';
 import LogInBtn from '../../components/LogInBtn/LogInBtn';
-import LogoBar from '../../components/LogoBar/LogoBar';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import KakaoBox from '../../components/KakaoLogin/KakaoLogin';
 import GoogleBtn from '../../components/GoogleBtn/GoogleBtn';
-
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
-  const [emailVaule, setEmail] = useState('');
-  const [passwordVaule, setPassword] = useState('');
-
+  const [emailValue, setEmail] = useState('');
+  const [passwordValue, setPassword] = useState('');
   const navigate = useNavigate();
-  const [signedIn, setSignedIn] = useState(false);
 
-  const handleLogin = () => {
-    setSignedIn(true);
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/users/login/', {
+        email: emailValue,
+        password: passwordValue,
+      });
 
-    navigate('/');
+      console.log('Login Success:', response.data);
+
+      localStorage.setItem('accessToken', response.headers['authorization']);
+      localStorage.setItem('refreshToken', response.headers['refresh-token']);
+      navigate('/');
+    } catch (error) {
+      console.error('Login Error:', error); // 콘솔에 로그인 실패 메시지 출력
+    }
   };
+
   const handleSignUp = () => {
     navigate('/users/signup/');
   };
 
   const saveUserEmail = (event) => {
     setEmail(event.target.value);
-    console.log(event.target.value);
-  }
+  };
+
   const saveUserPassword = (event) => {
     setPassword(event.target.value);
-    console.log(event.target.value);
-  }
+  };
 
   return (
     <>
@@ -43,38 +50,26 @@ function SignIn() {
             <div className='signIn-margin'>
               <div className='signIn-formMargin'>
                 <div className='signIn-emailForm'>
-                  <input 
-                    type="text" 
-                    placeholder='아이디 또는 이메일' 
+                  <input
+                    type='text'
+                    placeholder='아이디 또는 이메일'
                     className='signIn-emailInput'
-                    value={emailVaule} 
+                    value={emailValue}
                     onChange={saveUserEmail}
                   />
                 </div>
                 <div className='signIn-passwdForm'>
-                  <input 
-                    type="text" 
-                    placeholder='비밀번호' 
+                  <input
+                    type='password'
+                    placeholder='비밀번호'
                     className='signIn-passwdInput'
-                    value={passwordVaule} 
+                    value={passwordValue}
                     onChange={saveUserPassword}
                   />
                 </div>
               </div>
               <div className='signIn-btnMargin'>
-                <div className='signIn-signInBtn'
-                  onClick={() => {
-                    axios.post("http://localhost:8000/users/login/", {
-                        email : emailVaule,
-                        password : passwordVaule
-                    }).then(function (response) {
-                      console.log(response);
-                      handleLogin();
-                    }).catch(function (error) {
-                      console.log(error);
-                    })
-                  }}                
-                >
+                <div className='signIn-signInBtn' onClick={handleLogin}>
                   <LogInBtn />
                 </div>
                 <div className='signIn-signUpBtn' onClick={handleSignUp}>
