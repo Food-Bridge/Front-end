@@ -34,11 +34,13 @@ export default function MainPage() {
   return (
     <div className='main'>
       <button onClick={() => {
-        axios.post('http://localhost:8000/users/logout/',{token: localStorage.getItem('refreshToken')}
+        axios.post('http://localhost:8000/users/logout/', { 
+        refresh: localStorage.getItem('refresh'),
+      }
         ).then(function (response) {
           console.log(response);
-          localStorage.removeItem('refreshToken', );
-          localStorage.removeItem('accessToken')
+          localStorage.removeItem('refresh');
+          localStorage.removeItem('access')
           navigate('users/signin/');
         })
       }}>로그아웃</button>
