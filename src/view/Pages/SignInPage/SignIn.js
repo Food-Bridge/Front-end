@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SignIn.scss';
 import LogInBtn from '../../components/LogInBtn/LogInBtn';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
@@ -16,13 +16,14 @@ function SignIn() {
     try {
       const response = await axios.post('http://localhost:8000/users/login/', {
         email: emailValue,
-        password: passwordValue,
+        password: passwordValue, 
+        headers: { "Content-Type" : "application/json" },
       });
-
-      console.log('Login Success:', response.data);
-
-      localStorage.setItem('accessToken', response.headers['authorization']);
-      localStorage.setItem('refreshToken', response.headers['refresh-token']);
+      const user = response.data;
+      console.log('Login Success:', user.tokens);
+      
+      localStorage.setItem('access', user.tokens.access);
+      localStorage.setItem('refresh', user.tokens.refresh);
       navigate('/');
     } catch (error) {
       console.error('Login Error:', error); // 콘솔에 로그인 실패 메시지 출력
