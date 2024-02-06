@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './SignIn.scss';
 import LogInBtn from '../../components/LogInBtn/LogInBtn';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
@@ -6,11 +6,15 @@ import KakaoBox from '../../components/KakaoLogin/KakaoLogin';
 import GoogleBtn from '../../components/GoogleBtn/GoogleBtn';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { login, selectIsLoggedIn } from '../../../redux/reducers/authSlice';
+import { useSelector, useDispatch} from 'react-redux'
 
 function SignIn() {
   const [emailValue, setEmail] = useState('');
   const [passwordValue, setPassword] = useState('');
-  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     try {
@@ -24,9 +28,11 @@ function SignIn() {
       
       localStorage.setItem('access', user.tokens.access);
       localStorage.setItem('refresh', user.tokens.refresh);
+      dispatch(login())
+      console.log(isLoggedIn)
       navigate('/');
     } catch (error) {
-      console.error('Login Error:', error); // 콘솔에 로그인 실패 메시지 출력
+      console.error('Login Error:', error);
     }
   };
 
