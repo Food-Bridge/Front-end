@@ -1,5 +1,6 @@
 import './MainPage.scss';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
@@ -32,6 +33,17 @@ export default function MainPage() {
 
   return (
     <div className='main'>
+      <button onClick={() => {
+        axios.post('http://localhost:8000/users/logout/', { 
+        refresh: localStorage.getItem('refresh'),
+      }
+        ).then(function (response) {
+          console.log(response);
+          localStorage.removeItem('refresh');
+          localStorage.removeItem('access')
+          navigate('users/signin/');
+        })
+      }}>로그아웃</button>
       <SearchBar className='main-searchBar' location='강남구' count='1' />
       <div className='main-imageSliderContainer'><ImageSlider className='main-imageSlider' slides={SliderData} /></div>
       

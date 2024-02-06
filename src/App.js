@@ -32,8 +32,8 @@ function App() {
 
           <Route path='user/' element={<MyList />} />
           <Route path='user/coupon/' element={<CouponList />} />
-          <Route path='location/' element={<Location />} />
-          <Route path='location/search/' element={<LocationSearch />} />
+          <Route path='address/' element={<Location />} />
+          <Route path='searchLocation/' element={<LocationSearch />} />
 
           <Route path='store/' element={<Store />} />
           <Route path='option/' element={<StoreOption popular/>} />
@@ -42,6 +42,7 @@ function App() {
           <Route path='commu/' element={<Community />} />
           <Route path='commuPost/' element={<CommuPost />} />
           <Route path='upload/' element={<PostUpload />}/>
+
         </Routes>
       </Router>
     </div>
