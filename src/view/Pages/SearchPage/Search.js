@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
-
 
 import './Search.scss';
 
@@ -30,7 +29,7 @@ export default function Search() {
     },
   ];
 
-  const [ searchText, setSearchText ] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const handleClickSearch = (event) => {
     setSearchText(event.target.value);
@@ -41,15 +40,15 @@ export default function Search() {
     <div className='search'>
       <SearchBar />
       <div className='search-container'>
- <input
-        className='search-input'
-        placeholder='검색어를 입력하세요.'
-        type='text'
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-      <button className='search-button' onClick={handleClickSearch}></button>
+        <input
+          className='search-input'
+          placeholder='검색어를 입력하세요.'
+          type='text'
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <button className='search-button' onClick={handleClickSearch}></button>
       </div>
-     
+
       <div className='search-content'>
         <h1 className='search-title'>최근 검색어</h1>
         <div className='search-recent'>

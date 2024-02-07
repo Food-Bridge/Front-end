@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './MainPage.scss';
 import { useNavigate } from 'react-router-dom';
 

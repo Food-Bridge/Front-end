@@ -2,7 +2,7 @@ import { CiLocationOn } from 'react-icons/ci';
 import './Location.scss';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Location() {
   const navigate = useNavigate();

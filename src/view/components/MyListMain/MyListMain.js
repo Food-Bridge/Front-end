@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './MyListMain.scss';
 
 import { TfiReceipt } from 'react-icons/tfi';

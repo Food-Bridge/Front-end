@@ -1,5 +1,6 @@
-import './MyListBlock.scss'
+import React from 'react';
 
+import './MyListBlock.scss'
 
 export default function MyListBlock({icon,text}) {
   return (

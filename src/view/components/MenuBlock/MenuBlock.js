@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './MenuBlock.scss';
 
 import chickenImg from '../../../data/chicken.jpg';

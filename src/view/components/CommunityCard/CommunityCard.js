@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './CommunityCard.scss';
 import { CiLocationOn } from 'react-icons/ci';
 
