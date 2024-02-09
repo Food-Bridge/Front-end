@@ -13,7 +13,7 @@ export default function Location() {
       .get('http://127.0.0.1:8000/1/address/')
       .then(function (response) {
         console.log(response);
-        setLocations(response.data)
+        setLocations(response.data);
       })
       .catch(function (error) {
         console.log(error.response.data);
@@ -32,7 +32,7 @@ export default function Location() {
   };
 
   const handleClickAdd = () => {
-    navigate('searchLocation/');
+    navigate('/searchLocation/');
   };
 
   const handleClickDelete = (name, address) => {
@@ -52,35 +52,35 @@ export default function Location() {
       .catch(function (error) {
         console.log(error.response.data);
       });
-
-    return (
-      <div className='location'>
-        <header className='location-header'>
-          <h1 className='location-title'>주소 관리</h1>
-          <button className='location-edit' onClick={handleClickEdit}>
-            {isEdit ? '완료' : '편집'}
-          </button>
-        </header>
-        <button className='location-add' onClick={handleClickAdd}>
-          주소 추가
-        </button>
-        {locations.map(({ name, address }) => {
-          return (
-            <button className='location-button'>
-              <CiLocationOn className='location-icon' />
-              <div className='location-content'>
-                <h1 className='location-name'>{name}</h1>
-                <p className='location-address'>{address}</p>
-              </div>
-              {isEdit && (
-                <button className='location-delete' onClick={handleClickDelete}>
-                  X
-                </button>
-              )}
-            </button>
-          );
-        })}
-      </div>
-    );
   };
+
+  return (
+    <div className='location'>
+      <header className='location-header'>
+        <h1 className='location-title'>주소 관리</h1>
+        <button className='location-edit' onClick={handleClickEdit}>
+          {isEdit ? '완료' : '편집'}
+        </button>
+      </header>
+      <button className='location-add' onClick={handleClickAdd}>
+        주소 추가
+      </button>
+      {locations.map(({ name, address }) => {
+        return (
+          <button className='location-button'>
+            <CiLocationOn className='location-icon' />
+            <div className='location-content'>
+              <h1 className='location-name'>{name}</h1>
+              <p className='location-address'>{address}</p>
+            </div>
+            {isEdit && (
+              <button className='location-delete' onClick={handleClickDelete}>
+                X
+              </button>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
 }

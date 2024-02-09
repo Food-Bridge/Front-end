@@ -21,7 +21,7 @@ const LocationSearch = () => {
       })
       .then(function (response) {
         console.log(response);
-        navigate('address/');
+        navigate('/address/');
       })
       .catch(function (error) {
         console.log(error.response.data);
