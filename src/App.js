@@ -16,7 +16,6 @@ import LocationSearch from './view/pages/LocationSearchPage/LocationSearch';
 import CommuPost from './view/pages/CommuPostPage/CommuPost';
 import Community from './view/pages/CommunityPage/Community';
 
-
 function App() {
   return (
     <div className='App'>
