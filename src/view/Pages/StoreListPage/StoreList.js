@@ -18,7 +18,7 @@ function StoreList() {
 
 
   return (
-    <div className='StoreList' onClick={handleClickStore}>
+    <div className='StoreList'>
       <div className='storeList-header'>
         <div className="storeList-searchBar"><SearchBar location={"강남구"}/></div>
         <div className='storeList-imageSlider'><SliderTime className="storeList-img1" slides={SliderImgData} /></div>
@@ -36,7 +36,7 @@ function StoreList() {
       </div>
       <div className='storeList-storeCard'>
         <div className='storeList-storeCardComp'>
-          <StoreCardList />
+          <button onClick={handleClickStore}><StoreCardList /></button>
         </div>
       </div>
     </div>
