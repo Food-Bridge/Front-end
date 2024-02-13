@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { login, selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 import { useSelector, useDispatch} from 'react-redux'
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'; 
 
 function SignIn() {
   const [emailValue, setEmail] = useState('');
@@ -47,6 +48,38 @@ function SignIn() {
   const saveUserPassword = (event) => {
     setPassword(event.target.value);
   };
+
+  // // 구글 로그인
+  // const googleClientId = process.env.REACT_APP_GOGGLE_KEY;
+
+  // const googleRedirectUrl = process.env.REACT_APP_GOOGLE_REDIRECT_URL;
+
+  // const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=792829001349-mhe10a1cvuqpruve9m1vajl11mipbvu5.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:3000/users/signin&scope=https://www.googleapis.com/auth/userinfo.email`;
+
+  // const loginHandler = () => {
+  //   window.location.href = googleAuthUrl;
+  //   console.log('Login Success:', googleAuthUrl.access_token);
+  // }
+ 
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     const response = await axios.post('http://localhost:8000/users/login/', {
+  //       email: emailValue,
+  //       password: passwordValue, 
+  //       headers: { "Content-Type" : "application/json" },
+  //     });
+  //     const user = response.data;
+  //     console.log('Login Success:', user.tokens);
+      
+  //     localStorage.setItem('access', user.tokens.access);
+  //     localStorage.setItem('refresh', user.tokens.refresh);
+  //     dispatch(login())
+  //     console.log(isLoggedIn)
+  //     navigate('/');
+  //   } catch (error) {
+  //     console.error('Login Error:', error);
+  //   }
+  // };
 
   return (
     <>
