@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './SignIn.scss';
 import LogInBtn from '../../components/LogInBtn/LogInBtn';
-import LogoBar from '../../components/LogoBar/LogoBar';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import KakaoBox from '../../components/KakaoLogin/KakaoLogin';
 import GoogleBtn from '../../components/GoogleBtn/GoogleBtn';
 
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const [emailVaule, setEmail] = useState('');
@@ -55,7 +54,6 @@ function SignIn() {
                   <input 
                     type='password'
                     id='password'
-                    ref={passwordRef}
                     placeholder='비밀번호' 
                     className='signIn-passwdInput'
                     value={passwordVaule} 
