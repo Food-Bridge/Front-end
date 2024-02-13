@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ImageSlider.scss';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import './Basket.scss';
 
 import { CiShoppingBasket } from 'react-icons/ci';

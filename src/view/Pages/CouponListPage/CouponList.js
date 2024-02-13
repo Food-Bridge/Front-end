@@ -1,6 +1,10 @@
 import React from 'react';
 import './CouponList.scss';
 import Coupon from '../../components/Coupon/Coupon';
+<<<<<<< HEAD
+=======
+import LogoBar from '../../components/LogoBar/LogoBar';
+>>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
 import { couponData } from '../../../data/CouponData/CouponData';
 
 function CouponList() {
