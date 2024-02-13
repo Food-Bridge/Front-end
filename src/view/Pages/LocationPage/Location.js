@@ -2,11 +2,7 @@ import { CiLocationOn } from 'react-icons/ci';
 import './Location.scss';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
-=======
-import React, { useState, useEffect } from 'react';
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
 
 export default function Location() {
   const navigate = useNavigate();
@@ -17,11 +13,7 @@ export default function Location() {
       .get('http://127.0.0.1:8000/1/address/')
       .then(function (response) {
         console.log(response);
-<<<<<<< HEAD
         setLocations(response.data)
-=======
-        setLocations(response.data);
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
       })
       .catch(function (error) {
         console.log(error.response.data);
@@ -40,11 +32,7 @@ export default function Location() {
   };
 
   const handleClickAdd = () => {
-<<<<<<< HEAD
     navigate('searchLocation/');
-=======
-    navigate('/searchLocation/');
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
   };
 
   const handleClickDelete = (name, address) => {
@@ -64,7 +52,6 @@ export default function Location() {
       .catch(function (error) {
         console.log(error.response.data);
       });
-<<<<<<< HEAD
 
     return (
       <div className='location'>
@@ -96,37 +83,4 @@ export default function Location() {
       </div>
     );
   };
-=======
-  };
-
-  return (
-    <div className='location'>
-      <header className='location-header'>
-        <h1 className='location-title'>주소 관리</h1>
-        <button className='location-edit' onClick={handleClickEdit}>
-          {isEdit ? '완료' : '편집'}
-        </button>
-      </header>
-      <button className='location-add' onClick={handleClickAdd}>
-        주소 추가
-      </button>
-      {locations.map(({ name, address }) => {
-        return (
-          <button className='location-button'>
-            <CiLocationOn className='location-icon' />
-            <div className='location-content'>
-              <h1 className='location-name'>{name}</h1>
-              <p className='location-address'>{address}</p>
-            </div>
-            {isEdit && (
-              <button className='location-delete' onClick={handleClickDelete}>
-                X
-              </button>
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
 }
