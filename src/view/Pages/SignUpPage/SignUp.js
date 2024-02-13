@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
+import LogoBar from '../../components/LogoBar/LogoBar';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [emailValue, setEmail] = useState('');

@@ -1,21 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './SignIn.scss';
 import LogInBtn from '../../components/LogInBtn/LogInBtn';
+import LogoBar from '../../components/LogoBar/LogoBar';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import KakaoBox from '../../components/KakaoLogin/KakaoLogin';
 import GoogleBtn from '../../components/GoogleBtn/GoogleBtn';
 
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const [emailVaule, setEmail] = useState('');
   const [passwordVaule, setPassword] = useState('');
-
-  const [userIdInput, setUserIdInput] = useState('')
-  const [userPwInput, setUserPwInput] = useState('')
-  const [isShowPwChecked, setShowPwChecked] = useState(false)
-  const passwordRef = useRef(null)  
 
   const navigate = useNavigate();
   const [signedIn, setSignedIn] = useState(false);
@@ -48,7 +44,7 @@ function SignIn() {
               <div className='signIn-formMargin'>
                 <div className='signIn-emailForm'>
                   <input 
-                    type='text'
+                    type="text" 
                     placeholder='아이디 또는 이메일' 
                     className='signIn-emailInput'
                     value={emailVaule} 
