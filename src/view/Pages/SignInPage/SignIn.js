@@ -100,4 +100,8 @@ function SignIn() {
   );
 }
 
+<<<<<<< HEAD
 export default SignIn;
+=======
+export default SignIn;
+>>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44

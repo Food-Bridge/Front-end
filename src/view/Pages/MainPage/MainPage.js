@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import React from 'react';
+
+>>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
 import './MainPage.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -90,4 +95,8 @@ export default function MainPage() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44

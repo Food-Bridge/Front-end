@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './SearchRank.scss';
 
 import { RxTriangleUp, RxTriangleDown } from 'react-icons/rx';

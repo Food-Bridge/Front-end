@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './MenuCheckBox.scss';
 import { useState } from 'react';
 

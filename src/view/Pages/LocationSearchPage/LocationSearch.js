@@ -21,7 +21,11 @@ const LocationSearch = () => {
       })
       .then(function (response) {
         console.log(response);
+<<<<<<< HEAD
         navigate('address/');
+=======
+        navigate('/address/');
+>>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
       })
       .catch(function (error) {
         console.log(error.response.data);
