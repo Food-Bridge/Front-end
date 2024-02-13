@@ -15,6 +15,7 @@ import Location from './view/pages/LocationPage/Location';
 import LocationSearch from './view/pages/LocationSearchPage/LocationSearch';
 import CommuPost from './view/pages/CommuPostPage/CommuPost';
 import Community from './view/pages/CommunityPage/Community';
+import GoogleCallback from './view/components/GoogleBtn/GoogleCallback';
 import Callback from './view/pages/CallbackPage/Callback';
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
           <Route path='commu/' element={<Community />} />
           <Route path='commuPost/' element={<CommuPost />} />
 
-          <Route path='users/signin/googleCallback/' element={<GoogleCallback/>} />
+          <Route path="users/signin/googleCallback" element={<GoogleCallback />} />
         </Routes>
       </Router>
     </div>

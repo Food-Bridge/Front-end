@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-=======
 import React, { useState } from 'react';
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
 
 import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
@@ -15,7 +11,6 @@ import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import Basket from '../../components/Basket/Basket.js';
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 
 export default function Store({ count }) {
@@ -25,10 +20,6 @@ export default function Store({ count }) {
     navigate('/option/')
   }
 
-=======
-
-export default function Store({ count }) {
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
   const SliderData = [
     {
       image:
@@ -110,11 +101,7 @@ export default function Store({ count }) {
       <StoreDeliverTogo />
       <div className='store-menu'>
         <h2 className='store-menuTitle'>인기메뉴</h2>
-<<<<<<< HEAD
         <div className='store-menuBlocks' onClick={handleClickOption}>
-=======
-        <div className='store-menuBlocks'>
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
           <MenuBlock popular={true} />
           <MenuBlock />
           <MenuBlock />

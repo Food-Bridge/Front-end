@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-=======
 import React, { useState } from 'react';
->>>>>>> 774ec86cd3ef3f1d7a8d2d10386811af4aac6b44
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
