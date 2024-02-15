@@ -41,7 +41,9 @@ function App() {
           <Route path='storeList/' element={<StoreList />} />
           
           <Route path='commu/' element={<Community />} />
-          <Route path='commuPost/' element={<CommuPost />} />
+          <Route path='commuPostWeek/' element={<CommuPost title={"주간 인기"}/>} />
+          <Route path='commuPostDay/' element={<CommuPost title={"일간 인기"}/>} />
+          <Route path='commuPostNew/' element={<CommuPost title={"최신"}/>} />
 
           <Route path="users/signin/googleCallback" element={<GoogleCallback />} />
         </Routes>
