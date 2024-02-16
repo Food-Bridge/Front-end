@@ -17,6 +17,7 @@ import CommuPost from './view/pages/CommuPostPage/CommuPost';
 import Community from './view/pages/CommunityPage/Community';
 import GoogleCallback from './view/components/GoogleBtn/GoogleCallback';
 import Callback from './view/pages/CallbackPage/Callback';
+import PostDetail from './view/pages/PostDetailPage/PostDetail';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path='commuPostWeek/' element={<CommuPost title={"주간 인기"}/>} />
           <Route path='commuPostDay/' element={<CommuPost title={"일간 인기"}/>} />
           <Route path='commuPostNew/' element={<CommuPost title={"최신"}/>} />
+          <Route path='postCard/' element={<PostDetail />} />
 
           <Route path="users/signin/googleCallback" element={<GoogleCallback />} />
         </Routes>
