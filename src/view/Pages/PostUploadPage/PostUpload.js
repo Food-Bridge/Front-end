@@ -1,8 +1,32 @@
 import React, { useState } from 'react'
 import './PostUpload.scss'
 import { CiImageOn, CiLocationOn } from "react-icons/ci";
+import { RiArrowDropDownFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 function PostUpload() {
+  const navigate = useNavigate();
+  const locations = [
+    '서울시 강남구 역삼로 111',
+    '서울시 강남구 역삼로 222',
+    '서울시 관악구 봉천로 333',
+  ];
+
+  const [location, setLocation] = useState(locations[0]);
+
+  const [showList, setShowList] = useState(false);
+
+  const handleShowList = () => {
+    setShowList(!showList);
+  };
+
+  const handleSearchClick = () => {
+    navigate('/search/');
+  };
+
+  const handleControlClick = () => {
+    navigate(`address/`);
+  };
 
   return (
     <div className='PostUpload'>
@@ -18,14 +42,41 @@ function PostUpload() {
             <div className='postUpload-photo'>
               <CiImageOn className='postUpload-photoIcon' />
             </div>
-            <div className='postUpload-location'>
+            <button className='postUpload-location' onClick={handleShowList}>
               <CiLocationOn className='postUpload-locationIcon' />
-            </div>
+              <h1 className='postUpload-locaName'>
+                {location.split(' ').slice(1, 2).join(' ')}
+            </h1>
+            </button>
           </div>
         </div>
         <div className='postUpload-button'>
           <button className='postUpload-uploadButton'>게시글 업로드</button>
         </div>
+
+        {showList && (
+          <div className='postUpload-locaList'>
+            {locations.map((address, index) => (
+              <button
+                key={index}
+                className={`postUpload-loca ${
+                  location === address ? 'selected' : ''
+                }`}
+                onClick={() => setLocation(address)}
+              >
+                {locations[index]}
+              </button>
+            ))}
+            <button
+              className='postUpload-loca control'
+              onClick={handleControlClick}
+            >
+              + 주소 관리
+            </button>
+          </div>
+        )}
+
+        
     </div>
   )
 }
