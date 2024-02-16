@@ -19,6 +19,7 @@ import GoogleCallback from './view/components/GoogleBtn/GoogleCallback';
 import Callback from './view/pages/CallbackPage/Callback';
 import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
+import Poster from './view/pages/PosterPage/Poster';
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function App() {
           <Route path='commuPostNew/' element={<CommuPost title={"최신"}/>} />
           <Route path='postCard/' element={<PostDetail />} />
           <Route path='postUpload/' element={<PostUpload/>}/>
+
+          <Route path='poster/' element={<Poster />}/>
 
           <Route path="users/signin/googleCallback" element={<GoogleCallback />} />
         </Routes>
