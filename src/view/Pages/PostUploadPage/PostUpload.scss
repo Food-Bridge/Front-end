@@ -1,0 +1,91 @@
+.PostUpload {
+
+    .postUpload-header {
+        width: 600px;
+        height: 60px;
+        border-bottom: 1px solid lightgray;
+
+        .postUpload-headerTitle {
+            height: 60px;
+            display: flex;
+            font-size: 24px;
+            font-weight: 800;
+            margin-left: 20px;
+            align-items: center;
+            justify-content:flex-start;
+        }
+    }
+    .postUpload-title {
+        width: 600px;
+        height: 45px;
+        border-bottom: 1px solid lightgray;
+
+        .postUpload-inputTitle {
+            width: 540px;
+            border: none;
+            font-size: 20px;
+            margin-top: 12.5px;
+            margin-left: 30px;
+        }
+        .postUpload-inputTitle::placeholder {
+            color: lightgray;
+        }
+
+    }
+    .postUpload-inputMain {
+        margin-top: 20px;
+        height: 480px;
+        border-bottom: 1px solid lightgray;
+
+        .postUpload-inputForm {
+            border: none;
+            width: 540px;
+            height: 430px;
+            resize: none;
+            font-size: 16px;
+            margin-left: 30px;
+        }
+        .postUpload-inputForm:focus {
+            outline: none;
+        }
+        .postUpload-inputForm::placeholder {
+            color: lightgray;
+        }
+        
+        .postUpload-etcIcons {
+            display: flex;
+            margin-left: 30px;
+
+            .postUpload-photo {
+
+                .postUpload-photoIcon {
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 20px;
+                }
+            }
+            .postUpload-location {
+
+                .postUpload-locationIcon {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+    .postUpload-button {
+        width: 600px;
+        display: flex;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        align-items: center;        
+        justify-content: center;
+
+        .postUpload-uploadButton {
+            width: 350px;
+            height: 50px;
+            color: white;
+            background-color: black;
+        }
+    }
+}
