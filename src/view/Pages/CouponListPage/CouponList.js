@@ -5,8 +5,6 @@ import { couponData } from '../../../data/CouponData/CouponData';
 
 function CouponList() {
 
-
-
   return (
     <div className='CouponList'>
       <header className='couponList-frame'>
