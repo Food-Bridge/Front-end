@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './MainPage.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,18 +26,20 @@ export default function MainPage() {
     },
   ];
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleClickCoupon = () => {
-    navigate('user/coupon/')
-  }
+    navigate('user/coupon/');
+  };
 
   return (
     <div className='main'>
       <SearchBar className='main-searchBar' location='강남구' count='1' />
-      <div className='main-imageSliderContainer'><ImageSlider className='main-imageSlider' slides={SliderData} /></div>
-      
-      <MenuBar name='menuBar-pageLine1'/>
+      <div className='main-imageSliderContainer'>
+        <ImageSlider className='main-imageSlider' slides={SliderData} />
+      </div>
+
+      <MenuBar name='menuBar-pageLine1' />
       <div className='main-title'>
         <h1 className='main-text'>이달의 인기 맛집</h1>
         <PlusInfo text='더보기' arrow='true' />
@@ -60,13 +64,21 @@ export default function MainPage() {
         <PlusInfo text='더보기' arrow='true' />
       </div>
       <div className='main-group'>
-          {MiniPostData.map((el) => {
-            return <CommunityCard user={el.user} location={el.location} img={el.img} text={el.text} className={el.className}/>
-          })}
+        {MiniPostData.map((el) => {
+          return (
+            <CommunityCard
+              user={el.user}
+              location={el.location}
+              img={el.img}
+              text={el.text}
+              className={el.className}
+            />
+          );
+        })}
       </div>
       <div className='main-title'>
         <h1 className='main-text'>할인 쿠폰</h1>
-        <PlusInfo text='더보기' arrow='true' onClick={handleClickCoupon}/>
+        <PlusInfo text='더보기' arrow='true' onClick={handleClickCoupon} />
       </div>
       <div className='main-group'>
         <img

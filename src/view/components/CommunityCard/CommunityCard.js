@@ -1,9 +1,18 @@
+import React from 'react';
+
 import './CommunityCard.scss';
 import { CiLocationOn } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom';
 
 export default function CommunityCard({user, location, img, text, className}) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate('/postCard')
+  }
+
   return (
-    <div className={`${className}`}>
+    <div className={`${className}`} onClick={handleCardClick}>
       <header className='communityCard-header'>
         <div className='communityCard-profile'>
           <img

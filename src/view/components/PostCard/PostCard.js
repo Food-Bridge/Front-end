@@ -1,7 +1,7 @@
 import React from 'react'
 import './PostCard.scss'
 import { postTagData } from '../../../data/PostCardData/PostTagData';
-import { postImgData } from '../../../data/PostCardData/PostCardData';
+// import { postImgData } from '../../../data/PostCardData/PostCardData';
 import { CiFaceSmile, CiLocationOn } from "react-icons/ci";
 
 function PostCard({postImg, postWriting, postTitle}) {
