@@ -58,6 +58,18 @@
             margin-left: 30px;
 
             .postUpload-photo {
+                
+                .postUpload-img {
+                    width: 200px;
+                    height: 140px;
+                    top: 450px;
+                    left: 445px;
+                    z-index: 10;
+                    position: absolute;
+                }
+                .postUpload-imgUpload {
+                    display: none;
+                }
 
                 .postUpload-photoIcon {
                     width: 30px;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import './PostUpload.scss'
 import { CiImageOn, CiLocationOn } from "react-icons/ci";
 import { RiArrowDropDownFill } from 'react-icons/ri';
@@ -28,6 +28,28 @@ function PostUpload() {
     navigate(`address/`);
   };
 
+  const [image, setImage] = useState(
+    // 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+  );
+
+  const onChangeImage = (event) => {
+    // imageInput.current.click();
+    const { files } = event.target;
+    const uploadFile = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadFile);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  };
+
+  const imageInput = useRef();
+ 
+  // 버튼클릭시 input태그에 클릭이벤트를 걸어준다. 
+  const onCickImageUpload = () => {
+    imageInput.current.click();
+  };
+
   return (
     <div className='PostUpload'>
         <div className='postUpload-header'>
@@ -40,7 +62,18 @@ function PostUpload() {
           <textarea className='postUpload-inputForm' type="text" placeholder='추천하고 싶은 맛집이나 새로 오픈한 가게 정보 등을 커뮤니티를 통해 공유해주세요!' />
           <div className='postUpload-etcIcons'>
             <div className='postUpload-photo'>
-              <CiImageOn className='postUpload-photoIcon' />
+                <img className='postUpload-img' src={image} />
+                <input
+                className='postUpload-imgUpload'
+                id='file'
+                type='file'
+                accept='image/*'
+                onChange={onChangeImage}
+                ref={imageInput}
+              />
+              <button onClick={onCickImageUpload}>
+                <CiImageOn className='postUpload-photoIcon' />
+              </button>
             </div>
             <button className='postUpload-location' onClick={handleShowList}>
               <CiLocationOn className='postUpload-locationIcon' />
