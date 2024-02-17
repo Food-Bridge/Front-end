@@ -10,12 +10,13 @@ import StoreOption from './view/pages/StoreOptionPage/StoreOption';
 import SignIn from './view/pages/SignInPage/SignIn';
 import SignUp from './view/pages/SignUpPage/SignUp';
 import StoreList from './view/pages/StoreListPage/StoreList';
+import Search from './view/pages/SearchPage/Search';
 import Location from './view/pages/LocationPage/Location';
 import LocationSearch from './view/pages/LocationSearchPage/LocationSearch';
 import Search from './view/pages/SearchPage/Search'
 import CommuPost from './view/pages/CommuPostPage/CommuPost';
 import Community from './view/pages/CommunityPage/Community';
-
+import Callback from './view/pages/CallbackPage/Callback';
 
 function App() {
   return (
@@ -28,11 +29,12 @@ function App() {
 
           <Route path='users/signin/' element={<SignIn />} />
           <Route path='users/signup/' element={<SignUp />} />
+          <Route path='users/signin/callback/' element={<Callback />} />
 
           <Route path='user/' element={<MyList />} />
           <Route path='user/coupon/' element={<CouponList />} />
-          <Route path='location/' element={<Location />} />
-          <Route path='location/search/' element={<LocationSearch />} />
+          <Route path='address/' element={<Location />} />
+          <Route path='searchLocation/' element={<LocationSearch />} />
 
           <Route path='store/:store_id/' element={<Store />} />
           <Route path='store/' element={<StoreOption popular/>} />

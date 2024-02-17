@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { CiLocationOn } from 'react-icons/ci';
 import { CiClock2 } from 'react-icons/ci';
 import { HiOutlineXMark } from 'react-icons/hi2';

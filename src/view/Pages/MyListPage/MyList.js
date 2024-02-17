@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/reducers/authSlice'
 
 import MyListBlock from '../../components/MyListBlock/MyListBlock';
 import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
@@ -12,18 +16,57 @@ import { GoMegaphone } from 'react-icons/go';
 import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 
 export default function MyList() {
-  const [image, setImage] = useState(
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-  );
+  const navigate = useNavigate();
+  const [image, setImage] = useState('')
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/users/profile/4/')
+    .then(response => {
+      console.log(response)
+      setImage(response.data.image);
+    })
+    .catch(error => {
+      console.error('Error fetching image:', error);
+    });
+  }, []);
 
   const onChangeImage = (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
+    const formData = new FormData();
+    formData.append('image', uploadFile);
+
+    axios.put('http://127.0.0.1:8000/users/profile/4/', formData, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(function (response) {
+        setImage(response.data.image);
+      })
+      .catch(function (error) {
+        console.error('Error uploading image:', error);
+      });
+  };
+
+
+  
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    axios
+      .post('http://localhost:8000/users/logout/', {
+        refresh: localStorage.getItem('refresh'),
+      })
+      .then(function (response) {
+        console.log(response);
+        localStorage.removeItem('refresh');
+        localStorage.removeItem('access');
+        dispatch(logout());
+        navigate('/users/signin/');
+      });
   };
 
   return (
@@ -46,13 +89,15 @@ export default function MyList() {
           <div className='mylistUser-id'>
             <h1 className='mylistUser-id-name'>000님</h1>
             <p className='mylistUser-id-info'>test@gmail.com</p>
-            <PlusInfo className='mylistUser-id-logout' text='로그아웃' />
+            <button onClick={handleLogout}>
+              <PlusInfo className='mylistUser-id-logout' text='로그아웃' />
+            </button>
           </div>
           <div className='mylistUser-detail'>
             <div className='mylistUser-detailBox'>
               <h2 className='mylistUser-detailBox-num'>123</h2>
               <p className='mylistUser-detailBox-title'>주문 내역</p>
-            </div>{' '}
+            </div>
             <div className='mylistUser-detailBox'>
               <h2 className='mylistUser-detailBox-num'>34</h2>
               <p className='mylistUser-detailBox-title'>나의 리뷰</p>

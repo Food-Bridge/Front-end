@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './PaymentMenu.scss';
 
 import menuImg from '../../../data/chicken.jpg';

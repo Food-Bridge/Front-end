@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './SearchRecord.scss'
 
 export default function SearchRecord({text}) {
