@@ -28,21 +28,16 @@ const Callback = () => {
       )
       .then((res) => {
         console.log(res);
-        const { access_token } = res.data;
+        const token = res.data.access_token;
         axios
           .post(
-            `https://kapi.kakao.com/v2/user/me`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${access_token}`,
-                'Content-type':
-                  'application/x-www-form-urlencoded;charset=utf-8',
-              },
-            }
+            'http://127.0.0.1:8000/users/kakao/login/callback/',
+            {"access_token": token},
           )
           .then((res) => {
             console.log('Kakao user data:', res.data);
+            localStorage.setItem('access', res.data.token.access);
+            localStorage.setItem('refresh', res.data.token.refresh);
             dispatch(login());
             console.log(isLoggedIn);
             navigate('/');

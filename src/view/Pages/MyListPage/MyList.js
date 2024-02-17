@@ -50,9 +50,6 @@ export default function MyList() {
       });
   };
 
-
-  
-
   const dispatch = useDispatch();
 
   const handleLogout = () => {

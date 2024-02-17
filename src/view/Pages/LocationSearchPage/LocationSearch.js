@@ -13,7 +13,7 @@ const LocationSearch = () => {
     const buildingName = data.buildingName;
 
     axios
-      .post('http://127.0.0.1:8000/1/address/', {
+      .post('http://127.0.0.1:8000/users/4/address/', {
         zonecode: zonecode,
         road_address: roadAddress,
         jibun_address: jibunAddress,
