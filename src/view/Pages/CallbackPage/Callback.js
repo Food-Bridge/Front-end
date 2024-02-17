@@ -8,6 +8,7 @@ const Callback = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate('');
+  
   useEffect(() => {
     const params = new URL(document.location.toString()).searchParams;
     const code = params.get('code');

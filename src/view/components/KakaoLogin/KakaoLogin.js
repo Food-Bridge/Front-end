@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './KakaoLogin.scss';
 import logo from '../../../data/KakaoLogo.png';
 
