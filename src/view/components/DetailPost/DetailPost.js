@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './DetailPost.scss'
 import { CiLocationOn } from 'react-icons/ci'
 import { postTagData } from '../../../data/PostCardData/PostTagData'
+import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
 
 function DetailPost({user, location}) {
 
@@ -17,7 +18,13 @@ function DetailPost({user, location}) {
             tag3 : "일식덮밥",
             tag4 : "동네맛집"
         }
-    ]        
+    ] 
+    
+    const [isLike, setIsLike] = useState(false);
+  
+    const handleLike = () => {
+      setIsLike(!isLike);
+    };
 
   return (
     <div className='DetailPost'>
@@ -29,9 +36,18 @@ function DetailPost({user, location}) {
           />
           <p className='detailPost-profileName'>{user} 님</p>
         </div>
-        <div className='detailPost-location'>
-          <CiLocationOn className='detailPost-locaIcon' size='20' />
-          <p className='detailPost-locaText'>{location}</p>
+        <div className='detailPost-headerRight'>
+          <div className='detailPost-location'>
+            <CiLocationOn className='detailPost-locaIcon' size='20' />
+            <p className='detailPost-locaText'>{location}</p>
+          </div>
+          <button onClick={handleLike}>
+            {isLike ? (
+              <IoIosHeart size='30' color='red' className='detailPost-like' />
+            ) : (
+              <IoIosHeartEmpty size='30' color='red' className='detailPost-like' />
+            )}
+          </button>
         </div>
       </header>
       <div className='detailPost-content'>
