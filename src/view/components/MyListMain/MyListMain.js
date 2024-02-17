@@ -10,7 +10,7 @@ export default function MyListMain() {
   return (
     <div className='mylistMain'>
       <button className='mylistMain-box'>
-        <div classNAme='mylistMain-content'>
+        <div className='mylistMain-content'>
           <TfiReceipt size='40' />
           <h2 className='mylistMain-title'>주문내역</h2>
         </div>

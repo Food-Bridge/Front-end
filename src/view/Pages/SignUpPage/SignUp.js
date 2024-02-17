@@ -97,7 +97,7 @@ function SignUp() {
               <div
                 onClick={() => {
                   axios
-                    .post('http://127.0.0.1:8000/users/signup/', {
+                    .post('http://localhost:8000/users/signup/', {
                       email: emailValue,
                       username: userNameValue,
                       password: passwordValue,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -17,19 +17,41 @@ import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 
 export default function MyList() {
   const navigate = useNavigate();
-  const [image, setImage] = useState(
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-  );
+  const [image, setImage] = useState('')
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/users/profile/4/')
+    .then(response => {
+      console.log(response)
+      setImage(response.data.image);
+    })
+    .catch(error => {
+      console.error('Error fetching image:', error);
+    });
+  }, []);
 
   const onChangeImage = (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
+    const formData = new FormData();
+    formData.append('image', uploadFile);
+
+    axios.put('http://127.0.0.1:8000/users/profile/4/', formData, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(function (response) {
+        setImage(response.data.image);
+      })
+      .catch(function (error) {
+        console.error('Error uploading image:', error);
+      });
   };
+
+
+  
 
   const dispatch = useDispatch();
 
