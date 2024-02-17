@@ -1,12 +1,9 @@
 import React from 'react';
 import './CouponList.scss';
 import Coupon from '../../components/Coupon/Coupon';
-import LogoBar from '../../components/LogoBar/LogoBar';
 import { couponData } from '../../../data/CouponData/CouponData';
 
 function CouponList() {
-
-
 
   return (
     <div className='CouponList'>

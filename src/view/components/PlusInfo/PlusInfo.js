@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './PlusInfo.scss';
 
 import { IoIosArrowForward } from 'react-icons/io';

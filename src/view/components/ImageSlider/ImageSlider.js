@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './ImageSlider.scss';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 export default function ImageSlider({ slides }) {
   const [current, setCurrent] = useState(0);
   const length = slides.length;
+
+  const navigate = useNavigate();
+
+  const handleSlideClick = () => {
+    navigate('poster/')
+  }
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -34,7 +41,7 @@ export default function ImageSlider({ slides }) {
         return (
           <div
             className={index === current ? 'slide active' : 'slide'}
-            key={index}
+            key={index} onClick={handleSlideClick}
           >
             {index === current && <img src={slide.image} className='image' />}
           </div>

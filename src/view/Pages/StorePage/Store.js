@@ -11,8 +11,15 @@ import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import Basket from '../../components/Basket/Basket.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function Store({ count }) {
+  const navigate = useNavigate()
+
+  const handleClickOption = () => {
+    navigate('/option/')
+  }
+
   const SliderData = [
     {
       image:
@@ -94,7 +101,7 @@ export default function Store({ count }) {
       <StoreDeliverTogo />
       <div className='store-menu'>
         <h2 className='store-menuTitle'>인기메뉴</h2>
-        <div className='store-menuBlocks'>
+        <div className='store-menuBlocks' onClick={handleClickOption}>
           <MenuBlock popular={true} />
           <MenuBlock />
           <MenuBlock />

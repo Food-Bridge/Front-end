@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './Community.scss'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import MenuBar from '../../components/MenuBar/MenuBar'
-import StoreTagList from '../../components/StoreTagList/StoreTagList'
 import SliderTime from '../../SliderTime/SliderTime'
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData'
 import CommunityCard from '../../components/CommunityCard/CommunityCard'
@@ -13,7 +12,13 @@ function Community() {
     const navigate = useNavigate();
 
     const handleMoreClick = () => {
-        navigate('/commuPost');
+        navigate('/commuPostWeek');
+    };
+    const handleMoreClick2 = () => {
+        navigate('/commuPostDay');
+    };
+    const handleMoreClick3 = () => {
+        navigate('/commuPostNew');
     };
 
   return (
@@ -35,7 +40,7 @@ function Community() {
         <div className='community-dailySection'>
             <div className='community-dailyHeader'>
                 <div className='community-dailyTitle'>일간 인기 글</div>
-                <button onClick={handleMoreClick} className='community-dailyMoreBtn'>더보기</button>
+                <button onClick={handleMoreClick2} className='community-dailyMoreBtn'>더보기</button>
             </div>
             <div className='community-dailyMiniPost'>
                 {MiniPostData.map((el) => {
@@ -45,8 +50,8 @@ function Community() {
         </div>
         <div className='community-newestSection'>
             <div className='community-newestHeader'>
-                <div className='community-newestTitle'>일간 인기 글</div>
-                <button onClick={handleMoreClick} className='community-newestMoreBtn'>더보기</button>
+                <div className='community-newestTitle'>최신 글</div>
+                <button onClick={handleMoreClick3} className='community-newestMoreBtn'>더보기</button>
             </div>
             <div className='community-newestMiniPost'>
                 {MiniPostData.map((el) => {

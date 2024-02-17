@@ -69,6 +69,10 @@ export default function MyList() {
       });
   };
 
+  const handleCoupon = () => {
+    navigate('coupon/')
+  }
+
   return (
     <div className='mylist'>
       <div className='mylistUser'>
@@ -112,7 +116,7 @@ export default function MyList() {
       <MyListMain />
       <MyListDeliver />
       <div className='mylistBlocks-row'>
-        <MyListBlock icon={<CiDiscount1 size='35' />} text='할인쿠폰' />
+        <button onClick={handleCoupon}><MyListBlock icon={<CiDiscount1 size='35' />} text='할인쿠폰' /></button>
         <MyListBlock icon={<CiGift size='35' />} text='이벤트' />
         <MyListBlock icon={<IoSettingsOutline size='35' />} text='설정' />
       </div>

@@ -2,15 +2,20 @@ import React from 'react'
 import './StoreList.scss'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import MenuBar from '../../components/MenuBar/MenuBar'
-import Category from '../../components/Category/Category'
 import CategoryBar from '../../components/CategoryBar/CategoryBar'
 import StoreTagList from '../../components/StoreTagList/StoreTagList'
 import StoreCardList from '../../components/StoreCardList/StoreCardList'
-import ImageSlider from '../../components/ImageSlider/ImageSlider'
 import SliderTime from '../../SliderTime/SliderTime'
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData'
+import { useNavigate } from 'react-router-dom'
 
 function StoreList() {
+  const navigate = useNavigate()
+
+  const handleClickStore = () => {
+    navigate('/store/')
+  }
+
 
   return (
     <div className='StoreList'>
@@ -31,7 +36,7 @@ function StoreList() {
       </div>
       <div className='storeList-storeCard'>
         <div className='storeList-storeCardComp'>
-          <StoreCardList />
+          <button onClick={handleClickStore}><StoreCardList /></button>
         </div>
       </div>
     </div>
