@@ -20,8 +20,9 @@ function SignIn() {
     try {
       const response = await axios.post('http://localhost:8000/users/login/', {
         email: emailValue,
-        password: passwordValue, 
-        headers: { "Content-Type" : "application/json" },
+        password: passwordValue,
+      }, {
+        headers: { "Content-Type": "application/json" },
       });
       const user = response.data;
       console.log('Login Success:', user.tokens);
@@ -76,9 +77,9 @@ function SignIn() {
                 </div>
               </div>
               <div className='signIn-btnMargin'>
-                <div className='signIn-signInBtn' onClick={handleLogin}>
+                <button className='signIn-signInBtn' onClick={handleLogin}>
                   <LogInBtn />
-                </div>
+                </button>
                 <div className='signIn-signUpBtn' onClick={handleSignUp}>
                   <SignUpBtn
                     className1={'signUpBtn-frame2'}
