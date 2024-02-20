@@ -6,11 +6,12 @@
   .mylistUser {
     display: flex;
     width: 560px;
-    justify-content: space-around;
 
     .mylistUser-profile {
       display: flex;
       flex-direction: column;
+      margin-left: 50px;
+      margin-right: 100px;
       width: 120px;
       align-items: center;
 
@@ -45,16 +46,23 @@
         display: flex;
         align-items: center;
         margin-bottom: 30px;
+        
+        .mylistUser-id-input {
+          font-size: 24px;
+          font-weight: 600;
+          width: 100px;
+          height: 30px;
+        }
 
         .mylistUser-id-name {
           font-size: 24px;
           font-weight: 600;
+          width: 100px;
+          height: 30px;
         }
-
-        .mylistUser-id-info {
-          margin: 5px;
-          font-size: 14px;
-          color: #8d8d8d;
+        
+        .mylistUser-id-change {
+          margin: 0 10px;
         }
       }
       .mylistUser-detail {
