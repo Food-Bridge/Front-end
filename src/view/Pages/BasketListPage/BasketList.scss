@@ -1,0 +1,85 @@
+.basketlist-header {
+  font-size: 24px;
+  text-align: center;
+  margin: 20px;
+}
+
+.basketlist-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #c6c6c6;
+  .basketlist-store {
+    display: flex;
+    align-items: center;
+    .basketlist-storeImg {
+      width: 30px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .basketlist-storeName {
+      font-size: 18px;
+    }
+  }
+  .basketlist-deliver {
+    display: flex;
+    align-items: center;
+    .basketlist-deliverTime {
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  }
+}
+.basketlist-delete {
+  margin: 0 20px;
+  border-bottom: 1px solid #c6c6c6;
+  text-align: right;
+  .basketlist-deleteBtn {
+    margin: 20px 0;
+    border: 1px solid #c6c6c6;
+    border-radius: 50px;
+    padding: 5px 10px;
+    box-shadow: 2px 2px 2px #c6c6c6;
+  }
+}
+.basketlist-menu {
+  margin: 0 20px;
+}
+.basketlist-add {
+  margin: 0 20px;
+  border-bottom: 3px solid #c6c6c6;
+  text-align: center;
+  .basketlist-addBtn {
+    margin: 20px 0;
+    border: 1px solid #c6c6c6;
+    border-radius: 50px;
+    padding: 5px 10px;
+    box-shadow: 2px 2px 2px #c6c6c6;
+  }
+}
+.basketlist-priceGroup {
+  margin: 20px;
+  border-bottom: 1px solid #c6c6c6;
+  .basketlist-price {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .basketlist-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .basketlist-value {
+      font-size: 14px;
+    }
+  }
+}
+.basketlist-orderBtn {
+  background-color: #c6c6c6;
+  margin: 50px;
+  width: 500px;
+  height: 50px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 10px;
+}

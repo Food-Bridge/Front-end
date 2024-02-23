@@ -20,6 +20,7 @@ import Callback from './view/pages/CallbackPage/Callback';
 import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
+import BasketList from './view/pages/BasketListPage/BaketList';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path='store/:store_id/' element={<Store />} />
           <Route path='store/' element={<StoreOption popular/>} />
           <Route path='storeList/' element={<StoreList />} />
+          <Route path='basket/' element={<BasketList />} />
           
           <Route path='commu/' element={<Community />} />
           <Route path='commuPostWeek/' element={<CommuPost title={"주간 인기"}/>} />
