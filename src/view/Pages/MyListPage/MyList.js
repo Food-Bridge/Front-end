@@ -56,7 +56,11 @@ export default function MyList() {
     axios
       .post('http://localhost:8000/users/logout/', {
         refresh: localStorage.getItem('refresh'),
-      })
+        },{
+          headers : {
+            'Authorization': `Bearer ${localStorage.getItem('access')}`,
+          }
+        })
       .then(function (response) {
         console.log(response);
         localStorage.removeItem('refresh');
