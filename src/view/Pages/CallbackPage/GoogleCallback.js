@@ -21,7 +21,7 @@ const GoogleCallback = () => {
 
     axios
       .post(
-        `https://oauth2.googleapis.com/token?client_id=${client_id}&scope=${scope}&client_secret=${CLIENT_SECRET}&redirect_uri=${redirect_uri}&code=${code}&grant_type=authorization_code&response_type=code`,
+        `https://oauth2.googleapis.com/token?client_id=${client_id}&client_secret=${CLIENT_SECRET}&redirect_uri=${redirect_uri}&code=${code}&grant_type=authorization_code`,
         {},
         {
           headers: {
