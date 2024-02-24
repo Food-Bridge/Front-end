@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../../redux/reducers/authSlice'
+import { logout } from '../../../redux/reducers/authSlice';
 
 import MyListBlock from '../../components/MyListBlock/MyListBlock';
 import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
@@ -17,17 +17,25 @@ import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 
 export default function MyList() {
   const navigate = useNavigate();
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [isNicknameChange, setIsNicknameChange] = useState(false);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/users/profile/4/')
-    .then(response => {
-      console.log(response)
-      setImage(response.data.image);
-    })
-    .catch(error => {
-      console.error('Error fetching image:', error);
-    });
+    axios
+      .get('http://127.0.0.1:8000/users/profile/', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access')}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setImage(response.data.image);
+        setNickname(response.data.nickname);
+      })
+      .catch((error) => {
+        console.error('Error fetching image:', error);
+      });
   }, []);
 
   const onChangeImage = (event) => {
@@ -35,13 +43,14 @@ export default function MyList() {
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
+    formData.append('nickname', nickname);
 
-    axios.put('http://127.0.0.1:8000/users/profile/4/', formData, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access')}`,
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    axios
+      .put('http://127.0.0.1:8000/users/profile/', formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access')}`,
+        },
+      })
       .then(function (response) {
         setImage(response.data.image);
       })
@@ -51,6 +60,27 @@ export default function MyList() {
   };
 
   const dispatch = useDispatch();
+
+  const handleChangeNickname = () => {
+    if (isNicknameChange) {
+      const formData = new FormData();
+      formData.append('nickname', nickname);
+
+      axios
+        .put('http://127.0.0.1:8000/users/profile/', formData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access')}`,
+          },
+        })
+        .then(function (response) {
+          setNickname(response.data.nickname);
+        })
+        .catch(function (error) {
+          console.error('Error uploading nickname:', error);
+        });
+    }
+    setIsNicknameChange(!isNicknameChange);
+  };
 
   const handleLogout = () => {
     axios
@@ -71,8 +101,8 @@ export default function MyList() {
   };
 
   const handleCoupon = () => {
-    navigate('coupon/')
-  }
+    navigate('coupon/');
+  };
 
   return (
     <div className='mylist'>
@@ -92,10 +122,23 @@ export default function MyList() {
         </div>
         <div className='mylistUser-group'>
           <div className='mylistUser-id'>
-            <h1 className='mylistUser-id-name'>000님</h1>
-            <p className='mylistUser-id-info'>test@gmail.com</p>
-            <button onClick={handleLogout}>
-              <PlusInfo className='mylistUser-id-logout' text='로그아웃' />
+            {isNicknameChange ? (
+              <input
+                className='mylistUser-id-input'
+                type='text'
+                onChange={(event) => setNickname(event.target.value)}
+              ></input>
+            ) : (
+              <h1 className='mylistUser-id-name'>{nickname}</h1>
+            )}
+            <button className='mylistUser-id-change' onClick={handleChangeNickname}>
+              <PlusInfo
+                
+                text={isNicknameChange ? '변경 완료' : '닉네임 변경'}
+              />
+            </button>
+            <button className='mylistUser-id-logout' onClick={handleLogout}>
+              <PlusInfo text='로그아웃' />
             </button>
           </div>
           <div className='mylistUser-detail'>
@@ -117,7 +160,9 @@ export default function MyList() {
       <MyListMain />
       <MyListDeliver />
       <div className='mylistBlocks-row'>
-        <button onClick={handleCoupon}><MyListBlock icon={<CiDiscount1 size='35' />} text='할인쿠폰' /></button>
+        <button onClick={handleCoupon}>
+          <MyListBlock icon={<CiDiscount1 size='35' />} text='할인쿠폰' />
+        </button>
         <MyListBlock icon={<CiGift size='35' />} text='이벤트' />
         <MyListBlock icon={<IoSettingsOutline size='35' />} text='설정' />
       </div>
