@@ -3,27 +3,42 @@
     .postComment-frame {
         width: 500px;
         height: 150px;
-        border: 1px solid black;
+        // border: 1px solid black;
         margin-left: 20px;
         margin-top: 20px;
 
         .postComment-top {
+            height: 40px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+
+            .postComment-userInfo {
+                display: flex;
+                align-items: center;
             
-            .postComment-profile {
-                width: 40px;
-                height: 40px;
-                // margin-top: 10px;
-                // margin-left: 10px;
-                border-radius: 50px;
-                border: 1px solid black;
+                .postComment-profile {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50px;
+                    border: 1px solid black;
+                }
+                .postComment-userName {
+                    font-size: 16px;
+                    color: black;
+                    margin-left: 10px;
+                    font-weight: 800;
+                }
             }
-            .postComment-userName {
-                font-size: 16px;
-                color: black;
-                margin-left: 10px;
-                font-weight: 800;
+            .postComment-like {
+                display: flex;
+                align-items: center;
+
+                .postComment-likeIcon {
+                    width: 24px;
+                    height: 24px;
+                    color: red;
+                }
             }
         }
         
@@ -31,7 +46,6 @@
             height: 100px;
             margin-top: 5px;
             margin-left: 50px;
-            border: 1px solid black;
 
             .postComment-comment {
                 font-size: 16px;
