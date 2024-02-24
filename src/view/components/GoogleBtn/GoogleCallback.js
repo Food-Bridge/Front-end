@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const GoogleCallback = () => {
+const GoogleCallbackTest = () => {
 
   const navigate = useNavigate()
   
@@ -57,4 +57,4 @@ const GoogleCallback = () => {
   return null;
 };
 
-export default GoogleCallback;
+export default GoogleCallbackTest;
