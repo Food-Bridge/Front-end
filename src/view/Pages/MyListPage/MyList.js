@@ -96,9 +96,11 @@ export default function MyList() {
       });
   };
 
-  const handleCoupon = () => {
+  const handleOpenCoupon = () => {
     navigate('coupon/');
   };
+
+
 
   return (
     <div className='mylist'>
@@ -156,7 +158,7 @@ export default function MyList() {
       <MyListMain />
       <MyListDeliver />
       <div className='mylistBlocks-row'>
-        <button onClick={handleCoupon}>
+        <button onClick={handleOpenCoupon}>
           <MyListBlock icon={<CiDiscount1 size='35' />} text='할인쿠폰' />
         </button>
         <MyListBlock icon={<CiGift size='35' />} text='이벤트' />

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function SearchBar({ count }) {
   const navigate = useNavigate();
+
   const locations = [
     '서울시 강남구 역삼로 111',
     '서울시 강남구 역삼로 222',
@@ -29,6 +30,9 @@ function SearchBar({ count }) {
     navigate(`address/`);
   };
 
+  const handleOpenBasket = () => {
+    navigate('basket/')
+  }
   return (
     <div className='SearchBar'>
       <header className='searchBar-frame'>
@@ -47,13 +51,13 @@ function SearchBar({ count }) {
           </div>
           <div className='searchBar-etcIcon'>
             <CiHeart className='searchBar-heartIcon' />
-            <div className='searchBar-shopCount'>
+            <button className='searchBar-shopCount' onClick={handleOpenBasket}>
               <CiShoppingBasket className='searchBar-shopIcon'>
                 <div className='searchBar-countBlock'>
                   <h1 className='searchBar-countText'>{count}</h1>
                 </div>
               </CiShoppingBasket>
-            </div>
+            </button>
           </div>
         </div>
         {showList && (

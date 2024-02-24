@@ -45,7 +45,7 @@ function App() {
 
           <Route path='store/:store_id/' element={<Store />} />
           <Route path='store/' element={<StoreOption popular/>} />
-          <Route path='storeReview/' element={<StoreReview />} />
+          <Route path='store/:store_id/review/' element={<StoreReview />} />
           <Route path='storeList/' element={<StoreList />} />
           <Route path='basket/' element={<BasketList />} />
           
