@@ -21,6 +21,8 @@ import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
 import BasketList from './view/pages/BasketListPage/BaketList';
+import StoreReview from './view/pages/StoreReviewPage/StoreReview';
+import MyReview from './view/pages/MyReviewPage/MyReview';
 
 function App() {
   return (
@@ -36,12 +38,14 @@ function App() {
           <Route path='users/signin/callback/' element={<Callback />} />
 
           <Route path='user/' element={<MyList />} />
+          <Route path='user/review' element={<MyReview />} />
           <Route path='user/coupon/' element={<CouponList />} />
           <Route path='address/' element={<Location />} />
           <Route path='searchLocation/' element={<LocationSearch />} />
 
           <Route path='store/:store_id/' element={<Store />} />
           <Route path='store/' element={<StoreOption popular/>} />
+          <Route path='storeReview/' element={<StoreReview />} />
           <Route path='storeList/' element={<StoreList />} />
           <Route path='basket/' element={<BasketList />} />
           
