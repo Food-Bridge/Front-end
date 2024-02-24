@@ -12,7 +12,9 @@ function PostDetail() {
       <div className="postDetail-menuBar"><MenuBar name={"menuBar-pageLine3"} /></div>
       <DetailPost user={"김선민"} location={"강남역"}  />
       {/* user, location, img, text */}
-      <PostComment/>
+      <div className='postDetail-comment'>
+        <PostComment />
+      </div>
     </div>
   )    
 }

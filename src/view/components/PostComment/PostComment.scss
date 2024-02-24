@@ -1,0 +1,42 @@
+.PostComment {
+
+    .postComment-frame {
+        width: 500px;
+        height: 150px;
+        border: 1px solid black;
+        margin-left: 20px;
+        margin-top: 20px;
+
+        .postComment-top {
+            display: flex;
+            align-items: center;
+            
+            .postComment-profile {
+                width: 40px;
+                height: 40px;
+                // margin-top: 10px;
+                // margin-left: 10px;
+                border-radius: 50px;
+                border: 1px solid black;
+            }
+            .postComment-userName {
+                font-size: 16px;
+                color: black;
+                margin-left: 10px;
+                font-weight: 800;
+            }
+        }
+        
+        .postComment-commentFrame {
+            height: 100px;
+            margin-top: 5px;
+            margin-left: 50px;
+            border: 1px solid black;
+
+            .postComment-comment {
+                font-size: 16px;
+                font-weight: 100;
+            }
+        }
+    }
+}

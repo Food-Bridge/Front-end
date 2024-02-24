@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './PostComment.scss'
 
-const PostComment = ({ communityId }) => {
+const PostComment = () => {
   const [newComment, setNewComment] = useState('');
 
   const handleCommentSubmit = () => {
@@ -27,9 +28,21 @@ const PostComment = ({ communityId }) => {
   };
 
   return (
-    <div>
-      <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} />
-      <button onClick={handleCommentSubmit}>Submit Comment</button>
+    <div className='PostComment'>
+      {/* <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} />
+      <button onClick={handleCommentSubmit}>Submit Comment</button> */}
+
+      <div className='postComment-frame'>
+        <div className='postComment-top'>
+          <div className='postComment-profile'></div>
+          <div className='postComment-userName'>ooo 님</div>
+        </div>
+        <div className='postComment-commentFrame'>
+          <h1 className='postComment-comment'>
+          출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다. 제기하다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다 출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다.
+          </h1>
+        </div>
+      </div>
     </div>
   );
 };
