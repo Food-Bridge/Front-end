@@ -15,11 +15,11 @@ import Location from './view/pages/LocationPage/Location';
 import LocationSearch from './view/pages/LocationSearchPage/LocationSearch';
 import CommuPost from './view/pages/CommuPostPage/CommuPost';
 import Community from './view/pages/CommunityPage/Community';
-import GoogleCallback from './view/components/GoogleBtn/GoogleCallback';
 import Callback from './view/pages/CallbackPage/Callback';
 import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
+import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
 
 function App() {
   return (
