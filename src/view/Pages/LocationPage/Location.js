@@ -10,7 +10,7 @@ export default function Location() {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/users/4/address/')
+      .get('http://127.0.0.1:8000/users/address/4/')
       .then(function (response) {
         console.log(response);
         setLocations(response.data);
@@ -65,9 +65,10 @@ export default function Location() {
       <button className='location-add' onClick={handleClickAdd}>
         주소 추가
       </button>
-      {locations.map(({ name, address }) => {
+      {locations.map(({ name, address, index }) => {
         return (
-          <button className='location-button'>
+          <button className='location-button'
+          key = {index}>
             <CiLocationOn className='location-icon' />
             <div className='location-content'>
               <h1 className='location-name'>{name}</h1>
