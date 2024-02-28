@@ -20,6 +20,7 @@ import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
+import SearchResult from './view/pages/SearchResultPage/SearchResult';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path='search/' element={<Search />} />
+          <Route path='search/result/' element={<SearchResult />} />
 
           <Route path='users/signin/' element={<SignIn />} />
           <Route path='users/signup/' element={<SignUp />} />

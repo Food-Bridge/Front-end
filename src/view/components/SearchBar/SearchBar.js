@@ -29,6 +29,10 @@ function SearchBar({ count }) {
     navigate(`address/`);
   };
 
+  const handleClickLikes = () => {
+    navigate('/likes/');
+  };
+
   return (
     <div className='SearchBar'>
       <header className='searchBar-frame'>
@@ -46,7 +50,10 @@ function SearchBar({ count }) {
             </button>
           </div>
           <div className='searchBar-etcIcon'>
-            <CiHeart className='searchBar-heartIcon' />
+            <button onClick={handleClickLikes}>
+              <CiHeart className='searchBar-heartIcon' />
+            </button>
+
             <div className='searchBar-shopCount'>
               <CiShoppingBasket className='searchBar-shopIcon'>
                 <div className='searchBar-countBlock'>

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { IoIosSearch } from 'react-icons/io';
-
+import React, { useEffect, useState } from 'react';
 import './Search.scss';
+import axios from 'axios';
 
-import SearchBar from '../../components/SearchBar/SearchBar';
 import StoreTag from '../../components/StoreTag/StoreTag';
 import './Search.scss';
 import SearchRank from '../../components/SearchRank/SearchRank';
 import StoreCard from '../../components/StoreCard/StoreCard';
+import SearchBarPlus from '../../components/SearchBar/SearchBarPlus';
 
 export default function Search() {
+  const [rankData, setRankData] = useState([])
   const dataArr = [
     {
       className: 'StoreCard',
@@ -29,26 +29,22 @@ export default function Search() {
     },
   ];
 
-  const [ searchText, setSearchText ] = useState('');
+  useEffect(() => {
+    axios
+      .get('http://localhost:8000/search/search-ranking')
+      .then((response) => {
+        setRankData(response.data.results);
+        console.log(response.data.results);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [rankData]);
 
-  const handleClickSearch = (event) => {
-    setSearchText(event.target.value);
-    console.log(searchText);
-  };
 
   return (
     <div className='search'>
-      <SearchBar />
-      <div className='search-container'>
- <input
-        className='search-input'
-        placeholder='검색어를 입력하세요.'
-        type='text'
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-      <button className='search-button' onClick={handleClickSearch}></button>
-      </div>
-     
+      <SearchBarPlus />
       <div className='search-content'>
         <h1 className='search-title'>최근 검색어</h1>
         <div className='search-recent'>
@@ -59,16 +55,7 @@ export default function Search() {
         </div>
         <h1 className='search-title'>인기 검색어</h1>
         <div className='search-popular'>
-          <SearchRank rank='1' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='2' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='3' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='4' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='5' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='6' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='7' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='8' text='그릭요거트' type='down' />{' '}
-          <SearchRank rank='9' text='그릭요거트' type='up' />
-          <SearchRank rank='10' text='그릭요거트' />
+          <SearchRank rank='1' text='그릭요거트' type='up' />
         </div>
         <h1 className='search-title'>실시간 인기 맛집</h1>
         <div className='search-store'>
@@ -83,7 +70,7 @@ export default function Search() {
                 storeScore={el.storeScore}
               />
             );
-          })}{' '}
+          })}
         </div>
       </div>
     </div>
