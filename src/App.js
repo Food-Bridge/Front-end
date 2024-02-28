@@ -23,6 +23,8 @@ import Poster from './view/pages/PosterPage/Poster';
 import BasketList from './view/pages/BasketListPage/BaketList';
 import StoreReview from './view/pages/StoreReviewPage/StoreReview';
 import MyReview from './view/pages/MyReviewPage/MyReview';
+import OrderList from './view/pages/OrderListPage/OrderList';
+
 
 function App() {
   return (
@@ -46,8 +48,10 @@ function App() {
           <Route path='store/:store_id/' element={<Store />} />
           <Route path='store/' element={<StoreOption popular/>} />
           <Route path='store/:store_id/review/' element={<StoreReview />} />
-          <Route path='storeList/' element={<StoreList />} />
+          <Route path='storelist/' element={<StoreList />} />
+
           <Route path='basket/' element={<BasketList />} />
+          <Route path='orderlist/' element= {<OrderList />} />
           
           <Route path='commu/' element={<Community />} />
           <Route path='commuPostWeek/' element={<CommuPost title={"주간 인기"}/>} />
