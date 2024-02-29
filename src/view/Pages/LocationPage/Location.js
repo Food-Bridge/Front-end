@@ -1,7 +1,7 @@
 import { CiLocationOn } from 'react-icons/ci';
 import './Location.scss';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../../api/instance';
 import React, { useState, useEffect } from 'react';
 
 export default function Location() {
@@ -9,22 +9,16 @@ export default function Location() {
   const [locations, setLocations] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [editedNicknames, setEditedNicknames] = useState([]);
+  const [defaultId, setDefaultId] = useState();
 
   useEffect(() => {
-    axios
-      .get('http://127.0.0.1:8000/users/address/', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access')}`,
-        },
-      })
-      .then(function (response) {
-        console.log(response.data);
-        setLocations(response.data);
-        setEditedNicknames(new Array(response.data.length).fill('')); // 배열 초기화
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+    const res = axiosInstance.get('/users/address/');
+    setLocations(res.data);
+    setEditedNicknames(new Array(res.data.length).fill(''));
+    const defaultIdValue = res.data.find((item) => item.is_default === true);
+    if (defaultIdValue) {
+      setDefaultId(defaultIdValue);
+    }
   }, []);
 
   const handleClickEdit = () => {
@@ -36,24 +30,13 @@ export default function Location() {
   };
 
   const handleClickDelete = (id, detail_address, index) => {
-    axios
-      .delete(`http://127.0.0.1:8000/users/address/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access')}`,
-        },
-      })
-      .then(function (response) {
-        console.log(response);
-        setLocations((prevLocations) =>
-          prevLocations.filter((loc) => loc.detail_address !== detail_address)
-        );
-        setEditedNicknames((prevNicknames) =>
-          prevNicknames.filter((_, i) => i !== index)
-        );
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+    axiosInstance.delete(`/users/address/${id}`);
+    setLocations((prevLocations) =>
+      prevLocations.filter((loc) => loc.detail_address !== detail_address)
+    );
+    setEditedNicknames((prevNicknames) =>
+      prevNicknames.filter((_, i) => i !== index)
+    );
   };
 
   const handleChangeNickname = (event, index) => {
@@ -65,71 +48,31 @@ export default function Location() {
 
   const handleSubmitNickname = (id, index) => {
     const editedNickname = editedNicknames[index];
-    axios
-      .patch(
-        `http://127.0.0.1:8000/users/address/${id}/`,
-        {
-          nickname: editedNickname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access')}`,
-          },
+    axiosInstance.patch(`/users/address/${id}/`, {
+      nickname: editedNickname,
+    });
+
+    setLocations((prevLocations) =>
+      prevLocations.map((loc, idx) => {
+        if (idx === index) {
+          return {
+            ...loc,
+            nickname: editedNickname,
+          };
         }
-      )
-      .then(function (response) {
-        console.log(response);
-        setLocations((prevLocations) =>
-          prevLocations.map((loc, idx) => {
-            if (idx === index) {
-              return {
-                ...loc,
-                nickname: editedNickname,
-              };
-            }
-            return loc;
-          })
-        );
-        setIsEdit(false);
+        return loc;
       })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+    );
+    setIsEdit(false);
   };
 
   const setIsDefault = (id) => {
-    const updatedLocations = locations.map((loc) => ({
-      ...loc,
-      is_default: loc.id === id ? true : false,
-    }));
-  
-    const updatedLocationToSend = updatedLocations.map(location => {
-      if (location.id === id) {
-        return { ...location, is_default: true };
-      }
-      return location;
-    });
-  
-    axios
-      .patch(
-        `http://127.0.0.1:8000/users/address/`,
-        updatedLocationToSend,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access')}`,
-          },
-        }
-      )
-      .then(function (response) {
-        console.log(response);
-        setLocations(updatedLocations);
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+    if (defaultId) {
+      axiosInstance.patch(`/users/address/${defaultId}`), { is_default: false };
+    }
+    axiosInstance.patch(`/users/address/${id}`, { is_default: true });
   };
-  
-  
+
   return (
     <div className='location'>
       <header className='location-header'>
