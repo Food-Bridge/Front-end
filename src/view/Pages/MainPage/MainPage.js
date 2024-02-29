@@ -64,9 +64,10 @@ export default function MainPage() {
         <PlusInfo text='더보기' arrow='true' />
       </div>
       <div className='main-group'>
-        {MiniPostData.map((el) => {
+        {MiniPostData.map((el, index) => {
           return (
             <CommunityCard
+              key = {index}
               user={el.user}
               location={el.location}
               img={el.img}

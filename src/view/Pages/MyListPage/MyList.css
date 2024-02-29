@@ -1,0 +1,82 @@
+.mylist {
+  width: 600px;
+  margin: 20px;
+  justify-content: center;
+}
+.mylist .mylistUser {
+  display: flex;
+  width: 560px;
+  justify-content: space-around;
+}
+.mylist .mylistUser .mylistUser-profile {
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+  align-items: center;
+}
+.mylist .mylistUser .mylistUser-profile .mylistUser-profileImg {
+  background-color: #8d8d8d;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+.mylist .mylistUser .mylistUser-profile .mylistUser-profileInput {
+  display: none;
+}
+.mylist .mylistUser .mylistUser-profile .mylistUser-profileBtn {
+  display: flex;
+  background-color: #c6c6c6;
+  width: 42px;
+  height: 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-top: -10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.mylist .mylistUser .mylistUser-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.mylist .mylistUser .mylistUser-group .mylistUser-id {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.mylist .mylistUser .mylistUser-group .mylistUser-id .mylistUser-id-name {
+  font-size: 24px;
+  font-weight: 600;
+}
+.mylist .mylistUser .mylistUser-group .mylistUser-id .mylistUser-id-info {
+  margin: 5px;
+  font-size: 14px;
+  color: #8d8d8d;
+}
+.mylist .mylistUser .mylistUser-group .mylistUser-detail {
+  display: flex;
+  justify-content: space-between;
+}
+.mylist .mylistUser .mylistUser-group .mylistUser-detail .mylistUser-detailBox {
+  text-align: center;
+}
+.mylist .mylistUser .mylistUser-group .mylistUser-detail .mylistUser-detailBox .mylistUser-detailBox-num {
+  font-size: 18px;
+}
+.mylist .mylistUser .mylistUser-group .mylistUser-detail .mylistUser-detailBox .mylistUser-detailBox-title {
+  font-size: 14px;
+  padding: 10px;
+}
+.mylist .mylistBlocks-row {
+  width: 560px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.mylist .mylistBanner {
+  background-color: #8d8d8d;
+  width: 560px;
+  height: 100px;
+  margin-top: 40px;
+}
