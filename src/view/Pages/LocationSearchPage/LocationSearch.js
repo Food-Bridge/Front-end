@@ -21,8 +21,7 @@ const LocationSearch = () => {
           road_address: roadAddress,
           jibun_address: jibunAddress,
           building_name: buildingName,
-          sigungu: sigungu,
-          user: 4,
+          sigungu: sigungu
         },
         {
           headers: {

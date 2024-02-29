@@ -112,8 +112,8 @@ export default function Location() {
   
     axios
       .patch(
-        `http://127.0.0.1:8000/users/address/`,
-        updatedLocationToSend,
+        `http://127.0.0.1:8000/users/address/${id}/`,
+        { },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('access')}`,
