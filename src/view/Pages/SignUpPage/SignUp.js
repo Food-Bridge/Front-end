@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
-import axios from 'axios';
+import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
@@ -10,17 +10,16 @@ function SignUp() {
   const [password2Value, setPassword2] = useState('');
   const [phoneNumberValue, setPhoneNumber] = useState('');
 
-  const [userIdInput, setUserIdInput] = useState('')
-  const [userPwInput, setUserPwInput] = useState('')
-  const [isShowPwChecked, setShowPwChecked] = useState(false)
-  const passwordRef = useRef(null)
+  const [userIdInput, setUserIdInput] = useState('');
+  const [userPwInput, setUserPwInput] = useState('');
+  const [isShowPwChecked, setShowPwChecked] = useState(false);
+  const passwordRef = useRef(null);
 
   const navigate = useNavigate();
   const [signedUp, setSignedUp] = useState(false);
 
   const handleSignUp = () => {
     setSignedUp(true);
-
     navigate('/users/signin/');
   };
 
@@ -93,35 +92,26 @@ function SignUp() {
             </div>
             <div className='signUp-btn'>
               <div className='signUp-line'></div>
-
-              <div
+              <button
                 onClick={() => {
-                  axios
-                    .post('http://localhost:8000/users/signup/', {
-                      email: emailValue,
-                      username: userNameValue,
-                      password: passwordValue,
-                      password2: password2Value,
-                      phone_number: phoneNumberValue,
-                      is_seller: false,
-                    })
-                    .then(function (response) {
-                      console.log(response);
-                      handleSignUp()
-                    })
-                    .catch(function (error) {
-                      console.log(error.response.data);
-                    });
+                  axiosInstance.post('/users/signup/', {
+                    email: emailValue,
+                    username: userNameValue,
+                    password: passwordValue,
+                    password2: password2Value,
+                    phone_number: phoneNumberValue,
+                    is_seller: false,
+                  });
+
+                  handleSignUp();
                 }}
               >
-                <button>
-                  <SignUpBtn
-                    className='SignUpBtnComp'
-                    className1={'signUpBtn-frame1'}
-                    className2={'signUpBtn-text1'}
-                  />
-                </button>
-              </div>
+                <SignUpBtn
+                  className='SignUpBtnComp'
+                  className1={'signUpBtn-frame1'}
+                  className2={'signUpBtn-text1'}
+                />
+              </button>
             </div>
           </div>
         </header>
