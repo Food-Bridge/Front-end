@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
-const GoogleCallback = () => {
+const KakaoCallback = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate('');
 
@@ -12,18 +12,18 @@ const GoogleCallback = () => {
     const fetchData = async () => {
       const params = new URL(document.location.toString()).searchParams;
       const code = params.get('code');
-      const client_id =
-        '792829001349-mhe10a1cvuqpruve9m1vajl11mipbvu5.apps.googleusercontent.com';
-      const redirect_uri = 'http://127.0.0.1:3000/users/signin/googleCallback/';
-      const CLIENT_SECRET = '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';
+      const grantType = 'authorization_code';
+      const REST_API_KEY = 'e1ea08564695a809c2ea4becbb1f5e1d';
+      const REDIRECT_URI = 'http://127.0.0.1:3000/users/signin/callback/';
 
       const response = await axiosInstance.post(
-        `https://oauth2.googleapis.com/token?client_id=${client_id}&client_secret=${CLIENT_SECRET}&redirect_uri=${redirect_uri}&code=${code}&grant_type=authorization_code`,
+        `https://kauth.kakao.com/oauth/token?grant_type=${grantType}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`,
         {}
       );
+
       const token = response.data.access_token;
-      const res = await axiosInstance.post('/users/google/login/callback/', {
-        access_token: token,
+      const res = await axiosInstance.post('/users/kakao/login/callback/', {
+        "access_token": token,
       });
 
       const { access, refresh } = res.data.token;
@@ -39,4 +39,4 @@ const GoogleCallback = () => {
   return null;
 };
 
-export default GoogleCallback;
+export default KakaoCallback;
