@@ -12,13 +12,25 @@ export default function Location() {
   const [defaultId, setDefaultId] = useState();
 
   useEffect(() => {
-    const res = axiosInstance.get('/users/address/');
-    setLocations(res.data);
-    setEditedNicknames(new Array(res.data.length).fill(''));
-    const defaultIdValue = res.data.find((item) => item.is_default === true);
-    if (defaultIdValue) {
-      setDefaultId(defaultIdValue);
-    }
+    const fetchData = async () => {
+      try {
+        const res = await axiosInstance.get('/users/address/');
+        if (res.data) {
+          setLocations(res.data);
+          setEditedNicknames(new Array(res.data.length).fill(''));
+          const defaultIdValue = res.data.find(
+            (item) => item.is_default === true
+          );
+          if (defaultIdValue) {
+            setDefaultId(defaultIdValue);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleClickEdit = () => {
@@ -68,7 +80,7 @@ export default function Location() {
 
   const setIsDefault = (id) => {
     if (defaultId) {
-      axiosInstance.patch(`/users/address/${defaultId}`), { is_default: false };
+      axiosInstance.patch(`/users/address/${defaultId}`, { is_default: false });
     }
     axiosInstance.patch(`/users/address/${id}`, { is_default: true });
   };

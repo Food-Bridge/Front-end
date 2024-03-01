@@ -2,6 +2,7 @@ import React from 'react';
 import DaumPostCode from 'react-daum-postcode';
 import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LocationSearch = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const LocationSearch = () => {
       jibun_address: jibunAddress,
       building_name: buildingName,
       sigungu: sigungu,
-      user: 4,
     });
 
     navigate('/address');
