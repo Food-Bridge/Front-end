@@ -20,8 +20,11 @@ import KakaoCallback from './view/pages/CallbackPage/KakaoCallback';
 import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
+import BasketList from './view/pages/BasketListPage/BaketList';
+import StoreReview from './view/pages/StoreReviewPage/StoreReview';
+import MyReview from './view/pages/MyReviewPage/MyReview';
+import OrderList from './view/pages/OrderListPage/OrderList';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
-import SearchResult from './view/components/SearchResult/SearchResult';
 
 function App() {
   return (
@@ -31,7 +34,6 @@ function App() {
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path='search/' element={<Search />} />
-          <Route path='search/result/' element={<SearchResult />} />
 
           <Route path='users/signin/' element={<SignIn />} />
           <Route path='users/signup/' element={<SignUp />} />
@@ -39,14 +41,19 @@ function App() {
           <Route path="users/signin/googleCallback" element={<GoogleCallback />} />
 
           <Route path='user/' element={<MyList />} />
+          <Route path='user/review' element={<MyReview />} />
           <Route path='user/coupon/' element={<CouponList />} />
           <Route path='address/' element={<Location />} />
           <Route path='searchLocation/' element={<LocationSearch />} />
 
           <Route path='store/:store_id/' element={<Store />} />
-          <Route path='store/' element={<StoreOption popular />} />
-          <Route path='storeList/' element={<StoreList />} />
+          <Route path='store/' element={<StoreOption popular/>} />
+          <Route path='store/:store_id/review/' element={<StoreReview />} />
+          <Route path='storelist/' element={<StoreList />} />
 
+          <Route path='basket/' element={<BasketList />} />
+          <Route path='orderlist/' element= {<OrderList />} />
+     
           <Route path='commu/' element={<Community />} />
           <Route
             path='commuPostWeek/'

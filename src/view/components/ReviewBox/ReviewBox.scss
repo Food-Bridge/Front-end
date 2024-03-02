@@ -1,0 +1,58 @@
+.reviewBox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 560px;
+  padding: 20px;
+
+  .reviewBox-profile {
+    display: flex;
+    align-items: center;
+    .reviewBox-profileImg {
+      width: 42px;
+      border-radius: 50px;
+      margin-right: 10px;
+    }
+    .reviewBox-profileContent {
+      height: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .reviewBox-profileName {
+        font-size: 14px;
+      }
+      .reviewBox-rate {}
+    }
+  }
+  .reviewBox-date {
+    font-size: 14px;
+  }
+}
+.reviewBox-content {
+  display: flex;
+  width: 560px;
+  padding: 0 20px;
+  .reviewBox-contentImg {
+    width: 150px;
+    border-radius: 5px;
+    margin-right:20px;
+  }
+  .reviewBox-contentText {
+    font-size: 14px;
+  }
+}
+.reviewBox-menuList {
+  display: flex;
+  width: 560px;
+  padding: 20px;
+  border-bottom: 1px solid #c6c6c6;
+  .reviewBox-menu {
+    font-size: 14px;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #c6c6c6;
+    border-radius: 50px;
+    box-shadow: 2px 2px 2px #c6c6c6;
+  }
+
+}

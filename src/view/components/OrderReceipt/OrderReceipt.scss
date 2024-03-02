@@ -1,0 +1,81 @@
+.orderReceipt-frame {
+  width: 500px;
+  height: 750px;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #c6c6c6;
+  background-color: white;
+
+  .orderReceipt-header {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid #c6c6c6;
+
+    .orderReceipt-back {
+      width: 50px;
+      text-align: center;
+    }
+    .orderReceipt-title {
+      width: 360px;
+      text-align: center;
+      font-size: 24px;
+    }
+  }
+  .orderReceipt-body {
+    margin: 20px;
+    .orderReceipt-store {
+      font-size: 24px;
+    }
+    .orderReceipt-time {
+      margin: 10px 0
+    }
+    .orderReceipt-menuList {
+      border-top: 1px solid #c6c6c6;
+      border-bottom: 1px solid #c6c6c6;
+      height: 350px;
+
+      .orderReceipt-menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+        
+        .orderReceipt-menuName {
+          font-size: 16px;
+
+        }
+        .orderReceipt-menuPrice {
+          font-size: 14px;
+        }
+      }
+    }
+    .orderReceipt-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+      .orderReceipt-text {
+        font-size: 16px;
+      }
+      .orderReceipt-value {
+        font-size: 14px;
+      }
+    }
+    .orderReceipt-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      margin: 20px 0;
+      border-top: 1px solid #c6c6c6;
+      .orderReceipt-totalText {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .orderReceipt-totalValue {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+  }
+}

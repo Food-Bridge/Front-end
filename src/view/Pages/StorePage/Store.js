@@ -20,6 +20,10 @@ export default function Store({ count }) {
     navigate('/option/')
   }
 
+  const handleOpenReview = () => {
+    navigate('review/')
+  }
+
   const SliderData = [
     {
       image:
@@ -89,7 +93,7 @@ export default function Store({ count }) {
             <p className='store-detailNum'>354</p>
             <h2 className='store-detailText'>리뷰</h2>
             <p className='store-detailNum'>1503</p>
-            <PlusInfo text='더보기' arrow='true' />
+            <PlusInfo text='더보기' arrow='true' onClick={handleOpenReview}/>
           </div>
           {showPhoneNumber && (
             <div className='store-popup'>
