@@ -1,0 +1,17 @@
+.searchResult-text {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 24px;
+}
+.searchResult-store {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #c6c6c6;
+}
+.searchResult-none {
+  margin-top: 20px;
+  margin-left: 20px;
+}

@@ -21,6 +21,7 @@ import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
+import SearchResult from './view/components/SearchResult/SearchResult';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path='search/' element={<Search />} />
+          <Route path='search/result/' element={<SearchResult />} />
 
           <Route path='users/signin/' element={<SignIn />} />
           <Route path='users/signup/' element={<SignUp />} />
@@ -42,18 +44,23 @@ function App() {
           <Route path='searchLocation/' element={<LocationSearch />} />
 
           <Route path='store/:store_id/' element={<Store />} />
-          <Route path='store/' element={<StoreOption popular/>} />
+          <Route path='store/' element={<StoreOption popular />} />
           <Route path='storeList/' element={<StoreList />} />
-          
+
           <Route path='commu/' element={<Community />} />
-          <Route path='commuPostWeek/' element={<CommuPost title={"주간 인기"}/>} />
-          <Route path='commuPostDay/' element={<CommuPost title={"일간 인기"}/>} />
-          <Route path='commuPostNew/' element={<CommuPost title={"최신"}/>} />
+          <Route
+            path='commuPostWeek/'
+            element={<CommuPost title={'주간 인기'} />}
+          />
+          <Route
+            path='commuPostDay/'
+            element={<CommuPost title={'일간 인기'} />}
+          />
+          <Route path='commuPostNew/' element={<CommuPost title={'최신'} />} />
           <Route path='postCard/' element={<PostDetail />} />
-          <Route path='postUpload/' element={<PostUpload/>}/>
+          <Route path='postUpload/' element={<PostUpload />} />
 
-          <Route path='poster/' element={<Poster />}/>
-
+          <Route path='poster/' element={<Poster />} />
         </Routes>
       </Router>
     </div>
