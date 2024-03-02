@@ -67,8 +67,8 @@ export default function SearchBarPlus({
           <h1 className='search-title'>최근 검색어</h1>
           <div className='search-recentTag'>
             {searchTextRecord.map((search, index) => (
-              <button onClick={() => handleSearch(search)}>
-                <StoreTag key={index} tagName={search} />
+              <button key={index} onClick={() => handleSearch(search)}>
+                <StoreTag  tagName={search} />
               </button>
             ))}
           </div>
