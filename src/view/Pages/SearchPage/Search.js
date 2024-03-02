@@ -1,8 +1,6 @@
-// Search 컴포넌트
 import React, { useState, useEffect } from 'react';
 import './Search.scss';
-import axios from 'axios';
-import './Search.scss';
+import axiosInstance from '../../../api/instance';
 import SearchRank from '../../components/SearchRank/SearchRank';
 import StoreCard from '../../components/StoreCard/StoreCard';
 import SearchBarPlus from '../../components/SearchBar/SearchBarPlus';
@@ -21,19 +19,17 @@ export default function Search() {
 
   const handleMoveBack = () => {
     setIsResult(false);
-    setSearchText('')
+    setSearchText('');
   };
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8000/search/search-ranking/')
-      .then((response) => {
-        setRankData(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const fetchRank = async () => {
+      const res = axiosInstance.get(
+      'http://localhost:8000/search/search-ranking/'
+    );
+    setRankData(res.data)
+    }
+    fetchRank()
   }, []);
 
   return (
