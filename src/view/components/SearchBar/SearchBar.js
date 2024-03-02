@@ -18,7 +18,7 @@ function SearchBar({ count }) {
 
   const [showList, setShowList] = useState(false);
 
-  const handleShowList = () => {
+  const handleToggleLocationList = () => {
     setShowList(!showList);
   };
 
@@ -43,7 +43,7 @@ function SearchBar({ count }) {
     <div className='SearchBar'>
       <header className='searchBar-frame'>
         <div className='searchBar-margin'>
-          <button className='searchBar-location' onClick={handleShowList}>
+          <button className='searchBar-location' onClick={handleToggleLocationList}>
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
               {location.split(' ').slice(1, 2).join(' ')}
@@ -55,12 +55,11 @@ function SearchBar({ count }) {
               <IoIosSearch className='searchBar-searchIcon' />
             </button>
           </div>
-          <div className='searchBar-etcIcon'>
-            <CiHeart className='searchBar-heartIcon' />
-            <button className='searchBar-shopCount' onClick={handleOpenBasket}>
-            <button onClick={handleClickLikes}>
+          <div className='searchBar-etcIcon'><button onClick={handleClickLikes}>
               <CiHeart className='searchBar-heartIcon' />
             </button>
+            <button className='searchBar-shopCount' onClick={handleOpenBasket}>
+            
 
             <div className='searchBar-shopCount'>
               <CiShoppingBasket className='searchBar-shopIcon'>
@@ -68,6 +67,7 @@ function SearchBar({ count }) {
                   <h1 className='searchBar-countText'>{count}</h1>
                 </div>
               </CiShoppingBasket>
+              </div>
             </button>
           </div>
         </div>

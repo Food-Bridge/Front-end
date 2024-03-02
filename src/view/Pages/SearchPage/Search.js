@@ -24,8 +24,8 @@ export default function Search() {
 
   useEffect(() => {
     const fetchRank = async () => {
-      const res = axiosInstance.get(
-      'http://localhost:8000/search/search-ranking/'
+      const res = await axiosInstance.get(
+      '/search/search-ranking/'
     );
     setRankData(res.data)
     }
@@ -47,7 +47,7 @@ export default function Search() {
           <div className='search-content'>
             <h1 className='search-title'>인기 검색어</h1>
             <div className='search-popular'>
-              {rankData.map((el, index) => {
+              {rankData && rankData.map((el, index) => {
                 return (
                   index < 10 && (
                     <button
