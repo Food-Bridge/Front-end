@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
+import React from 'react';
 
 import CouponList from './view/pages/CouponListPage/CouponList';
 import LogoBar from './view/components/LogoBar/LogoBar';
@@ -15,8 +16,7 @@ import Location from './view/pages/LocationPage/Location';
 import LocationSearch from './view/pages/LocationSearchPage/LocationSearch';
 import CommuPost from './view/pages/CommuPostPage/CommuPost';
 import Community from './view/pages/CommunityPage/Community';
-import GoogleCallback from './view/components/GoogleBtn/GoogleCallback';
-import Callback from './view/pages/CallbackPage/Callback';
+import KakaoCallback from './view/pages/CallbackPage/KakaoCallback';
 import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
@@ -24,7 +24,7 @@ import BasketList from './view/pages/BasketListPage/BaketList';
 import StoreReview from './view/pages/StoreReviewPage/StoreReview';
 import MyReview from './view/pages/MyReviewPage/MyReview';
 import OrderList from './view/pages/OrderListPage/OrderList';
-
+import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
 
 function App() {
   return (
@@ -37,7 +37,8 @@ function App() {
 
           <Route path='users/signin/' element={<SignIn />} />
           <Route path='users/signup/' element={<SignUp />} />
-          <Route path='users/signin/callback/' element={<Callback />} />
+          <Route path='users/signin/callback/' element={<KakaoCallback />} />
+          <Route path="users/signin/googleCallback" element={<GoogleCallback />} />
 
           <Route path='user/' element={<MyList />} />
           <Route path='user/review' element={<MyReview />} />
@@ -52,17 +53,21 @@ function App() {
 
           <Route path='basket/' element={<BasketList />} />
           <Route path='orderlist/' element= {<OrderList />} />
-          
+     
           <Route path='commu/' element={<Community />} />
-          <Route path='commuPostWeek/' element={<CommuPost title={"주간 인기"}/>} />
-          <Route path='commuPostDay/' element={<CommuPost title={"일간 인기"}/>} />
-          <Route path='commuPostNew/' element={<CommuPost title={"최신"}/>} />
+          <Route
+            path='commuPostWeek/'
+            element={<CommuPost title={'주간 인기'} />}
+          />
+          <Route
+            path='commuPostDay/'
+            element={<CommuPost title={'일간 인기'} />}
+          />
+          <Route path='commuPostNew/' element={<CommuPost title={'최신'} />} />
           <Route path='postCard/' element={<PostDetail />} />
-          <Route path='postUpload/' element={<PostUpload/>}/>
+          <Route path='postUpload/' element={<PostUpload />} />
 
-          <Route path='poster/' element={<Poster />}/>
-
-          <Route path="users/signin/googleCallback" element={<GoogleCallback />} />
+          <Route path='poster/' element={<Poster />} />
         </Routes>
       </Router>
     </div>

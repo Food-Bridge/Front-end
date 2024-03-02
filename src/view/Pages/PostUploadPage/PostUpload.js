@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './PostUpload.scss'
 import { CiImageOn, CiLocationOn } from "react-icons/ci";
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function PostUpload() {
   const navigate = useNavigate();
@@ -28,21 +29,6 @@ function PostUpload() {
     navigate(`address/`);
   };
 
-  const [image, setImage] = useState(
-    // 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-  );
-
-  const onChangeImage = (event) => {
-    // imageInput.current.click();
-    const { files } = event.target;
-    const uploadFile = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
-  };
-
   const imageInput = useRef();
  
   // 버튼클릭시 input태그에 클릭이벤트를 걸어준다. 
@@ -50,16 +36,43 @@ function PostUpload() {
     imageInput.current.click();
   };
 
+  const formData = new FormData();
+
+  const onChangeTitle = (event) => {
+    formData.append('title', event.target.value);
+  }
+
+  const onChangeContent = (event) => {
+    formData.append('content', event.target.value)
+  }
+  
+  const onChangeImage = (event) => {
+    const { files } = event.target;
+    const uploadFile = files[0];
+    formData.append('image', uploadFile);
+  }
+    const [image, setImage] = useState();
+    
   return (
     <div className='PostUpload'>
         <div className='postUpload-header'>
           <p className='postUpload-headerTitle'>글쓰기</p>
         </div>
         <div className='postUpload-title'>
-          <input className='postUpload-inputTitle' type="text" placeholder='제목을 입력하세요' />
+          <input 
+            onChange={onChangeTitle}
+            className='postUpload-inputTitle' 
+            type="text" 
+            placeholder='제목을 입력하세요'
+          />
         </div>
         <div className='postUpload-inputMain'>
-          <textarea className='postUpload-inputForm' type="text" placeholder='추천하고 싶은 맛집이나 새로 오픈한 가게 정보 등을 커뮤니티를 통해 공유해주세요!' />
+          <textarea 
+            onChange={onChangeContent}
+            className='postUpload-inputForm' 
+            type="text" 
+            placeholder='추천하고 싶은 맛집이나 새로 오픈한 가게 정보 등을 커뮤니티를 통해 공유해주세요!' 
+          />
           <div className='postUpload-etcIcons'>
             <div className='postUpload-photo'>
                 <img className='postUpload-img' src={image} />
@@ -84,7 +97,26 @@ function PostUpload() {
           </div>
         </div>
         <div className='postUpload-button'>
-          <button className='postUpload-uploadButton'>게시글 업로드</button>
+          <button 
+            className='postUpload-uploadButton'
+            onClick={() => {
+              axios
+                .post('http://localhost:8000/community/create/', 
+                formData,
+                {
+                  headers : {
+                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
+                  },
+                })
+                .then(function (response) {
+                  console.log(response);
+                  navigate('/commuPostWeek/')
+                })
+                .catch(function (error) {
+                  console.log(error.response.data);
+                });
+            }} 
+          >게시글 업로드</button>
         </div>
 
         {showList && (

@@ -1,10 +1,18 @@
-import React,{useEffect} from 'react'
+import React,{ useEffect } from 'react'
 import './GoogleBtn.scss'
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 function GoogleBtn() {
+  const client_id = "792829001349-mhe10a1cvuqpruve9m1vajl11mipbvu5.apps.googleusercontent.com";
+  const redirect_uri = "http://127.0.0.1:3000/users/signin/googleCallback/";
+  const scope = "https://www.googleapis.com/auth/userinfo.email";
+  const link = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scope}`;
+
+
+  const handleGoogleLogin = () => {
+    window.location.href = link;
+  };
+
   // const REST_API_KEY = '792829001349-mhe10a1cvuqpruve9m1vajl11mipbvu5.apps.googleusercontent.com';
   // const REDIRECT_URI = 'http://localhost:3000/users/signin/';
   // const google = `https://accounts.google.com/o/oauth2/v2/auth?client_id=792829001349-mhe10a1cvuqpruve9m1vajl11mipbvu5.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:3000/users/signin&scope=https://www.googleapis.com/auth/userinfo.email`
@@ -55,20 +63,20 @@ function GoogleBtn() {
   //   }
 
     //--------------------------------
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const handleGoogleLogin = () => {
-      const params   = new URL(document.location.toString()).searchParams;
-      const code = params.get('code');
-      const client_id = process.env.GOOGLE_CLIENT_ID;
-      const client_secret = process.env.GOOGLE_SECRET_ID;
-      const GOOGLE_CALLBACK_URI = "http://127.0.0.1:3000/users/signin/googleCallback";
-      const scope = "http://www.googleapis.com/auth/userinfo.email"
-      const state = "rstring"
+    // const handleGoogleLogin = () => {
+    //   const params   = new URL(document.location.toString()).searchParams;
+    //   const code = params.get('code');
+    //   const client_id = process.env.GOOGLE_CLIENT_ID;
+    //   const client_secret = process.env.GOOGLE_SECRET_ID;
+    //   const GOOGLE_CALLBACK_URI = "http://127.0.0.1:3000/users/signin/googleCallback";
+    //   const scope = "http://www.googleapis.com/auth/userinfo.email"
+    //   const state = "rstring"
   
-      window.location.href = `http://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&client_secret=${client_secret}&code=${code}&grant_type=authorization_code&redirect_uri=${GOOGLE_CALLBACK_URI}&state=${state}`;
-      // window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${GOOGLE_CALLBACK_URI}&response_type=${code}&client_secret=${client_secret}&scope=${scope}`;
-    };
+    //   window.location.href = `http://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&client_secret=${client_secret}&code=${code}&grant_type=authorization_code&redirect_uri=${GOOGLE_CALLBACK_URI}&state=${state}`;
+    //   // window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${GOOGLE_CALLBACK_URI}&response_type=${code}&client_secret=${client_secret}&scope=${scope}`;
+    // };
 
   return (
     <div className='GoogleBtn' onClick={handleGoogleLogin}>
