@@ -1,13 +1,16 @@
 .location {
   width: 560px;
   margin: 20px;
+
   .location-header {
     display: flex;
     align-items: center;
+
     .location-title {
       font-size: 24px;
       margin-right: 5px;
     }
+
     .location-edit {
       width: 60px;
       height: 25px;
@@ -17,6 +20,7 @@
       font-size: 14px;
     }
   }
+
   .location-add {
     font-size: 18px;
     width: 560px;
@@ -26,45 +30,5 @@
     border-radius: 5px;
     margin: 20px 0;
     font-weight: 600;
-  }.location-button {
-    display: flex;
-    align-items: center;
-    width: 560px;
-    height: 70px;
-    border: 1px solid #c6c6c6;
-    border-radius: 5px;
-    box-shadow: 2px 2px 2px #c6c6c6;
-    margin-bottom: 20px;
-      .location-icon {
-        font-size: 35px;
-        margin: 10px;
-        color: #8d8d8d;
-      }
-      .location-content {
-        .location-input {
-          font-size: 20px;
-          width: 380px;
-          margin-right: 5px;
-        }
-        .location-name {
-          text-align: left;
-          font-size: 18px;
-          font-weight: 600;
-          margin-bottom: 5px;
-        }
-        .location-address {
-          font-size: 12px;
-        }
-      
-      }
-      .location-editBtn {
-        width: 50px;
-        height: 25px;
-        border: 1px solid #c6c6c6;
-        border-radius: 50px;
-        box-shadow: 2px 2px 2px #c6c6c6;
-        font-size: 14px;
-        margin-left: 5px;
-      }
-    }
+  }
 }
