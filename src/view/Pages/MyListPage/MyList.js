@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../../api/instance';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../redux/reducers/authSlice';
 
@@ -21,83 +21,49 @@ export default function MyList() {
   const [nickname, setNickname] = useState('');
   const [isNicknameChange, setIsNicknameChange] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get('http://127.0.0.1:8000/users/profile/', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access')}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        setImage(response.data.image);
-        setNickname(response.data.nickname);
-      })
-      .catch((error) => {
-        console.error('Error fetching image:', error);
-      });
+  useEffect(async () => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get('/users/profile/');
+      setImage(res.data.image);
+      setNickname(res.data.nickname);
+    };
+    fetchData();
   }, []);
 
-  const onChangeImage = (event) => {
+  const onChangeImage = async (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
     formData.append('nickname', nickname);
 
-    axios
-      .put('http://127.0.0.1:8000/users/profile/', formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access')}`,
-        },
-      })
-      .then(function (response) {
-        setImage(response.data.image);
-      })
-      .catch(function (error) {
-        console.error('Error uploading image:', error);
-      });
+    const res = await axiosInstance.put('/users/profile/', formData);
+    setImage(res.data.image);
   };
 
   const dispatch = useDispatch();
 
-  const handleChangeNickname = () => {
+  const handleChangeNickname = async () => {
+    setIsNicknameChange(!isNicknameChange)
     if (isNicknameChange) {
       const formData = new FormData();
       formData.append('nickname', nickname);
 
-      axios
-        .put('http://127.0.0.1:8000/users/profile/', formData, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access')}`,
-          },
-        })
-        .then(function (response) {
-          setNickname(response.data.nickname);
-        })
-        .catch(function (error) {
-          console.error('Error uploading nickname:', error);
-        });
+      const res = axiosInstance.put('/users/profile/', formData);
+
+      setNickname(res.data.nickname);
     }
-    setIsNicknameChange(!isNicknameChange);
   };
 
-  const handleLogout = () => {
-    axios
-      .post('http://localhost:8000/users/logout/', {
-        refresh: localStorage.getItem('refresh'),
-        },{
-          headers : {
-            'Authorization': `Bearer ${localStorage.getItem('access')}`,
-          }
-        })
-      .then(function (response) {
-        console.log(response);
-        localStorage.removeItem('refresh');
-        localStorage.removeItem('access');
-        dispatch(logout());
-        navigate('/users/signin/');
-      });
+  const handleLogout = async () => {
+    await axiosInstance.post('/users/logout/', {
+      refresh: localStorage.getItem('refresh'),
+    });
+
+    localStorage.removeItem('refresh');
+    localStorage.removeItem('access');
+    dispatch(logout());
+    navigate('/users/signin/');
   };
 
   const handleCoupon = () => {
@@ -131,11 +97,11 @@ export default function MyList() {
             ) : (
               <h1 className='mylistUser-id-name'>{nickname}</h1>
             )}
-            <button className='mylistUser-id-change' onClick={handleChangeNickname}>
-              <PlusInfo
-                
-                text={isNicknameChange ? '변경 완료' : '닉네임 변경'}
-              />
+            <button
+              className='mylistUser-id-change'
+              onClick={handleChangeNickname}
+            >
+              <PlusInfo text={isNicknameChange ? '변경 완료' : '닉네임 변경'} />
             </button>
             <button className='mylistUser-id-logout' onClick={handleLogout}>
               <PlusInfo text='로그아웃' />

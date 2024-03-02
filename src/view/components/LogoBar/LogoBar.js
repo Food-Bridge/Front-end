@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { LuUserCircle2 } from 'react-icons/lu';
 import './LogoBar.scss';
-import  {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
-import { useNavigate } from
- 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function LogoBar() {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const handleHomeClick = () => {
     navigate('/');
@@ -19,7 +18,8 @@ export default function LogoBar() {
     if (isLoggedIn) {
       navigate('/user');
     } else {
-    navigate('/users/signin');}
+      navigate('/users/signin');
+    }
   };
 
   return (

@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './PostCard.scss'
 import { postTagData } from '../../../data/PostCardData/PostTagData';
-// import { postImgData } from '../../../data/PostCardData/PostCardData';
 import { CiFaceSmile, CiLocationOn } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 
-function PostCard({postImg, postWriting, postTitle}) {
+function PostCard({image, title, content}) {
   const navigate = useNavigate();
     
   const handlePostClick = () => {
@@ -27,21 +26,22 @@ function PostCard({postImg, postWriting, postTitle}) {
         </div>
         <div className='postCard-section'>
           <div className='postCard-img'>
-            <img className='postCard-imgSize' src={postImg} alt="img" />
+            <img className='postCard-imgSize' src={image} alt="img" />
           </div>
           <div className='postCard-contents'>
-            <div className='postCard-postTitle'>{postTitle}</div>
+            <div className='postCard-postTitle'>{title}</div>
+            {/* {postData.map(post => (<h2>{post.content}</h2>))} */}
             <div className='postCard-postWriting'>
-              <p>{postWriting}</p>
+              <p>{content}</p>
             </div>
             <div className='postCard-postTag'>
               {postTagData.map((el) => {
                 return <h1 className='postCard-postTagName'># {el.tagName}</h1>
               })} 
+              {/* {postData.map(post => (<h2>{post.content}</h2>))} */}
             </div>
           </div>
         </div>
-
       </div>
     </div>
   )
