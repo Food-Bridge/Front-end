@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
+import React from 'react';
 
 import CouponList from './view/pages/CouponListPage/CouponList';
 import LogoBar from './view/components/LogoBar/LogoBar';
