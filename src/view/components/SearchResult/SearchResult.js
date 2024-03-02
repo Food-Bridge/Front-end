@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './SearchResult.scss';
-import axios from 'axios';
+import axiosInstance from '../../../api/instance';
 import StoreCard from '../StoreCard/StoreCard';
 
 export default function SearchResult({ searchText }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8000/search/', {
+    const fetchData = async () => {
+      const res = await axiosInstance.get('http://localhost:8000/search/', {
         params: { search: searchText, page: 1 },
-      })
-      .then((response) => {
-        setData(response.data.results);
-      })
-      .catch((error) => {
-        console.log(error);
       });
+
+      setData(res.data.results);
+    };
+    fetchData();
   }, [searchText]);
 
   return (
