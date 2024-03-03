@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ImageSlider({ slides }) {
   const [current, setCurrent] = useState(0);
-  const length = slides.length;
+  const length = slides ? slides.length : 0;
 
   const navigate = useNavigate();
 

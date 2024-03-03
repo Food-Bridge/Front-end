@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
@@ -8,52 +8,40 @@ import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import { CiPhone } from 'react-icons/ci';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
-import { FaStar, FaStarHalf } from 'react-icons/fa';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import Basket from '../../components/Basket/Basket.js';
-import { useNavigate } from 'react-router-dom';
+import RateStars from '../../components/RateStars/RateStars.js';
+import { useNavigate, useParams } from 'react-router-dom';
+import axiosInstance from '../../../api/instance.js';
 
 export default function Store({ count }) {
-  const navigate = useNavigate()
-
-  const handleClickOption = () => {
-    navigate('/option/')
-  }
-
-  const handleOpenReview = () => {
-    navigate('review/')
-  }
-
-  const SliderData = [
-    {
-      image:
-        'https://images.unsplash.com/photo-1575932444877-5106bee2a599?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1627662168781-4345690f0bb3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1549759594-0d842f402b4d?q=80&w=949&auto= format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
-  ];
-
-  function roundRates(number) {
-    return Math.round(number * 2) / 2;
-  }
-  const rate = roundRates(4.72);
-  let rateStars;
-  if (rate % 1 === 0) {
-    rateStars = Array(rate).fill(<FaStar color='#ffc700' />);
-  } else {
-    const intPart = Math.floor(rate);
-    rateStars = Array(intPart).fill(<FaStar color='#ffc700' />);
-    rateStars.push(<FaStarHalf color='#ffc700' />);
-  }
-
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [sliderData, setSliderData] = useState([]);
+  const [menuData, setMenuData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
   const [isLike, setIsLike] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get(`/restaurant/${id}`);
+      const menures = await axiosInstance.get(`/restaurant/${id}/menu`);
+      setData(res.data);
+      setSliderData(res.data.image);
+      setMenuData(menures.data);
+      console.log(menuData);
+    };
+    fetchData();
+  }, []);
+
+  const handleClickOption = (menuId) => {
+    navigate(`${menuId}/`);
+  };
+
+  const handleOpenReview = () => {
+    navigate('review/');
+  };
 
   const showNumber = () => {
     setShowPhoneNumber(!showPhoneNumber);
@@ -67,10 +55,14 @@ export default function Store({ count }) {
     <div className='store'>
       <div className='store-main'>
         <Basket count='1' />
-        <ImageSlider className='store-img' slides={SliderData} />
+        {sliderData ? (
+          <ImageSlider className='store-img' slides={sliderData} />
+        ) : (
+          <div className='store-img' />
+        )}
 
         <div className='store-title'>
-          <h1 className='store-name'>000치킨 00점</h1>
+          <h1 className='store-name'>{data.name}</h1>
           <div className='store-icon'>
             <button className='store-phone' onClick={showNumber}>
               <CiPhone size='30' />
@@ -85,30 +77,42 @@ export default function Store({ count }) {
           </div>
         </div>
         <p className='store-rate'>
-          {rate} {rateStars}
+          <RateStars />
         </p>
         <div className='store-detailContainer'>
           <div className='store-detail'>
             <h2 className='store-detailText'>찜</h2>
-            <p className='store-detailNum'>354</p>
+            <p className='store-detailNum'>{data.bookmarkCount}</p>
             <h2 className='store-detailText'>리뷰</h2>
-            <p className='store-detailNum'>1503</p>
-            <PlusInfo text='더보기' arrow='true' onClick={handleOpenReview}/>
+            <p className='store-detailNum'>{data.reviewCount}</p>
+            <PlusInfo text='더보기' arrow='true' onClick={handleOpenReview} />
           </div>
           {showPhoneNumber && (
             <div className='store-popup'>
-              <p className='store-popupText'> 010-1234-5678</p>
+              <p className='store-popupText'> {data.phone_number}</p>
             </div>
           )}
         </div>
       </div>
-      <StoreDeliverTogo />
+      <StoreDeliverTogo data={data} />
       <div className='store-menu'>
         <h2 className='store-menuTitle'>인기메뉴</h2>
-        <div className='store-menuBlocks' onClick={handleClickOption}>
-          <MenuBlock popular={true} />
-          <MenuBlock />
-          <MenuBlock />
+        <div className='store-menuBlocks'>
+          {menuData.map((el) => (
+            <button
+              className='store-menuBlock'
+              key={el.id}
+              onClick={() => handleClickOption(el.id)}
+            >
+              <MenuBlock
+                title={el.name}
+                price={el.price}
+                image={el.image}
+                content={el.content}
+                popular={el.is_popular}
+              />
+            </button>
+          ))}
         </div>
       </div>
     </div>

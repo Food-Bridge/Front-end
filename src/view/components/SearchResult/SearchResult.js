@@ -8,7 +8,7 @@ export default function SearchResult({ searchText }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get('http://localhost:8000/search/', {
+      const res = await axiosInstance.get('/search/', {
         params: { search: searchText, page: 1 },
       });
 
