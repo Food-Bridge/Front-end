@@ -23,7 +23,7 @@ function StoreList() {
       setData(res.data);
     };
     fetchData();
-  }, [data]);
+  }, []);
 
   return (
     <div className='StoreList'>
