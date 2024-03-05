@@ -16,7 +16,7 @@ export default function LogoBar() {
 
   const handleUserClick = () => {
     if (isLoggedIn) {
-      navigate('/user');
+      navigate('/users');
     } else {
       navigate('/users/signin');
     }

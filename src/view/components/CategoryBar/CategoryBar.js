@@ -47,8 +47,8 @@ function CategoryBar() {
     <div className='CategoryBar'>
       <div className='categoryBar-category'>
         <div className='categoryBar-categoryComp'>
-          {dataArr.map((el) => {
-            return <Category category={el.category} className={el.className} image={el.image}/>
+          {dataArr.map((el, index) => {
+            return <Category category={el.category}  key={index} className={el.className} image={el.image}/>
           })}          
         </div>
       </div>
