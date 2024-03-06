@@ -49,9 +49,9 @@ function App() {
           <Route path='users/coupon/' element={<CouponList />} />
           <Route path='users/address/' element={<Location />} />
           // 식당 정보
-          <Route path='restaurant/:id/' element={<Store />} />
-          <Route path='restaurant/:id/:menuid' element={<StoreOption />} />
-          <Route path='restaurant/:id/review/' element={<StoreReview />} />
+          <Route path='restaurant/:resId/' element={<Store />} />
+          <Route path='restaurant/:resId/:menuId' element={<StoreOption />} />
+          <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
           // 주문 정보
           <Route path='basket/' element={<BasketList />} />

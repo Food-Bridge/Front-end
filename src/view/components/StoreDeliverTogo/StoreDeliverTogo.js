@@ -33,12 +33,16 @@ export default function StoreDeliverTogo({ data }) {
           <div className='storeDeliverTogo-detail'>
             <h3 className='storeDeliverTogo-detailTitle'>최소 주문 금액</h3>
             <p className='storeDeliverTogo-detailContent'>
-              {data.minimumOrderPrice}원
+              {data.minimumOrderPrice
+                ? data.minimumOrderPrice.toLocaleString('ko-KR') + '원'
+                : ''}
             </p>
           </div>
           <div className='storeDeliverTogo-detail'>
             <h3 className='storeDeliverTogo-detailTitle'>배달비</h3>
-            <p className='storeDeliverTogo-detailContent'>{data.delivertyFee}원</p>
+            <p className='storeDeliverTogo-detailContent'>
+              {data.delivertyFee}원
+            </p>
           </div>
           <div className='storeDeliverTogo-info'>
             <PlusInfo text='매장정보' arrow='true' />
@@ -49,17 +53,19 @@ export default function StoreDeliverTogo({ data }) {
         <div className='storeDeliverTogo-contents'>
           <div className='storeDeliverTogo-detail'>
             <h3 className='storeDeliverTogo-detailTitle'>예상 픽업 시간</h3>
-            <p className='storeDeliverTogo-detailContent'>{data.minPickupTime}분</p>
+            <p className='storeDeliverTogo-detailContent'>
+              {data.minPickupTime}분
+            </p>
           </div>
           <div className='storeDeliverTogo-detail'>
             <h3 className='storeDeliverTogo-detailTitle'>최소 주문 금액</h3>
-            <p className='storeDeliverTogo-detailContent'>{data.minimumPickupPrice}원</p>
+            <p className='storeDeliverTogo-detailContent'>
+              {data.minimumPickupPrice}원
+            </p>
           </div>
           <div className='storeDeliverTogo-detail'>
             <h3 className='storeDeliverTogo-detailTitle'>픽업 주소</h3>
-            <p className='storeDeliverTogo-detailContent'>
-              {data.address}
-            </p>
+            <p className='storeDeliverTogo-detailContent'>{data.address}</p>
           </div>
           <div className='storeDeliverTogo-info'>
             <PlusInfo text='매장정보' arrow='true' />

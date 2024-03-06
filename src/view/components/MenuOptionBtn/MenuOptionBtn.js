@@ -1,5 +1,4 @@
 import './MenuOptionButton.scss';
-
 import React, { useState } from 'react';
 
 export default function MenuOptionBtn() {
@@ -10,7 +9,11 @@ export default function MenuOptionBtn() {
     { text: '바질크림', price: 0 },
   ];
 
-  const [optionVisible, setOptionVisible] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
 
   return (
     <div className='menuOptionBtn'>
@@ -18,14 +21,15 @@ export default function MenuOptionBtn() {
         <h1 className='menuOptionBtn-title'>맛 1 선택</h1>
         <p className='menuOptionBtn-info'>필수</p>
       </header>
-      {options.map((option) => (
-        <div className='menuOptionBtn-row'>
+      {options.map((option, index) => (
+        <div className='menuOptionBtn-row' key={index}>
           <div className='menuOptionBtn-choice'>
             <input
               className='menuOptionBtn-button'
               type='radio'
-              checked = {optionVisible === option.text}
-              onClick={() => setOptionVisible(option.text)}
+              value={option.text}
+              checked={selectedOption === option}
+              onChange={() => handleOptionChange(option)}
             />
             <p className='menuOptionBtn-option'>{option.text}</p>
           </div>

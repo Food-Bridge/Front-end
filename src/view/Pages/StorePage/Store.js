@@ -15,7 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance.js';
 
 export default function Store({ count }) {
-  const { id } = useParams();
+  const { resId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
@@ -25,8 +25,8 @@ export default function Store({ count }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${id}`);
-      const menuRes = await axiosInstance.get(`/restaurant/${id}/menu`);
+      const res = await axiosInstance.get(`/restaurant/${resId}`);
+      const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu`);
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
@@ -77,7 +77,7 @@ export default function Store({ count }) {
           </div>
         </div>
         <div className='store-rate'>
-          <RateStars />
+          <RateStars rate={data.rating}/>
         </div>
         <div className='store-detailContainer'>
           <div className='store-detail'>
@@ -99,7 +99,7 @@ export default function Store({ count }) {
         <h2 className='store-menuTitle'>메뉴</h2>
         <div className='store-menuBlocks'>
           {menuData.map((el) => (
-            <button
+            <div
               className='store-menuBlock'
               key={el.id}
               onClick={() => handleClickOption(el.id)}
@@ -112,7 +112,7 @@ export default function Store({ count }) {
                 popular={el.is_popular}
                 main={el.is_main}
               />
-            </button>
+            </div>
           ))}
         </div>
       </div>

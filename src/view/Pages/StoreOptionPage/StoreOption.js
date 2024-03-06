@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../../api/instance';
+import { useParams } from 'react-router-dom';
 import './StoreOption.scss';
 
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import Basket from '../../components/Basket/Basket';
-import chicken from '../../../data/chicken.jpg';
 import { IoIosArrowBack } from 'react-icons/io';
 
-export default function StoreOption({ popular }) {
+export default function StoreOption() {
   const [quantity, setQuantity] = useState(Number(1));
+  const { resId, menuId } = useParams();
+  const [data, setData] = useState([]);
+  const [menuData, setMenuData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get(`/restaurant/${resId}`);
+      const menuRes = await axiosInstance.get(
+        `/restaurant/${resId}/menu/${menuId}`
+      );
+      setData(res.data);
+      setMenuData(menuRes.data);
+    };
+    fetchData();
+  }, []);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -19,6 +34,7 @@ export default function StoreOption({ popular }) {
       setQuantity(quantity - 1);
     }
   };
+
   return (
     <div className='storeOption'>
       <div className='storeOption-header'>
@@ -26,21 +42,23 @@ export default function StoreOption({ popular }) {
         <button className='storeOption-backContainer'>
           <IoIosArrowBack className='storeOption-back' size='30' />
         </button>
-        <img src={chicken} className='storeOption-img' />
+        <img src={menuData.image} className='storeOption-img' />
       </div>
       <div className='storeOption-title'>
-        {popular && (
+        {menuData.is_popular && (
           <div className='storeOption-tag'>
             <p className='storeOption-tag-title'>인기</p>
           </div>
         )}
+        {menuData.is_main && (
+          <div className='storeOption-tag'>
+            <p className='storeOption-tag-title'>메인</p>
+          </div>
+        )}
 
-        <h1 className='storeOpiton-name'>반반 치킨</h1>
+        <h1 className='storeOpiton-name'>{menuData.name}</h1>
       </div>
-      <p className='storeOption-detail'>
-        출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다. 45퍼센트
-        참여하다 쉽고 있은 있고,
-      </p>
+      <p className='storeOption-detail'>{menuData.content}</p>
       <MenuOptionBtn />
       <MenuCheckBox />
       <div className='storeOption-footer'>
@@ -56,7 +74,11 @@ export default function StoreOption({ popular }) {
           </div>
           <div className='storeOption-least'>
             <h1 className='storeOption-leastTitle'>최소 주문 금액</h1>
-            <p className='storeOption-leastPrice'>15,000원</p>
+            <p className='storeOption-leastPrice'>
+              {data.minimumOrderPrice
+                ? data.minimumOrderPrice.toLocaleString('ko-KR') + '원'
+                : ''}
+            </p>
           </div>
         </div>
 
