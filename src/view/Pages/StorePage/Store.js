@@ -26,11 +26,11 @@ export default function Store({ count }) {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${id}`);
-      const menures = await axiosInstance.get(`/restaurant/${id}/menu`);
+      const menuRes = await axiosInstance.get(`/restaurant/${id}/menu`);
       setData(res.data);
       setSliderData(res.data.image);
-      setMenuData(menures.data);
-      console.log(menuData);
+      setMenuData(menuRes.data);
+      console.log(menuRes);
     };
     fetchData();
   }, []);
@@ -55,8 +55,8 @@ export default function Store({ count }) {
     <div className='store'>
       <div className='store-main'>
         <Basket count='1' />
-        {sliderData ? (
-          <ImageSlider className='store-img' slides={sliderData} />
+        {sliderData && sliderData.length > 0 ? (
+          <ImageSlider className='store-img' slides={[sliderData]} />
         ) : (
           <div className='store-img' />
         )}
@@ -76,9 +76,9 @@ export default function Store({ count }) {
             </button>
           </div>
         </div>
-        <p className='store-rate'>
+        <div className='store-rate'>
           <RateStars />
-        </p>
+        </div>
         <div className='store-detailContainer'>
           <div className='store-detail'>
             <h2 className='store-detailText'>찜</h2>
@@ -96,7 +96,7 @@ export default function Store({ count }) {
       </div>
       <StoreDeliverTogo data={data} />
       <div className='store-menu'>
-        <h2 className='store-menuTitle'>인기메뉴</h2>
+        <h2 className='store-menuTitle'>메뉴</h2>
         <div className='store-menuBlocks'>
           {menuData.map((el) => (
             <button
@@ -110,6 +110,7 @@ export default function Store({ count }) {
                 image={el.image}
                 content={el.content}
                 popular={el.is_popular}
+                main={el.is_main}
               />
             </button>
           ))}

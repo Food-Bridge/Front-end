@@ -43,7 +43,7 @@ export default function ImageSlider({ slides }) {
             className={index === current ? 'slide active' : 'slide'}
             key={index} onClick={handleSlideClick}
           >
-            {index === current && <img src={slide.image} className='image' />}
+            {index === current && <img src={slide} className='image' />}
           </div>
         );
       })}

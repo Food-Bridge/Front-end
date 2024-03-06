@@ -21,14 +21,14 @@ export default function MyList() {
   const [nickname, setNickname] = useState('');
   const [isNicknameChange, setIsNicknameChange] = useState(false);
 
-  useEffect(async () => {
+  useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get('/users/profile/');
       setImage(res.data.image);
       setNickname(res.data.nickname);
     };
     fetchData();
-  }, []);
+  }, [image, nickname]);
 
   const onChangeImage = async (event) => {
     const { files } = event.target;
@@ -49,7 +49,7 @@ export default function MyList() {
       const formData = new FormData();
       formData.append('nickname', nickname);
 
-      const res = axiosInstance.put('/users/profile/', formData);
+      const res = await axiosInstance.put('/users/profile/', formData);
 
       setNickname(res.data.nickname);
     }
@@ -84,7 +84,7 @@ export default function MyList() {
             accept='image/*'
             onChange={onChangeImage}
           />
-          <label for='file' className='mylistUser-profileBtn'>
+          <label htmlFor='file' className='mylistUser-profileBtn'>
             편집
           </label>
         </div>
@@ -99,15 +99,15 @@ export default function MyList() {
             ) : (
               <h1 className='mylistUser-id-name'>{nickname}</h1>
             )}
-            <button
+            <div
               className='mylistUser-id-change'
               onClick={handleChangeNickname}
             >
               <PlusInfo text={isNicknameChange ? '변경 완료' : '닉네임 변경'} />
-            </button>
-            <button className='mylistUser-id-logout' onClick={handleLogout}>
+            </div>
+            <div className='mylistUser-id-logout' onClick={handleLogout}>
               <PlusInfo text='로그아웃' />
-            </button>
+            </div>
           </div>
           <div className='mylistUser-detail'>
             <div className='mylistUser-detailBox'>
@@ -128,9 +128,9 @@ export default function MyList() {
       <MyListMain />
       <MyListDeliver />
       <div className='mylistBlocks-row'>
-        <button onClick={handleOpenCoupon}>
+        <div onClick={handleOpenCoupon}>
           <MyListBlock icon={<CiDiscount1 size='35' />} text='할인쿠폰' />
-        </button>
+        </div>
         <MyListBlock icon={<CiGift size='35' />} text='이벤트' />
         <MyListBlock icon={<IoSettingsOutline size='35' />} text='설정' />
       </div>

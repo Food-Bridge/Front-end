@@ -45,9 +45,9 @@ function StoreList() {
       </div>
       <div className='storeList-store'>
         {data.length > 0 && data.map((el) => (
-          <button onClick={() => handleClickStore(el.id)}>
+          <button key={el.id} onClick={() => handleClickStore(el.id)}>
             <StoreCard
-              key={el.id}
+              
               img={el.image}
               className={el.className}
               storeName={el.name}
