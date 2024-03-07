@@ -3,18 +3,20 @@ import React from 'react';
 import './MenuCheckBox.scss';
 import { useState } from 'react';
 
-export default function MenuCheckBox({data, count}) {
-
+export default function MenuCheckBox({ data, count, onOptionChange }) {
   const [ids, setIds] = useState([]);
 
-  const handleButtonClick = (data) => {
-    setIds((prevState) => {
-      const updatedOptions = prevState.includes(data.id)
-        ? prevState.filter((option) => option !== data.id)
-        : [...prevState, data.id];
-      return updatedOptions;
-    });
+  const handleButtonClick = (option) => {
+    const updatedIds = ids.includes(option.id)
+      ? ids.filter((id) => id !== option.id)
+      : [...ids, option.id];
+  
+    setIds(updatedIds);
+    onOptionChange(updatedIds.map(id => {
+      return data.find(opt => opt.id === id);
+    }));
   };
+  
 
   return (
     <div className='menuCheckBox'>
@@ -29,7 +31,7 @@ export default function MenuCheckBox({data, count}) {
               className='menuCheckBox-button'
               type='checkbox'
               checked={ids.includes(option.id)}
-              onChange={() => handleButtonClick(option)} // Use onChange instead of onClick for checkboxes
+              onChange={() => handleButtonClick(option)}
             />
             <p className='menuCheckBox-option'>{option.name}</p>
           </div>

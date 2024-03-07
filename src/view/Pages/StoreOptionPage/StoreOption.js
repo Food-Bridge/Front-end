@@ -16,6 +16,14 @@ export default function StoreOption() {
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
 
+  const [option, setOption] = useState('');
+  const [sOption, setSOption] = useState([]);
+
+  const totalPrice = (
+    menuData.price +
+    (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
+    (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0)) * quantity;
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${resId}`);
@@ -35,6 +43,14 @@ export default function StoreOption() {
     };
     fetchData();
   }, []);
+
+  const handleOptionChange = (option) => {
+    setOption(option);
+  };
+
+  const handleSOptionChange = (sOption) => {
+    setSOption(sOption);
+  };
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -70,11 +86,15 @@ export default function StoreOption() {
       </div>
       <p className='storeOption-detail'>{menuData.content}</p>
       {menuData.required_options_count === 1 ? (
-        <MenuOptionBtn data={optionData} />
+        <MenuOptionBtn data={optionData} onOptionChange={handleOptionChange} />
       ) : (
-        <MenuCheckBox data={optionData} count={menuData.required_options_count}/>
+        <MenuCheckBox
+          data={optionData}
+          count={menuData.required_options_count}
+          onOptionChange={handleOptionChange}
+        />
       )}
-      <MenuCheckBox data={sOptionData}/>
+      <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
       <div className='storeOption-footer'>
         <div className='storeOption-footerL'>
           <div className='storeOption-quantity'>
@@ -96,7 +116,9 @@ export default function StoreOption() {
           </div>
         </div>
 
-        <button className='storeOption-add'>22,800원 담기</button>
+        <button className='storeOption-add'>
+          {totalPrice.toLocaleString('ko-KR')}원 담기
+        </button>
       </div>
     </div>
   );

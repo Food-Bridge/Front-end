@@ -1,12 +1,13 @@
 import './MenuOptionButton.scss';
 import React, { useState } from 'react';
 
-export default function MenuOptionBtn({data}) {
+export default function MenuOptionBtn({data, onOptionChange}) {
 
   const [selectedOption, setSelectedOption] = useState(data[0]);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
+    onOptionChange(option)
   };
 
   return (
