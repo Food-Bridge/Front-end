@@ -2,6 +2,22 @@
   width: 600px;
   .storeOption-header {
     margin: 20px 0;
+    .storeOption-basketContainer {
+      position: relative;
+      .storeOption-basket {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 540px;
+        top: 20px;
+        z-index: 10;
+        background-color: rgba(141, 141, 141, 0.5);
+        border-radius: 5px;
+        width: 40px;
+        height: 35px;
+      }
+    }
     .storeOption-backContainer {
       position: relative;
       .storeOption-back {
@@ -9,9 +25,11 @@
         top: -180px;
         left: 20px;
         width: 40px;
+        height: 35px;
         background-color: rgba(141, 141, 141, 0.5);
         border-radius: 5px;
         z-index: 10;
+        color: white
       }
     }
     .storeOption-img {

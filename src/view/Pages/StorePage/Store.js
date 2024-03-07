@@ -54,7 +54,11 @@ export default function Store({ count }) {
   return (
     <div className='store'>
       <div className='store-main'>
-        <Basket count='1' />
+        <div className='store-basketContainer'>
+          <div className='store-basket'>
+            <Basket count={1} white />
+          </div>
+        </div>
         {sliderData && sliderData.length > 0 ? (
           <ImageSlider className='store-img' slides={[sliderData]} />
         ) : (
@@ -77,7 +81,7 @@ export default function Store({ count }) {
           </div>
         </div>
         <div className='store-rate'>
-          <RateStars rate={data.rating}/>
+          <RateStars rate={data.rating} />
         </div>
         <div className='store-detailContainer'>
           <div className='store-detail'>

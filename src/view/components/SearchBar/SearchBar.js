@@ -4,8 +4,9 @@ import { CiLocationOn, CiHeart, CiShoppingBasket } from 'react-icons/ci';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import Basket from '../Basket/Basket';
 
-function SearchBar({ count }) {
+function SearchBar() {
   const navigate = useNavigate();
 
   const locations = [
@@ -31,19 +32,21 @@ function SearchBar({ count }) {
   };
 
   const handleOpenBasket = () => {
-    navigate('basket/')
-  }
-  
+    navigate('basket/');
+  };
+
   const handleClickLikes = () => {
     navigate('/likes/');
   };
-
 
   return (
     <div className='SearchBar'>
       <header className='searchBar-frame'>
         <div className='searchBar-margin'>
-          <button className='searchBar-location' onClick={handleToggleLocationList}>
+          <button
+            className='searchBar-location'
+            onClick={handleToggleLocationList}
+          >
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
               {location.split(' ').slice(1, 2).join(' ')}
@@ -55,20 +58,20 @@ function SearchBar({ count }) {
               <IoIosSearch className='searchBar-searchIcon' />
             </button>
           </div>
-          <div className='searchBar-etcIcon'><button onClick={handleClickLikes}>
+          <div className='searchBar-etcIcon'>
+            <button onClick={handleClickLikes}>
               <CiHeart className='searchBar-heartIcon' />
             </button>
-            <button className='searchBar-shopCount' onClick={handleOpenBasket}>
-            
-
-            <div className='searchBar-shopCount'>
-              <CiShoppingBasket className='searchBar-shopIcon'>
-                <div className='searchBar-countBlock'>
-                  <h1 className='searchBar-countText'>{count}</h1>
-                </div>
-              </CiShoppingBasket>
+            <Basket count='1'/>
+            {/* <button className='searchBar-shopCount' onClick={handleOpenBasket}>
+              <div className='searchBar-shopCount'>
+                <CiShoppingBasket className='searchBar-shopIcon'>
+                  <div className='searchBar-countBlock'>
+                    <h1 className='searchBar-countText'>{count}</h1>
+                  </div>
+                </CiShoppingBasket>
               </div>
-            </button>
+            </button> */}
           </div>
         </div>
         {showList && (

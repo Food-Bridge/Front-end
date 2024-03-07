@@ -19,10 +19,11 @@ export default function StoreOption() {
   const [option, setOption] = useState('');
   const [sOption, setSOption] = useState([]);
 
-  const totalPrice = (
-    menuData.price +
-    (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
-    (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0)) * quantity;
+  const totalPrice =
+    (menuData.price +
+      (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
+      (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0)) *
+    quantity;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +65,11 @@ export default function StoreOption() {
   return (
     <div className='storeOption'>
       <div className='storeOption-header'>
-        <Basket className='storeOption-basket' count='1' />
+        <div className='storeOption-basketContainer'>
+          <div className='storeOption-basket'>
+            <Basket count={1} white />
+          </div>
+        </div>
         <button className='storeOption-backContainer'>
           <IoIosArrowBack className='storeOption-back' size='30' />
         </button>
