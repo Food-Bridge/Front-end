@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectProfile,
+  logout,
+  setProfile,
+} from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../../redux/reducers/authSlice';
-
 import MyListBlock from '../../components/MyListBlock/MyListBlock';
 import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
 import MyListMain from '../../components/MyListMain/MyListMain';
@@ -17,41 +20,38 @@ import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 
 export default function MyList() {
   const navigate = useNavigate();
-  const [image, setImage] = useState('');
-  const [nickname, setNickname] = useState('');
+  const dispatch = useDispatch();
+  const profile = useSelector(selectProfile);
   const [isNicknameChange, setIsNicknameChange] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get('/users/profile/');
-      setImage(res.data.image);
-      setNickname(res.data.nickname);
+      dispatch(setProfile({ image: res.data.image, nickname: res.data.nickname }));
     };
     fetchData();
-  }, [image, nickname]);
+  }, [dispatch]);
 
   const onChangeImage = async (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
-    formData.append('nickname', nickname);
+    formData.append('nickname', profile.nickname);
 
     const res = await axiosInstance.put('/users/profile/', formData);
-    setImage(res.data.image);
+    dispatch(setProfile({ image: res.data.image, nickname: profile.nickname }));
   };
 
-  const dispatch = useDispatch();
-
   const handleChangeNickname = async () => {
-    setIsNicknameChange(!isNicknameChange)
+    setIsNicknameChange(!isNicknameChange);
     if (isNicknameChange) {
       const formData = new FormData();
-      formData.append('nickname', nickname);
+      formData.append('nickname', profile.nickname);
 
       const res = await axiosInstance.put('/users/profile/', formData);
 
-      setNickname(res.data.nickname);
+      dispatch(setProfile({ image: profile.image, nickname: res.data.nickname }));
     }
   };
 
@@ -70,13 +70,11 @@ export default function MyList() {
     navigate('coupon/');
   };
 
-
-
   return (
     <div className='mylist'>
       <div className='mylistUser'>
         <div className='mylistUser-profile'>
-          <img className='mylistUser-profileImg' src={image} />
+          <img className='mylistUser-profileImg' src={profile.image} />
           <input
             className='mylistUser-profileInput'
             id='file'
@@ -94,10 +92,18 @@ export default function MyList() {
               <input
                 className='mylistUser-id-input'
                 type='text'
-                onChange={(event) => setNickname(event.target.value)}
+                value={profile.nickname}
+                onChange={(event) =>
+                  dispatch(
+                    setProfile({
+                      image: profile.image,
+                      nickname: event.target.value,
+                    })
+                  )
+                }
               ></input>
             ) : (
-              <h1 className='mylistUser-id-name'>{nickname}</h1>
+              <h1 className='mylistUser-id-name'>{profile.nickname}</h1>
             )}
             <div
               className='mylistUser-id-change'

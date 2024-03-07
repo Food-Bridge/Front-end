@@ -3,13 +3,7 @@ import React from 'react';
 import './MenuCheckBox.scss';
 import { useState } from 'react';
 
-export default function MenuCheckBox() {
-  const options = [
-    { text: '통마늘소금바베큐', price: 0, id: 0 },
-    { text: '양념', price: 0, id: 1 },
-    { text: '후라이드', price: 0, id: 2 },
-    { text: '바질크림', price: 0, id: 3 },
-  ];
+export default function MenuCheckBox({data, count}) {
 
   const [ids, setIds] = useState([]);
 
@@ -25,10 +19,10 @@ export default function MenuCheckBox() {
   return (
     <div className='menuCheckBox'>
       <header className='menuCheckBox-header'>
-        <h1 className='menuCheckBox-title'>맛 2 선택</h1>
-        <p className='menuCheckBox-info'>필수</p>
+        <h1 className='menuCheckBox-title'>{count ? '필수' : '선택'} 옵션</h1>
+        {count && <p className='menuCheckBox-info'>{count}개 선택</p>}
       </header>
-      {options.map((option) => (
+      {data.map((option) => (
         <div className='menuCheckBox-row' key={option.id}>
           <div className='menuCheckBox-choice'>
             <input
@@ -37,7 +31,7 @@ export default function MenuCheckBox() {
               checked={ids.includes(option.id)}
               onChange={() => handleButtonClick(option)} // Use onChange instead of onClick for checkboxes
             />
-            <p className='menuCheckBox-option'>{option.text}</p>
+            <p className='menuCheckBox-option'>{option.name}</p>
           </div>
           <p className='menuCheckBox-price'>+{option.price}원</p>
         </div>

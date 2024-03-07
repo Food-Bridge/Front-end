@@ -13,6 +13,8 @@ export default function StoreOption() {
   const { resId, menuId } = useParams();
   const [data, setData] = useState([]);
   const [menuData, setMenuData] = useState([]);
+  const [optionData, setOptionData] = useState([]);
+  const [sOptionData, setSOptionData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,8 +22,16 @@ export default function StoreOption() {
       const menuRes = await axiosInstance.get(
         `/restaurant/${resId}/menu/${menuId}`
       );
+      const optionRes = await axiosInstance.get(
+        `/restaurant/${resId}/menu/${menuId}/options`
+      );
+      const sOptionRes = await axiosInstance.get(
+        `restaurant/${resId}/menu/${menuId}/soptions`
+      );
       setData(res.data);
       setMenuData(menuRes.data);
+      setOptionData(optionRes.data);
+      setSOptionData(sOptionRes.data);
     };
     fetchData();
   }, []);
@@ -59,8 +69,12 @@ export default function StoreOption() {
         <h1 className='storeOpiton-name'>{menuData.name}</h1>
       </div>
       <p className='storeOption-detail'>{menuData.content}</p>
-      <MenuOptionBtn />
-      <MenuCheckBox />
+      {menuData.required_options_count === 1 ? (
+        <MenuOptionBtn data={optionData} />
+      ) : (
+        <MenuCheckBox data={optionData} count={menuData.required_options_count}/>
+      )}
+      <MenuCheckBox data={sOptionData}/>
       <div className='storeOption-footer'>
         <div className='storeOption-footerL'>
           <div className='storeOption-quantity'>
