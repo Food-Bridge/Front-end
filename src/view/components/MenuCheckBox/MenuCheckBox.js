@@ -3,41 +3,37 @@ import React from 'react';
 import './MenuCheckBox.scss';
 import { useState } from 'react';
 
-export default function MenuCheckBox() {
-  const options = [
-    { text: '통마늘소금바베큐', price: 0, id: 0 },
-    { text: '양념', price: 0, id: 1 },
-    { text: '후라이드', price: 0, id: 2 },
-    { text: '바질크림', price: 0, id: 3 },
-  ];
-
+export default function MenuCheckBox({ data, count, onOptionChange }) {
   const [ids, setIds] = useState([]);
 
-  const handleButtonClick = (data) => {
-    setIds((prevState) => {
-      const updatedOptions = prevState.includes(data.id)
-        ? prevState.filter((option) => option !== data.id)
-        : [...prevState, data.id];
-      return updatedOptions;
-    });
+  const handleButtonClick = (option) => {
+    const updatedIds = ids.includes(option.id)
+      ? ids.filter((id) => id !== option.id)
+      : [...ids, option.id];
+  
+    setIds(updatedIds);
+    onOptionChange(updatedIds.map(id => {
+      return data.find(opt => opt.id === id);
+    }));
   };
+  
 
   return (
     <div className='menuCheckBox'>
       <header className='menuCheckBox-header'>
-        <h1 className='menuCheckBox-title'>맛 2 선택</h1>
-        <p className='menuCheckBox-info'>필수</p>
+        <h1 className='menuCheckBox-title'>{count ? '필수' : '선택'} 옵션</h1>
+        {count && <p className='menuCheckBox-info'>{count}개 선택</p>}
       </header>
-      {options.map((option) => (
+      {data.map((option) => (
         <div className='menuCheckBox-row' key={option.id}>
           <div className='menuCheckBox-choice'>
             <input
               className='menuCheckBox-button'
               type='checkbox'
               checked={ids.includes(option.id)}
-              onChange={() => handleButtonClick(option)} // Use onChange instead of onClick for checkboxes
+              onChange={() => handleButtonClick(option)}
             />
-            <p className='menuCheckBox-option'>{option.text}</p>
+            <p className='menuCheckBox-option'>{option.name}</p>
           </div>
           <p className='menuCheckBox-price'>+{option.price}원</p>
         </div>

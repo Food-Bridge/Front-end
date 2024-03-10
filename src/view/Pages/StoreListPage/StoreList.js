@@ -4,49 +4,26 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import CategoryBar from '../../components/CategoryBar/CategoryBar';
 import SliderTime from '../../SliderTime/SliderTime';
-import StoreCard from '../../components/StoreCard/StoreCard'
+import StoreCard from '../../components/StoreCard/StoreCard';
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../../api/instance';
 
 function StoreList() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  const handleClickStore = () => {
-    navigate('/store/');
+  const handleClickStore = (id) => {
+    navigate(`/restaurant/${id} `);
   };
 
-  //   const data = [
-  //   {
-  //     className: 'StoreCard',
-  //     storeName: 'ooo치킨 oo점',
-  //     minimumPrice: '20,000',
-  //     deliverPrice: '2,000',
-  //     storeScore: '4.5',
-  //     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdVJ7hnsvl92es433v7D4NmnVbfM3s3Lp9ww&usqp=CAU',
-  //   },
-  //   {
-  //     className: 'StoreCard',
-  //     name: 'ooo치킨 oo점',
-  //     minimumOrderPrice: '20,000',
-  //     deliverPrice: '2,000',
-  //     rating: '4.5',
-  //     image: 'https://images.pexels.com/photos/19144414/pexels-photo-19144414.jpeg',
-  //   },
-  // ];
-
   useEffect(() => {
-    axios
-      .get('http://localhost:8000/restaurant/')
-      .then((response) => {
-        setData(response.data.results);
-        console.log(response.data.results);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [data]);
+    const fetchData = async () => {
+      const res = await axiosInstance.get('/restaurant/');
+      setData(res.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className='StoreList'>
@@ -67,15 +44,15 @@ function StoreList() {
         </div>
       </div>
       <div className='storeList-store'>
-        {data.map((el, index) => (
-          <button onClick={handleClickStore}>
+        {data.length > 0 && data.map((el) => (
+          <button key={el.id} onClick={() => handleClickStore(el.id)}>
             <StoreCard
-              key={el.id}
+              
               img={el.image}
               className={el.className}
               storeName={el.name}
               minimumPrice={el.minimumOrderPrice}
-              deliverPrice={el.deliverPrice}
+              deliverPrice={el.delivertyFee}
               storeScore={el.rating}
             />
           </button>

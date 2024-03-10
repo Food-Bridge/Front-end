@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './ImageSlider.scss';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
 
 export default function ImageSlider({ slides }) {
   const [current, setCurrent] = useState(0);
-  const length = slides.length;
-
-  const navigate = useNavigate();
-
-  const handleSlideClick = () => {
-    navigate('poster/')
-  }
+  const length = slides ? slides.length : 0;
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -24,9 +17,9 @@ export default function ImageSlider({ slides }) {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000); 
+    }, 5000);
 
-    return () => clearInterval(interval); // 
+    return () => clearInterval(interval);
   }, [current, length]);
 
   if (!Array.isArray(slides) || slides.length <= 0) {
@@ -35,15 +28,23 @@ export default function ImageSlider({ slides }) {
 
   return (
     <div className='imageSlider'>
-      <IoIosArrowBack className='imageSlider-arrow left' size='30' onClick={prevSlide} />
-      <IoIosArrowForward className='imageSlider-arrow right' size='30' onClick={nextSlide} />
+      <IoIosArrowBack
+        className='imageSlider-arrow left'
+        size='30'
+        onClick={prevSlide}
+      />
+      <IoIosArrowForward
+        className='imageSlider-arrow right'
+        size='30'
+        onClick={nextSlide}
+      />
       {slides.map((slide, index) => {
         return (
           <div
             className={index === current ? 'slide active' : 'slide'}
-            key={index} onClick={handleSlideClick}
+            key={index}
           >
-            {index === current && <img src={slide.image} className='image' />}
+            {index === current && <img src={slide} className='image' />}
           </div>
         );
       })}
