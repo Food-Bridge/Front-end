@@ -63,8 +63,8 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers['Authorization'] = `Bearer ${token}`;
         return axios(originalRequest);
       } catch (error) {
-        console.error('토큰 갱신에 실패했습니다.', error);
-        window.location.href = '/login';
+        alert('로그인이 필요합니다')
+        window.location.href = '/users/signin';
         return Promise.reject(error);
       }
     }

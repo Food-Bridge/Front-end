@@ -1,12 +1,10 @@
 .SearchBar {
   width: 100%;
-  // background-color: lightgray;
 
   .searchBar-frame {
     width: 560px;
     height: 50px;
     margin-left: 20px;
-    // background-color: bisque;
 
     .searchBar-margin {
       width: 555px;
@@ -16,7 +14,7 @@
       justify-content: space-between;
 
       .searchBar-location {
-        width: 100px;
+        width: 120px;
         display: flex;
         align-items: center;
         margin-top: 5px;
@@ -63,7 +61,7 @@
       }
 
       .searchBar-etcIcon {
-        width: 55px;
+        width: 60px;
         margin-top: 5px;
         display: flex;
         justify-content: space-between;

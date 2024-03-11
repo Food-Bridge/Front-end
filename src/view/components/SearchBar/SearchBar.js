@@ -10,30 +10,38 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchAddresses,
   selectAddresses,
+  selectDefaultId,
+  setDefaultId,
 } from '../../../redux/reducers/addressSlice';
+import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 
 function SearchBar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(fetchAddresses());
-  }, [dispatch]);
+  const addresses = useSelector(selectAddresses);
+  const defaultId = useSelector(selectDefaultId);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const address = useSelector(selectAddresses);
-
-  const locations = [
-    '서울시 강남구 역삼로 111',
-    '서울시 강남구 역삼로 222',
-    '서울시 관악구 봉천로 333',
-  ];
-
-  const [location, setLocation] = useState(locations[0]);
-
+  const [defaultAddress, setDefaultAddress] = useState(null);
   const [showList, setShowList] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchAddresses()).then(() => {
+        const newDefaultAddress =
+          addresses.find((address) => address.id === defaultId) || addresses[0];
+        setDefaultAddress(newDefaultAddress);
+      });
+    }
+  }, [dispatch, isLoggedIn, defaultId]);
 
   const handleToggleLocationList = () => {
     setShowList(!showList);
+  };
+
+  const handleClickAddress = (address) => {
+    setDefaultAddress(address);
+    dispatch(setDefaultId(address.id));
   };
 
   const handleSearchClick = () => {
@@ -41,11 +49,11 @@ function SearchBar() {
   };
 
   const handleControlClick = () => {
-    navigate(`users/address/`);
-  };
-
-  const handleOpenBasket = () => {
-    navigate('basket/');
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다')
+      navigate('/users/signin')
+    } else {
+    navigate(`/users/address/`)};
   };
 
   const handleClickLikes = () => {
@@ -62,7 +70,11 @@ function SearchBar() {
           >
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
-              {location.split(' ').slice(1, 2).join(' ')}
+              {isLoggedIn
+                ? defaultAddress
+                  ? defaultAddress.sigungu.split(' ')[0]
+                  : '로딩 중'
+                : '로그인 필요'}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
@@ -75,22 +87,27 @@ function SearchBar() {
             <button onClick={handleClickLikes}>
               <CiHeart className='searchBar-heartIcon' />
             </button>
-            <Basket count='1'/>
+
+            <Basket count='1' />
           </div>
         </div>
         {showList && (
           <div className='searchBar-locaList'>
-            {locations.map((address, index) => (
-              <button
-                key={index}
-                className={`searchBar-loca ${
-                  location === address ? 'selected' : ''
-                }`}
-                onClick={() => setLocation(address)}
-              >
-                {locations[index]}
-              </button>
-            ))}
+            {isLoggedIn &&
+              addresses.map((address) => (
+                <button
+                  key={address.id}
+                  className={`searchBar-loca ${
+                    defaultAddress && defaultAddress.id === address.id
+                      ? 'selected'
+                      : ''
+                  }`}
+                  onClick={() => handleClickAddress(address)}
+                >
+                  {address.detail_address}
+                </button>
+              ))}
+
             <button
               className='searchBar-loca control'
               onClick={handleControlClick}

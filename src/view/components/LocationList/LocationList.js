@@ -8,14 +8,20 @@ import {
   setDefaultAddress,
   deleteAddress,
 } from '../../../redux/reducers/addressSlice';
+import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LocationList = ({ isEdit, editedNicknames, handleEditAddressNickname }) => {
   const dispatch = useDispatch();
+  const  navigate = useNavigate()
   const addresses = useSelector(selectAddresses);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    dispatch(fetchAddresses());
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(fetchAddresses());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return (
     <div className='location-list'>
