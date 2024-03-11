@@ -5,8 +5,6 @@ import './StoreOption.scss';
 
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
-import Basket from '../../components/Basket/Basket';
-import { IoIosArrowBack } from 'react-icons/io';
 
 export default function StoreOption() {
   const [quantity, setQuantity] = useState(Number(1));
@@ -64,17 +62,8 @@ export default function StoreOption() {
 
   return (
     <div className='storeOption'>
-      <div className='storeOption-header'>
-        <div className='storeOption-basketContainer'>
-          <div className='storeOption-basket'>
-            <Basket count={1} white />
-          </div>
-        </div>
-        <button className='storeOption-backContainer'>
-          <IoIosArrowBack className='storeOption-back' size='30' />
-        </button>
+      
         <img src={menuData.image} className='storeOption-img' />
-      </div>
       <div className='storeOption-title'>
         {menuData.is_popular && (
           <div className='storeOption-tag'>
