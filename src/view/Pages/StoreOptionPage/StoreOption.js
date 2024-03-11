@@ -5,9 +5,9 @@ import './StoreOption.scss';
 
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
+import CartAddBtn from '../../components/CartAddBtn/CartAddBtn';
 
 export default function StoreOption() {
-  const [quantity, setQuantity] = useState(Number(1));
   const { resId, menuId } = useParams();
   const [data, setData] = useState([]);
   const [menuData, setMenuData] = useState([]);
@@ -17,11 +17,10 @@ export default function StoreOption() {
   const [option, setOption] = useState('');
   const [sOption, setSOption] = useState([]);
 
-  const totalPrice =
-    (menuData.price +
-      (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
-      (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0)) *
-    quantity;
+  const price =
+  (menuData.price +
+    (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
+    (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,27 +42,17 @@ export default function StoreOption() {
     fetchData();
   }, []);
 
-  const handleOptionChange = (option) => {
-    setOption(option);
+  const handleOptionChange = (selectedOption) => {
+    setOption(selectedOption);
   };
 
-  const handleSOptionChange = (sOption) => {
-    setSOption(sOption);
-  };
-
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-  const decreaseQunatity = () => {
-    if (quantity !== 1) {
-      setQuantity(quantity - 1);
-    }
+  const handleSOptionChange = (selectedSOption) => {
+    setSOption(selectedSOption);
   };
 
   return (
     <div className='storeOption'>
-      
-        <img src={menuData.image} className='storeOption-img' />
+      <img src={menuData.image} className='storeOption-img' />
       <div className='storeOption-title'>
         {menuData.is_popular && (
           <div className='storeOption-tag'>
@@ -75,12 +64,14 @@ export default function StoreOption() {
             <p className='storeOption-tag-title'>메인</p>
           </div>
         )}
-
         <h1 className='storeOpiton-name'>{menuData.name}</h1>
       </div>
       <p className='storeOption-detail'>{menuData.content}</p>
       {menuData.required_options_count === 1 ? (
-        <MenuOptionBtn data={optionData} onOptionChange={handleOptionChange} />
+        <MenuOptionBtn
+          data={optionData}
+          onOptionChange={handleOptionChange}
+        />
       ) : (
         <MenuCheckBox
           data={optionData}
@@ -88,32 +79,15 @@ export default function StoreOption() {
           onOptionChange={handleOptionChange}
         />
       )}
-      <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
-      <div className='storeOption-footer'>
-        <div className='storeOption-footerL'>
-          <div className='storeOption-quantity'>
-            <button className='storeOption-minus' onClick={decreaseQunatity}>
-              -
-            </button>
-            <p className='storeOption-quantityNum'>{quantity}</p>
-            <button className='storeOption-plus' onClick={increaseQuantity}>
-              +
-            </button>
-          </div>
-          <div className='storeOption-least'>
-            <h1 className='storeOption-leastTitle'>최소 주문 금액</h1>
-            <p className='storeOption-leastPrice'>
-              {data.minimumOrderPrice
-                ? data.minimumOrderPrice.toLocaleString('ko-KR') + '원'
-                : ''}
-            </p>
-          </div>
-        </div>
-
-        <button className='storeOption-add'>
-          {totalPrice.toLocaleString('ko-KR')}원 담기
-        </button>
-      </div>
+      <MenuCheckBox
+        data={sOptionData}
+        onOptionChange={handleSOptionChange}
+      />
+      <CartAddBtn
+        price={price}
+        data={data}
+        menuData={{ ...menuData, option, sOption }}
+      />
     </div>
   );
 }

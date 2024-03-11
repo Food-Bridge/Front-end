@@ -1,41 +1,41 @@
-.basketlist-header {
+.cartlist-header {
   font-size: 24px;
   text-align: center;
   margin: 20px;
 }
 
-.basketlist-info {
+.cartlist-info {
   display: flex;
   justify-content: space-between;
   margin: 0 20px;
   padding-bottom: 10px;
   border-bottom: 3px solid #c6c6c6;
-  .basketlist-store {
+  .cartlist-store {
     display: flex;
     align-items: center;
-    .basketlist-storeImg {
+    .cartlist-storeImg {
       width: 30px;
       border-radius: 5px;
       margin-right: 10px;
     }
-    .basketlist-storeName {
+    .cartlist-storeName {
       font-size: 18px;
     }
   }
-  .basketlist-deliver {
+  .cartlist-deliver {
     display: flex;
     align-items: center;
-    .basketlist-deliverTime {
+    .cartlist-deliverTime {
       font-size: 16px;
       margin-left: 10px;
     }
   }
 }
-.basketlist-delete {
+.cartlist-delete {
   margin: 0 20px;
   border-bottom: 1px solid #c6c6c6;
   text-align: right;
-  .basketlist-deleteBtn {
+  .cartlist-deleteBtn {
     margin: 20px 0;
     border: 1px solid #c6c6c6;
     border-radius: 50px;
@@ -43,14 +43,14 @@
     box-shadow: 2px 2px 2px #c6c6c6;
   }
 }
-.basketlist-menu {
+.cartlist-menu {
   margin: 0 20px;
 }
-.basketlist-add {
+.cartlist-add {
   margin: 0 20px;
   border-bottom: 3px solid #c6c6c6;
   text-align: center;
-  .basketlist-addBtn {
+  .cartlist-addBtn {
     margin: 20px 0;
     border: 1px solid #c6c6c6;
     border-radius: 50px;
@@ -58,23 +58,23 @@
     box-shadow: 2px 2px 2px #c6c6c6;
   }
 }
-.basketlist-priceGroup {
+.cartlist-priceGroup {
   margin: 20px;
   border-bottom: 1px solid #c6c6c6;
-  .basketlist-price {
+  .cartlist-price {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    .basketlist-title {
+    .cartlist-title {
       font-size: 16px;
       font-weight: 600;
     }
-    .basketlist-value {
+    .cartlist-value {
       font-size: 14px;
     }
   }
 }
-.basketlist-orderBtn {
+.cartlist-orderBtn {
   background-color: #c6c6c6;
   margin: 50px;
   width: 500px;
