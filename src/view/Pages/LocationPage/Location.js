@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Location.scss';
+import {
+  fetchAddresses,
+  editAddressesNicknames,
+} from '../../../redux/reducers/addressSlice';
 import { useDispatch } from 'react-redux';
-import { updateAddresses } from '../../../redux/reducers/addressSlice';
-import axiosInstance from '../../../api/instance';
+
 import LocationList from '../../components/LocationList/LocationList';
 import LocationSearch from '../LocationSearchPage/LocationSearch';
 
@@ -10,56 +13,44 @@ const Location = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
+  const [editedNicknames, setEditedNicknames] = useState({});
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const res = await axiosInstance.get('/users/address/');
-    dispatch(updateAddresses(res.data));
+  const handleEditAddressNickname = (id, value) => {
+    setEditedNicknames((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
   };
 
   const handleToggleEdit = () => {
-    setIsEdit(!isEdit);
+    setIsEdit((prevIsEdit) => !prevIsEdit);
   };
 
-  const handleSetDefault = async (id) => {
-    await axiosInstance.patch(`/users/address/${id}`);
-    fetchData();
-  };
-
-  const handleEditNickname = async (event, id) => {
-    const { value } = event.target;
-    await axiosInstance.patch(`/users/address/${id}/`, { nickname: value });
-    fetchData();
-  };
-
-  const handleDelete = async (id) => {
-    await axiosInstance.delete(`/users/address/${id}`);
-    fetchData();
-  };
-
-  const handleClickAdd = async () => {
+  const handleClickAdd = () => {
     setIsAdd(true);
   };
 
-  const handleSearchComplete = () => {
-    fetchData();
+  const handleCompleteAdd = () => {
     setIsAdd(false);
+  };
+
+  const handleCompleteEditing = () => {
+    setIsEdit(false);
+    const updatedNicknames = Object.entries(editedNicknames).map(
+      ([id, nickname]) => ({ id, nickname })
+    );
+        dispatch(editAddressesNicknames(updatedNicknames));
   };
 
   return (
     <div className='location'>
       {isAdd ? (
-        <div>
-          <LocationSearch complete={handleSearchComplete} />
-        </div>
+        <LocationSearch complete={handleCompleteAdd} />
       ) : (
         <div>
           <header className='location-header'>
             <h1 className='location-title'>주소 관리</h1>
-            <button className='location-edit' onClick={handleToggleEdit}>
+            <button className='location-edit' onClick={isEdit ? handleCompleteEditing : handleToggleEdit}>
               {isEdit ? '완료' : '편집'}
             </button>
           </header>
@@ -68,9 +59,8 @@ const Location = () => {
           </button>
           <LocationList
             isEdit={isEdit}
-            handleSetDefault={handleSetDefault}
-            handleEditNickname={handleEditNickname}
-            handleDelete={handleDelete}
+            editedNicknames={editedNicknames}
+            handleEditAddressNickname={handleEditAddressNickname}
           />
         </div>
       )}

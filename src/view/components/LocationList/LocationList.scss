@@ -17,12 +17,16 @@
 
     .location-content {
       .location-input {
-        font-size: 20px;
-        width: 380px;
-        margin-right: 5px;
+        font-size: 18px;
+        width: 430px;
+        height: 25px;
+        padding: 3px;
+        margin-bottom: 5px;
       }
 
       .location-name {
+        height: 25px;
+        padding: 2px 5px;
         text-align: left;
         font-size: 18px;
         font-weight: 600;
@@ -31,6 +35,7 @@
 
       .location-address {
         font-size: 12px;
+        padding-left: 5px;
       }
     }
 
@@ -41,7 +46,7 @@
       border-radius: 50px;
       box-shadow: 2px 2px 2px #c6c6c6;
       font-size: 14px;
-      margin-left: 5px;
+      margin-left: 10px;
     }
   }
 }
