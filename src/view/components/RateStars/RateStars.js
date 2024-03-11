@@ -14,7 +14,7 @@ export default function RateStars({ rate }) {
 
   return (
     <p className='rateStars'>
-      {rates} {rateStars}
+      {rate} {rateStars}
     </p>
   );
 }

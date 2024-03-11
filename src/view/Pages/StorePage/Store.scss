@@ -1,31 +1,17 @@
 .store {
+  width: 600px;
   .store-img {
+    margin-top: 10px;
     width: 600px;
     height: 300px;
-    position: relative;
     overflow: hidden;
     margin-bottom: 20px;
     background-color: #c6c6c6;
   }
+
   .store-main {
-    width: 600px;
     margin: 20px 0;
-    .store-basketContainer {
-      position: relative;
-      .store-basket {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        left: 540px;
-        top: 20px;
-        z-index: 10;
-        background-color: rgba(141, 141, 141, 0.5);
-        border-radius: 5px;
-        width: 40px;
-        height: 35px;
-      }
-    }
+
     .store-title {
       margin: 0 20px;
       display: flex;

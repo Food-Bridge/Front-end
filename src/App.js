@@ -32,9 +32,11 @@ function App() {
       <Router>
         <LogoBar />
         <Routes>
+
           // 메인
           <Route path='/' element={<MainPage />} />
           <Route path='search/' element={<Search />} />
+
           // 유저 로그인
           <Route path='users/signin/' element={<SignIn />} />
           <Route path='users/signup/' element={<SignUp />} />
@@ -43,19 +45,23 @@ function App() {
             path='users/signin/googleCallback'
             element={<GoogleCallback />}
           />
+
           // 유저 정보
           <Route path='users/' element={<MyList />} />
           <Route path='users/review' element={<MyReview />} />
           <Route path='users/coupon/' element={<CouponList />} />
           <Route path='users/address/' element={<Location />} />
+
           // 식당 정보
           <Route path='restaurant/:resId/' element={<Store />} />
           <Route path='restaurant/:resId/:menuId' element={<StoreOption />} />
           <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
+
           // 주문 정보
           <Route path='basket/' element={<BasketList />} />
           <Route path='orderlist/' element={<OrderList />} />
+          
           // 커뮤니티
           <Route path='commu/' element={<Community />} />
           <Route

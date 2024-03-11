@@ -1,113 +1,108 @@
 .SignIn {
+  width: 100%;
+  margin-top: 20px;
+  .signIn-frame {
     width: 100%;
-    margin-top: 20px;
-    // height: 700px;
+    height: 530px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    position: relative;
+    .signIn-title {
+      font-size: 24px;
+    }
+    .signIn-flex {
+      height: 460px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
-    .signIn-frame {
-        width: 100%;
-        height: 530px;
+      .signIn-margin {
+        height: 270px;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        flex-direction: column;
 
-        .signIn-title {
-            font-size: 24px;
-        }
-        .signIn-flex {
-            height: 460px;
+        .signIn-formMargin {
+          height: 110px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .signIn-emailForm {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            .signIn-emailInput {
+              width: 300px;
+              height: 50px;
+            }
+          }
+          .signIn-passwdForm {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
 
-            .signIn-margin {
-                height: 270px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-between;
-
-                .signIn-formMargin {
-                    height: 110px;
-                    display: flex;
-                    align-items: center;
-                    flex-direction: column;
-                    justify-content: space-between;
-
-                    .signIn-emailForm {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-direction: column;
-
-                        .signIn-emailInput {
-                            width: 300px;
-                            height: 50px;
-                        }
-                    }   
-                    .signIn-passwdForm {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-
-                            .signIn-passwdInput {
-                                width: 300px;
-                                height: 50px;
-                            }
-
-                    }                                        
-                }
-
-                .signIn-btnMargin {
-                    height: 140px;
-                    display: flex;
-                    align-items: center;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    
-                    .signIn-signInBtn {
-                        height: 50px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-direction: column;
-                    } 
-                    .signIn-signUpBtn {
-                        height: 50px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-direction: column;  
-                    } 
-                    .signIn-findText {
-                        width: 300px;
-                        font-size: 14px;
-                        text-align: right;
-                        align-items: flex-end;
-                    }
-                }
-        
+            .signIn-passwdInput {
+              width: 300px;
+              height: 50px;
             }
-            .signIn-btn {
-                height: 140px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-
-                .signIn-line {
-                    width: 450px;
-                    border: 1px solid #CBCBCB;
-                }
-                // .signInBtn-kakaoBtn {
-
-                // }
-                // .signInBtn-google {
-                    
-                // }
-            }
+          }
         }
 
+        .signIn-btnMargin {
+          height: 140px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .signIn-signInBtn {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+          }
+          .signIn-signUpBtn {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+          }
+          .signIn-findText {
+            width: 300px;
+            font-size: 14px;
+            text-align: right;
+            align-items: flex-end;
+          }
+        }
+      }
+      .signIn-btn {
+        height: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .signIn-line {
+          width: 450px;
+          border: 1px solid #cbcbcb;
+        }
+        // .signInBtn-kakaoBtn {
+
+        // }
+        // .signInBtn-google {
+
+        // }
+      }
     }
+  }
 }

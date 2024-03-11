@@ -3,34 +3,31 @@ import './LocationList.scss';
 import { CiLocationOn } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  updateAddresses,
+  fetchAddresses,
   selectAddresses,
+  setDefaultAddress,
+  deleteAddress,
 } from '../../../redux/reducers/addressSlice';
-import axiosInstance from '../../../api/instance';
+import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-const LocationList = ({
-  isEdit,
-  handleSetDefault,
-  handleEditNickname,
-  handleDelete,
-}) => {
+const LocationList = ({ isEdit, editedNicknames, handleEditAddressNickname }) => {
   const dispatch = useDispatch();
+  const  navigate = useNavigate()
   const addresses = useSelector(selectAddresses);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    const fetchAddresses = async () => {
-      const updatedRes = await axiosInstance.get('/users/address/');
-      dispatch(updateAddresses(updatedRes.data));
-      console.log('Locations updated:', updatedRes.data);
-    };
-    fetchAddresses();
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(fetchAddresses());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return (
     <div className='location-list'>
       {addresses.map(({ nickname, detail_address, is_default, id }) => (
         <div className='location-button' key={id}>
-          <button onClick={() => handleSetDefault(id)}>
+          <button onClick={() => dispatch(setDefaultAddress(id))}>
             <CiLocationOn
               className='location-icon'
               style={{ color: is_default ? 'red' : 'black' }}
@@ -39,12 +36,14 @@ const LocationList = ({
 
           <div className='location-content'>
             {isEdit ? (
-              <input
-                className='location-input'
-                placeholder={nickname}
-                value={nickname}
-                onChange={(e) => handleEditNickname(e, id)}
-              />
+              <>
+                <input
+                  className='location-input'
+                  placeholder={nickname}
+                  value={editedNicknames[id] || nickname}
+                  onChange={(e) => handleEditAddressNickname(id, e.target.value)}
+                />
+              </>
             ) : (
               <h1 className='location-name'>{nickname}</h1>
             )}
@@ -53,7 +52,7 @@ const LocationList = ({
           {isEdit && (
             <button
               className='location-editBtn'
-              onClick={() => handleDelete(id)}
+              onClick={() => dispatch(deleteAddress(id))}
             >
               삭제
             </button>

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axiosInstance from '../../../api/instance.js';
 
 import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
+import SearchBar from '../../components/SearchBar/SearchBar'
+import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
+import RateStars from '../../components/RateStars/RateStars.js';
 
 import { CiPhone } from 'react-icons/ci';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
-import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
-import Basket from '../../components/Basket/Basket.js';
-import RateStars from '../../components/RateStars/RateStars.js';
-import { useNavigate, useParams } from 'react-router-dom';
-import axiosInstance from '../../../api/instance.js';
+
 
 export default function Store({ count }) {
   const { resId } = useParams();
@@ -53,18 +54,15 @@ export default function Store({ count }) {
 
   return (
     <div className='store'>
-      <div className='store-main'>
-        <div className='store-basketContainer'>
-          <div className='store-basket'>
-            <Basket count={1} white />
-          </div>
-        </div>
+      <SearchBar />
+      <div className='store-img'>
         {sliderData && sliderData.length > 0 ? (
-          <ImageSlider className='store-img' slides={[sliderData]} />
+          <ImageSlider slides={[sliderData]} />
         ) : (
-          <div className='store-img' />
+          ''
         )}
-
+      </div>
+      <div className='store-main'>
         <div className='store-title'>
           <h1 className='store-name'>{data.name}</h1>
           <div className='store-icon'>
@@ -98,6 +96,7 @@ export default function Store({ count }) {
           )}
         </div>
       </div>
+
       <StoreDeliverTogo data={data} />
       <div className='store-menu'>
         <h2 className='store-menuTitle'>메뉴</h2>

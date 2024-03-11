@@ -1,26 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchBar.scss';
-import { CiLocationOn, CiHeart, CiShoppingBasket } from 'react-icons/ci';
+import { CiLocationOn, CiHeart } from 'react-icons/ci';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import Basket from '../Basket/Basket';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  fetchAddresses,
+  selectAddresses,
+  selectDefaultId,
+  setDefaultId,
+} from '../../../redux/reducers/addressSlice';
+import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
+
 function SearchBar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const addresses = useSelector(selectAddresses);
+  const defaultId = useSelector(selectDefaultId);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const locations = [
-    '서울시 강남구 역삼로 111',
-    '서울시 강남구 역삼로 222',
-    '서울시 관악구 봉천로 333',
-  ];
-
-  const [location, setLocation] = useState(locations[0]);
-
+  const [defaultAddress, setDefaultAddress] = useState(null);
   const [showList, setShowList] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchAddresses()).then(() => {
+        const newDefaultAddress =
+          addresses.find((address) => address.id === defaultId) || addresses[0];
+        setDefaultAddress(newDefaultAddress);
+      });
+    }
+  }, [dispatch, isLoggedIn, defaultId]);
 
   const handleToggleLocationList = () => {
     setShowList(!showList);
+  };
+
+  const handleClickAddress = (address) => {
+    setDefaultAddress(address);
+    dispatch(setDefaultId(address.id));
   };
 
   const handleSearchClick = () => {
@@ -28,11 +49,11 @@ function SearchBar() {
   };
 
   const handleControlClick = () => {
-    navigate(`address/`);
-  };
-
-  const handleOpenBasket = () => {
-    navigate('basket/');
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다')
+      navigate('/users/signin')
+    } else {
+    navigate(`/users/address/`)};
   };
 
   const handleClickLikes = () => {
@@ -49,7 +70,11 @@ function SearchBar() {
           >
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
-              {location.split(' ').slice(1, 2).join(' ')}
+              {isLoggedIn
+                ? defaultAddress
+                  ? defaultAddress.sigungu.split(' ')[0]
+                  : '로딩 중'
+                : '로그인 필요'}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
@@ -62,31 +87,27 @@ function SearchBar() {
             <button onClick={handleClickLikes}>
               <CiHeart className='searchBar-heartIcon' />
             </button>
-            <Basket count='1'/>
-            {/* <button className='searchBar-shopCount' onClick={handleOpenBasket}>
-              <div className='searchBar-shopCount'>
-                <CiShoppingBasket className='searchBar-shopIcon'>
-                  <div className='searchBar-countBlock'>
-                    <h1 className='searchBar-countText'>{count}</h1>
-                  </div>
-                </CiShoppingBasket>
-              </div>
-            </button> */}
+
+            <Basket count='1' />
           </div>
         </div>
         {showList && (
           <div className='searchBar-locaList'>
-            {locations.map((address, index) => (
-              <button
-                key={index}
-                className={`searchBar-loca ${
-                  location === address ? 'selected' : ''
-                }`}
-                onClick={() => setLocation(address)}
-              >
-                {locations[index]}
-              </button>
-            ))}
+            {isLoggedIn &&
+              addresses.map((address) => (
+                <button
+                  key={address.id}
+                  className={`searchBar-loca ${
+                    defaultAddress && defaultAddress.id === address.id
+                      ? 'selected'
+                      : ''
+                  }`}
+                  onClick={() => handleClickAddress(address)}
+                >
+                  {address.detail_address}
+                </button>
+              ))}
+
             <button
               className='searchBar-loca control'
               onClick={handleControlClick}
