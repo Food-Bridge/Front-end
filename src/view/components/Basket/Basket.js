@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Basket({ count}) {
   const navigate = useNavigate()
   const handleOpenBasket = () => {
-    navigate('/basket/');
+    navigate('/cart/');
   };
   
   return (
