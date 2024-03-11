@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchBar.scss';
-import { CiLocationOn, CiHeart, CiShoppingBasket } from 'react-icons/ci';
+import { CiLocationOn, CiHeart } from 'react-icons/ci';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import Basket from '../Basket/Basket';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  fetchAddresses,
+  selectAddresses,
+} from '../../../redux/reducers/addressSlice';
+
 function SearchBar() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchAddresses());
+  }, [dispatch]);
+
+  const address = useSelector(selectAddresses);
 
   const locations = [
     '서울시 강남구 역삼로 111',
@@ -28,7 +41,7 @@ function SearchBar() {
   };
 
   const handleControlClick = () => {
-    navigate(`address/`);
+    navigate(`users/address/`);
   };
 
   const handleOpenBasket = () => {
@@ -63,15 +76,6 @@ function SearchBar() {
               <CiHeart className='searchBar-heartIcon' />
             </button>
             <Basket count='1'/>
-            {/* <button className='searchBar-shopCount' onClick={handleOpenBasket}>
-              <div className='searchBar-shopCount'>
-                <CiShoppingBasket className='searchBar-shopIcon'>
-                  <div className='searchBar-countBlock'>
-                    <h1 className='searchBar-countText'>{count}</h1>
-                  </div>
-                </CiShoppingBasket>
-              </div>
-            </button> */}
           </div>
         </div>
         {showList && (
