@@ -14,7 +14,7 @@ export default function StoreOption() {
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
 
-  const [option, setOption] = useState('');
+  const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
 
   const price =

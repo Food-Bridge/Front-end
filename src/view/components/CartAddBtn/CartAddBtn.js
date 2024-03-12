@@ -9,11 +9,13 @@ import {
   setMenuData,
   selectMenu,
 } from '../../../redux/reducers/cartSlice';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../Modal/Modal';
 
 const CartAddBtn = ({ price, menuData, data }) => {
-  const isMenuIn = useSelector(selectIsMenuIn);
+  const navigate = useNavigate();
   const menu = useSelector(selectMenu);
+  const isMenuIn = useSelector(selectIsMenuIn);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [modal, showModal] = useState(false);
@@ -30,39 +32,49 @@ const CartAddBtn = ({ price, menuData, data }) => {
       setQuantity(quantity - 1);
     }
   };
-
+  console.log(menu);
   const handleAddCart = () => {
     if (isMenuIn && menu[0]?.restaurant === menuData.restaurant) {
       const existingMenuItem = menu.find(
         (item) =>
           item.id === menuData.id &&
-          item.option === menuData.option &&
-          item.sOption === menuData.sOption
+          arraysEqual(item.option, menuData.option) &&
+          arraysEqual(item.sOption, menuData.sOption)
       );
-      if (existingMenuItem) {
-        dispatch(
-          setMenuData(
-            menu.map((item) =>
-              item.id === menuData.id
-                ? { ...item, quantity: item.quantity + quantity }
-                : item
-            )
-          )
+      if (existingMenuItem !== undefined) {
+        const updatedMenu = menu.map((item) =>
+          item.id === existingMenuItem.id &&
+          item.option === existingMenuItem.option &&
+          item.sOption === existingMenuItem.sOption
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
         );
+        dispatch(setMenuData(updatedMenu));
       } else {
-        dispatch(setMenuData([...menu, { ...menuData }]));
+        dispatch(setMenuData([...menu, { ...menuData, quantity }]));
       }
-      showModal(false);
-    } else {
-      if (isMenuIn) {
-      showModal(true);
-      } else {
-      setCurrentStore(data);
-      dispatch(setMenuData([{ ...menuData, quantity }]));
       dispatch(addMenu());
+      showModal(false);
+      navigate(-1);
+    } else {
+      dispatch(setCurrentStore(data));
+      if (isMenuIn) {
+        showModal(true);
+      } else {
+        dispatch(setMenuData([{ ...menuData, quantity }]));
+        dispatch(addMenu());
+        navigate(-1);
       }
     }
   };
+
+  function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+  }
 
   const handleCancel = () => {
     showModal(false);
@@ -89,8 +101,8 @@ const CartAddBtn = ({ price, menuData, data }) => {
           <div className='cartAddBtn-least'>
             <h1 className='cartAddBtn-leastTitle'>최소 주문 금액</h1>
             <p className='cartAddBtn-leastPrice'>
-              {menuData.minimumOrderPrice
-                ? menuData.minimumOrderPrice.toLocaleString('ko-KR') + '원'
+              {data.minimumOrderPrice
+                ? data.minimumOrderPrice.toLocaleString('ko-KR') + '원'
                 : ''}
             </p>
           </div>

@@ -4,8 +4,9 @@ export const CartSlice = createSlice({
   name: 'cart',
   initialState: {
     isMenuIn: false,
+    isDeliver: true,
     store: [],
-    menu: []
+    menu: [],
   },
   reducers: {
     addMenu(state) {
@@ -13,8 +14,14 @@ export const CartSlice = createSlice({
     },
     deleteMenu(state) {
       state.isMenuIn = false;
-      state.store = null;
+      state.store = [];
       state.menu = [];
+    },
+    setDeliver(state) {
+      state.isDeliver = true;
+    },
+    setPickUp(state) {
+      state.isDeliver = false;
     },
     setCurrentStore(state, action) {
       state.store = action.payload;
@@ -25,9 +32,17 @@ export const CartSlice = createSlice({
   },
 });
 
-export const { addMenu, deleteMenu, setCurrentStore, setMenuData } = CartSlice.actions;
+export const {
+  addMenu,
+  deleteMenu,
+  setDeliver,
+  setPickUp,
+  setCurrentStore,
+  setMenuData,
+} = CartSlice.actions;
 
 export const selectIsMenuIn = (state) => state.cart.isMenuIn;
+export const selectIsDeliver = (state) => state.cart.isDeliver;
 export const selectStore = (state) => state.cart.store;
 export const selectMenu = (state) => state.cart.menu;
 

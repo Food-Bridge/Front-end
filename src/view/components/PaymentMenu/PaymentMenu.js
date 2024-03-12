@@ -1,40 +1,64 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './PaymentMenu.scss';
 
-import menuImg from '../../../data/chicken.jpg';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-export default function PaymentMenu({onDelete}) {
-  const [quantity, setQuantity] = useState(Number(1));
+export default function PaymentMenu({
+  onIncrease,
+  onDecrease,
+  onDelete,
+  item,
+  index,
+}) {
+  const navigate = useNavigate();
 
-  const increaseQuantity = () => {
-    setQuantity(quantity+1)
-  }
-  const decreaseQunatity = () => {
-    if (quantity === 1) {
-      onDelete()
-    }
-    setQuantity(quantity-1)
-  }
+  const handleClickOption = () => {
+    navigate(`/restaurant/${item.restaurant}/${item.id}`);
+    onDelete(index);
+  };
 
   return (
     <div className='paymentMenu'>
-      <img src={menuImg} className='paymentMenu-image' />
+      <img src={item.image} className='paymentMenu-image' />
       <div className='paymentMenu-content'>
         <div className='paymentMenu-header'>
-          <h1 className='paymentMenu-title'>반반치킨</h1>
-          <button className='paymentMenu-delete' onClick={onDelete}>X</button>
+          <h1 className='paymentMenu-title'>{item.name}</h1>
+          <button
+            className='paymentMenu-delete'
+            onClick={() => onDelete(index)}
+          >
+            X
+          </button>
         </div>
 
         <p className='paymentMenu-detail'>
-          옵션: 리뷰 이벤트 - 콜라 / 공기밥 추가 / 반찬 추가
+          {(item.option.length > 0 || item.sOption.length > 0) && ' 옵션 : '}
+          {item.option.map((option) => option.name).join(' / ')}{' '}
+          {item.option.length > 0 && item.sOption.length > 0 && ' / '}
+          {item.sOption.map((sOption) => sOption.name).join(' / ')}
         </p>
-        <p className='paymentMenu-price'>10,000원</p>
+        <p className='paymentMenu-price'>
+          {(item.price * item.quantity).toLocaleString('ko-KR')}원
+        </p>
         <div className='paymentMenu-button'>
-          <button className='paymentMenu-optionBtn'>옵션 변경</button>
+          <button className='paymentMenu-optionBtn' onClick={handleClickOption}>
+            옵션 변경
+          </button>
           <div className='paymentMenu-quantity'>
-            <button className='paymentMenu-minus' onClick={decreaseQunatity}>-</button>
-            <p className='paymentMenu-quantityNum'>{quantity}</p>
-            <button className='paymentMenu-plus' onClick={increaseQuantity}>+</button>
+            <button
+              className='paymentMenu-minus'
+              onClick={() => onDecrease(index)}
+            >
+              -
+            </button>
+            <p className='paymentMenu-quantityNum'>{item.quantity}</p>
+            <button
+              className='paymentMenu-plus'
+              onClick={() => onIncrease(index)}
+            >
+              +
+            </button>
           </div>
         </div>
       </div>
