@@ -11,7 +11,7 @@ import {
 } from '../../../redux/reducers/cartSlice';
 import Modal from '../Modal/Modal';
 
-const CartAddBtn = ({ price, menuData }) => {
+const CartAddBtn = ({ price, menuData, data }) => {
   const isMenuIn = useSelector(selectIsMenuIn);
   const menu = useSelector(selectMenu);
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const CartAddBtn = ({ price, menuData }) => {
       setQuantity(quantity - 1);
     }
   };
-  console.log(menu);
+
   const handleAddCart = () => {
     if (isMenuIn && menu[0]?.restaurant === menuData.restaurant) {
       const existingMenuItem = menu.find(
@@ -50,14 +50,17 @@ const CartAddBtn = ({ price, menuData }) => {
           )
         );
       } else {
-        dispatch(setMenuData([...menu, { ...menuData, quantity }]));
+        dispatch(setMenuData([...menu, { ...menuData }]));
       }
       showModal(false);
     } else {
-      setCurrentStore(menuData);
+      if (isMenuIn) {
+      showModal(true);
+      } else {
+      setCurrentStore(data);
       dispatch(setMenuData([{ ...menuData, quantity }]));
       dispatch(addMenu());
-      showModal(true);
+      }
     }
   };
 
@@ -66,10 +69,8 @@ const CartAddBtn = ({ price, menuData }) => {
   };
 
   const handleConfirm = () => {
-    showModal(false);
     dispatch(deleteMenu());
-    dispatch(setMenuData([]))
-    handleAddCart();
+    showModal(false);
   };
 
   return (

@@ -79,10 +79,10 @@ export default function StoreOption() {
           onOptionChange={handleOptionChange}
         />
       )}
-      <MenuCheckBox
+      {sOptionData.length > 0 && <MenuCheckBox
         data={sOptionData}
         onOptionChange={handleSOptionChange}
-      />
+      />}
       <CartAddBtn
         price={price}
         data={data}
