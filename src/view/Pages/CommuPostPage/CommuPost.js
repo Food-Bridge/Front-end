@@ -8,7 +8,7 @@ import CommunityCard from '../../components/CommunityCard/CommunityCard'
 import PostCard from '../../components/PostCard/PostCard'
 import { postCardData } from '../../../data/PostCardData/PostCardData'
 import { LuPencilLine } from "react-icons/lu";
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function CommuPost({ title }) {
@@ -18,41 +18,9 @@ function CommuPost({ title }) {
       navigate('/postUpload/');
   };
 
-  // const [ image, setImage ] = useState('');
-
-  // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:8000/community/', {
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching image:', error);
-  //     });
-  // }, []);
-
-  // const [infor, setInfor] = useState([])
-
-  // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:8000/community/', {
-  //       params: {
-  //         count: count,
-  //         results: results,
-  //       }
-  //     })
-  //     .then((response) => {
-  //       console.log(response)
-  //       // setInfor([response.data])
-  //       setTitle(response.data.title);
-  //       setContent(response.data.content);
-  //       setImage(response.data.image);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching image:', error);
-  //     });
-  // }, []);
+  const handleCardClick = (id) => {
+    navigate(`/postCard/${id}`)
+  }
 
   const [postData, setPostData] = useState([]);
 
@@ -63,6 +31,7 @@ function CommuPost({ title }) {
         // 성공적으로 데이터를 받아온 경우 state를 업데이트
         console.log(response)
         setPostData(response.data.results);
+        console.log('postData ids:', response.data.results.map(post => post.id));
       })
       .catch(error => {
         // 오류 처리
@@ -82,7 +51,9 @@ function CommuPost({ title }) {
           </div>
           <div className='commuPost-postList'>
             {postData.map(post => (
-              <PostCard title={post.title} content={post.content} image={post.image}/>
+                <button onClick={() => {handleCardClick(post.id)}} key={post.id} >
+                  <PostCard id={post.id} title={post.title} content={post.content} image={post.image}/>
+                </button>
             ))}
           </div>
         </div>

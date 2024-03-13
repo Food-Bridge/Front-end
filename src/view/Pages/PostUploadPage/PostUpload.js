@@ -5,7 +5,7 @@ import { RiArrowDropDownFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function PostUpload() {
+function PostUpload({onPostUpload}) {
   const navigate = useNavigate();
   const locations = [
     '서울시 강남구 역삼로 111',
@@ -38,11 +38,17 @@ function PostUpload() {
 
   const formData = new FormData();
 
+
+
   const onChangeTitle = (event) => {
     formData.append('title', event.target.value);
   }
 
   const onChangeContent = (event) => {
+    formData.append('content', event.target.value)
+  }
+
+  const onChangeId = (event) => {
     formData.append('content', event.target.value)
   }
   
@@ -51,7 +57,8 @@ function PostUpload() {
     const uploadFile = files[0];
     formData.append('image', uploadFile);
   }
-    const [image, setImage] = useState();
+  const [image, setImage] = useState();
+  const [postId, setPostId] = useState(null);
     
   return (
     <div className='PostUpload'>
@@ -99,6 +106,7 @@ function PostUpload() {
         <div className='postUpload-button'>
           <button 
             className='postUpload-uploadButton'
+            onChange={onChangeId}
             onClick={() => {
               axios
                 .post('http://localhost:8000/community/create/', 
@@ -111,6 +119,10 @@ function PostUpload() {
                 .then(function (response) {
                   console.log(response);
                   navigate('/commuPostWeek/')
+                  // 게시글 업로드 후 서버에서 반환된 ID를 상태로 설정
+                  // setPostId(response.data.id);
+                  // 부모 컴포넌트로 게시글 ID를 전달
+                  // onPostUpload(response.data.id);
                 })
                 .catch(function (error) {
                   console.log(error.response.data);

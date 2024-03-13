@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './DetailPost.scss'
 import { CiLocationOn } from 'react-icons/ci'
 import { postTagData } from '../../../data/PostCardData/PostTagData'
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
+import axios from 'axios'
 
-function DetailPost({user, location}) {
+function DetailPost({user, location, image, title, content}) {
 
     const data = [
         {
@@ -53,10 +54,10 @@ function DetailPost({user, location}) {
       <div className='detailPost-content'>
         <img
           className='detailPost-image'
-          src={data[0].img}
+          src={image}
         />
-        <p className='detailPost-title'>{data[0].title}</p>
-        <p className='detailPost-text'>{data[0].text}</p> 
+        <p className='detailPost-title'>{title}</p>
+        <p className='detailPost-text'>{content}</p> 
         <div className='detailPost-tags'>
               {postTagData.map((el) => {
                 return ( 
