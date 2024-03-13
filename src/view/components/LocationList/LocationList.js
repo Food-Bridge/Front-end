@@ -25,6 +25,7 @@ const LocationList = ({ isEdit,editedNicknames, handleEditAddressNickname }) => 
 
   const handleDefaultAddress = (address) => {
       dispatch(setDefaultAddress(address));
+      dispatch(fetchAddresses())
     }
   
   return (

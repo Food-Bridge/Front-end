@@ -59,14 +59,13 @@ export const setDefaultAddress = (address) => async (dispatch, getState) => {
   }
 };
 
-export const editAddressesNicknames = (updates) => async (dispatch) => {
+export const editAddressesNicknames = (updates) => async () => {
   if (updates && updates.length > 0) {
     for (const { id, nickname } of updates) {
       await axiosInstance.patch(`/users/address/${id}/`, {
         nickname: nickname,
       });
     }
-    dispatch(fetchAddresses());
   }
 };
 
