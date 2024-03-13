@@ -27,10 +27,10 @@ function SearchBar() {
   console.log(addresses);
 
   useEffect(() => {
-    if (isLoggedIn && addresses.length === 0) {
+    if (isLoggedIn) {
       dispatch(fetchAddresses());
     }
-  }, [dispatch, isLoggedIn, addresses]);
+  }, [dispatch, isLoggedIn]);
 
   const handleToggleLocationList = () => {
     setShowList(!showList);
@@ -70,11 +70,13 @@ function SearchBar() {
             <h1 className='searchBar-locaName'>
               {isLoggedIn
                 ? defaultId
-                  ? addresses
+                  ? (addresses
                       .find((address) => address.id === defaultId)
-                      .sigungu.split(' ')[0]
-                  : '로딩중'
+                      .sigungu.split(' ')[0] || addresses
+                      .find((address) => address.id === defaultId).detail_address.split(' ')[1])
+                  : ''
                 : '로그인 필요'}
+              {addresses.length == 0 && '주소 없음'}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>

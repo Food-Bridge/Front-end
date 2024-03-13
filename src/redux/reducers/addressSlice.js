@@ -29,20 +29,19 @@ export const selectDefaultId = (state) => state.address.defaultId;
 export const { updateAddresses, setDefaultId, editAddressNickname } =
   AddressSlice.actions;
 
-  export const fetchAddresses = () => async (dispatch, getState) => {
-    const res = await axiosInstance.get('/users/address/');
-    dispatch(updateAddresses(res.data));
-    const state = getState();
-    const defaultId = selectDefaultId(state);
-    if (defaultId === null && res.data.length > 0) {
-      dispatch(setDefaultId(res.data[0].id));
-    }
-      const newDefaultAddress = defaultId
-      ? res.data.find((address) => address.id === defaultId)
-      : res.data[0];
-    dispatch(setDefaultAddress(newDefaultAddress));
-  };
-  
+export const fetchAddresses = () => async (dispatch, getState) => {
+  const res = await axiosInstance.get('/users/address/');
+  dispatch(updateAddresses(res.data));
+  const state = getState();
+  const defaultId = selectDefaultId(state);
+  if (defaultId === null && res.data.length > 0) {
+    dispatch(setDefaultId(res.data[0].id));
+  }
+  const newDefaultAddress = defaultId
+    ? res.data.find((address) => address.id === defaultId)
+    : res.data[0];
+  dispatch(setDefaultAddress(newDefaultAddress));
+};
 
 export const setDefaultAddress = (address) => async (dispatch, getState) => {
   const state = getState();
@@ -55,18 +54,20 @@ export const setDefaultAddress = (address) => async (dispatch, getState) => {
       is_default: true,
     });
   }
-  dispatch(setDefaultId(address.id));
-  dispatch(fetchAddresses());
+  if (currentDefaultId) {
+    dispatch(setDefaultId(address.id));
+  }
 };
 
 export const editAddressesNicknames = (updates) => async (dispatch) => {
-  console.log(updates);
-  for (const { id, nickname } of updates) {
-    await axiosInstance.patch(`/users/address/${id}/`, {
-      nickname: nickname,
-    });
+  if (updates && updates.length > 0) {
+    for (const { id, nickname } of updates) {
+      await axiosInstance.patch(`/users/address/${id}/`, {
+        nickname: nickname,
+      });
+    }
+    dispatch(fetchAddresses());
   }
-  dispatch(fetchAddresses());
 };
 
 export const deleteAddress = (id) => async (dispatch, getState) => {

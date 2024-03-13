@@ -17,10 +17,11 @@ const LocationList = ({ isEdit,editedNicknames, handleEditAddressNickname }) => 
   const defaultId = useSelector(selectDefaultId)
 
   useEffect(() => {
-    if (isLoggedIn && addresses.length === 0) {
+    if (isLoggedIn) {
       dispatch(fetchAddresses());
     }
-  }, [dispatch, isLoggedIn, addresses]);
+  }, [dispatch, isLoggedIn]);
+
 
   const handleDefaultAddress = (address) => {
       dispatch(setDefaultAddress(address));
