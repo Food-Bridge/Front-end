@@ -7,30 +7,35 @@ import {
   selectAddresses,
   setDefaultAddress,
   deleteAddress,
+  selectDefaultId,
 } from '../../../redux/reducers/addressSlice';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
-import { useNavigate } from 'react-router-dom';
-
-const LocationList = ({ isEdit, editedNicknames, handleEditAddressNickname }) => {
+const LocationList = ({ isEdit,editedNicknames, handleEditAddressNickname }) => {
   const dispatch = useDispatch();
-  const  navigate = useNavigate()
   const addresses = useSelector(selectAddresses);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
+  const defaultId = useSelector(selectDefaultId)
+console.log(addresses)
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(fetchAddresses());
     }
   }, [dispatch, isLoggedIn]);
 
+
+  const handleDefaultAddress = (address) => {
+      dispatch(setDefaultAddress(address));
+      dispatch(fetchAddresses())
+    }
+  
   return (
     <div className='location-list'>
-      {addresses.map(({ nickname, detail_address, is_default, id }) => (
-        <div className='location-button' key={id}>
-          <button onClick={() => dispatch(setDefaultAddress(id))}>
+      {addresses.map((address) => (
+        <div className='location-button' key={address.id}>
+          <button onClick={() => handleDefaultAddress(address)}>
             <CiLocationOn
               className='location-icon'
-              style={{ color: is_default ? 'red' : 'black' }}
+              style={{ color: address.id === defaultId ? 'red' : 'black' }}
             />
           </button>
 
@@ -39,20 +44,20 @@ const LocationList = ({ isEdit, editedNicknames, handleEditAddressNickname }) =>
               <>
                 <input
                   className='location-input'
-                  placeholder={nickname}
-                  value={editedNicknames[id] || nickname}
-                  onChange={(e) => handleEditAddressNickname(id, e.target.value)}
+                  placeholder={address.nickname}
+                  value={editedNicknames[address.id] || address.nickname}
+                  onChange={(e) => handleEditAddressNickname(address.id, e.target.value)}
                 />
               </>
             ) : (
-              <h1 className='location-name'>{nickname}</h1>
+              <h1 className='location-name'>{address.nickname}</h1>
             )}
-            <p className='location-address'>{detail_address}</p>
+            <p className='location-address'>{address.detail_address}</p>
           </div>
           {isEdit && (
             <button
               className='location-editBtn'
-              onClick={() => dispatch(deleteAddress(id))}
+              onClick={() => dispatch(deleteAddress(address.id))}
             >
               삭제
             </button>

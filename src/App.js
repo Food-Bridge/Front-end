@@ -13,18 +13,18 @@ import SignUp from './view/pages/SignUpPage/SignUp';
 import StoreList from './view/pages/StoreListPage/StoreList';
 import Search from './view/pages/SearchPage/Search';
 import Location from './view/pages/LocationPage/Location';
-import LocationSearch from './view/pages/LocationSearchPage/LocationSearch';
 import CommuPost from './view/pages/CommuPostPage/CommuPost';
 import Community from './view/pages/CommunityPage/Community';
 import KakaoCallback from './view/pages/CallbackPage/KakaoCallback';
 import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
-import BasketList from './view/pages/BasketListPage/BaketList';
+import CartList from './view/pages/CartListPage/CartList';
 import StoreReview from './view/pages/StoreReviewPage/StoreReview';
 import MyReview from './view/pages/MyReviewPage/MyReview';
 import OrderList from './view/pages/OrderListPage/OrderList';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
+import Modal from './view/components/Modal/Modal';
 
 function App() {
   return (
@@ -59,7 +59,7 @@ function App() {
           <Route path='restaurant/' element={<StoreList />} />
 
           // 주문 정보
-          <Route path='basket/' element={<BasketList />} />
+          <Route path='cart/' element={<CartList />} />
           <Route path='orderlist/' element={<OrderList />} />
           
           // 커뮤니티

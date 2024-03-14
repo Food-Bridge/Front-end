@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import PlusInfo from '../PlusInfo/PlusInfo';
 import './StoreDelierTogo.scss';
+import { useDispatch } from 'react-redux';
+import { setPickUp, setDeliver } from '../../../redux/reducers/cartSlice';
 
 export default function StoreDeliverTogo({ data }) {
+  const dispatch = useDispatch();
   const [type, setType] = useState('deliver');
+
+  if (type === 'deliver') {
+    dispatch(setDeliver());
+  } else {
+    dispatch(setPickUp());
+  }
 
   return (
     <div className='storeDeliverTogo'>

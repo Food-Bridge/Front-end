@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Location.scss';
 import {
-  fetchAddresses,
   editAddressesNicknames,
 } from '../../../redux/reducers/addressSlice';
 import { useDispatch } from 'react-redux';
@@ -16,10 +15,10 @@ const Location = () => {
   const [editedNicknames, setEditedNicknames] = useState({});
 
   const handleEditAddressNickname = (id, value) => {
-    setEditedNicknames((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
+      setEditedNicknames((prevState) => ({
+        ...prevState,
+        [id]: value,
+      }));
   };
 
   const handleToggleEdit = () => {
@@ -39,7 +38,8 @@ const Location = () => {
     const updatedNicknames = Object.entries(editedNicknames).map(
       ([id, nickname]) => ({ id, nickname })
     );
-        dispatch(editAddressesNicknames(updatedNicknames));
+    console.log(updatedNicknames)
+    dispatch(editAddressesNicknames(updatedNicknames));
   };
 
   return (
@@ -50,7 +50,10 @@ const Location = () => {
         <div>
           <header className='location-header'>
             <h1 className='location-title'>주소 관리</h1>
-            <button className='location-edit' onClick={isEdit ? handleCompleteEditing : handleToggleEdit}>
+            <button
+              className='location-edit'
+              onClick={isEdit ? handleCompleteEditing : handleToggleEdit}
+            >
               {isEdit ? '완료' : '편집'}
             </button>
           </header>
@@ -59,8 +62,8 @@ const Location = () => {
           </button>
           <LocationList
             isEdit={isEdit}
-            editedNicknames={editedNicknames}
             handleEditAddressNickname={handleEditAddressNickname}
+            editedNicknames={editedNicknames}
           />
         </div>
       )}

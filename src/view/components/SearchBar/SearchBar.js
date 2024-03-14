@@ -12,6 +12,7 @@ import {
   selectAddresses,
   selectDefaultId,
   setDefaultId,
+  setDefaultAddress,
 } from '../../../redux/reducers/addressSlice';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 
@@ -21,26 +22,22 @@ function SearchBar() {
   const addresses = useSelector(selectAddresses);
   const defaultId = useSelector(selectDefaultId);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  const [defaultAddress, setDefaultAddress] = useState(null);
   const [showList, setShowList] = useState(false);
+  console.log(defaultId);
+  console.log(addresses);
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(fetchAddresses()).then(() => {
-        const newDefaultAddress =
-          addresses.find((address) => address.id === defaultId) || addresses[0];
-        setDefaultAddress(newDefaultAddress);
-      });
+      dispatch(fetchAddresses());
     }
-  }, [dispatch, isLoggedIn, defaultId]);
+  }, [dispatch, isLoggedIn]);
 
   const handleToggleLocationList = () => {
     setShowList(!showList);
   };
 
   const handleClickAddress = (address) => {
-    setDefaultAddress(address);
+    dispatch(setDefaultAddress(address));
     dispatch(setDefaultId(address.id));
   };
 
@@ -50,10 +47,11 @@ function SearchBar() {
 
   const handleControlClick = () => {
     if (!isLoggedIn) {
-      alert('로그인이 필요합니다')
-      navigate('/users/signin')
+      alert('로그인이 필요합니다');
+      navigate('/users/signin');
     } else {
-    navigate(`/users/address/`)};
+      navigate(`/users/address/`);
+    }
   };
 
   const handleClickLikes = () => {
@@ -71,10 +69,17 @@ function SearchBar() {
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
               {isLoggedIn
-                ? defaultAddress
-                  ? defaultAddress.sigungu.split(' ')[0]
-                  : '로딩 중'
-                : '로그인 필요'}
+                ? defaultId
+                  ? addresses.length > 0
+                    ? addresses
+                        .find((address) => address.id === defaultId)
+                        ?.sigungu.split(' ')[0] ||
+                      addresses
+                        .find((address) => address.id === defaultId)
+                        ?.detail_address.split(' ')[1]
+                    : '주소 선택'
+                  : '로딩중'
+                : addresses.length === 0 && '주소 없음'}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
@@ -87,27 +92,22 @@ function SearchBar() {
             <button onClick={handleClickLikes}>
               <CiHeart className='searchBar-heartIcon' />
             </button>
-
             <Basket count='1' />
           </div>
         </div>
         {showList && (
           <div className='searchBar-locaList'>
-            {isLoggedIn &&
-              addresses.map((address) => (
-                <button
-                  key={address.id}
-                  className={`searchBar-loca ${
-                    defaultAddress && defaultAddress.id === address.id
-                      ? 'selected'
-                      : ''
-                  }`}
-                  onClick={() => handleClickAddress(address)}
-                >
-                  {address.detail_address}
-                </button>
-              ))}
-
+            {addresses.map((address) => (
+              <button
+                key={address.id}
+                className={`searchBar-loca ${
+                  defaultId === address.id ? 'selected' : ''
+                }`}
+                onClick={() => handleClickAddress(address)}
+              >
+                {address.detail_address}
+              </button>
+            ))}
             <button
               className='searchBar-loca control'
               onClick={handleControlClick}

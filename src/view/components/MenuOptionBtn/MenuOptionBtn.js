@@ -7,7 +7,7 @@ export default function MenuOptionBtn({data, onOptionChange}) {
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
-    onOptionChange(option)
+    onOptionChange([option])
   };
 
   return (

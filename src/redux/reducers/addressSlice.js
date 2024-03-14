@@ -34,35 +34,48 @@ export const fetchAddresses = () => async (dispatch, getState) => {
   dispatch(updateAddresses(res.data));
   const state = getState();
   const defaultId = selectDefaultId(state);
-  if (defaultId === null && res.data.length > 0) {
-    dispatch(setDefaultId(res.data[0].id));
+  if (defaultId) {
+    const newDefaultAddress = res.data.find(
+      (address) => address.id === defaultId
+    );
+    dispatch(setDefaultAddress(newDefaultAddress));
   }
 };
 
-export const setDefaultAddress = (id) => async (dispatch, getState) => {
+export const setDefaultAddress = (address) => async (dispatch, getState) => {
   const state = getState();
   const currentDefaultId = selectDefaultId(state);
-  console.log(currentDefaultId);
-  if (currentDefaultId !== id) {
+  if (currentDefaultId && currentDefaultId !== address.id) {
     await axiosInstance.patch(`/users/address/${currentDefaultId}/`, {
       is_default: false,
     });
-    console.log(id);
-    console.log(currentDefaultId);
-    await axiosInstance.patch(`/users/address/${id}/`, { is_default: true });
+    await axiosInstance.patch(`/users/address/${address.id}/`, {
+      is_default: true,
+    });
   }
-  dispatch(setDefaultId(id));
-  dispatch(fetchAddresses());
+  if (currentDefaultId) {
+    dispatch(setDefaultId(address.id));
+  }
 };
 
 export const editAddressesNicknames = (updates) => async (dispatch) => {
-  for (const { id, editednickname } of updates) {
-    await axiosInstance.patch(`/users/address/${id}/`, { nickname: editednickname });
+  if (updates && updates.length > 0) {
+    for (const { id, nickname } of updates) {
+      const res = await axiosInstance.patch(`/users/address/${id}/`, {
+        nickname: nickname,
+      });
+      console.log(res);
+    }
+    dispatch(fetchAddresses());
   }
-  dispatch(fetchAddresses());
 };
 
-export const deleteAddress = (id) => async (dispatch) => {
+export const deleteAddress = (id) => async (dispatch, getState) => {
+  const state = getState();
+  const defaultId = selectDefaultId(state);
+  if (id === defaultId) {
+    dispatch(setDefaultId(null));
+  }
   await axiosInstance.delete(`/users/address/${id}/`);
   dispatch(fetchAddresses());
 };
