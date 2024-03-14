@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import axiosInstance from '../../../api/instance';
@@ -9,10 +9,6 @@ function SignUp() {
   const [passwordValue, setPassword] = useState('');
   const [password2Value, setPassword2] = useState('');
   const [phoneNumberValue, setPhoneNumber] = useState('');
-
-  const [userIdInput, setUserIdInput] = useState('');
-  const [userPwInput, setUserPwInput] = useState('');
-  const [isShowPwChecked, setShowPwChecked] = useState(false);
   const passwordRef = useRef(null);
 
   const navigate = useNavigate();
@@ -39,8 +35,97 @@ function SignUp() {
 
   const userNameValue = '김00';
 
+// 비밀번호 일치 여부 확인
+const [passwordMatch, setPasswordMatch] = useState(true);
+
+const checkPasswordMatch = () => {
+  if (passwordValue !== password2Value) {
+    setPasswordMatch(false);
+  } else {
+    setPasswordMatch(true);
+  }
+};
+
+useEffect(() => {
+  checkPasswordMatch();
+}, [passwordValue, password2Value]);
+
+
+// 이메일 형식 확인
+const [emailValid, setEmailValid] = useState(true);
+
+const validateEmail = (email) => {
+  // 이메일 형식을 검사하는 정규식
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+};
+
+const checkEmailValidity = () => {
+  setEmailValid(validateEmail(emailValue));
+};
+
+useEffect(() => {
+  checkEmailValidity();
+}, [emailValue]);
+
+
+// 전화번호
+const [phoneValid, setPhoneValid] = useState(true);
+
+const validatePhoneNumber = (phoneNumber) => {
+  // 전화번호 형식을 검사하는 정규식 (숫자만으로 이루어진 10자리 또는 11자리)
+  const phoneRegex = /^\d{11}$/;
+  return phoneRegex.test(phoneNumber);
+};
+
+const checkPhoneValidity = () => {
+  setPhoneValid(validatePhoneNumber(phoneNumberValue));
+};
+
+useEffect(() => {
+  checkPhoneValidity();
+}, [phoneNumberValue]);
+
+
+// 중복 여부 확인
+const [emailExists, setEmailExists] = useState(false);
+const [phoneExists, setPhoneExists] = useState(false);
+
+const checkExistingEmail = async () => {
+  try {
+    const response = await axiosInstance.get(`/check-email/${emailValue}`);
+    setEmailExists(response.data.exists);
+  } catch (error) {
+    console.error("Error checking existing email:", error);
+  }
+};
+
+const checkExistingPhone = async () => {
+  try {
+    const response = await axiosInstance.get(`/check-phone/${phoneNumberValue}`);
+    setPhoneExists(response.data.exists);
+  } catch (error) {
+    console.error("Error checking existing phone number:", error);
+  }
+};
+
+useEffect(() => {
+  if (emailValue) {
+    checkExistingEmail();
+  }
+}, [emailValue]);
+
+useEffect(() => {
+  if (phoneNumberValue) {
+    checkExistingPhone();
+  }
+}, [phoneNumberValue]);
+
+
   return (
     <>
+    {emailExists && <p className="email-exists">이미 존재하는 이메일입니다</p>}
+    {phoneExists && <p className="phone-exists">이미 존재하는 전화번호입니다</p>}
       <div className='SignUp'>
         <header className='signUp-frame'>
           <h1 className='signUp-title'>이메일로 회원가입</h1>
@@ -55,28 +140,34 @@ function SignUp() {
                   value={emailValue}
                   onChange={saveUserEmail}
                 />
+                {emailValid && <p className="singUp-emailInvalid1">올바른 이메일 형식입니다</p>}
+                {!emailValid && <p className="singUp-emailInvalid2">올바른 이메일 형식이 아닙니다</p>}
               </div>
               <div className='signUp-passwdForm'>
                 <h1 className='signUp-passwdText'>비밀번호</h1>
                 <div className='signUp-inputFlex'>
-                  <input
-                    type='password'
-                    id='password'
-                    ref={passwordRef}
-                    placeholder='영문/숫자/특수문자 혼합 8~20자'
-                    className='singUp-passwdInput'
-                    value={passwordValue}
-                    onChange={saveUserPassword}
-                  />
-                  <input
-                    type='password'
-                    id='password'
-                    ref={passwordRef}
-                    placeholder='비밀번호를 한번 더 입력해주세요'
-                    className='singUp-passwdInput2'
-                    value={password2Value}
-                    onChange={saveUserPassword2}
-                  />
+                  <div className='singUp-passwdInputForm'>
+                    <input
+                      type='password'
+                      id='password'
+                      ref={passwordRef}
+                      placeholder='영문/숫자/특수문자 혼합 8~20자'
+                      className='singUp-passwdInput'
+                      value={passwordValue}
+                      onChange={saveUserPassword}
+                    />
+                      <input
+                        type='password'
+                        id='password'
+                        ref={passwordRef}
+                        placeholder='비밀번호를 한번 더 입력해주세요'
+                        className='singUp-passwdInput2'
+                        value={password2Value}
+                        onChange={saveUserPassword2}
+                      />
+                    </div>
+                    {/* {passwordMatch && <p className="singUp-passwdMismatch1">비밀번호가 일치합니다</p>} */}
+                    {!passwordMatch && <p className="singUp-passwdMismatch2">비밀번호가 일치하지 않습니다</p>}
                 </div>
               </div>
               <div className='signUp-numberForm'>
@@ -88,6 +179,8 @@ function SignUp() {
                   value={phoneNumberValue}
                   onChange={saveUserPhoneNumber}
                 />
+                {phoneValid && <p className="singUp-phoneInvalid1">올바른 전화번호 형식입니다</p>}
+                {!phoneValid && <p className="singUp-phoneInvalid2">올바른 전화번호 형식이 아닙니다</p>}
               </div>
             </div>
             <div className='signUp-btn'>
@@ -101,6 +194,10 @@ function SignUp() {
                     password2: password2Value,
                     phone_number: phoneNumberValue,
                     is_seller: false,
+                  }, {
+                    headers: {
+                      'Authorization': `Bearer ${localStorage.getItem('access')}`,
+                    }
                   });
 
                   handleSignUp();

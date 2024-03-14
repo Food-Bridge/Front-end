@@ -56,9 +56,16 @@ export default function MyList() {
   };
 
   const handleLogout = async () => {
-    await axiosInstance.post('/users/logout/', {
-      refresh: localStorage.getItem('refresh'),
-    });
+    await axiosInstance.post('/users/logout/', 
+      {
+        refresh: localStorage.getItem('refresh'),
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        }
+      }
+    );
 
     localStorage.removeItem('refresh');
     localStorage.removeItem('access');

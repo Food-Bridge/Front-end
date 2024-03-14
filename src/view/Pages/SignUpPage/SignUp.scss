@@ -43,6 +43,18 @@
                         width: 300px;
                         height: 50px;
                     }
+                    .singUp-emailInvalid1 {
+                        width: 300px;
+                        height: 20px;
+                        color: blue;
+                        font-size: 12px;
+                    }
+                    .singUp-emailInvalid2 {
+                        width: 300px;
+                        height: 20px;
+                        color: red;
+                        font-size: 12px;
+                    }
                 }
                 .signUp-passwdForm {
                     width: 385px;
@@ -57,19 +69,35 @@
                         text-align: left;
                     }
                     .signUp-inputFlex {
-                        height: 120px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-between;
+                        height: 140px;
 
-                        .singUp-passwdInput {
-                            width: 300px;
-                            height: 50px;
+                        .singUp-passwdInputForm {
+                            height: 120px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+
+                            .singUp-passwdInput {
+                                width: 300px;
+                                height: 50px;
+                            }
+                            .singUp-passwdInput2 {
+                                width: 300px;
+                                height: 50px;
+                            }   
                         }
-                        .singUp-passwdInput2 {
+                        .singUp-passwdMismatch1 {
                             width: 300px;
-                            height: 50px;
-                        }   
+                            height: 20px;
+                            color: blue;
+                            font-size: 12px;
+                        }
+                        .singUp-passwdMismatch2 {
+                            width: 300px;
+                            height: 20px;
+                            color: red;
+                            font-size: 12px;
+                        }
                     }
 
                 }   
@@ -89,6 +117,18 @@
                         width: 300px;
                         height: 50px;
                     }   
+                    .singUp-phoneInvalid1 {
+                        width: 300px;
+                        height: 20px;
+                        color: blue;
+                        font-size: 12px;
+                    }
+                    .singUp-phoneInvalid2 {
+                        width: 300px;
+                        height: 20px;
+                        color: red;
+                        font-size: 12px;
+                    }
                 }         
             }
             .signUp-btn {
