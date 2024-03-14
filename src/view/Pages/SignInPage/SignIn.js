@@ -17,13 +17,13 @@ function SignIn() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    window.localStorage.clear();
     const data = {
       email: emailValue,
       password: passwordValue,
     };
     const res = await axiosInstance.post('/users/login/', data);
     console.log(res);
-
     localStorage.setItem('access', res.data.tokens.access);
     localStorage.setItem('refresh', res.data.tokens.refresh);
     dispatch(login());

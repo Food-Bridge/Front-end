@@ -22,6 +22,7 @@ const KakaoCallback = () => {
       );
 
       const token = response.data.access_token;
+      window.localStorage.clear()
       const res = await axiosInstance.post('/users/kakao/login/callback/', {
         "access_token": token,
       });

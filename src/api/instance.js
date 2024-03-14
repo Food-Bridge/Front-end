@@ -30,7 +30,6 @@ axiosInstance.interceptors.request.use(
 
       return currentTime >= tokenExpiration;
     };
-
     let token = localStorage.getItem('access');
     if (token && isTokenExpired(token)) {
       token = await refreshToken();

@@ -22,6 +22,7 @@ const GoogleCallback = () => {
         {}
       );
       const token = response.data.access_token;
+      window.localStorage.clear()
       const res = await axiosInstance.post('/users/google/login/callback/', {
         access_token: token,
       });
