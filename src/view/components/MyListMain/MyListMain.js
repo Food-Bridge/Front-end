@@ -8,15 +8,19 @@ import { HiOutlineChatBubbleLeftEllipsis } from 'react-icons/hi2';
 import { CiHeart } from 'react-icons/ci';
 
 export default function MyListMain() {
-  const navigate = useNavigate('')
+  const navigate = useNavigate('');
 
   const handleOpenReview = () => {
-    navigate('review')
-  }
+    navigate('/users/review/');
+  };
+
+  const handleOpenOrder = () => {
+    navigate('/orderlist/');
+  };
 
   return (
     <div className='mylistMain'>
-      <button className='mylistMain-box'>
+      <button className='mylistMain-box' onClick={handleOpenOrder}>
         <div className='mylistMain-content'>
           <TfiReceipt size='40' />
           <h2 className='mylistMain-title'>주문내역</h2>
