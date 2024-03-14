@@ -27,6 +27,7 @@ import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
 import Modal from './view/components/Modal/Modal';
 
 function App() {
+  
   return (
     <div className='App'>
       <Router>
@@ -64,18 +65,14 @@ function App() {
           
           // 커뮤니티
           <Route path='commu/' element={<Community />} />
-          <Route
-            path='commuPostWeek/'
-            element={<CommuPost title={'주간 인기'} />}
-          />
-          <Route
-            path='commuPostDay/'
-            element={<CommuPost title={'일간 인기'} />}
-          />
-          <Route path='commuPostNew/' element={<CommuPost title={'최신'} />} />
-          <Route path='postCard/' element={<PostDetail />} />
-          <Route path='postUpload/' element={<PostUpload />} />
-          <Route path='poster/' element={<Poster />} />
+          <Route path='commuPostWeek/' element={<CommuPost title={"주간 인기"}/>} />
+          <Route path='commuPostDay/' element={<CommuPost title={"일간 인기"}/>} />
+          <Route path='commuPostNew/' element={<CommuPost title={"최신"}/>} />
+          <Route path='postCard/:id' element={<PostDetail />} />
+          <Route path='postUpload/' element={<PostUpload/>}/>
+
+          <Route path='poster/' element={<Poster />}/>
+
         </Routes>
       </Router>
     </div>

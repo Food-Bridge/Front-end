@@ -2,17 +2,12 @@ import React, { useEffect, useState } from 'react'
 import './PostCard.scss'
 import { postTagData } from '../../../data/PostCardData/PostTagData';
 import { CiFaceSmile, CiLocationOn } from "react-icons/ci";
-import { useNavigate } from 'react-router-dom';
 
 function PostCard({image, title, content}) {
-  const navigate = useNavigate();
-    
-  const handlePostClick = () => {
-    navigate('/postCard')
-  }
 
   return (
-    <div className='PostCard' onClick={handlePostClick}>
+    <div className='PostCard'>
+      {/* {id} */}
       <div className='postCard-frame'>
         <div className='postCard-header'>
           <div className='postCard-userInfo'>
