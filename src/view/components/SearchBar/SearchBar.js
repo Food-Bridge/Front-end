@@ -77,7 +77,7 @@ function SearchBar() {
                       addresses
                         .find((address) => address.id === defaultId)
                         ?.detail_address.split(' ')[1]
-                    : '주소 없음'
+                    : '주소 선택'
                   : '로딩중'
                 : addresses.length === 0 && '주소 없음'}
             </h1>

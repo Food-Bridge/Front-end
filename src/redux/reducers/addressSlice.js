@@ -34,13 +34,12 @@ export const fetchAddresses = () => async (dispatch, getState) => {
   dispatch(updateAddresses(res.data));
   const state = getState();
   const defaultId = selectDefaultId(state);
-  if (defaultId === null && res.data.length > 0) {
-    dispatch(setDefaultId(res.data[0].id));
+  if (defaultId) {
+    const newDefaultAddress = res.data.find(
+      (address) => address.id === defaultId
+    );
+    dispatch(setDefaultAddress(newDefaultAddress));
   }
-  const newDefaultAddress = defaultId
-    ? res.data.find((address) => address.id === defaultId)
-    : res.data[0];
-  dispatch(setDefaultAddress(newDefaultAddress));
 };
 
 export const setDefaultAddress = (address) => async (dispatch, getState) => {
@@ -59,13 +58,15 @@ export const setDefaultAddress = (address) => async (dispatch, getState) => {
   }
 };
 
-export const editAddressesNicknames = (updates) => async () => {
+export const editAddressesNicknames = (updates) => async (dispatch) => {
   if (updates && updates.length > 0) {
     for (const { id, nickname } of updates) {
-      await axiosInstance.patch(`/users/address/${id}/`, {
+      const res = await axiosInstance.patch(`/users/address/${id}/`, {
         nickname: nickname,
       });
+      console.log(res);
     }
+    dispatch(fetchAddresses());
   }
 };
 
