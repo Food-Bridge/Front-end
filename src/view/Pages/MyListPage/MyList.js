@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectProfile,
+  logout,
+  setProfile,
+} from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../../redux/reducers/authSlice';
-
 import MyListBlock from '../../components/MyListBlock/MyListBlock';
 import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
 import MyListMain from '../../components/MyListMain/MyListMain';
@@ -17,41 +20,38 @@ import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 
 export default function MyList() {
   const navigate = useNavigate();
-  const [image, setImage] = useState('');
-  const [nickname, setNickname] = useState('');
+  const dispatch = useDispatch();
+  const profile = useSelector(selectProfile);
   const [isNicknameChange, setIsNicknameChange] = useState(false);
 
-  useEffect(async () => {
+  useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get('/users/profile/');
-      setImage(res.data.image);
-      setNickname(res.data.nickname);
+      dispatch(setProfile({ image: res.data.image, nickname: res.data.nickname }));
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const onChangeImage = async (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
-    formData.append('nickname', nickname);
+    formData.append('nickname', profile.nickname);
 
     const res = await axiosInstance.put('/users/profile/', formData);
-    setImage(res.data.image);
+    dispatch(setProfile({ image: res.data.image, nickname: profile.nickname }));
   };
 
-  const dispatch = useDispatch();
-
   const handleChangeNickname = async () => {
-    setIsNicknameChange(!isNicknameChange)
+    setIsNicknameChange(!isNicknameChange);
     if (isNicknameChange) {
       const formData = new FormData();
-      formData.append('nickname', nickname);
+      formData.append('nickname', profile.nickname);
 
-      const res = axiosInstance.put('/users/profile/', formData);
+      const res = await axiosInstance.put('/users/profile/', formData);
 
-      setNickname(res.data.nickname);
+      dispatch(setProfile({ image: profile.image, nickname: res.data.nickname }));
     }
   };
 
@@ -66,7 +66,7 @@ export default function MyList() {
     navigate('/users/signin/');
   };
 
-  const handleCoupon = () => {
+  const handleOpenCoupon = () => {
     navigate('coupon/');
   };
 
@@ -74,7 +74,7 @@ export default function MyList() {
     <div className='mylist'>
       <div className='mylistUser'>
         <div className='mylistUser-profile'>
-          <img className='mylistUser-profileImg' src={image} />
+          <img className='mylistUser-profileImg' src={profile.image} />
           <input
             className='mylistUser-profileInput'
             id='file'
@@ -82,7 +82,7 @@ export default function MyList() {
             accept='image/*'
             onChange={onChangeImage}
           />
-          <label for='file' className='mylistUser-profileBtn'>
+          <label htmlFor='file' className='mylistUser-profileBtn'>
             편집
           </label>
         </div>
@@ -92,20 +92,28 @@ export default function MyList() {
               <input
                 className='mylistUser-id-input'
                 type='text'
-                onChange={(event) => setNickname(event.target.value)}
+                value={profile.nickname}
+                onChange={(event) =>
+                  dispatch(
+                    setProfile({
+                      image: profile.image,
+                      nickname: event.target.value,
+                    })
+                  )
+                }
               ></input>
             ) : (
-              <h1 className='mylistUser-id-name'>{nickname}</h1>
+              <h1 className='mylistUser-id-name'>{profile.nickname}</h1>
             )}
-            <button
+            <div
               className='mylistUser-id-change'
               onClick={handleChangeNickname}
             >
               <PlusInfo text={isNicknameChange ? '변경 완료' : '닉네임 변경'} />
-            </button>
-            <button className='mylistUser-id-logout' onClick={handleLogout}>
+            </div>
+            <div className='mylistUser-id-logout' onClick={handleLogout}>
               <PlusInfo text='로그아웃' />
-            </button>
+            </div>
           </div>
           <div className='mylistUser-detail'>
             <div className='mylistUser-detailBox'>
@@ -126,9 +134,9 @@ export default function MyList() {
       <MyListMain />
       <MyListDeliver />
       <div className='mylistBlocks-row'>
-        <button onClick={handleCoupon}>
+        <div onClick={handleOpenCoupon}>
           <MyListBlock icon={<CiDiscount1 size='35' />} text='할인쿠폰' />
-        </button>
+        </div>
         <MyListBlock icon={<CiGift size='35' />} text='이벤트' />
         <MyListBlock icon={<IoSettingsOutline size='35' />} text='설정' />
       </div>
