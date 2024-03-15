@@ -38,7 +38,6 @@ function SearchBar() {
 
   const handleClickAddress = (address) => {
     dispatch(setDefaultAddress(address));
-    dispatch(setDefaultId(address.id));
   };
 
   const handleSearchClick = () => {
@@ -68,18 +67,18 @@ function SearchBar() {
           >
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
-              {isLoggedIn
-                ? defaultId
-                  ? addresses.length > 0
-                    ? addresses
-                        .find((address) => address.id === defaultId)
-                        ?.sigungu.split(' ')[0] ||
-                      addresses
-                        .find((address) => address.id === defaultId)
-                        ?.detail_address.split(' ')[1]
-                    : '주소 선택'
-                  : '로딩중'
-                : addresses.length === 0 && '주소 없음'}
+            {
+  isLoggedIn ?
+    (
+      defaultId && addresses.length > 0 ?
+        (
+          addresses.find((address) => address.id === defaultId)
+            ?.sigungu.split(' ')[0] ||
+          addresses.find((address) => address.id === defaultId)
+            ?.detail_address.split(' ')[1]
+        ) : '주소 선택'
+    ) : '로그인 필요'
+}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
