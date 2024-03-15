@@ -13,7 +13,6 @@ import {
   setPickUp,
   deleteMenu,
   setMenuData,
-  setCurrentStore,
 } from '../../../redux/reducers/cartSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,6 +29,7 @@ export default function CartList() {
     0
   );
   const deliveryFee = store.deliveryFee ? store.deliverFee : 0;
+  console.log(deliveryFee)
   const totalPrice = (totalValue + deliveryFee).toLocaleString('ko-KR');
 
   const [deliverClass, setDeliverClass] = useState('cartlist-selectBtn');

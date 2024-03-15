@@ -59,7 +59,7 @@ function App() {
           <Route path='restaurant/:resId/:menuId' element={<StoreOption />} />
           <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
-          <Route path='restaurant/reviewUpload' element={<ReviewUpload />} />
+          <Route path='restaurant/reviewUpload/' element={<ReviewUpload />} />
 
           // 주문 정보
           <Route path='cart/' element={<CartList />} />

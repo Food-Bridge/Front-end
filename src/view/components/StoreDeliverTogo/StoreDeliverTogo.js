@@ -50,7 +50,7 @@ export default function StoreDeliverTogo({ data }) {
           <div className='storeDeliverTogo-detail'>
             <h3 className='storeDeliverTogo-detailTitle'>배달비</h3>
             <p className='storeDeliverTogo-detailContent'>
-              {data.delivertyFee}원
+              {data.deliveryFee}원
             </p>
           </div>
           <div className='storeDeliverTogo-info'>

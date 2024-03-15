@@ -1,53 +1,77 @@
 import React from 'react';
 import './OrderReceipt.scss';
-import { HiMiniXMark } from "react-icons/hi2";
+import { HiMiniXMark } from 'react-icons/hi2';
 
-export default function OrderReceipt({closeModal}) {
-  const menu = [
-    { name: '반반치킨(순살)', price: '18,000' },
-    { name: '치즈 추가', price: '2,000' },
-  ];
-
+export default function OrderReceipt({ order, closeModal, created }) {
+  const menu = order.menu_list;
+  const isDeliver = order.is_deliver;
   return (
     <>
       <div className='orderReceipt-frame'>
         <header className='orderReceipt-header'>
-          <button className='orderReceipt-back' onClick={closeModal}><HiMiniXMark size='30' /></button>
+          <button className='orderReceipt-back' onClick={closeModal}>
+            <HiMiniXMark size='30' />
+          </button>
           <h1 className='orderReceipt-title'>영수증</h1>
         </header>
         <div className='orderReceipt-body'>
-          <h1 className='orderReceipt-store'>000치킨 00점</h1>
-          <p className='orderReceipt-time'>2024-02-24 12:15</p>
+          <h1 className='orderReceipt-store'>{order.restaurant_name}</h1>
+          <p className='orderReceipt-time'>
+            {created} {order.order_state}
+          </p>
           <div className='orderReceipt-menuList'>
-            {menu.map(({ name, price }) => (
-              <div className='orderReceipt-menu' key={name}>
-                <h2 className='orderReceipt-menuName'>{name}</h2>
-                <p className='orderReceipt-menuPrice'>{price}원</p>
+            {menu.map(({ menu_id, menu_name, price }) => (
+              <div className='orderReceipt-menu' key={menu_id}>
+                <h2 className='orderReceipt-menuName'>{menu_name}</h2>
+                <p className='orderReceipt-menuPrice'>
+                  {price.toLocaleString('ko-KR')}원
+                </p>
               </div>
             ))}
           </div>
-          <div className='orderReceipt-row'>
-            <h3 className='orderReceipt-text'>주문 금액</h3>
-            <p className='orderReceipt-value'>20,000원</p>
-          </div>
-          <div className='orderReceipt-row'>
-            <h3 className='orderReceipt-text'>배달 팁</h3>
-            <p className='orderReceipt-value'>3,000원</p>
-          </div>
+          {isDeliver && (
+            <>
+              <div className='orderReceipt-row'>
+                <h3 className='orderReceipt-text'>주문 금액</h3>
+                <p className='orderReceipt-value'>
+                  {(order.total_price - order.delivery_fee).toLocaleString(
+                    'ko-KR'
+                  )}
+                  원
+                </p>
+              </div>
+              <div className='orderReceipt-row'>
+                <h3 className='orderReceipt-text'>배달 팁</h3>
+                <p className='orderReceipt-value'>
+                  {order.delivery_fee.toLocaleString('ko-KR')}원
+                </p>
+              </div>
+            </>
+          )}
           <div className='orderReceipt-total'>
             <h3 className='orderReceipt-totalText'>총 결제금액</h3>
-            <p className='orderReceipt-totalValue'>23,000원</p>
+            <p className='orderReceipt-totalValue'>
+              {order.total_price.toLocaleString('ko-KR')}원
+            </p>
           </div>
           <div className='orderReceipt-row'>
             <h3 className='orderReceipt-text'>결제방법</h3>
-            <p className='orderReceipt-value'>토스페이</p>
+            <p className='orderReceipt-value'>{order.paymentMethod}</p>
           </div>
-          <div className='orderReceipt-row'>
-            <h3 className='orderReceipt-text'>배달 주소</h3>
-            <p className='orderReceipt-value'>
-              서울특별시 역삼로 111 000아파트 101호
-            </p>
-          </div>
+          {isDeliver && (
+            <>
+              <div className='orderReceipt-row'>
+                <h3 className='orderReceipt-text'>배달 주소</h3>
+                <p className='orderReceipt-value'>{order.deliver_address}</p>
+              </div>
+              <div className='orderReceipt-row'>
+                <h3 className='orderReceipt-text'>요청사항</h3>
+                <p className='orderReceipt-value'>
+                  {order.deliveryman_request}
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

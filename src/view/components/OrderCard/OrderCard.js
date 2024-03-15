@@ -3,12 +3,16 @@ import './OrderCard.scss';
 import { useState } from 'react';
 
 import OrderReceipt from '../OrderReceipt/OrderReceipt';
+import { useNavigate } from 'react-router-dom';
 
-export default function OrderCard() {
-  const [isReview, setIsReview] = useState(false);
+export default function OrderCard({order, isReview}) {
+  const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const menuList = ['숯불반반치킨(순살)', '치즈사리 추가'];
+  const created = `${new Date(order.created_at).toLocaleDateString('ko-KR')} ${new Date(order.created_at).toLocaleTimeString('ko-KR')}`
+  const menuList = order.menu_list;
   const receiptBtn = isReview ? 'orderCard-receipt' : 'orderCard-receipt-long';
+
+  const handleClickReview = () => {navigate('/restaurant/reviewUpload')}
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -21,24 +25,26 @@ export default function OrderCard() {
   return (
     <>
       {isModalOpen && <div className='orderCard-modal'>
-          <OrderReceipt closeModal={closeModal}/>
+          <OrderReceipt closeModal={closeModal} order={order} created={created}/>
         </div>}
       <div className='orderCard-frame'>
         <div className='orderCard-content'>
-          <div className='orderCard-img'></div>
+          <div className='orderCard-img'><img src={order.restaurant_image} /></div>
           <div className='orderCard-text'>
-            <h1 className='orderCard-store'>000치킨 00점</h1>
+            <h1 className='orderCard-store'>{order.restaurant_name}</h1>
             <div className='orderCard-menuList'>
               {menuList.map((menu) => (
-                <p className='orderCard-menu'>{menu}</p>
+                <p className='orderCard-menu' key={menu.menu_id}>{menu.menu_name}</p>
               ))}
             </div>
-            <div className='orderCard-deliver'>
-              <p className='orderCard-deliverStat'>
-                2024-02-24 12:15 배달 완료
+            <div className='orderCard-order'>
+              <p className='orderCard-orderTime'>
+                {created}
               </p>
-              <p className='orderCard-deliverPrice'>합계 40,000원</p>
+              <p className='orderCard-orderState'>{order.order_state}</p>
+              
             </div>
+            <p className='orderCard-deliverPrice'>합계 {order.total_price.toLocaleString('ko-KR')}원</p>
           </div>
         </div>
         <div className='orderCard-button'>
@@ -46,7 +52,7 @@ export default function OrderCard() {
             영수증 보기
           </button>
           {isReview && (
-            <button className='orderCard-review'>리뷰 작성하기</button>
+            <button className='orderCard-review' onClick={handleClickReview}>리뷰 작성하기</button>
           )}
         </div>
       </div>
