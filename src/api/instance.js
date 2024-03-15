@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { selectIsLoggedIn } from '../redux/reducers/authSlice';
+import store from '../redux/store'
 
 const REFRESH_URL = 'http://localhost:8000/users/token/refresh/';
 const axiosInstance = axios.create({
@@ -20,9 +22,10 @@ const refreshToken = async () => {
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    if (!config.headers['Authorization']) {
+    const isLoggedIn = store.getState().auth.isLoggedIn;
+    if (isLoggedIn) {
       try {
-        let access = getAccessTokenFromCookie();
+        let access = getAccessTokenFromCookie(); 
         if (access) {
           config.headers['Authorization'] = `Bearer ${access}`;
         }
@@ -31,8 +34,6 @@ axiosInstance.interceptors.request.use(
         throw new Error('토큰 갱신에 실패했습니다.');
       }
     }
-
-    console.log('axios config : ', config);
     return config;
   },
   (error) => {
@@ -40,6 +41,7 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 
 
 axiosInstance.interceptors.response.use(

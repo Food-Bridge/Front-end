@@ -29,13 +29,13 @@ export const selectDefaultId = (state) => state.address.defaultId;
 export const { updateAddresses, setDefaultId, editAddressNickname } =
   AddressSlice.actions;
 
-export const fetchAddresses = () => async (dispatch, getState) => {
+export const fetchAddresses = () => async (dispatch) => {
   const res = await axiosInstance.get('/users/address/');
   dispatch(updateAddresses(res.data));
   const newDefaultAddress = res.data.find(
     (address) => address.is_default === true
   );
-  dispatch(setDefaultAddress(newDefaultAddress));
+  newDefaultAddress && dispatch(setDefaultAddress(newDefaultAddress));
 };
 
 export const setDefaultAddress = (address) => async (dispatch, getState) => {
@@ -46,6 +46,7 @@ export const setDefaultAddress = (address) => async (dispatch, getState) => {
       is_default: false,
     });
   }
+  console.log(address)
   await axiosInstance.patch(`/users/address/${address.id}/`, {
     is_default: true,
   });
@@ -53,7 +54,7 @@ export const setDefaultAddress = (address) => async (dispatch, getState) => {
 };
 
 export const editAddressesNicknames = (update) => async (dispatch) => {
-  const { id, nickname } = update;  console.log(id);
+  const { id, nickname } = update;
   await axiosInstance.patch(`/users/address/${id}/`, {
     nickname: nickname,
   });
