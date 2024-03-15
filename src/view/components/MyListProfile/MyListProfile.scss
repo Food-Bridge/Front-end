@@ -1,0 +1,81 @@
+.mylistUser {
+  display: flex;
+  width: 560px;
+
+  .mylistUser-profile {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-right: 100px;
+    width: 120px;
+    align-items: center;
+
+    .mylistUser-profileImg {
+      background-color: #8d8d8d;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+    .mylistUser-profileInput {
+      display: none;
+    }
+    .mylistUser-profileBtn {
+      display: flex;
+      background-color: #c6c6c6;
+      width: 42px;
+      height: 20px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-top: -10px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer
+    }
+  }
+  .mylistUser-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .mylistUser-id {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      
+      .mylistUser-id-input {
+        font-size: 24px;
+        font-weight: 600;
+        width: 100px;
+        height: 30px;
+      }
+
+      .mylistUser-id-name {
+        font-size: 24px;
+        font-weight: 600;
+        width: 100px;
+        height: 30px;
+      }
+      
+      .mylistUser-id-change {
+        margin: 0 10px;
+      }
+    }
+    .mylistUser-detail {
+      display: flex;
+      justify-content: space-between;
+
+      .mylistUser-detailBox {
+        text-align: center;
+
+        .mylistUser-detailBox-num {
+          font-size: 18px;
+        }
+
+        .mylistUser-detailBox-title {
+          font-size: 14px;
+          padding: 10px;
+        }
+      }
+    }
+  }
+}

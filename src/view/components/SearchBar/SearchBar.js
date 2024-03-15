@@ -23,8 +23,6 @@ function SearchBar() {
   const defaultId = useSelector(selectDefaultId);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const [showList, setShowList] = useState(false);
-  console.log(defaultId);
-  console.log(addresses);
 
   useEffect(() => {
     if (isLoggedIn) {

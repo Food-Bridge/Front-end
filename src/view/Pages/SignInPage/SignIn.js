@@ -6,27 +6,23 @@ import KakaoBox from '../../components/KakaoLogin/KakaoLogin';
 import GoogleBtn from '../../components/GoogleBtn/GoogleBtn';
 import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
-import { login, selectIsLoggedIn } from '../../../redux/reducers/authSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { setTokens } from '../../../redux/reducers/authSlice';
+import { useDispatch } from 'react-redux';
 
 function SignIn() {
   const [emailValue, setEmail] = useState('');
   const [passwordValue, setPassword] = useState('');
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    window.localStorage.clear();
     const data = {
       email: emailValue,
       password: passwordValue,
     };
     const res = await axiosInstance.post('/users/login/', data);
-    console.log(res);
-    localStorage.setItem('access', res.data.tokens.access);
-    localStorage.setItem('refresh', res.data.tokens.refresh);
-    dispatch(login());
+    const { access, refresh } = res.data.token;
+    dispatch(setTokens({ access, refresh }));
     navigate('/');
   };
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../../redux/reducers/authSlice';
+import { setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
 const KakaoCallback = () => {
@@ -17,20 +17,14 @@ const KakaoCallback = () => {
       const REDIRECT_URI = 'http://127.0.0.1:3000/users/signin/callback/';
 
       const response = await axiosInstance.post(
-        `https://kauth.kakao.com/oauth/token?grant_type=${grantType}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`,
-        {}
+        `https://kauth.kakao.com/oauth/token?grant_type=${grantType}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`
       );
-
       const token = response.data.access_token;
-      window.localStorage.clear()
       const res = await axiosInstance.post('/users/kakao/login/callback/', {
-        "access_token": token,
+        access_token: token,
       });
-
       const { access, refresh } = res.data.token;
-      localStorage.setItem('access', access);
-      localStorage.setItem('refresh', refresh);
-      dispatch(login());
+      dispatch(setTokens({ access, refresh }));
       navigate('/');
     };
 

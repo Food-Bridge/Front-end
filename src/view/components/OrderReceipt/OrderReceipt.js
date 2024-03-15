@@ -17,7 +17,7 @@ export default function OrderReceipt({ order, closeModal, created }) {
         <div className='orderReceipt-body'>
           <h1 className='orderReceipt-store'>{order.restaurant_name}</h1>
           <p className='orderReceipt-time'>
-            {created} {order.order_state}
+            {created} {order.order_state_name}
           </p>
           <div className='orderReceipt-menuList'>
             {menu.map(({ menu_id, menu_name, price }) => (
@@ -31,7 +31,7 @@ export default function OrderReceipt({ order, closeModal, created }) {
           </div>
           {isDeliver && (
             <>
-              <div className='orderReceipt-row'>
+              <div className='orderReceipt-row deliver'>
                 <h3 className='orderReceipt-text'>주문 금액</h3>
                 <p className='orderReceipt-value'>
                   {(order.total_price - order.delivery_fee).toLocaleString(
@@ -56,7 +56,7 @@ export default function OrderReceipt({ order, closeModal, created }) {
           </div>
           <div className='orderReceipt-row'>
             <h3 className='orderReceipt-text'>결제방법</h3>
-            <p className='orderReceipt-value'>{order.paymentMethod}</p>
+            <p className='orderReceipt-value'>{order.payment_method_name}</p>
           </div>
           {isDeliver && (
             <>
