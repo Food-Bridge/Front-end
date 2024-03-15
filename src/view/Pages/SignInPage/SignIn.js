@@ -21,7 +21,7 @@ function SignIn() {
       password: passwordValue,
     };
     const res = await axiosInstance.post('/users/login/', data);
-    const { access, refresh } = res.data.token;
+    const { access, refresh } = res.data.tokens;
     dispatch(setTokens({ access, refresh }));
     navigate('/');
   };
