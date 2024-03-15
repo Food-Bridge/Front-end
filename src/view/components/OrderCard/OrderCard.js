@@ -41,7 +41,7 @@ export default function OrderCard({order, isReview}) {
               <p className='orderCard-orderTime'>
                 {created}
               </p>
-              <p className='orderCard-orderState'>{order.order_state}</p>
+              <p className='orderCard-orderState'>{order.order_state_name}</p>
               
             </div>
             <p className='orderCard-deliverPrice'>합계 {order.total_price.toLocaleString('ko-KR')}원</p>
