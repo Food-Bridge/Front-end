@@ -52,16 +52,12 @@ export const setDefaultAddress = (address) => async (dispatch, getState) => {
   dispatch(setDefaultId(address.id));
 };
 
-export const editAddressesNicknames = (updates) => async (dispatch) => {
-  if (updates && updates.length > 0) {
-    for (const { id, nickname } of updates) {
-      const res = await axiosInstance.patch(`/users/address/${id}/`, {
-        nickname: nickname,
-      });
-      console.log(res);
-    }
-    dispatch(fetchAddresses());
-  }
+export const editAddressesNicknames = (update) => async (dispatch) => {
+  const { id, nickname } = update;  console.log(id);
+  await axiosInstance.patch(`/users/address/${id}/`, {
+    nickname: nickname,
+  });
+  dispatch(fetchAddresses());
 };
 
 export const deleteAddress = (id) => async (dispatch, getState) => {

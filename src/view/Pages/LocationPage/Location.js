@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Location.scss';
-import {
-  editAddressesNicknames,
-} from '../../../redux/reducers/addressSlice';
+import { editAddressesNicknames } from '../../../redux/reducers/addressSlice';
 import { useDispatch } from 'react-redux';
 
 import LocationList from '../../components/LocationList/LocationList';
@@ -15,10 +13,10 @@ const Location = () => {
   const [editedNicknames, setEditedNicknames] = useState({});
 
   const handleEditAddressNickname = (id, value) => {
-      setEditedNicknames((prevState) => ({
-        ...prevState,
-        [id]: value,
-      }));
+    setEditedNicknames((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
   };
 
   const handleToggleEdit = () => {
@@ -38,9 +36,20 @@ const Location = () => {
     const updatedNicknames = Object.entries(editedNicknames).map(
       ([id, nickname]) => ({ id, nickname })
     );
-    console.log(updatedNicknames)
+    console.log(updatedNicknames);
     dispatch(editAddressesNicknames(updatedNicknames));
   };
+
+  useEffect(() => {
+    if (!isEdit) {
+      const updatedNicknames = Object.entries(editedNicknames).map(
+        ([id, nickname]) => ({ id, nickname })
+      );
+      updatedNicknames.map((update) => {
+        dispatch(editAddressesNicknames(update));
+      });
+    }
+  }, [isEdit, editedNicknames]);
 
   return (
     <div className='location'>

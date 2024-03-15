@@ -15,7 +15,6 @@ const LocationList = ({ isEdit,editedNicknames, handleEditAddressNickname }) => 
   const addresses = useSelector(selectAddresses);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const defaultId = useSelector(selectDefaultId)
-console.log(addresses)
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(fetchAddresses());
