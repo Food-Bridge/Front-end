@@ -1,67 +1,93 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../../api/instance';
+import { useParams } from 'react-router-dom';
 import './StoreOption.scss';
 
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
-import Basket from '../../components/Basket/Basket';
-import chicken from '../../../data/chicken.jpg';
-import { IoIosArrowBack } from 'react-icons/io';
+import CartAddBtn from '../../components/CartAddBtn/CartAddBtn';
 
-export default function StoreOption({ popular }) {
-  const [quantity, setQuantity] = useState(Number(1));
+export default function StoreOption() {
+  const { resId, menuId } = useParams();
+  const [data, setData] = useState([]);
+  const [menuData, setMenuData] = useState([]);
+  const [optionData, setOptionData] = useState([]);
+  const [sOptionData, setSOptionData] = useState([]);
 
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
+  const [option, setOption] = useState([]);
+  const [sOption, setSOption] = useState([]);
+
+  const price =
+  (menuData.price +
+    (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
+    (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0))
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get(`/restaurant/${resId}`);
+      const menuRes = await axiosInstance.get(
+        `/restaurant/${resId}/menu/${menuId}`
+      );
+      const optionRes = await axiosInstance.get(
+        `/restaurant/${resId}/menu/${menuId}/options`
+      );
+      const sOptionRes = await axiosInstance.get(
+        `restaurant/${resId}/menu/${menuId}/soptions`
+      );
+      setData(res.data);
+      setMenuData(menuRes.data);
+      setOptionData(optionRes.data);
+      setSOptionData(sOptionRes.data);
+    };
+    fetchData();
+  }, []);
+
+  const handleOptionChange = (selectedOption) => {
+    setOption(selectedOption);
   };
-  const decreaseQunatity = () => {
-    if (quantity !== 1) {
-      setQuantity(quantity - 1);
-    }
+
+  const handleSOptionChange = (selectedSOption) => {
+    setSOption(selectedSOption);
   };
+
   return (
     <div className='storeOption'>
-      <div className='storeOption-header'>
-        <Basket className='storeOption-basket' count='1' />
-        <button className='storeOption-backContainer'>
-          <IoIosArrowBack className='storeOption-back' size='30' />
-        </button>
-        <img src={chicken} className='storeOption-img' />
-      </div>
+      <img src={menuData.image} className='storeOption-img' />
       <div className='storeOption-title'>
-        {popular && (
+        {menuData.is_popular && (
           <div className='storeOption-tag'>
             <p className='storeOption-tag-title'>인기</p>
           </div>
         )}
-
-        <h1 className='storeOpiton-name'>반반 치킨</h1>
-      </div>
-      <p className='storeOption-detail'>
-        출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다. 45퍼센트
-        참여하다 쉽고 있은 있고,
-      </p>
-      <MenuOptionBtn />
-      <MenuCheckBox />
-      <div className='storeOption-footer'>
-        <div className='storeOption-footerL'>
-          <div className='storeOption-quantity'>
-            <button className='storeOption-minus' onClick={decreaseQunatity}>
-              -
-            </button>
-            <p className='storeOption-quantityNum'>{quantity}</p>
-            <button className='storeOption-plus' onClick={increaseQuantity}>
-              +
-            </button>
+        {menuData.is_main && (
+          <div className='storeOption-tag'>
+            <p className='storeOption-tag-title'>메인</p>
           </div>
-          <div className='storeOption-least'>
-            <h1 className='storeOption-leastTitle'>최소 주문 금액</h1>
-            <p className='storeOption-leastPrice'>15,000원</p>
-          </div>
-        </div>
-
-        <button className='storeOption-add'>22,800원 담기</button>
+        )}
+        <h1 className='storeOpiton-name'>{menuData.name}</h1>
       </div>
+      <p className='storeOption-detail'>{menuData.content}</p>
+      {menuData.required_options_count === 1 ? (
+        <MenuOptionBtn
+          data={optionData}
+          onOptionChange={handleOptionChange}
+        />
+      ) : (
+        <MenuCheckBox
+          data={optionData}
+          count={menuData.required_options_count}
+          onOptionChange={handleOptionChange}
+        />
+      )}
+      {sOptionData.length > 0 && <MenuCheckBox
+        data={sOptionData}
+        onOptionChange={handleSOptionChange}
+      />}
+      <CartAddBtn
+        price={price}
+        data={data}
+        menuData={{ ...menuData, option, sOption }}
+      />
     </div>
   );
 }

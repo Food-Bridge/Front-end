@@ -1,0 +1,52 @@
+.location-list {
+  .location-button {
+    display: flex;
+    align-items: center;
+    width: 560px;
+    height: 70px;
+    border: 1px solid #c6c6c6;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #c6c6c6;
+    margin-bottom: 20px;
+
+    .location-icon {
+      font-size: 35px;
+      margin: 10px;
+      color: #8d8d8d;
+    }
+
+    .location-content {
+      .location-input {
+        font-size: 18px;
+        width: 430px;
+        height: 25px;
+        padding: 3px;
+        margin-bottom: 5px;
+      }
+
+      .location-name {
+        height: 25px;
+        padding: 2px 5px;
+        text-align: left;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .location-address {
+        font-size: 12px;
+        padding-left: 5px;
+      }
+    }
+
+    .location-editBtn {
+      width: 50px;
+      height: 25px;
+      border: 1px solid #c6c6c6;
+      border-radius: 50px;
+      box-shadow: 2px 2px 2px #c6c6c6;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+  }
+}

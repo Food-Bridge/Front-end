@@ -1,14 +1,14 @@
-import React from 'react'
-import './StoreTag.scss'
+import React from 'react';
+import './StoreTag.scss';
 
-function StoreTag({className, tagName}) {
+function StoreTag({ tagName }) {
   return (
-    <div className={className}>
-        <header className='storeTag-frame'>
-            <div className='storeTag-text'># {tagName}</div>
-        </header>
+    <div className='storeTag-margin'>
+      <header className='storeTag-frame'>
+        <div className='storeTag-text'># {tagName}</div>
+      </header>
     </div>
-  )
+  );
 }
 
-export default StoreTag
+export default StoreTag;

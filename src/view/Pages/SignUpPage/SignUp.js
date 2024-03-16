@@ -190,7 +190,7 @@ useEffect(() => {
                   axiosInstance.post('/users/signup/', {
                     email: emailValue,
                     username: userNameValue,
-                    password: passwordValue,
+             햣       password: passwordValue,
                     password2: password2Value,
                     phone_number: phoneNumberValue,
                     is_seller: false,

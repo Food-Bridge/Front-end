@@ -8,8 +8,9 @@ function MenuBar({name}) {
     const handleHomeClick = () => {
         navigate('/');
     };
+    
     const handleStoreClick = () => {
-        navigate('/storeList/');
+        navigate('/restaurant/');
     };
     const handleCommuClick = () => {
         navigate('/commu/');

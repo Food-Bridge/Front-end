@@ -1,46 +1,63 @@
-import React from 'react'
-import './StoreList.scss'
-import SearchBar from '../../components/SearchBar/SearchBar'
-import MenuBar from '../../components/MenuBar/MenuBar'
-import CategoryBar from '../../components/CategoryBar/CategoryBar'
-import StoreTagList from '../../components/StoreTagList/StoreTagList'
-import StoreCardList from '../../components/StoreCardList/StoreCardList'
-import SliderTime from '../../SliderTime/SliderTime'
-import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import './StoreList.scss';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import MenuBar from '../../components/MenuBar/MenuBar';
+import CategoryBar from '../../components/CategoryBar/CategoryBar';
+import SliderTime from '../../SliderTime/SliderTime';
+import StoreCard from '../../components/StoreCard/StoreCard';
+import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../../api/instance';
 
 function StoreList() {
-  const navigate = useNavigate()
+  const [data, setData] = useState([]);
+  const [category, setCategory] = useState(0);
+  const navigate = useNavigate();
+  const handleClickStore = (id) => {
+    navigate(`/restaurant/${id} `);
+  };
 
-  const handleClickStore = () => {
-    navigate('/store/')
-  }
+  let url = category ? `/search/category/${category}/` : '/restaurant/';
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get(url);
+      setData(res.data);
+    };
+    fetchData();
+  }, [url]);
 
   return (
     <div className='StoreList'>
       <div className='storeList-header'>
-        <div className="storeList-searchBar"><SearchBar location={"강남구"}/></div>
-        <div className='storeList-imageSlider'><SliderTime className="storeList-img1" slides={SliderImgData} /></div>
-        <div className="storeList-menuBar"><MenuBar name={"menuBar-pageLine2"}/></div>
-      </div>
-      <div className='storeList-category'>
-        <div className='storeList-categoryComp'>
-          <CategoryBar />       
+        <div className='storeList-searchBar'>
+          <SearchBar location={'강남구'} />
+        </div>
+        <div className='storeList-imageSlider'>
+          <SliderTime className='storeList-img1' slides={SliderImgData} />
+        </div>
+        <div className='storeList-menuBar'>
+          <MenuBar name={'menuBar-pageLine2'} />
         </div>
       </div>
-      <div className='storeList-storeTag'>
-        <div className='storeList-storeTag'>
-          <StoreTagList />
-        </div>
-      </div>
-      <div className='storeList-storeCard'>
-        <div className='storeList-storeCardComp'>
-          <button onClick={handleClickStore}><StoreCardList /></button>
-        </div>
+      <CategoryBar setCategory={setCategory} />
+      <div className='storeList-store'>
+        {data.length > 0 &&
+          data.map((el) => (
+            <button key={el.id} onClick={() => handleClickStore(el.id)}>
+              <StoreCard
+                img={el.image}
+                className={el.className}
+                storeName={el.name}
+                minimumPrice={el.minimumOrderPrice}
+                deliverPrice={el.delivertyFee}
+                storeScore={el.rating}
+              />
+            </button>
+          ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default StoreList
+export default StoreList;
