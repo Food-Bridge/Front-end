@@ -51,7 +51,7 @@ function SearchBar() {
   };
 
   const handleClickLikes = () => {
-    navigate('/likes/');
+    navigate('/users/likes/');
   };
 
   return (
@@ -64,18 +64,16 @@ function SearchBar() {
           >
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
-            {
-  isLoggedIn ?
-    (
-      defaultId && addresses.length > 0 ?
-        (
-          addresses.find((address) => address.id === defaultId)
-            ?.sigungu.split(' ')[0] ||
-          addresses.find((address) => address.id === defaultId)
-            ?.detail_address.split(' ')[1]
-        ) : '주소 선택'
-    ) : '로그인 필요'
-}
+              {isLoggedIn
+                ? defaultId && addresses.length > 0
+                  ? addresses
+                      .find((address) => address.id === defaultId)
+                      ?.sigungu.split(' ')[0] ||
+                    addresses
+                      .find((address) => address.id === defaultId)
+                      ?.detail_address.split(' ')[1]
+                  : '주소 선택'
+                : '로그인 필요'}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
@@ -88,7 +86,7 @@ function SearchBar() {
             <button onClick={handleClickLikes}>
               <CiHeart className='searchBar-heartIcon' />
             </button>
-            <Basket count='1' />
+            <Basket />
           </div>
         </div>
         {showList && (

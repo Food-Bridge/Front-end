@@ -17,7 +17,7 @@ function StoreList() {
     navigate(`/restaurant/${id} `);
   };
 
-  let url = category ? `/search/category/${category}/` : '/restaurant/'
+  let url = category ? `/search/category/${category}/` : '/restaurant/';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,25 +40,21 @@ function StoreList() {
           <MenuBar name={'menuBar-pageLine2'} />
         </div>
       </div>
-      <div className='storeList-category'>
-        <div className='storeList-categoryComp'>
-          <CategoryBar setCategory={setCategory}/>
-        </div>
-      </div>
+      <CategoryBar setCategory={setCategory} />
       <div className='storeList-store'>
-        {data.length > 0 && data.map((el) => (
-          <button key={el.id} onClick={() => handleClickStore(el.id)}>
-            <StoreCard
-              
-              img={el.image}
-              className={el.className}
-              storeName={el.name}
-              minimumPrice={el.minimumOrderPrice}
-              deliverPrice={el.delivertyFee}
-              storeScore={el.rating}
-            />
-          </button>
-        ))}
+        {data.length > 0 &&
+          data.map((el) => (
+            <button key={el.id} onClick={() => handleClickStore(el.id)}>
+              <StoreCard
+                img={el.image}
+                className={el.className}
+                storeName={el.name}
+                minimumPrice={el.minimumOrderPrice}
+                deliverPrice={el.delivertyFee}
+                storeScore={el.rating}
+              />
+            </button>
+          ))}
       </div>
     </div>
   );
