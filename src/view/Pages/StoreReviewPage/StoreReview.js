@@ -1,7 +1,7 @@
 import React from 'react';
 import './StoreReview.scss';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
-import { IoIosArrowDown, IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowDown } from 'react-icons/io';
 import { CiCamera } from 'react-icons/ci';
 
 import ReviewBox from '../../components/ReviewBox/ReviewBox';
@@ -24,9 +24,6 @@ export default function StoreReview() {
     <>
       <div className='storeReview-header'>
         <div className='storeReview-title'>
-          <button className='storeReview-bakcBtn'>
-            <IoIosArrowBack size='30' />
-          </button>
           <h2 className='storeReview-titleText'>000치킨 00점 리뷰</h2>
         </div>
 

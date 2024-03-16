@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { selectIsLoggedIn } from '../redux/reducers/authSlice';
 import store from '../redux/store'
 
 const REFRESH_URL = 'http://localhost:8000/users/token/refresh/';

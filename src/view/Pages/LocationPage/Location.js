@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Location.scss';
 import { editAddressesNicknames } from '../../../redux/reducers/addressSlice';
 import { useDispatch } from 'react-redux';
@@ -36,7 +36,7 @@ const Location = () => {
     const updatedNicknames = Object.entries(editedNicknames).map(
       ([id, nickname]) => ({ id, nickname })
     );
-    updatedNicknames.map((update) => {
+    updatedNicknames.forEach((update) => {
       dispatch(editAddressesNicknames(update));
     });
   };

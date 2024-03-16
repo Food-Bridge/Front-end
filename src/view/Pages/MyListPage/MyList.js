@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   selectProfile,
-  logout,
   setProfile,
   deleteTokens,
 } from '../../../redux/reducers/authSlice';
@@ -23,7 +22,6 @@ export default function MyList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
-  const [isNicknameChange, setIsNicknameChange] = useState(false);
 
   const onChangeImage = async (event) => {
     const { files } = event.target;

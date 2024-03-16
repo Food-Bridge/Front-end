@@ -20,8 +20,8 @@ const CartAddBtn = ({ price, menuData, data }) => {
   const [quantity, setQuantity] = useState(1);
   const [modal, showModal] = useState(false);
 
-  const modalText1 = '장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.';
-  const modalText2 = '기존에 담은 메뉴를 삭제하시겠습니까?';
+  const modalTitle = '알림'
+  const contents = ['장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.', '기존에 담은 메뉴를 삭제하시겠습니까?']
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -32,7 +32,6 @@ const CartAddBtn = ({ price, menuData, data }) => {
       setQuantity(quantity - 1);
     }
   };
-  console.log(menu);
   const handleAddCart = () => {
     if (isMenuIn && menu[0]?.restaurant === menuData.restaurant) {
       const existingMenuItem = menu.find(
@@ -114,11 +113,11 @@ const CartAddBtn = ({ price, menuData, data }) => {
       </div>
       {modal && (
         <Modal
-          content1={modalText1}
-          content2={modalText2}
+          contents={contents}
           twoBtn
           onCancel={handleCancel}
           onConfirm={handleConfirm}
+          title={modalTitle}
         />
       )}
     </div>

@@ -32,7 +32,7 @@ export default function MyListProfile({onChangeImage, handleLogout}) {
   return (
     <div className='mylistUser'>
       <div className='mylistUser-profile'>
-        <img className='mylistUser-profileImg' src={profile.image} />
+        <img className='mylistUser-profileImg' src={profile.image} alt='프로필이미지'/>
         <input
           className='mylistUser-profileInput'
           id='file'

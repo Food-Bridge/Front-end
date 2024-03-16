@@ -6,16 +6,15 @@ import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
-import SearchBar from '../../components/SearchBar/SearchBar'
+import SearchBar from '../../components/SearchBar/SearchBar';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
+import Modal from '../../components/Modal/Modal.js';
 
 import { CiPhone } from 'react-icons/ci';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
-
-
-export default function Store({ count }) {
+export default function Store() {
   const { resId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -31,10 +30,10 @@ export default function Store({ count }) {
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
-      console.log(menuRes);
+      console.log(res);
     };
     fetchData();
-  }, []);
+  }, [resId]);
 
   const handleClickOption = (menuId) => {
     navigate(`${menuId}/`);
@@ -90,9 +89,16 @@ export default function Store({ count }) {
             <PlusInfo text='더보기' arrow='true' onClick={handleOpenReview} />
           </div>
           {showPhoneNumber && (
-            <div className='store-popup'>
-              <p className='store-popupText'> {data.phone_number}</p>
-            </div>
+            <Modal
+              title={'전화번호'}
+              contents={[
+                data.phone_number.replace(
+                  /^02(\d{3,4})-?(\d{4})$/,
+                  '02-$1-$2'
+                )
+              ]}
+              onConfirm={() => setShowPhoneNumber(false)}
+            />
           )}
         </div>
       </div>

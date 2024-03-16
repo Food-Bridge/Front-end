@@ -11,7 +11,6 @@ import {
   fetchAddresses,
   selectAddresses,
   selectDefaultId,
-  setDefaultId,
   setDefaultAddress,
 } from '../../../redux/reducers/addressSlice';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
