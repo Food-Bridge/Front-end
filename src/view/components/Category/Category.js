@@ -1,16 +1,16 @@
 import React from 'react'
 import './Category.scss'
 
-function Category({className, category, image}) {
+function Category({category, image, onPress}) {
   return (
-    <div className={`${className}`}>
+    <button className='Category' onClick={onPress}>
         <header className='category-frame'>
             <div className='category-imgBlock'>
-              <img className='category-img' src={`${image}`} alt="img" />
+              <img className='category-img' src={image} alt={`${category} 메뉴`} />
             </div>
             <h1 className='category-name'>{category}</h1>
         </header>
-    </div>
+    </button>
   )
 }
 
