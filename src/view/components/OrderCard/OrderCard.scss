@@ -3,7 +3,6 @@
   top: 150px;
   left: 50%;
   transform: translate(-50%, 0);
-  
 }
 .orderCard-frame {
   width: 560px;
@@ -22,6 +21,7 @@
       background-color: #c6c6c6;
       border-radius: 5px;
       margin-right: 20px;
+      object-fit: cover;
     }
     .orderCard-text {
       .orderCard-store {
@@ -49,7 +49,7 @@
         justify-content: space-between;
         .orderCard-orderTime {
         }
-        .orderCard-orderState{
+        .orderCard-orderState {
         }
       }
       .orderCard-deliverPrice {
