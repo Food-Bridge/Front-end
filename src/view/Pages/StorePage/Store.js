@@ -30,7 +30,6 @@ export default function Store() {
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
-      console.log(res);
     };
     fetchData();
   }, [resId]);

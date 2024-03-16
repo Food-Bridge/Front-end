@@ -11,19 +11,21 @@ import axiosInstance from '../../../api/instance';
 
 function StoreList() {
   const [data, setData] = useState([]);
+  const [category, setCategory] = useState(0);
   const navigate = useNavigate();
-
   const handleClickStore = (id) => {
     navigate(`/restaurant/${id} `);
   };
 
+  let url = category ? `/search/category/${category}/` : '/restaurant/'
+
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get('/restaurant/');
+      const res = await axiosInstance.get(url);
       setData(res.data);
     };
     fetchData();
-  }, []);
+  }, [url]);
 
   return (
     <div className='StoreList'>
@@ -40,7 +42,7 @@ function StoreList() {
       </div>
       <div className='storeList-category'>
         <div className='storeList-categoryComp'>
-          <CategoryBar />
+          <CategoryBar setCategory={setCategory}/>
         </div>
       </div>
       <div className='storeList-store'>
