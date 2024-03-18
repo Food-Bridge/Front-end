@@ -52,7 +52,7 @@ function CommuPost({ title }) {
           <div className='commuPost-postList'>
             {postData.map(post => (
                 <button onClick={() => {handleCardClick(post.id)}} key={post.id} >
-                  <PostCard user={post.author} id={post.id} title={post.title} content={post.content} image={post.image}/>
+                  <PostCard user={post.author} id={post.id} title={post.title} content={post.content} image={post.image} likeCount={post.likes_count} views={post.views}/>
                 </button>
             ))}
           </div>

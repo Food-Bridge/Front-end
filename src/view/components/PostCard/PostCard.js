@@ -3,7 +3,7 @@ import './PostCard.scss'
 import { postTagData } from '../../../data/PostCardData/PostTagData';
 import { CiFaceSmile, CiLocationOn } from "react-icons/ci";
 
-function PostCard({image, title, content, user}) {
+function PostCard({image, title, content, user, likeCount, views}) {
 
   return (
     <div className='PostCard'>
@@ -34,6 +34,12 @@ function PostCard({image, title, content, user}) {
                 return <h1 className='postCard-postTagName'># {el.tagName}</h1>
               })} 
               {/* {postData.map(post => (<h2>{post.content}</h2>))} */}
+            </div>
+            <div>
+              {likeCount}
+            </div>
+            <div>
+              {views}
             </div>
           </div>
         </div>

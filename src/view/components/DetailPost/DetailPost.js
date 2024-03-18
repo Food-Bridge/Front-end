@@ -4,6 +4,7 @@ import { CiLocationOn } from 'react-icons/ci'
 import { postTagData } from '../../../data/PostCardData/PostTagData'
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function DetailPost({user, location, image, title, content}) {
 
@@ -23,9 +24,46 @@ function DetailPost({user, location, image, title, content}) {
     
     const [isLike, setIsLike] = useState(false);
   
-    const handleLike = () => {
-      setIsLike(!isLike);
-    };
+    // const handleLike = () => {
+    //   setIsLike(!isLike);
+    // };
+
+    const formData = new FormData();
+    const navigate = useNavigate();
+    const id = window.location.href.split('/').reverse()[0]
+
+  // 페이지 로드될 때 로컬 스토리지에서 좋아요 상태 가져오기
+  useEffect(() => {
+    const storedLikeStatus = localStorage.getItem('post_like_status');
+    if (storedLikeStatus) {
+      setIsLike(JSON.parse(storedLikeStatus));
+    }
+  }, []);
+
+  // 좋아요 상태 변경 시 로컬 스토리지에 저장하기
+  useEffect(() => {
+    localStorage.setItem('post_like_status', JSON.stringify(isLike));
+  }, [isLike]);
+
+  const handleLike = () => {
+    axios
+      .post(
+        `http://localhost:8000/community/${id}/likes/`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access')}`,
+          },
+        }
+      )
+      .then(function (response) {
+        setIsLike(prevState => !prevState); // 이전 상태를 기반으로 토글
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+  };
 
   return (
     <div className='DetailPost'>
