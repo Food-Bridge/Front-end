@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import './StoreLikes.scss';
 import axiosInstance from '../../../api/instance';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import CategoryBar from '../../components/CategoryBar/CategoryBar';
 import StoreCard from '../../components/StoreCard/StoreCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +17,7 @@ export default function StoreLikes() {
     const fetchData = async () => {
       const res = await axiosInstance.get('/like/');
       setData(res.data);
+      console.log(res)
     };
     fetchData();
   }, []);

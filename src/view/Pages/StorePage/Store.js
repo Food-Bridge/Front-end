@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance.js';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  updateStoreIds,
+  selectStoreIds,
+  fectchStoreIds,
+} from '../../../redux/reducers/likeSlice.js';
 
 import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
@@ -16,11 +22,14 @@ import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
 export default function Store() {
   const { resId } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+
+  const storeIds = useSelector(selectStoreIds);
   const [isLike, setIsLike] = useState(false);
 
   useEffect(() => {
@@ -32,7 +41,17 @@ export default function Store() {
       setMenuData(menuRes.data);
     };
     fetchData();
+    dispatch(fectchStoreIds());
   }, [resId]);
+
+  useEffect(() => {
+    setIsLike(storeIds && storeIds.includes(resId));
+  }, [storeIds, resId]);
+
+  const handleClickHeart = async () => {
+    await axiosInstance.post(`/like/${resId}/`);
+    setIsLike((prevIsLike) => !prevIsLike);
+  };
 
   const handleClickOption = (menuId) => {
     navigate(`${menuId}/`);
@@ -44,10 +63,6 @@ export default function Store() {
 
   const showNumber = () => {
     setShowPhoneNumber(!showPhoneNumber);
-  };
-
-  const pressLike = () => {
-    setIsLike(!isLike);
   };
 
   return (
@@ -67,7 +82,7 @@ export default function Store() {
             <button className='store-phone' onClick={showNumber}>
               <CiPhone size='30' />
             </button>
-            <button className='store-like ' onClick={pressLike}>
+            <button className='store-like ' onClick={handleClickHeart}>
               {isLike ? (
                 <IoIosHeart size='30' color='red' />
               ) : (
@@ -91,10 +106,7 @@ export default function Store() {
             <Modal
               title={'전화번호'}
               contents={[
-                data.phone_number.replace(
-                  /^02(\d{3,4})-?(\d{4})$/,
-                  '02-$1-$2'
-                )
+                data.phone_number.replace(/^02(\d{3,4})-?(\d{4})$/, '02-$1-$2'),
               ]}
               onConfirm={() => setShowPhoneNumber(false)}
             />

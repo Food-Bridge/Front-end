@@ -17,12 +17,12 @@ function StoreList() {
     navigate(`/restaurant/${id} `);
   };
 
-  let url = category ? `/search/category/${category}/` : '/restaurant/';
+  let url = category ? `/search/category/?search=${category}` : '/restaurant/';
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(url);
-      setData(res.data);
+      category ? setData(res.data.results) : setData(res.data);
     };
     fetchData();
   }, [url]);
