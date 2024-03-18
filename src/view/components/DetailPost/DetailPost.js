@@ -57,13 +57,14 @@ function DetailPost({user, location, image, title, content}) {
         }
       )
       .then(function (response) {
-        setIsLike(prevState => !prevState); // 이전 상태를 기반으로 토글
+        setIsLike((prevState) => !prevState); // 이전 상태를 기반으로 토글
         console.log(response);
       })
       .catch(function (error) {
         console.log(error.response.data);
       });
   };
+
 
   return (
     <div className='DetailPost'>
@@ -82,9 +83,9 @@ function DetailPost({user, location, image, title, content}) {
           </div>
           <button onClick={handleLike}>
             {isLike ? (
-              <IoIosHeart size='30' color='red' className='detailPost-like' />
+              <IoIosHeart size="30" color="red" className="detailPost-like" />
             ) : (
-              <IoIosHeartEmpty size='30' color='red' className='detailPost-like' />
+              <IoIosHeartEmpty size="30" color="red" className="detailPost-like" />
             )}
           </button>
         </div>
