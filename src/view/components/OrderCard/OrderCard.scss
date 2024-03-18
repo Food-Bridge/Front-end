@@ -1,0 +1,84 @@
+.orderCard-modal {
+  position: fixed;
+  top: 150px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.orderCard-frame {
+  width: 560px;
+  height: 250px;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0 20px;
+  margin-bottom: 20px;
+
+  .orderCard-content {
+    display: flex;
+    .orderCard-img {
+      width: 150px;
+      height: 150px;
+      background-color: #c6c6c6;
+      border-radius: 5px;
+      margin-right: 20px;
+      object-fit: cover;
+    }
+    .orderCard-text {
+      .orderCard-store {
+        width: 220px;
+        font-size: 24px;
+      }
+      .orderCard-menuList {
+        display: flex;
+        flex-wrap: wrap;
+        width: 350px;
+        height: 80px;
+        padding: 10px 0;
+        .orderCard-menu {
+          font-size: 14px;
+          margin-right: 10px;
+          padding: 5px 10px;
+          border: 1px solid #c6c6c6;
+          border-radius: 50px;
+          height: 30px;
+          box-shadow: 2px 2px 2px #c6c6c6;
+        }
+      }
+      .orderCard-order {
+        display: flex;
+        justify-content: space-between;
+        .orderCard-orderTime {
+        }
+        .orderCard-orderState {
+        }
+      }
+      .orderCard-deliverPrice {
+        text-align: right;
+      }
+    }
+  }
+  .orderCard-button {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    * {
+      width: 250px;
+      height: 50px;
+      font-size: 18px;
+      border-radius: 5px;
+      text-align: center;
+      align-items: center;
+    }
+    .orderCard-receipt {
+      border: 1px solid #c6c6c6;
+    }
+    .orderCard-receipt-long {
+      border: 1px solid #c6c6c6;
+      width: 520px;
+    }
+    .orderCard-review {
+      background-color: black;
+      color: white;
+    }
+  }
+}

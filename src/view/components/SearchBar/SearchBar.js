@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchBar.scss';
-import { CiLocationOn, CiHeart, CiShoppingBasket } from 'react-icons/ci';
+import { CiLocationOn, CiHeart } from 'react-icons/ci';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import Basket from '../Basket/Basket';
 
-function SearchBar({ count }) {
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  fetchAddresses,
+  selectAddresses,
+  selectDefaultId,
+  setDefaultAddress,
+} from '../../../redux/reducers/addressSlice';
+import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
+
+function SearchBar() {
   const navigate = useNavigate();
-  const locations = [
-    '서울시 강남구 역삼로 111',
-    '서울시 강남구 역삼로 222',
-    '서울시 관악구 봉천로 333',
-  ];
-
-  const [location, setLocation] = useState(locations[0]);
-
+  const dispatch = useDispatch();
+  const addresses = useSelector(selectAddresses);
+  const defaultId = useSelector(selectDefaultId);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const [showList, setShowList] = useState(false);
 
-  const handleShowList = () => {
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchAddresses());
+    }
+  }, [dispatch, isLoggedIn]);
+
+  const handleToggleLocationList = () => {
     setShowList(!showList);
+  };
+
+  const handleClickAddress = (address) => {
+    dispatch(setDefaultAddress(address));
   };
 
   const handleSearchClick = () => {
@@ -26,17 +42,38 @@ function SearchBar({ count }) {
   };
 
   const handleControlClick = () => {
-    navigate(`address/`);
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다');
+      navigate('/users/signin');
+    } else {
+      navigate(`/users/address/`);
+    }
+  };
+
+  const handleClickLikes = () => {
+    navigate('/users/likes/');
   };
 
   return (
     <div className='SearchBar'>
       <header className='searchBar-frame'>
         <div className='searchBar-margin'>
-          <button className='searchBar-location' onClick={handleShowList}>
+          <button
+            className='searchBar-location'
+            onClick={handleToggleLocationList}
+          >
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
-              {location.split(' ').slice(1, 2).join(' ')}
+              {isLoggedIn
+                ? defaultId && addresses.length > 0
+                  ? addresses
+                      .find((address) => address.id === defaultId)
+                      ?.sigungu.split(' ')[0] ||
+                    addresses
+                      .find((address) => address.id === defaultId)
+                      ?.detail_address.split(' ')[1]
+                  : '주소 선택'
+                : '로그인 필요'}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
@@ -46,27 +83,23 @@ function SearchBar({ count }) {
             </button>
           </div>
           <div className='searchBar-etcIcon'>
-            <CiHeart className='searchBar-heartIcon' />
-            <div className='searchBar-shopCount'>
-              <CiShoppingBasket className='searchBar-shopIcon'>
-                <div className='searchBar-countBlock'>
-                  <h1 className='searchBar-countText'>{count}</h1>
-                </div>
-              </CiShoppingBasket>
-            </div>
+            <button onClick={handleClickLikes}>
+              <CiHeart className='searchBar-heartIcon' />
+            </button>
+            <Basket />
           </div>
         </div>
         {showList && (
           <div className='searchBar-locaList'>
-            {locations.map((address, index) => (
+            {addresses.map((address) => (
               <button
-                key={index}
+                key={address.id}
                 className={`searchBar-loca ${
-                  location === address ? 'selected' : ''
+                  defaultId === address.id ? 'selected' : ''
                 }`}
-                onClick={() => setLocation(address)}
+                onClick={() => handleClickAddress(address)}
               >
-                {locations[index]}
+                {address.detail_address}
               </button>
             ))}
             <button

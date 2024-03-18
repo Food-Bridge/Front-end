@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../../redux/reducers/authSlice';
+import { setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
 const GoogleCallback = () => {
@@ -25,11 +25,8 @@ const GoogleCallback = () => {
       const res = await axiosInstance.post('/users/google/login/callback/', {
         access_token: token,
       });
-
       const { access, refresh } = res.data.token;
-      localStorage.setItem('access', access);
-      localStorage.setItem('refresh', refresh);
-      dispatch(login());
+      dispatch(setTokens({ access, refresh }));
       navigate('/');
     };
 

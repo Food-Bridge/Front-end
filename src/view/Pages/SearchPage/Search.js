@@ -1,91 +1,89 @@
-import React, { useState } from 'react';
-import { IoIosSearch } from 'react-icons/io';
-
+import React, { useState, useEffect } from 'react';
 import './Search.scss';
-
-import SearchBar from '../../components/SearchBar/SearchBar';
-import StoreTag from '../../components/StoreTag/StoreTag';
-import './Search.scss';
+import axiosInstance from '../../../api/instance';
 import SearchRank from '../../components/SearchRank/SearchRank';
 import StoreCard from '../../components/StoreCard/StoreCard';
+import SearchBarPlus from '../../components/SearchBar/SearchBarPlus';
+import SearchResult from '../../components/SearchResult/SearchResult';
 
 export default function Search() {
-  const dataArr = [
-    {
-      className: 'StoreCard',
-      storeName: 'ooo치킨 oo점',
-      minimumPrice: '20,000',
-      deliverPrice: '2,000',
-      storeScore: '4.5',
-      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdVJ7hnsvl92es433v7D4NmnVbfM3s3Lp9ww&usqp=CAU',
-    },
-    {
-      className: 'StoreCard',
-      storeName: 'ooo치킨 oo점',
-      minimumPrice: '20,000',
-      deliverPrice: '2,000',
-      storeScore: '4.5',
-      img: 'https://images.pexels.com/photos/19144414/pexels-photo-19144414.jpeg',
-    },
-  ];
+  const [rankData, setRankData] = useState([]);
+  const [storeData, setStoreData] = useState([]);
+  const [isResult, setIsResult] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
-  const [ searchText, setSearchText ] = useState('');
-
-  const handleClickSearch = (event) => {
-    setSearchText(event.target.value);
-    console.log(searchText);
+  const handleSearch = (text) => {
+    setSearchText(text);
+    setIsResult(true);
   };
 
+  const handleMoveBack = () => {
+    setIsResult(false);
+    setSearchText('');
+  };
+
+  useEffect(() => {
+    const fetchRank = async () => {
+      const res = await axiosInstance.get(
+      '/search/search-ranking/'
+    );
+    setRankData(res.data)
+    }
+    fetchRank()
+  }, []);
+
   return (
-    <div className='search'>
-      <SearchBar />
-      <div className='search-container'>
- <input
-        className='search-input'
-        placeholder='검색어를 입력하세요.'
-        type='text'
-        onChange={(e) => setSearchText(e.target.value)}
+    <>
+      <SearchBarPlus
+        handleSearch={handleSearch}
+        handleMoveBack={handleMoveBack}
+        isResult={isResult}
       />
-      <button className='search-button' onClick={handleClickSearch}></button>
-      </div>
-     
-      <div className='search-content'>
-        <h1 className='search-title'>최근 검색어</h1>
-        <div className='search-recent'>
-          <StoreTag tagName='치킨 맛집' />
-          <StoreTag tagName='그릭요거트' />
-          <StoreTag tagName='족발' />
-          <StoreTag tagName='반반치킨' />
+
+      {isResult ? (
+        <SearchResult searchText={searchText} />
+      ) : (
+        <div className='search'>
+          <div className='search-content'>
+            <h1 className='search-title'>인기 검색어</h1>
+            <div className='search-popular'>
+              {rankData && rankData.map((el, index) => {
+                return (
+                  index < 10 && (
+                    <button
+                      key={'button_' + index}
+                      onClick={() => handleSearch(el.keyword)}
+                    >
+                      <SearchRank
+                        key={'searchRank_' + index}
+                        rank={index + 1}
+                        text={el.keyword}
+                        type='up'
+                      />
+                    </button>
+                  )
+                );
+              })}
+            </div>
+            <h1 className='search-title'>실시간 인기 맛집</h1>
+            <div className='search-store'>
+              {storeData.map((el, index) => {
+                return (
+                  <StoreCard
+                    key={index}
+                    img={el.image}
+                    className={el.className}
+                    storeName={el.name}
+                    minimumPrice={el.minimumOrderPrice}
+                    deliverPrice={el.deliverPrice}
+                    storeScore={el.rating}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
-        <h1 className='search-title'>인기 검색어</h1>
-        <div className='search-popular'>
-          <SearchRank rank='1' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='2' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='3' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='4' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='5' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='6' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='7' text='그릭요거트' type='up' />{' '}
-          <SearchRank rank='8' text='그릭요거트' type='down' />{' '}
-          <SearchRank rank='9' text='그릭요거트' type='up' />
-          <SearchRank rank='10' text='그릭요거트' />
-        </div>
-        <h1 className='search-title'>실시간 인기 맛집</h1>
-        <div className='search-store'>
-          {dataArr.map((el) => {
-            return (
-              <StoreCard
-                img={el.img}
-                className={el.className}
-                storeName={el.storeName}
-                minimumPrice={el.minimumPrice}
-                deliverPrice={el.deliverPrice}
-                storeScore={el.storeScore}
-              />
-            );
-          })}{' '}
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }

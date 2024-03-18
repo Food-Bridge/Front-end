@@ -1,23 +1,17 @@
-.StoreTag {
-  
-}
-.StoreTag-margin {
-    margin-right: 20px;
-}
+.storeTag-margin {
+  margin-right: 25px;
 
-.storeTag-frame {
+  .storeTag-frame {
     width: 120px;
     height: 30px;
     border-radius: 50px;
-    border: 1px solid #8D8D8D;
+    border: 1px solid #8d8d8d;
     box-shadow: 2px 2px 2px #c6c6c6;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .storeTag-text {
-        font-weight: 400;
-        font-style: normal;
-        font-family: 'Pretendard-Regular';    
     }
+  }
 }
