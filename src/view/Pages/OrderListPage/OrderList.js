@@ -7,8 +7,9 @@ import axiosInstance from '../../../api/instance';
 export default function OrderList() {
   const [orders, setOrders] = useState(null);
   
-  useEffect(() => {axiosInstance.get('/order/').then(res => {setOrders(res.data)})}, []);
-  console.log(orders)
+  useEffect(() => {axiosInstance.get('/order/').then(res => {console.log(res)
+    setOrders(res.data)})}, []);
+  
   return (
     <>
       <h1 className='orderList-title'>주문 내역</h1>
