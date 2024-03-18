@@ -20,6 +20,7 @@ import PostDetail from './view/pages/PostDetailPage/PostDetail';
 import PostUpload from './view/pages/PostUploadPage/PostUpload';
 import Poster from './view/pages/PosterPage/Poster';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
+import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
 
 function App() {
   
@@ -53,6 +54,8 @@ function App() {
           <Route path='postUpload/' element={<PostUpload/>}/>
 
           <Route path='poster/' element={<Poster />}/>
+
+          <Route path='storeUpload/' element={<StoreUpload />} />
 
         </Routes>
       </Router>

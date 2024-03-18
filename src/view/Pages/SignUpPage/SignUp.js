@@ -2,22 +2,42 @@ import React, { useState, useRef, useEffect } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import axiosInstance from '../../../api/instance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 function SignUp() {
   const [emailValue, setEmail] = useState('');
   const [passwordValue, setPassword] = useState('');
   const [password2Value, setPassword2] = useState('');
   const [phoneNumberValue, setPhoneNumber] = useState('');
+  const [isSeller, setIsSeller] = useState(false);
   const passwordRef = useRef(null);
 
   const navigate = useNavigate();
   const [signedUp, setSignedUp] = useState(false);
+  const location = useLocation();
 
-  const handleSignUp = () => {
-    setSignedUp(true);
-    navigate('/users/signin/');
+
+  const handleSignUp = async () => {
+    try {
+      await axiosInstance.post('/users/signup/', {
+        email: emailValue,
+        username: userNameValue,
+        password: passwordValue,
+        password2: password2Value,
+        phone_number: phoneNumberValue,
+        is_seller: isSeller,
+      });
+      setSignedUp(true);
+      navigate('/users/signin/'); // 회원가입 후 로그인 페이지로 이동
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
   };
+  // const handleSignUp = () => {
+  //   setSignedUp(true);
+  //   navigate('/users/signin/');
+  // };
 
   const saveUserEmail = (event) => {
     setEmail(event.target.value);
@@ -170,6 +190,7 @@ useEffect(() => {
                     {!passwordMatch && <p className="singUp-passwdMismatch2">비밀번호가 일치하지 않습니다</p>}
                 </div>
               </div>
+
               <div className='signUp-numberForm'>
                 <h1 className='signUp-numberText'>전화번호</h1>
                 <input
@@ -182,6 +203,14 @@ useEffect(() => {
                 {phoneValid && <p className="singUp-phoneInvalid1">올바른 전화번호 형식입니다</p>}
                 {!phoneValid && <p className="singUp-phoneInvalid2">올바른 전화번호 형식이 아닙니다</p>}
               </div>
+
+              <input
+                type="checkbox"
+                checked={isSeller}
+                onChange={(e) => setIsSeller(e.target.checked)}
+              />
+              <label htmlFor="isSeller">판매자로 등록하기</label>
+
             </div>
             <div className='signUp-btn'>
               <div className='signUp-line'></div>
@@ -193,7 +222,7 @@ useEffect(() => {
                     password: passwordValue,
                     password2: password2Value,
                     phone_number: phoneNumberValue,
-                    is_seller: false,
+                    is_seller: isSeller,
                   }, {
                     headers: {
                       'Authorization': `Bearer ${localStorage.getItem('access')}`,
