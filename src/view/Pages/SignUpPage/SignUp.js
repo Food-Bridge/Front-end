@@ -18,26 +18,26 @@ function SignUp() {
   const location = useLocation();
 
 
-  const handleSignUp = async () => {
-    try {
-      await axiosInstance.post('/users/signup/', {
-        email: emailValue,
-        username: userNameValue,
-        password: passwordValue,
-        password2: password2Value,
-        phone_number: phoneNumberValue,
-        is_seller: isSeller,
-      });
-      setSignedUp(true);
-      navigate('/users/signin/'); // 회원가입 후 로그인 페이지로 이동
-    } catch (error) {
-      console.error("Error signing up:", error);
-    }
-  };
-  // const handleSignUp = () => {
-  //   setSignedUp(true);
-  //   navigate('/users/signin/');
+  // const handleSignUp = async () => {
+  //   try {
+  //     await axiosInstance.post('/users/signup/', {
+  //       email: emailValue,
+  //       username: userNameValue,
+  //       password: passwordValue,
+  //       password2: password2Value,
+  //       phone_number: phoneNumberValue,
+  //       is_seller: isSeller,
+  //     });
+  //     // setSignedUp(true);
+  //     navigate('/users/signin/'); // 회원가입 후 로그인 페이지로 이동
+  //   } catch (error) {
+  //     console.error("Error signing up:", error);
+  //   }
   // };
+  const handleSignUp = () => {
+    setSignedUp(true);
+    navigate('/users/signin/');
+  };
 
   const saveUserEmail = (event) => {
     setEmail(event.target.value);
@@ -51,6 +51,10 @@ function SignUp() {
   };
   const saveUserPhoneNumber = (event) => {
     setPhoneNumber(event.target.value);
+  };
+  const saveUserSeller = (event) => {
+    setIsSeller(event.target.checked);
+    console.log(!isSeller)
   };
 
   const userNameValue = '김00';
@@ -207,7 +211,8 @@ useEffect(() => {
               <input
                 type="checkbox"
                 checked={isSeller}
-                onChange={(e) => setIsSeller(e.target.checked)}
+                // onChange={(e) => setIsSeller(e.target.checked)}
+                onChange={saveUserSeller}
               />
               <label htmlFor="isSeller">판매자로 등록하기</label>
 
