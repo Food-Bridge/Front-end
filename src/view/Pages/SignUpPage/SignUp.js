@@ -111,6 +111,18 @@ useEffect(() => {
 }, [phoneNumberValue]);
 
 
+// 비밀번호 형식
+const validatePassword = (password) => {
+  // 비밀번호 형식을 검사하는 정규식
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+  return passwordRegex.test(password);
+};
+
+const checkPasswordValidity = () => {
+  const isValid = validatePassword(passwordValue);
+  setPasswordMatch(isValid); // 비밀번호 형식이 일치하는지 상태 업데이트
+};
+
 // 중복 여부 확인
 const [emailExists, setEmailExists] = useState(false);
 const [phoneExists, setPhoneExists] = useState(false);
@@ -138,6 +150,10 @@ useEffect(() => {
     checkExistingEmail();
   }
 }, [emailValue]);
+
+useEffect(() => {
+  checkPasswordValidity();
+}, [passwordValue]);
 
 useEffect(() => {
   if (phoneNumberValue) {
@@ -180,6 +196,12 @@ useEffect(() => {
                       value={passwordValue}
                       onChange={saveUserPassword}
                     />
+                    {!passwordMatch && (
+                      <p className="singUp-passwdInvalid">
+                        비밀번호는 영문/숫자/특수문자 혼합 8~20자여야 합니다
+                      </p>
+                    )}
+
                       <input
                         type='password'
                         id='password'
