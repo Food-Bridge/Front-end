@@ -20,6 +20,12 @@ export const authSlice = createSlice({
         nickname: null,
       };
     },
+    loginS: (state) => {
+      state.isSeller = true;
+    },
+    logoutS: (state) => {
+      state.isSeller = false;
+    },
     setProfile: (state, action) => {
       const { image, nickname } = action.payload;
       state.profile = {
@@ -30,10 +36,11 @@ export const authSlice = createSlice({
   },
 });
 
-export const { login, logout, setProfile } = authSlice.actions;
+export const { login, logout,loginS, logoutS, setProfile } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectProfile = (state) => state.auth.profile;
+export const selectIsSeller = (state) => state.auth.isSeller;
 
 export const deleteTokens = () => {
   return async (dispatch) => {
