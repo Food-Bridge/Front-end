@@ -1,6 +1,5 @@
 import React from 'react';
 import './ReviewBox.scss';
-import profileImg from '../../../data/chicken.jpg';
 
 import { FaStar } from 'react-icons/fa';
 

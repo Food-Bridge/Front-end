@@ -15,7 +15,7 @@ export default function OrderCard({ order, isReview }) {
   const receiptBtn = isReview ? 'orderCard-receipt' : 'orderCard-receipt-long';
 
   const handleClickReview = () => {
-    navigate('/restaurant/reviewUpload');
+    navigate('/restaurant/reviewUpload', { state: { reviewId: order.restaurant } });
   };
 
   const openModal = () => {
@@ -39,7 +39,11 @@ export default function OrderCard({ order, isReview }) {
       )}
       <div className='orderCard-frame'>
         <div className='orderCard-content'>
-          <img className='orderCard-img' src={order.restaurant_image} alt='레스토랑 이미지'/>
+          <img
+            className='orderCard-img'
+            src={order.restaurant_image}
+            alt='레스토랑 이미지'
+          />
           <div className='orderCard-text'>
             <h1 className='orderCard-store'>{order.restaurant_name}</h1>
             <div className='orderCard-menuList'>
