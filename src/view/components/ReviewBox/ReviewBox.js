@@ -16,7 +16,7 @@ export default function ReviewBox() {
     <>
       <header className='reviewBox-header'>
         <div className='reviewBox-profile'>
-          <img className='reviewBox-profileImg' src={profileImg} />
+          <img className='reviewBox-profileImg' src='' />
           <div className='reviewBox-profileContent'>
             <p className='reviewBox-profileName'>닉네임</p>
             <p className='reviewBox-rate'>{rateStars}</p>
@@ -25,7 +25,7 @@ export default function ReviewBox() {
         <p className='reviewBox-date'>2024-02-24</p>
       </header>
       <div className='reviewBox-content'>
-        <img className='reviewBox-contentImg' src={profileImg} />
+        <img className='reviewBox-contentImg' src='' />
         <p className='reviewBox-contentText'>
           출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다.
           45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다 출판되게
