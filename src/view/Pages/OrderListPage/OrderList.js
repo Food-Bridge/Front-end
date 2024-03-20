@@ -18,7 +18,8 @@ export default function OrderList() {
           const today = new Date();
           const created = new Date(order.created_at)
           const diff = today.getTime() - created.getTime();
-          let isReview = diff < 1000 * 60 * 60 * 24 * 3;
+          let isReview = diff < 1000 * 60 * 60 * 24 * 3 && !order.review_written;
+          console.log(order.review_written)
           return <OrderCard order={order} isReview={isReview} />;
         })) : <p className='orderList-noItem'>주문 내역이 없습니다.</p>}
       </div>

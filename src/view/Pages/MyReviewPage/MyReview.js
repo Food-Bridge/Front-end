@@ -1,8 +1,6 @@
 import React from 'react';
 import './MyReview.scss';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
-import { IoIosArrowDown, IoIosArrowBack } from 'react-icons/io';
-import { CiCamera } from 'react-icons/ci';
 
 import ReviewBox from '../../components/ReviewBox/ReviewBox';
 
@@ -24,25 +22,12 @@ export default function MyReview() {
     <>
       <div className='myReview-header'>
         <div className='myReview-title'>
-          <button className='myReview-bakcBtn'>
-            <IoIosArrowBack size='30' />
-          </button>
           <h2 className='myReview-titleText'>나의 리뷰</h2>
         </div>
         <p className='myReview-average'>평균</p>
         <h1 className='myReview-rateValue'>4.72</h1>
         <p className='myReview-rateStars'>{rateStars}</p>
         <p className='myReview-num'>리뷰 1503</p>
-      </div>
-      <div className='myReview-buttons'>
-        <button className='myReview-button myReview-imgBtn'>
-          <CiCamera size='20' />
-          사진 리뷰만 보기
-        </button>
-        <button className='myReview-button myReview-arrayBtn'>
-          <p className='myReview-arrayText'>최신순</p>
-          <IoIosArrowDown size='16' />
-        </button>
       </div>
       <div className='myReview-review'>
         <ReviewBox />

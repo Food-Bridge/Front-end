@@ -1,48 +1,74 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './ReviewUpload.scss';
 import { CiImageOn } from 'react-icons/ci';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
+import Rate from 'rc-rate';
+import 'rc-rate/assets/index.css';
+import { FaStar } from 'react-icons/fa';
 
 function ReviewUpload() {
   const navigate = useNavigate();
-  const [image, setImage] = useState();
-  const [content, setContent] = useState('')
+  const [image, setImage] = useState([]);
+  const [caption, setCaption] = useState('');
+  const [rating, setRating] = useState(5);
   const formData = new FormData();
-
   const {
-    state: { reviewId: id },
+    state: { orderId: id, menuName: menu },
   } = useLocation();
+
+useEffect(() => {
+  const res = axiosInstance.get(`/review/${id}/create/`)
+  console.log(res)
+})
 
   const imageInput = useRef();
 
-  const onCickImageUpload = () => {
+  const handleImageUpload = () => {
     imageInput.current.click();
   };
 
-
-  const onChangeContent = (event) => {
-    setContent(event.target.value)
-    formData.append('content', content);
-    console.log(content)
-
+  const handleCaptionChange = (event) => {
+    const caption = event.target.value;
+    setCaption(caption);
   };
 
-  const onChangeImage = (event) => {
+  const handleImageChange = (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
-    setImage(uploadFile)
-    // formData.append('image', image);
+    setImage(uploadFile);
+  };
+
+  const handleClickUpload = () => {
+    formData.append('caption', caption);
+    formData.append('rating', rating);
+    formData.append('menu_name', menu);
+    formData.append('img', image);
+
+    axiosInstance
+      .post(`/review/${id}/create/`, formData)
+      .then(function (response) {
+        console.log(response);
+        navigate('/orderlist/');
+      });
   };
 
   return (
     <div className='ReviewUpload'>
       <div className='reviewUpload-header'>
         <p className='reviewUpload-headerTitle'>리뷰 작성</p>
+        <div className='reviewUpload-rate'>
+          <Rate
+            value={rating}
+            allowHalf
+            character={<FaStar />}
+            onChange={(e) => setRating(e)}
+          />
+        </div>
       </div>
       <div className='reviewUpload-inputMain'>
         <textarea
-          onChange={onChangeContent}
+          onChange={handleCaptionChange}
           className='reviewUpload-inputForm'
           type='text'
           placeholder='주문하신 가게의 리뷰를 작성해주세요!'
@@ -55,10 +81,10 @@ function ReviewUpload() {
               id='file'
               type='file'
               accept='image/*'
-              onChange={onChangeImage}
+              onChange={handleImageChange}
               ref={imageInput}
             />
-            <button onClick={onCickImageUpload}>
+            <button onClick={handleImageUpload}>
               <CiImageOn className='reviewUpload-photoIcon' />
             </button>
           </div>
@@ -67,19 +93,9 @@ function ReviewUpload() {
       <div className='reviewUpload-button'>
         <button
           className='reviewUpload-uploadButton'
-          onClick={() => {
-            axiosInstance
-              .post(`/order/history/${id}/`, {'content': content, 'id': id})
-              .then(function (response) {
-                console.log(response);
-                navigate('/orderlist/');
-              })
-              .catch(function (error) {
-                console.log(error.response.data);
-              });
-          }}
+          onClick={handleClickUpload}
         >
-          리뷰 글 업로드
+          리뷰 업로드
         </button>
       </div>
     </div>

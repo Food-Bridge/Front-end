@@ -13,11 +13,10 @@ export default function OrderCard({ order, isReview }) {
   )} ${new Date(order.created_at).toLocaleTimeString('ko-KR')}`;
   const menuList = order.menu_list;
   const receiptBtn = isReview ? 'orderCard-receipt' : 'orderCard-receipt-long';
-
+  const menuNames = order.menu_list.map(menu => menu.menu_name).join('/');
   const handleClickReview = () => {
-    navigate('/restaurant/reviewUpload', { state: { reviewId: order.restaurant } });
+    navigate('/restaurant/reviewUpload', { state: { orderId: order.id, menuName: menuNames } });
   };
-
   const openModal = () => {
     setIsModalOpen(true);
   };
