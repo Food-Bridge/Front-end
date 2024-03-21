@@ -18,6 +18,10 @@ export default function MyListMain() {
     navigate('/orderlist/');
   };
 
+  const handleOpenLikes = () => {
+    navigate('/users/likes/');
+  };
+
   return (
     <div className='mylistMain'>
       <button className='mylistMain-box' onClick={handleOpenOrder}>
@@ -30,7 +34,10 @@ export default function MyListMain() {
         <HiOutlineChatBubbleLeftEllipsis size='40' />
         <h2 className='mylistMain-title'>나의 리뷰</h2>
       </button>
-      <button className='mylistMain-box mylistMain-last'>
+      <button
+        className='mylistMain-box mylistMain-last'
+        onClick={handleOpenLikes}
+      >
         <CiHeart size='40' />
         <h2 className='mylistMain-title'>찜 목록</h2>
       </button>

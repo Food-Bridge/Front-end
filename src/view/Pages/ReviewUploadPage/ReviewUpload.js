@@ -17,10 +17,6 @@ function ReviewUpload() {
     state: { orderId: id, menuName: menu },
   } = useLocation();
 
-useEffect(() => {
-  const res = axiosInstance.get(`/review/${id}/create/`)
-  console.log(res)
-})
 
   const imageInput = useRef();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 
-export default function RateStars({ rate }) {
+export default function RateStars({ rate, starOnly }) {
   const rates = rate !== 0 ? Math.round(rate * 2) / 2 : 0;
 
   const rateStars = [];
@@ -14,7 +14,7 @@ export default function RateStars({ rate }) {
 
   return (
     <p className='rateStars'>
-      {rate} {rateStars}
+      {starOnly ? '' : rate} {rateStars}
     </p>
   );
 }
