@@ -5,6 +5,9 @@ import { postTagData } from '../../../data/PostCardData/PostTagData'
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { toggleLike } from '../../../redux/reducers/communitySlice'
 
 function DetailPost({user, location, image, title, content}) {
 
@@ -22,7 +25,9 @@ function DetailPost({user, location, image, title, content}) {
         }
     ] 
     
-    const [isLike, setIsLike] = useState(false);
+    // const [isLike, setIsLike] = useState(false);
+    const isLiked = useSelector((state) => state.community.like.isLiked);
+    const dispatch = useDispatch();
   
     // const handleLike = () => {
     //   setIsLike(!isLike);
@@ -36,14 +41,14 @@ function DetailPost({user, location, image, title, content}) {
   useEffect(() => {
     const storedLikeStatus = localStorage.getItem('post_like_status');
     if (storedLikeStatus) {
-      setIsLike(JSON.parse(storedLikeStatus));
+      dispatch(toggleLike(JSON.parse(storedLikeStatus)));
     }
-  }, []);
+  }, [dispatch]);
 
-  // 좋아요 상태 변경 시 로컬 스토리지에 저장하기
-  useEffect(() => {
-    localStorage.setItem('post_like_status', JSON.stringify(isLike));
-  }, [isLike]);
+  // // 좋아요 상태 변경 시 로컬 스토리지에 저장하기
+  // useEffect(() => {
+  //   localStorage.setItem('post_like_status', JSON.stringify(isLike));
+  // }, [isLike]);
 
   const handleLike = () => {
     axios
@@ -57,7 +62,7 @@ function DetailPost({user, location, image, title, content}) {
         }
       )
       .then(function (response) {
-        setIsLike((prevState) => !prevState); // 이전 상태를 기반으로 토글
+        dispatch(toggleLike(!isLiked)); // 좋아요 상태 토글
         console.log(response);
       })
       .catch(function (error) {
@@ -65,6 +70,25 @@ function DetailPost({user, location, image, title, content}) {
       });
   };
 
+
+    // 게시물 삭제
+    const handleDeletePost = () => {
+      axios
+        .delete(`http://localhost:8000/community/${id}/`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access')}`,
+          },
+        })
+        .then(response => {
+          console.log('Post deleted successfully:', response);
+          // 게시물 삭제 후 필요한 작업 수행 (예: 리다이렉트 등)
+          navigate("/commuPostWeek")
+        })
+        .catch(error => {
+          console.error('Error deleting post:', error);
+        });
+    };
+  
 
   return (
     <div className='DetailPost'>
@@ -82,11 +106,14 @@ function DetailPost({user, location, image, title, content}) {
             <p className='detailPost-locaText'>{location}</p>
           </div>
           <button onClick={handleLike}>
-            {isLike ? (
-              <IoIosHeart size="30" color="red" className="detailPost-like" />
+            {isLiked ? (
+              <IoIosHeart size='30' color='red' className='detailPost-like' />
             ) : (
-              <IoIosHeartEmpty size="30" color="red" className="detailPost-like" />
+              <IoIosHeartEmpty size='30' color='red' className='detailPost-like' />
             )}
+          </button>
+          <button className='detailPost-deleted' onClick={handleDeletePost}>
+            X
           </button>
         </div>
       </header>

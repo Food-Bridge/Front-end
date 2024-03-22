@@ -15,6 +15,7 @@ function PostCommentInput() {
 
 
     const id = window.location.href.split('/').reverse()[0]
+    
 
   return (
     <>
@@ -33,6 +34,8 @@ function PostCommentInput() {
                 .then(function (response) {
                     console.log(response);
                     console.log(response.data.results)
+                    window.location.reload();
+                    
                 })
                 .catch(function (error) {
                     console.log(error.response.data);

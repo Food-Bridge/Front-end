@@ -30,14 +30,24 @@
                     font-weight: 800;
                 }
             }
-            .postComment-like {
+            .postComment-headerRight {
                 display: flex;
-                align-items: center;
 
-                .postComment-likeIcon {
+                .postComment-like {
+                    display: flex;
+                    align-items: center;
+
+                    .postComment-likeIcon {
+                        width: 24px;
+                        height: 24px;
+                        color: red;
+                    }
+                }
+                .postComment-deleted {
                     width: 24px;
                     height: 24px;
-                    color: red;
+                    font-size: 20px;
+                    margin-left: 10px;
                 }
             }
         }

@@ -10,7 +10,7 @@ import PostCommentInput from '../../components/PostCommentInput/PostCommentInput
 
 function PostDetail() {
   const [postData, setPostData] = useState([]);
-  const id = window.location.href.split('/').reverse()[0]
+  const id = window.location.href.split('/').reverse()[0] 
 
   console.log(id)
   console.log(postData)
@@ -76,7 +76,7 @@ function PostDetail() {
       <div className='postDetail-comment'>
         <div className='postDetail-commentList'>
           {commentData && commentData.map(comment => (
-            <PostComment key={commentData.id} id={commentData.id} content={comment.content} user={comment.author} />
+            <PostComment key={commentData.id} id={commentData.id} commentId={commentData.post} content={comment.content} user={comment.author} />
           ))}
         </div>
         

@@ -60,6 +60,15 @@
         display: flex;
         align-items: center;
       }
+
+      .detailPost-deleted {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        font-size: 20px;
+        margin-left: 10px;
+        align-items: center;
+      }
     }
   }
   .detailPost-content {
