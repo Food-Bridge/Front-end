@@ -86,14 +86,14 @@ function SignUp() {
     <>
       <div className='SignUp'>
         <header className='signUp-frame'>
-          <h1 className='signUp-title'>이메일로 회원가입</h1>
+          <h1 className='signUp-title'>회원가입</h1>
           <div className='signUp-flex'>
             <div className='signUp-margin'>
               <div className='signUp-emailForm'>
                 <h1 className='signUp-emailText'>이메일</h1>
                 <input
                   type='text'
-                  placeholder='example@example.com'
+                  placeholder=' example@example.com'
                   className='singUp-emailInput'
                   value={emailValue}
                   onChange={saveUserData(setEmail)}
@@ -116,7 +116,7 @@ function SignUp() {
                     <input
                       type='password'
                       id='password'
-                      placeholder='영문/숫자/특수문자 혼합 8~20자'
+                      placeholder=' 영문/숫자/특수문자 혼합 8~20자'
                       className='singUp-passwdInput'
                       value={passwordValue}
                       onChange={saveUserData(setPassword)}
@@ -130,7 +130,7 @@ function SignUp() {
                     <input
                       type='password'
                       id='password2'
-                      placeholder='비밀번호를 한번 더 입력해주세요'
+                      placeholder=' 비밀번호를 한번 더 입력해주세요'
                       className='singUp-passwdInput2'
                       value={password2Value}
                       onChange={saveUserData(setPassword2)}
@@ -175,13 +175,13 @@ function SignUp() {
               </div>
               <div className='signUp-isSeller'>
                 <label htmlFor='isSeller' className='signUp-isSellerLabel'>
-                  판매자로 등록하기
+                  판매자 여부
                 </label>
                 <input
                   className='signUp-isSellerBox'
                   type='checkbox'
                   checked={isSeller}
-                  onChange={saveUserData(setIsSeller)}
+                  onChange={() => setIsSeller(!isSeller)}
                 />
               </div>
             </div>
