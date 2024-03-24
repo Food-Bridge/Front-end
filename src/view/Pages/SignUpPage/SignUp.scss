@@ -1,160 +1,157 @@
 .SignUp {
-    width: 100%;
-    margin-top: 20px;
-    // height: 700px;
+  width: 100%;
+  margin-top: 20px;
 
-    .signUp-frame {
-        width: 100%;
-        height: 530px;
+  .signUp-frame {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+    .signUp-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .signUp-flex {
+      .signUp-margin {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: space-between;
+
+        .signUp-emailForm {
+          height: 90px;
+          align-items: center;
+          justify-content: center;
+
+          .signUp-emailText {
+            width: 300px;
+            font-size: 16px;
+            text-align: left;
+          }
+          .singUp-emailInput {
+            width: 300px;
+            height: 50px;
+          }
+          .singUp-emailInvalid {
+            width: 300px;
+            height: 20px;
+            color: red;
+            font-size: 12px;
+          }
+        }
+        .signUp-passwdForm {
+          height: 160px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          .signUp-passwdText {
+            width: 300px;
+            font-size: 16px;
+            text-align: left;
+          }
+          .signUp-inputFlex {
+            height: 160px;
+
+            .singUp-passwdInputForm {
+              height: 120px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+
+              .singUp-passwdInput {
+                width: 300px;
+                height: 50px;
+              }
+              .singUp-passwdInput2 {
+                width: 300px;
+                height: 50px;
+              }
+              .singUp-passwdInvalid {
+                width: 300px;
+                height: 20px;
+                color: red;
+                font-size: 12px;
+              }
+            }
+            .singUp-passwdMismatch {
+              width: 300px;
+              height: 20px;
+              color: red;
+              font-size: 12px;
+            }
+          }
+        }
+        .signUp-numberForm {
+          height: 90px;
+
+          .signUp-numberText {
+            width: 300px;
+            text-align: left;
+            font-size: 16px;
+          }
+          .singUp-numberInput {
+            width: 300px;
+            height: 50px;
+          }
+          .singUp-phoneInvalid {
+            width: 300px;
+            height: 20px;
+            color: red;
+            font-size: 12px;
+          }
+        }
+        .signUp-userNameForm {
+          height: 90px;
+
+          .signUp-userNameText {
+            width: 300px;
+            text-align: left;
+            font-size: 16px;
+          }
+          .singUp-userNameInput {
+            width: 300px;
+            height: 50px;
+          }
+          .singUp-userNameInvalid {
+            width: 300px;
+            height: 20px;
+            color: red;
+            font-size: 12px;
+          }
+        }
+        .signUp-isSeller {
+          width: 300px;
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+          .signUp-isSellerLabel {
+            height: 20px;
+            margin-right: 10px;
+          }
+          .signUp-isSellerBox {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+      .signUp-btn {
+        height: 70px;
+        display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
-        .signUp-title {
-            font-size: 24px;
+        .signUp-line {
+          width: 450px;
+          border: 1px solid #cbcbcb;
         }
-        .signUp-flex {
-            height: 460px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            .signUp-margin {
-                height: 340px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-between;
-
-                .signUp-emailForm {
-                    width: 385px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-direction: column;
-
-                    .signUp-emailText {
-                        width: 300px;
-                        font-size: 16px;
-                        text-align: left;
-                    }
-                    .singUp-emailInput {
-                        width: 300px;
-                        height: 50px;
-                    }
-                    .singUp-emailInvalid1 {
-                        width: 300px;
-                        height: 20px;
-                        color: blue;
-                        font-size: 12px;
-                    }
-                    .singUp-emailInvalid2 {
-                        width: 300px;
-                        height: 20px;
-                        color: red;
-                        font-size: 12px;
-                    }
-                }
-                .signUp-passwdForm {
-                    width: 385px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-
-                    .signUp-passwdText {
-                        width: 300px;
-                        font-size: 16px;
-                        text-align: left;
-                    }
-                    .signUp-inputFlex {
-                        height: 160px;
-
-                        .singUp-passwdInputForm {
-                            height: 120px;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: space-between;
-
-                            .singUp-passwdInput {
-                                width: 300px;
-                                height: 50px;
-                            }
-                            .singUp-passwdInput2 {
-                                width: 300px;
-                                height: 50px;
-                            }   
-
-                            .singUp-passwdInvalid {
-                                width: 300px;
-                                height: 20px;
-                                color: red;
-                                font-size: 12px;
-                            }
-                        }
-
-                        .singUp-passwdMismatch1 {
-                            width: 300px;
-                            height: 20px;
-                            color: blue;
-                            font-size: 12px;
-                        }
-                        .singUp-passwdMismatch2 {
-                            width: 300px;
-                            height: 20px;
-                            color: red;
-                            font-size: 12px;
-                        }
-                    }
-
-                }   
-                .signUp-numberForm {
-                    width: 385px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-direction: column;
-
-                    .signUp-numberText {
-                        width: 300px;
-                        text-align: left;
-                        font-size: 16px;
-                    }
-                    .singUp-numberInput {
-                        width: 300px;
-                        height: 50px;
-                    }   
-                    .singUp-phoneInvalid1 {
-                        width: 300px;
-                        height: 20px;
-                        color: blue;
-                        font-size: 12px;
-                    }
-                    .singUp-phoneInvalid2 {
-                        width: 300px;
-                        height: 20px;
-                        color: red;
-                        font-size: 12px;
-                    }
-                }         
-            }
-            .signUp-btn {
-                height: 70px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-
-                .signUp-line {
-                    width: 450px;
-                    border: 1px solid #CBCBCB;
-                }
-                .SignUpBtnComp {
-                    
-                }
-            }
+        .SignUpBtnComp {
         }
-
+      }
     }
+  }
 }
