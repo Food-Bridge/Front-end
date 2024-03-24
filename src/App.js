@@ -24,6 +24,7 @@ import StoreReview from './view/pages/StoreReviewPage/StoreReview';
 import MyReview from './view/pages/MyReviewPage/MyReview';
 import OrderList from './view/pages/OrderListPage/OrderList';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
+import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
 import Modal from './view/components/Modal/Modal';
 import ReviewUpload from './view/pages/ReviewUploadPage/ReviewUpload';
 import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
@@ -76,6 +77,8 @@ function App() {
           <Route path='postUpload/' element={<PostUpload/>}/>
 
           <Route path='poster/' element={<Poster />}/>
+
+          <Route path='storeUpload/' element={<StoreUpload />} />
 
         </Routes>
       </Router>

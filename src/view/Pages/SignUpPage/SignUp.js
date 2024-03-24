@@ -2,18 +2,38 @@ import React, { useState, useRef, useEffect } from 'react';
 import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import axiosInstance from '../../../api/instance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 function SignUp() {
   const [emailValue, setEmail] = useState('');
   const [passwordValue, setPassword] = useState('');
   const [password2Value, setPassword2] = useState('');
   const [phoneNumberValue, setPhoneNumber] = useState('');
+  const [isSeller, setIsSeller] = useState(false);
   const passwordRef = useRef(null);
 
   const navigate = useNavigate();
   const [signedUp, setSignedUp] = useState(false);
+  const location = useLocation();
 
+
+  // const handleSignUp = async () => {
+  //   try {
+  //     await axiosInstance.post('/users/signup/', {
+  //       email: emailValue,
+  //       username: userNameValue,
+  //       password: passwordValue,
+  //       password2: password2Value,
+  //       phone_number: phoneNumberValue,
+  //       is_seller: isSeller,
+  //     });
+  //     // setSignedUp(true);
+  //     navigate('/users/signin/'); // 회원가입 후 로그인 페이지로 이동
+  //   } catch (error) {
+  //     console.error("Error signing up:", error);
+  //   }
+  // };
   const handleSignUp = () => {
     setSignedUp(true);
     navigate('/users/signin/');
@@ -31,6 +51,10 @@ function SignUp() {
   };
   const saveUserPhoneNumber = (event) => {
     setPhoneNumber(event.target.value);
+  };
+  const saveUserSeller = (event) => {
+    setIsSeller(event.target.checked);
+    console.log(!isSeller)
   };
 
   const userNameValue = '김00';
@@ -87,6 +111,18 @@ useEffect(() => {
 }, [phoneNumberValue]);
 
 
+// 비밀번호 형식
+const validatePassword = (password) => {
+  // 비밀번호 형식을 검사하는 정규식
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+  return passwordRegex.test(password);
+};
+
+const checkPasswordValidity = () => {
+  const isValid = validatePassword(passwordValue);
+  setPasswordMatch(isValid); // 비밀번호 형식이 일치하는지 상태 업데이트
+};
+
 // 중복 여부 확인
 const [emailExists, setEmailExists] = useState(false);
 const [phoneExists, setPhoneExists] = useState(false);
@@ -114,6 +150,10 @@ useEffect(() => {
     checkExistingEmail();
   }
 }, [emailValue]);
+
+useEffect(() => {
+  checkPasswordValidity();
+}, [passwordValue]);
 
 useEffect(() => {
   if (phoneNumberValue) {
@@ -156,6 +196,12 @@ useEffect(() => {
                       value={passwordValue}
                       onChange={saveUserPassword}
                     />
+                    {!passwordMatch && (
+                      <p className="singUp-passwdInvalid">
+                        비밀번호는 영문/숫자/특수문자 혼합 8~20자여야 합니다
+                      </p>
+                    )}
+
                       <input
                         type='password'
                         id='password'
@@ -170,6 +216,7 @@ useEffect(() => {
                     {!passwordMatch && <p className="singUp-passwdMismatch2">비밀번호가 일치하지 않습니다</p>}
                 </div>
               </div>
+
               <div className='signUp-numberForm'>
                 <h1 className='signUp-numberText'>전화번호</h1>
                 <input
@@ -182,6 +229,15 @@ useEffect(() => {
                 {phoneValid && <p className="singUp-phoneInvalid1">올바른 전화번호 형식입니다</p>}
                 {!phoneValid && <p className="singUp-phoneInvalid2">올바른 전화번호 형식이 아닙니다</p>}
               </div>
+
+              <input
+                type="checkbox"
+                checked={isSeller}
+                // onChange={(e) => setIsSeller(e.target.checked)}
+                onChange={saveUserSeller}
+              />
+              <label htmlFor="isSeller">판매자로 등록하기</label>
+
             </div>
             <div className='signUp-btn'>
               <div className='signUp-line'></div>
@@ -193,7 +249,7 @@ useEffect(() => {
              햣       password: passwordValue,
                     password2: password2Value,
                     phone_number: phoneNumberValue,
-                    is_seller: false,
+                    is_seller: isSeller,
                   }, {
                     headers: {
                       'Authorization': `Bearer ${localStorage.getItem('access')}`,
