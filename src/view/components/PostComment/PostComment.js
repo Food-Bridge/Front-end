@@ -12,7 +12,6 @@ const PostComment = ({content, user, commentId}) => {
   };
 
   const id = window.location.href.split('/').reverse()[0]
-  // const commentId = window.location.href.split('/').reverse()[0]
   const navigate = useNavigate();
 
   // 댓글 삭제

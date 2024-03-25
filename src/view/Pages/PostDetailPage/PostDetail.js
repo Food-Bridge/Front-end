@@ -52,7 +52,8 @@ function PostDetail() {
         // 성공적으로 데이터를 받아온 경우 state를 업데이트
         console.log(response)
         setCommentDatas(response.data);
-        // console.log('postData ids:', response.data.results.map(post => post.id));
+        // console.log(response.id)
+        console.log('postData ids:', response.data.results.map(comment => comment.id));
       })
       .catch(error => {
         // 오류 처리
@@ -76,7 +77,7 @@ function PostDetail() {
       <div className='postDetail-comment'>
         <div className='postDetail-commentList'>
           {commentData && commentData.map(comment => (
-            <PostComment key={commentData.id} id={commentData.id} commentId={commentData.post} content={comment.content} user={comment.author} />
+            <PostComment key={commentData.id} id={commentData.id} commentId={comment.id} content={comment.content} user={comment.author} />
           ))}
         </div>
         
