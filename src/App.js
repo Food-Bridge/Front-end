@@ -27,6 +27,7 @@ import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
 import Modal from './view/components/Modal/Modal';
 import ReviewUpload from './view/pages/ReviewUploadPage/ReviewUpload';
 import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
+import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
 
 function App() {
   
@@ -62,6 +63,7 @@ function App() {
           <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
           <Route path='restaurant/reviewUpload/' element={<ReviewUpload />} />
+          <Route path='storeUpload/' element={<StoreUpload />} />
 
           // 주문 정보
           <Route path='cart/' element={<CartList />} />
