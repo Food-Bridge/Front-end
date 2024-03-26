@@ -9,10 +9,11 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import CommunityCard from '../../components/CommunityCard/CommunityCard';
 import PlusInfo from '../../components/PlusInfo/PlusInfo';
 import { MiniPostData } from '../../../data/MiniPostData/MiniPostData';
+import { useSelector } from 'react-redux';
+import SellerMain from './SellerMain';
 
 export default function MainPage() {
   const [data, setData] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get('/restaurant/');
@@ -44,6 +45,7 @@ export default function MainPage() {
 
   return (
     <div className='main'>
+      <SellerMain />
       <SearchBar className='main-searchBar' location='강남구' count='1' />
       <div className='main-imageSliderContainer'>
         <ImageSlider className='main-imageSlider' slides={SliderData} />

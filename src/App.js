@@ -62,8 +62,7 @@ function App() {
           <Route path='restaurant/:resId/:menuId' element={<StoreOption />} />
           <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
-          <Route path='restaurant/reviewUpload/' element={<ReviewUpload />} />
-          <Route path='storeUpload/' element={<StoreUpload />} />
+          <Route path='restaurant/reviewUpload/' element={<ReviewUpload />} /
 
           // 주문 정보
           <Route path='cart/' element={<CartList />} />
@@ -78,6 +77,9 @@ function App() {
           <Route path='postUpload/' element={<PostUpload/>}/>
 
           <Route path='poster/' element={<Poster />}/>
+
+          //판매자 페이지
+          <Route path='storeUpload/' element={<StoreUpload />} />
 
         </Routes>
       </Router>

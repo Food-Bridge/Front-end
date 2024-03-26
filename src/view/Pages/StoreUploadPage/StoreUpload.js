@@ -5,7 +5,6 @@ import { HiMiniXMark } from 'react-icons/hi2';
 import axiosInstance from '../../../api/instance';
 
 import DaumPostCode from 'react-daum-postcode';
-import { Form } from 'react-router-dom';
 
 function StoreUpload() {
   const [isOpen, setIsOpen] = useState(false);
