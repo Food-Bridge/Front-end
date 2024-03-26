@@ -28,6 +28,7 @@ import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
 import Modal from './view/components/Modal/Modal';
 import ReviewUpload from './view/pages/ReviewUploadPage/ReviewUpload';
 import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
+import MenuUpload from './view/pages/MenuUploadPage/MenuUpload';
 
 function App() {
   
@@ -63,6 +64,9 @@ function App() {
           <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
           <Route path='restaurant/reviewUpload/' element={<ReviewUpload />} />
+
+          // 메뉴 정보
+          <Route path='menuUpload' element={<MenuUpload />} />
 
           // 주문 정보
           <Route path='cart/' element={<CartList />} />
