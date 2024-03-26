@@ -6,7 +6,6 @@ import axiosInstance from '../../../api/instance.js';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
-import SearchBar from '../../components/SearchBar/SearchBar.js';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
 import Modal from '../../components/Modal/Modal.js';

@@ -25,13 +25,16 @@ import MyReview from './view/pages/MyReviewPage/MyReview';
 import OrderList from './view/pages/OrderListPage/OrderList';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
 import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
-import Modal from './view/components/Modal/Modal';
 import ReviewUpload from './view/pages/ReviewUploadPage/ReviewUpload';
 import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
 import MenuUpload from './view/pages/MenuUploadPage/MenuUpload';
 import MyStore from './view/pages/StorePage/MyStore';
+import { useSelector } from 'react-redux';
+import { selectIsSeller } from './redux/reducers/authSlice';
 
 function App() {
+  const isSeller = useSelector(selectIsSeller);
+
   return (
     <div className='App'>
       <Router>
@@ -78,9 +81,13 @@ function App() {
           <Route path='postUpload/' element={<PostUpload />} />
           <Route path='poster/' element={<Poster />} />
           //판매자 페이지
-          <Route path='myStore/' element={<MyStore />} />
-          <Route path='storeUpload/' element={<StoreUpload />} />
-          <Route path='menuUpload/' element={<MenuUpload />} />
+          {isSeller && (
+            <>
+              <Route path='myStore/' element={<MyStore />} />
+              <Route path='storeUpload/' element={<StoreUpload />} />
+              <Route path='menuUpload/' element={<MenuUpload />} />
+            </>
+          )}
         </Routes>
       </Router>
     </div>
