@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ReviewBox.scss';
 
 import { FaStar } from 'react-icons/fa';
+import axiosInstance from '../../../api/instance';
 
 export default function ReviewBox({ data,  myReview }) {
+  const [userNickname, setUserNickname] = useState('')
+  const [userImage, setUserImage] = useState('')
+
+  useEffect(() => {
+    const fetchData = async() =>{
+      const res = await axiosInstance.get('/users/profile/')
+      console.log(res)
+      setUserNickname(res.data.nickname ? res.data.nickname : '닉네임')
+      setUserImage(res.data.image)
+    }
+fetchData()
+  }, [])
+
   const rate = data.rating;
   const rateStars = Array(rate).fill(<FaStar color='#ffc700' size='14' />);
 
@@ -16,9 +30,9 @@ export default function ReviewBox({ data,  myReview }) {
     <>
       <header className='reviewBox-header'>
         <div className='reviewBox-profile'>
-          <img className='reviewBox-profileImg' src='' />
+          <img className='reviewBox-profileImg' src={myReview ? data.restaurant_image : userImage} />
           <div className='reviewBox-profileContent'>
-            <p className='reviewBox-profileName'>{myReview ? '식당이름' : '닉네임'}</p>
+            <p className='reviewBox-profileName'>{myReview ? data.restaurnat_name : userNickname}</p>
             <p className='reviewBox-rate'>{rateStars}</p>
           </div>
         </div>
