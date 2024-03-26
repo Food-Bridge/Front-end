@@ -107,9 +107,9 @@ function DetailPost({user, location, image, title, content}) {
           </div>
           <button onClick={handleLike}>
             {isLiked ? (
-              <IoIosHeart size='30' color='red' className='detailPost-like' />
-            ) : (
               <IoIosHeartEmpty size='30' color='red' className='detailPost-like' />
+            ) : (
+              <IoIosHeart size='30' color='red' className='detailPost-like' />
             )}
           </button>
           <button className='detailPost-deleted' onClick={handleDeletePost}>
