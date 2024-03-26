@@ -17,7 +17,7 @@ const PostComment = ({content, user, commentId}) => {
   // 댓글 삭제
   const handleDeletePost = () => {
     axios
-    .delete(`http://localhost:8000/community/${id}/comment/${commentId}/delete/`, {
+    .delete(`http://localhost:8000/community/${id}/comment/${commentId}/`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access')}`,
       },
