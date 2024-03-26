@@ -8,24 +8,31 @@ import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
 import { setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
+import { loginS } from '../../../redux/reducers/authSlice';
 
 function SignIn() {
   const [emailValue, setEmail] = useState('');
   const [passwordValue, setPassword] = useState('');
+  const [isSeller, setIsSeller] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const data = {
-      email: emailValue,
-      password: passwordValue,
-    };
-    const res = await axiosInstance.post('/users/login/', data);
-    const { access, refresh } = res.data.tokens;
-    dispatch(setTokens({ access, refresh }));
-    navigate('/');
+    try {
+      const data = {
+        email: emailValue,
+        password: passwordValue,
+        is_seller: isSeller,
+      };
+      const res = await axiosInstance.post('/users/login/', data);
+      const { access, refresh } = res.data.tokens;
+      dispatch(setTokens({ access, refresh }));
+      res.data.is_seller && dispatch(loginS());
+      navigate('/');
+    } catch (error) {
+      alert(error.response.data.message);
+    }
   };
-
   const handleSignUp = () => {
     navigate('/users/signup/');
   };
@@ -49,7 +56,7 @@ function SignIn() {
                 <div className='signIn-emailForm'>
                   <input
                     type='text'
-                    placeholder='아이디 또는 이메일'
+                    placeholder=' 이메일'
                     className='signIn-emailInput'
                     value={emailValue}
                     onChange={saveUserEmail}
@@ -58,10 +65,21 @@ function SignIn() {
                 <div className='signIn-passwdForm'>
                   <input
                     type='password'
-                    placeholder='비밀번호'
+                    placeholder=' 비밀번호'
                     className='signIn-passwdInput'
                     value={passwordValue}
                     onChange={saveUserPassword}
+                  />
+                </div>
+                <div className='signIn-isSeller'>
+                  <label htmlFor='isSeller' className='signIn-isSellerLabel'>
+                    판매자 로그인
+                  </label>
+                  <input
+                    className='signIn-isSellerBox'
+                    type='checkbox'
+                    checked={isSeller}
+                    onChange={() => setIsSeller(!isSeller)}
                   />
                 </div>
               </div>
@@ -75,7 +93,6 @@ function SignIn() {
                     className2={'signUpBtn-text2'}
                   />
                 </div>
-                <h1 className='signIn-findText'>아이디/비밀번호 찾기</h1>
               </div>
             </div>
             <div className='signIn-btn'>

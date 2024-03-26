@@ -13,6 +13,7 @@ export default function MyListProfile({onChangeImage, handleLogout}) {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get('/users/profile/');
+      console.log(res)
       dispatch(setProfile({ image: res.data.image, nickname: res.data.nickname }));
     };
     fetchData();

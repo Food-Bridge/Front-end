@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './CouponList.scss';
 import Coupon from '../../components/Coupon/Coupon';
-import { couponData } from '../../../data/CouponData/CouponData';
+import axiosInstance from '../../../api/instance';
 
 function CouponList() {
+  const [couponData, setCouponData] = useState([]);
+  const [userCoupon, setUserCoupon] = useState([]);
 
+  useEffect(() => {
+    axiosInstance.get('/coupon/').then((result) => setCouponData(result.data));
+    axiosInstance
+      .get('/userscoupon/')
+      .then((result) => setUserCoupon(result.data));
+  }, []);
+  console.log(userCoupon);
   return (
     <div className='CouponList'>
       <header className='couponList-frame'>
         <h1 className='couponList-title'>할인쿠폰</h1>
         <div className='couponList-couponBlock'>
           {couponData.map((el) => {
-            return <Coupon  className='couponList-coupon' sale={el.sale} menuTag={el.menuTag} price={el.price} year={el.year} month={el.month} day={el.day} />
+            return <Coupon className='couponList-coupon' data={el} />;
           })}
         </div>
       </header>

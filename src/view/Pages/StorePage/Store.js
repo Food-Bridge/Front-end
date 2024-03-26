@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance.js';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  updateStoreIds,
-  selectStoreIds,
-  fectchStoreIds,
-} from '../../../redux/reducers/likeSlice.js';
 
 import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
@@ -22,34 +16,34 @@ import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
 export default function Store() {
   const { resId } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
+  const [likeData, setLikeData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
-
-  const storeIds = useSelector(selectStoreIds);
   const [isLike, setIsLike] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${resId}`);
       const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu`);
+      const likeRes = await axiosInstance.get('/like/');
+
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
+      setLikeData(likeRes.data.liked_restaurants_ids);
     };
     fetchData();
-    dispatch(fectchStoreIds());
   }, [resId]);
 
   useEffect(() => {
-    setIsLike(storeIds && storeIds.includes(resId));
-  }, [storeIds, resId]);
+    setIsLike(likeData.includes(parseInt(resId)));
+  }, [likeData, resId]);
 
   const handleClickHeart = async () => {
-    await axiosInstance.post(`/like/${resId}/`);
+      await axiosInstance.post(`/like/${resId}/`);
     setIsLike((prevIsLike) => !prevIsLike);
   };
 
