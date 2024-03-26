@@ -28,7 +28,6 @@ import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
 import Modal from './view/components/Modal/Modal';
 import ReviewUpload from './view/pages/ReviewUploadPage/ReviewUpload';
 import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
-import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
 import MenuUpload from './view/pages/MenuUploadPage/MenuUpload';
 
 function App() {
