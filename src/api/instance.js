@@ -29,17 +29,14 @@ axiosInstance.interceptors.request.use(
           config.headers['Authorization'] = `Bearer ${access}`;
         }
       } catch (error) {
-        console.error('토큰 갱신에 실패했습니다.', error);
-        throw new Error('토큰 갱신에 실패했습니다.');
+        console.error('로그인 실패', error);
+        throw new Error('로그인에 실패했습니다.');
       }
     }
     return config;
-  },
-  (error) => {
-    console.error('axios config : ', error);
-    return Promise.reject(error);
   }
 );
+
 
 
 

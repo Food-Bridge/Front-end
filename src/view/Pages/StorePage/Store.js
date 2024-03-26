@@ -13,6 +13,8 @@ import Modal from '../../components/Modal/Modal.js';
 
 import { CiPhone } from 'react-icons/ci';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../../redux/reducers/authSlice.js';
 
 export default function Store() {
   const { resId } = useParams();
@@ -23,17 +25,18 @@ export default function Store() {
   const [likeData, setLikeData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
   const [isLike, setIsLike] = useState(false);
+  const isLoggedIn = useSelector(selectIsLoggedIn)
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${resId}`);
       const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu`);
-      const likeRes = await axiosInstance.get('/like/');
+      const likeRes = isLoggedIn && await axiosInstance.get('/like/');
 
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
-      setLikeData(likeRes.data.liked_restaurants_ids);
+      isLoggedIn && setLikeData(likeRes.data.liked_restaurants_ids);
     };
     fetchData();
   }, [resId]);
