@@ -7,7 +7,6 @@ export default function Modal({
   onCancel,
   contents,
   title,
-  info,
 }) {
   return (
     <div className='modal-container'>

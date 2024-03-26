@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineHome } from 'react-icons/ai';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { IoIosArrowBack } from 'react-icons/io';
 import './LogoBar.scss';

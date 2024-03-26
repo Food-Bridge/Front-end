@@ -24,6 +24,7 @@ import StoreReview from './view/pages/StoreReviewPage/StoreReview';
 import MyReview from './view/pages/MyReviewPage/MyReview';
 import OrderList from './view/pages/OrderListPage/OrderList';
 import GoogleCallback from './view/pages/CallbackPage/GoogleCallback';
+import StoreUpload from './view/pages/StoreUploadPage/StoreUpload';
 import Modal from './view/components/Modal/Modal';
 import ReviewUpload from './view/pages/ReviewUploadPage/ReviewUpload';
 import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
@@ -64,7 +65,6 @@ function App() {
           <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
           <Route path='restaurant/reviewUpload/' element={<ReviewUpload />} />
-          <Route path='storeUpload/' element={<StoreUpload />} />
 
           // 메뉴 정보
           <Route path='menuUpload' element={<MenuUpload />} />
@@ -82,6 +82,9 @@ function App() {
           <Route path='postUpload/' element={<PostUpload/>}/>
 
           <Route path='poster/' element={<Poster />}/>
+
+          //판매자 페이지
+          <Route path='storeUpload/' element={<StoreUpload />} />
 
         </Routes>
       </Router>
