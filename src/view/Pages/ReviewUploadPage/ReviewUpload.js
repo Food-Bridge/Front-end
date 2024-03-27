@@ -10,6 +10,7 @@ import { FaStar } from 'react-icons/fa';
 function ReviewUpload() {
   const navigate = useNavigate();
   const [image, setImage] = useState([]);
+  const [imageDisplay, setImageDisplay] = useState(null)
   const [caption, setCaption] = useState('');
   const [rating, setRating] = useState(5);
   const formData = new FormData();

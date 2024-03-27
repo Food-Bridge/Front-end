@@ -32,7 +32,7 @@ export default function MyStore() {
   }, []);
 
   const handleClickOption = (menuId) => {
-    navigate(`${menuId}/`);
+    navigate(`${menuId}/`, { state: { id: menuId } });
   };
 
   const handleOpenReview = () => {
@@ -90,7 +90,6 @@ export default function MyStore() {
             <div
               className='store-menuBlock'
               key={el.id}
-              onClick={() => handleClickOption(el.id)}
             >
               <MenuBlock
                 title={el.name}
@@ -100,6 +99,7 @@ export default function MyStore() {
                 popular={el.is_popular}
                 main={el.is_main}
                 isSeller
+                onClick={() => handleClickOption(el.id)}
               />
             </div>
           ))}

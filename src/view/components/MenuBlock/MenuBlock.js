@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './MenuBlock.scss';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuBlock({
   popular,
@@ -10,10 +11,16 @@ export default function MenuBlock({
   content,
   image,
   isSeller,
+  onClick,
 }) {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <button className='menublock'>
+    <div className='menublock-container'>
+      <button
+        className='menublock'
+        onClick={onClick}
+      >
         <div className='menublock-content'>
           <div className='menublock-title'>
             {popular && (
@@ -37,12 +44,17 @@ export default function MenuBlock({
           <div className='menublock-image' />
         )}
       </button>
-      {isSeller && (
+      {isSeller  && (
         <div className='menublock-btn'>
-          <button className='menublock-patchBtn'>수정</button>
+          <button
+            className='menublock-patchBtn'
+            onClick={() => navigate('/menuUpload/')}
+          >
+            수정
+          </button>
           <button className='menublock-deleteBtn'>삭제</button>
         </div>
       )}
-    </>
+    </div>
   );
 }

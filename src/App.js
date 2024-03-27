@@ -29,6 +29,7 @@ import ReviewUpload from './view/pages/ReviewUploadPage/ReviewUpload';
 import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
 import MenuUpload from './view/pages/MenuUploadPage/MenuUpload';
 import MyStore from './view/pages/StorePage/MyStore';
+import MyStoreOption from './view/pages/StoreOptionPage/MyStoreOption';
 import { useSelector } from 'react-redux';
 import { selectIsSeller } from './redux/reducers/authSlice';
 
@@ -84,6 +85,7 @@ function App() {
           {isSeller && (
             <>
               <Route path='myStore/' element={<MyStore />} />
+              <Route path='myStore/:id' element={<MyStoreOption />} />
               <Route path='storeUpload/' element={<StoreUpload />} />
               <Route path='menuUpload/' element={<MenuUpload />} />
             </>
