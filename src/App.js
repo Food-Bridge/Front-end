@@ -32,6 +32,7 @@ import MyStore from './view/pages/StorePage/MyStore';
 import MyStoreOption from './view/pages/StoreOptionPage/MyStoreOption';
 import { useSelector } from 'react-redux';
 import { selectIsSeller } from './redux/reducers/authSlice';
+import OptionUpload from './view/pages/OptionUploadPage/OptionUpload';
 
 function App() {
   const isSeller = useSelector(selectIsSeller);
@@ -64,6 +65,7 @@ function App() {
           <Route path='restaurant/:resId/review/' element={<StoreReview />} />
           <Route path='restaurant/' element={<StoreList />} />
           <Route path='restaurant/reviewUpload/' element={<ReviewUpload />} />
+          <Route path='optionUpload' element={<OptionUpload />} />
           // 주문 정보
           <Route path='cart/' element={<CartList />} />
           <Route path='orderlist/' element={<OrderList />} />
