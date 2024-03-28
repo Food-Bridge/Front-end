@@ -21,14 +21,14 @@ function MenuUpload() {
         { id: 3, name: '매장 3' },
       ];
 
-      const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-      };
+    //   const toggleDropdown = () => {
+    //     setIsOpen(!isOpen);
+    //   };
 
-      const handleStoreClick = (item) => {
-        setStoreName(item);
-        setIsOpen(false);
-      };
+    //   const handleStoreClick = (item) => {
+    //     setStoreName(item);
+    //     setIsOpen(false);
+    //   };
 
       const handleSetMenuImage = (event) => {
         const file = event.target.files[0];
@@ -47,7 +47,7 @@ function MenuUpload() {
             <h1 className='menuUpload-pageTitle'>메뉴 등록</h1>
 
             <div className='menuUpload-fieldFrame'>
-                {/* 매장 리스트 */}
+                {/* 매장 리스트
                 <div
                 className='menuUpload-storeDropdown'
                 onClick={toggleDropdown}
@@ -69,7 +69,7 @@ function MenuUpload() {
                     })}
                     </ul>
                 )}
-                </div>
+                </div> */}
 
                 {/* 메뉴 이름 */}
                 <div className='menuUpload-name'>
