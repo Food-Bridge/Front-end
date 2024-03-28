@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Community.scss'
 import SearchBar from '../../components/SearchBar/SearchBar'
@@ -7,6 +7,7 @@ import SliderTime from '../../SliderTime/SliderTime'
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData'
 import CommunityCard from '../../components/CommunityCard/CommunityCard'
 import { MiniPostData } from '../../../data/MiniPostData/MiniPostData'
+import axios from 'axios';
 
 function Community() {
     const navigate = useNavigate();
@@ -21,6 +22,25 @@ function Community() {
         navigate('/commuPostNew');
     };
 
+    const visiblePostCount = 2;
+
+    const [postData, setPostData] = useState([]);
+
+    useEffect(() => {
+      // Axios를 사용하여 GET 요청을 보냄
+      axios.get('http://localhost:8000/community/')
+        .then(response => {
+          // 성공적으로 데이터를 받아온 경우 state를 업데이트
+          console.log(response)
+          setPostData(response.data.results);
+          console.log('postData ids:', response.data.results.map(post => post.id));
+        })
+        .catch(error => {
+          // 오류 처리
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
   return (
     <div className='Community'>
         <SearchBar />
@@ -32,9 +52,9 @@ function Community() {
                 <button onClick={handleMoreClick} className='community-weekMoreBtn'>더보기</button>
             </div>
             <div className='community-weekMiniPost'>
-                {MiniPostData.map((el) => {
-                    return <CommunityCard user={el.user} location={el.location} img={el.img} text={el.text} className={el.className}/>
-                })}
+                {postData.slice(0, visiblePostCount).map(post => (
+                    <CommunityCard user={post.author} id={post.id} content={post.content} img={post.image}/>
+                ))}
             </div>
         </div>
         <div className='community-dailySection'>
@@ -43,9 +63,9 @@ function Community() {
                 <button onClick={handleMoreClick2} className='community-dailyMoreBtn'>더보기</button>
             </div>
             <div className='community-dailyMiniPost'>
-                {MiniPostData.map((el) => {
-                    return <CommunityCard user={el.user} location={el.location} img={el.img} text={el.text} className={el.className}/>
-                })}
+                {postData.slice(0, visiblePostCount).map(post => (
+                    <CommunityCard user={post.author} id={post.id} content={post.content} img={post.image}/>
+                ))}
             </div>
         </div>
         <div className='community-newestSection'>
@@ -54,9 +74,9 @@ function Community() {
                 <button onClick={handleMoreClick3} className='community-newestMoreBtn'>더보기</button>
             </div>
             <div className='community-newestMiniPost'>
-                {MiniPostData.map((el) => {
-                    return <CommunityCard user={el.user} location={el.location} img={el.img} text={el.text} className={el.className}/>
-                })}
+                {postData.slice(0, visiblePostCount).map(post => (
+                    <CommunityCard user={post.author} id={post.id} content={post.content} img={post.image}/>
+                ))}
             </div>
         </div>
     </div>

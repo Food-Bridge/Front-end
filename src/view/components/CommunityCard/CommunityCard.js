@@ -4,15 +4,10 @@ import './CommunityCard.scss';
 import { CiLocationOn } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';
 
-export default function CommunityCard({user, location, img, text, className}) {
-  const navigate = useNavigate();
-
-  const handleCardClick = () => {
-    navigate('/postCard')
-  }
+export default function CommunityCard({user, location, img, content}) {
 
   return (
-    <div className={`${className}`} onClick={handleCardClick}>
+    <div className="CommunityCard">
       <header className='communityCard-header'>
         <div className='communityCard-profile'>
           <img
@@ -30,8 +25,9 @@ export default function CommunityCard({user, location, img, text, className}) {
         <img
           className='communityCard-image'
           src={img}
+          alt='img'
         />
-        <p className='communityCard-text'>{text}</p>
+        <h1 className='communityCard-text'>{content}</h1>
       </div>
       <footer className='communityCard-tags'>
         <div className='communityCard-tag'>#겨울 간식</div>
