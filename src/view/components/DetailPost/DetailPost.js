@@ -11,19 +11,19 @@ import { toggleLike } from '../../../redux/reducers/communitySlice'
 
 function DetailPost({user, location, image, title, content}) {
 
-    const data = [
-        {
-            img : "https://c.pxhere.com/photos/83/09/basil_blur_cuisine_delicious_dish_food_food_photography_grow-1545177.jpg!d",
-            title: "강남역 근처 일식집이 오픈 했어요",
-            text : "출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다. 제기하다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다 출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다. 출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다 출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다"
-        },
-        {
-            tag1 : "오픈소식",
-            tag2 : "일식맛집",
-            tag3 : "일식덮밥",
-            tag4 : "동네맛집"
-        }
-    ] 
+    // const data = [
+    //     {
+    //         img : "https://c.pxhere.com/photos/83/09/basil_blur_cuisine_delicious_dish_food_food_photography_grow-1545177.jpg!d",
+    //         title: "강남역 근처 일식집이 오픈 했어요",
+    //         text : "출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다. 제기하다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다 출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다. 출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다. 45퍼센트 참여하다 쉽고 있은 있고 별다르면, 납부하며 돌파하다 출판되게 폭넓는 개선이 사찰이어 심사가 점수의, 소아다 제기하다"
+    //     },
+    //     {
+    //         tag1 : "오픈소식",
+    //         tag2 : "일식맛집",
+    //         tag3 : "일식덮밥",
+    //         tag4 : "동네맛집"
+    //     }
+    // ] 
     
     // const [isLike, setIsLike] = useState(false);
     const isLiked = useSelector((state) => state.community.like.isLiked);
