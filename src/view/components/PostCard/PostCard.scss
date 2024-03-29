@@ -61,15 +61,16 @@
                 margin-left: 10px;
 
                 .postCard-postTitle {
-                    font-size: 16px;
+                    font-size: 20px;
                     font-weight: 1000;
-                    background-color: antiquewhite;
+                    text-align: left;
                 }
                 .postCard-postWriting {
                     width: 342px;
                     height: 112px;
                     font-size: 14px;
                     margin-top: 10px;
+                    text-align: left;
                 }
                 .postCard-postTag {
                     display: flex;
