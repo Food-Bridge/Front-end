@@ -1,4 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
+
+export const deleteTokens = createAsyncThunk(
+  'auth/deleteTokens',
+  async (thunkAPI) => {
+    document.cookie =
+      'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    sessionStorage.removeItem('refreshToken');
+    thunkAPI.dispatch(logout())
+    return true;
+  }
+);
+
+export const setTokens = createAsyncThunk(
+  'auth/setTokens',
+  async ({ access, refresh }, thunkAPI) => {
+    document.cookie = `accessToken=${access}; path=/`;
+    sessionStorage.setItem('refreshToken', refresh);
+    thunkAPI.dispatch(login()); // Dispatch login action using thunkAPI
+    return true;
+  }
+);
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -40,31 +62,19 @@ export const authSlice = createSlice({
       };
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(deleteTokens.fulfilled, (state) => {
+      persistStore(state.store).purge();
+    });
+  },
 });
 
-export const { login, logout, loginS, logoutS, setOwner, setProfile } = authSlice.actions;
+export const { login, logout, loginS, logoutS, setOwner, setProfile } =
+  authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectProfile = (state) => state.auth.profile;
 export const selectIsSeller = (state) => state.auth.isSeller;
-export const selectOwner = (state) => state.auth.owner
-
-export const deleteTokens = () => {
-  return async (dispatch) => {
-    document.cookie =
-      'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    sessionStorage.removeItem('refreshToken');
-    dispatch(logout());
-  };
-};
-
-export const setTokens = ({ access, refresh }) => {
-  return async (dispatch) => {
-    deleteTokens();
-    document.cookie = `accessToken=${access}; path=/`;
-    sessionStorage.setItem('refreshToken', refresh);
-    dispatch(login());
-  };
-};
+export const selectOwner = (state) => state.auth.owner;
 
 export default authSlice.reducer;
