@@ -116,9 +116,7 @@ export default function Store() {
           {menuData.map((el) => (
             <div
               className='store-menuBlock'
-              key={el.id}
-              onClick={() => handleClickOption(el.id)}
-            >
+              key={el.id}            >
               <MenuBlock
                 title={el.name}
                 price={el.price}
@@ -126,6 +124,7 @@ export default function Store() {
                 content={el.content}
                 popular={el.is_popular}
                 main={el.is_main}
+                menuId={el.id}
               />
             </div>
           ))}

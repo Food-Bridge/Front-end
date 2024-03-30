@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 
 import './MenuBlock.scss';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectOwner } from '../../../redux/reducers/authSlice';
+import axiosInstance from '../../../api/instance';
+import Modal from '../Modal/Modal';
 
 export default function MenuBlock({
   popular,
@@ -11,16 +15,47 @@ export default function MenuBlock({
   content,
   image,
   isSeller,
-  onClick,
+  menuId,
 }) {
   const navigate = useNavigate();
+  const owner = useSelector(selectOwner);
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+  const handleDeleteMenu = () => {
+    axiosInstance.delete(`/restaurant/${owner}/menu/${menuId}`);
+    setShowDeleteModal(false)
+  };
+
+  const handlePatchMenu = (menuId) => {
+    navigate(`/menuUpload/`, { state: { id: menuId } });
+  };
+
+  const handleClickOption = (menuId) => {
+    navigate(`${menuId}/`, { state: { id: menuId } });
+  };
+
+  const handleClickDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+  };
 
   return (
     <div className='menublock-container'>
-      <button
-        className='menublock'
-        onClick={onClick}
-      >
+      {showDeleteModal && (
+        <div className='storeUpload-modal'>
+          <Modal
+            twoBtn
+            onConfirm={handleDeleteMenu}
+            onCancel={handleCancelDelete}
+            contents={['정말로 메뉴를 삭제하시겠습니까?']}
+            title={'메뉴 삭제'}
+          />
+        </div>
+      )}
+      <button className='menublock' onClick={handleClickOption}>
         <div className='menublock-content'>
           <div className='menublock-title'>
             {popular && (
@@ -44,15 +79,14 @@ export default function MenuBlock({
           <div className='menublock-image' />
         )}
       </button>
-      {isSeller  && (
+      {isSeller && (
         <div className='menublock-btn'>
-          <button
-            className='menublock-patchBtn'
-            onClick={() => navigate('/menuUpload/')}
-          >
+          <button className='menublock-patchBtn' onClick={handlePatchMenu}>
             수정
           </button>
-          <button className='menublock-deleteBtn'>삭제</button>
+          <button className='menublock-deleteBtn' onClick={handleClickDelete}>
+            삭제
+          </button>
         </div>
       )}
     </div>

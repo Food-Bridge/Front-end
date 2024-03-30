@@ -5,13 +5,17 @@ import { HiMiniXMark } from 'react-icons/hi2';
 import axiosInstance from '../../../api/instance';
 
 import DaumPostCode from 'react-daum-postcode';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectOwner, setOwner } from '../../../redux/reducers/authSlice';
+import Modal from '../../components/Modal/Modal';
 
 function StoreUpload() {
+  const dispatch = useDispatch();
+  const owner = useSelector(selectOwner);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [addAddress, setAddAddress] = useState(false);
-
   const [packaging, setPackaging] = useState(false);
   const [status, setStatus] = useState(false);
   const [name, setName] = useState('');
@@ -33,7 +37,6 @@ function StoreUpload() {
   });
   const [image, setImage] = useState(null);
   const [imageDisplay, setImageDisplay] = useState(null);
-  const { resId } = useParams();
 
   const categoryList = [
     { id: 1, name: '한식' },
@@ -74,14 +77,7 @@ function StoreUpload() {
     try {
       const formData = new FormData();
       formData.append('image', image);
-
-      await axiosInstance.patch('/restaurant/3', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      await axiosInstance.patch('/restaurant/3', {
+      const data = {
         name: name,
         address: address,
         phone_number: phone,
@@ -99,19 +95,70 @@ function StoreUpload() {
         deliveryFee: deliveryFee,
         mainCategory: mainCategory.id,
         mainCategory_name: mainCategory.name,
-      });
+      };
+      if (owner) {
+        await axiosInstance.patch(`/restaurant/${owner}`, data);
+        await axiosInstance.patch(`/restaurant/${owner}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      } else {
+        const res = await axiosInstance.post(`/restaurant/`, data);
+        dispatch(setOwner(res.data.id));
+        await axiosInstance.patch(`/restaurant/${owner}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      }
+      setShowConfirmModal(true)
     } catch (error) {
       alert('에러가 발생했습니다', error);
     }
   };
 
   const handleDeleteStore = () => {
-    axiosInstance.delete('/restaurant/3');
+    axiosInstance.delete(`/restaurant/${owner}`);
+    dispatch(setOwner(null));
+    setShowDeleteModal(false);
+    setName('');
+    setAddress('매장 주소 추가');
+    setPhone('');
+    setDescription('');
+    setMinOrderPrice(0);
+    setMinPickUpPrice(0);
+    setMinDeliverTime(0);
+    setMaxDeliverTime(0);
+    setMinPickUpTime(0);
+    setPackaging(false);
+    setStatus(false);
+    setStart(0);
+    setEnd(0);
+    setOperating('');
+    setDeliveryFee(0);
+    setMainCategory({
+      id: 0,
+      name: '카테고리 선택',
+    });
+    setImageDisplay(null);
   };
+
+  const handleClickDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleConfirmModal = () => {
+    setShowConfirmModal(false)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get('/restaurant/3');
+      const res = await axiosInstance.get(`/restaurant/${owner}`);
       setName(res.data.name);
       setAddress(res.data.address);
       setPhone(res.data.phone_number);
@@ -133,26 +180,29 @@ function StoreUpload() {
       });
       setImageDisplay(res.data.image);
     };
-    fetchData();
+    owner && fetchData();
   }, []);
-
-  const formData = new FormData();
-  const navigate = useNavigate();
-
-  const onChangeName = (event) => {
-    formData.append('name', event.target.value);
-  }
-
-  const onChangePrice = (event) => {
-    formData.append('price', event.target.value);
-  }
-
-  const onChangeDescrip = (event) => {
-    formData.append('descrip', event.target.value);
-  }
 
   return (
     <div className='StoreUpload'>
+      {showConfirmModal && (<div className='storeUpload-modal'>
+          <Modal
+            onConfirm={handleConfirmModal}
+            contents={['요청이 정상적으로 이루어졌습니다.']}
+            title={owner ? '매장 수정' : '매장 추가'}
+          />
+        </div>)}
+      {showDeleteModal && (
+        <div className='storeUpload-modal'>
+          <Modal
+            twoBtn
+            onConfirm={handleDeleteStore}
+            onCancel={handleCancelDelete}
+            contents={['정말로 매장을 삭제하시겠습니까?']}
+            title={'매장 삭제'}
+          />
+        </div>
+      )}
       {addAddress && (
         <div className='storeUpload-addAddress'>
           <header className='storeUpload-addAddress-header'>
@@ -236,7 +286,7 @@ function StoreUpload() {
               className='storeUpload-storeName'
               type='text'
               placeholder={name}
-              onChange={onChangeName}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -257,7 +307,7 @@ function StoreUpload() {
               className='storeUpload-storeDescription'
               type='text'
               placeholder={description}
-              onChange={onChangeDescrip}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
           {/* 배달 최소 주문 금액 */}
@@ -269,7 +319,7 @@ function StoreUpload() {
               placeholder={
                 minOrderPrice ? minOrderPrice : '숫자만 입력해주세요'
               }
-              onChange={onChangePrice}
+              onChange={(e) => setMinOrderPrice(e.target.value)}
             />
           </div>
           {/* 픽업 최소 주문 금액 */}
@@ -374,34 +424,20 @@ function StoreUpload() {
         <div className='storeUpload-uploadBtn'>
           <button
             className='storeUpload-storeUploadBtn'
-            onClick={() => {
-              axios
-                .post(`http://localhost:8000/restaurant/`, 
-                formData,
-                {
-                  headers : {
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                  },
-                })
-                .then(function (response) {
-                  console.log(response);
-                  navigate('/')
-                })
-                .catch(function (error) {
-                  console.log(error.response.data);
-                });
-            }} 
+            onClick={handleAddStore}
           >
-            저장하기
+            {owner ? '수정하기' : '저장하기'}
           </button>
         </div>
         <div className='storeUpload-deleteBtn'>
-          <button
-            className='storeUpload-storeDeleteBtn'
-            onClick={handleDeleteStore}
-          >
-            매장 삭제하기
-          </button>
+          {owner && (
+            <button
+              className='storeUpload-storeDeleteBtn'
+              onClick={handleClickDelete}
+            >
+              매장 삭제하기
+            </button>
+          )}
         </div>
       </div>
     </div>

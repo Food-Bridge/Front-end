@@ -5,6 +5,7 @@ export const authSlice = createSlice({
   initialState: {
     isLoggedIn: false,
     isSeller: false,
+    owner: null,
     profile: {
       image: null,
       nickname: null,
@@ -27,6 +28,10 @@ export const authSlice = createSlice({
     logoutS: (state) => {
       state.isSeller = false;
     },
+    setOwner: (state, action) => {
+      const owner = action.payload;
+      state.owner = owner;
+    },
     setProfile: (state, action) => {
       const { image, nickname } = action.payload;
       state.profile = {
@@ -37,11 +42,12 @@ export const authSlice = createSlice({
   },
 });
 
-export const { login, logout,loginS, logoutS, setProfile } = authSlice.actions;
+export const { login, logout, loginS, logoutS, setOwner, setProfile } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectProfile = (state) => state.auth.profile;
 export const selectIsSeller = (state) => state.auth.isSeller;
+export const selectOwner = (state) => state.auth.owner
 
 export const deleteTokens = () => {
   return async (dispatch) => {

@@ -11,29 +11,28 @@ import RateStars from '../../components/RateStars/RateStars.js';
 import Modal from '../../components/Modal/Modal.js';
 
 import { CiPhone } from 'react-icons/ci';
+import { useSelector } from 'react-redux';
+import { selectOwner } from '../../../redux/reducers/authSlice.js';
 
 export default function MyStore() {
   const navigate = useNavigate();
+  const owner = useSelector(selectOwner);
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/1`);
-      const menuRes = await axiosInstance.get(`/restaurant/1/menu`);
-
+      const res = await axiosInstance.get(`/restaurant/${owner}`);
+      const menuRes = await axiosInstance.get(`/restaurant/${owner}/menu`);
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
     };
     fetchData();
-  }, []);
-
-  const handleClickOption = (menuId) => {
-    navigate(`${menuId}/`, { state: { id: menuId } });
-  };
+  }, [menuData]);
 
   const handleOpenReview = () => {
     navigate('review/');
@@ -45,6 +44,7 @@ export default function MyStore() {
 
   return (
     <div className='store'>
+
       <div className='store-img'>
         {sliderData && sliderData.length > 0 && (
           <ImageSlider slides={[sliderData]} />
@@ -87,10 +87,7 @@ export default function MyStore() {
         <h2 className='store-menuTitle'>메뉴</h2>
         <div className='store-menuBlocks'>
           {menuData.map((el) => (
-            <div
-              className='store-menuBlock'
-              key={el.id}
-            >
+            <div className='store-menuBlock' key={el.id}>
               <MenuBlock
                 title={el.name}
                 price={el.price}
@@ -98,8 +95,8 @@ export default function MyStore() {
                 content={el.content}
                 popular={el.is_popular}
                 main={el.is_main}
+                menuId={el.id}
                 isSeller
-                onClick={() => handleClickOption(el.id)}
               />
             </div>
           ))}
