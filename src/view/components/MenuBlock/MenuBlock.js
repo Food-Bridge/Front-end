@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 import './MenuBlock.scss';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectOwner } from '../../../redux/reducers/authSlice';
+import axiosInstance from '../../../api/instance';
 
 export default function MenuBlock({
   popular,
@@ -11,16 +14,26 @@ export default function MenuBlock({
   content,
   image,
   isSeller,
-  onClick,
+  menuId,
 }) {
   const navigate = useNavigate();
+  const owner = useSelector(selectOwner);
+
+  const handleDeleteMenu = () => {
+    axiosInstance.delete(`/restaurant/${owner}/menu/${menuId}`);
+  };
+
+  const handlePatchMenu = () => {
+    navigate(`/menuUpload/`, { state: { id: menuId } });
+  };
+
+  const handleClickOption = (menuId) => {
+    navigate(`${menuId}/`, { state: { id: menuId } });
+  };
 
   return (
     <div className='menublock-container'>
-      <button
-        className='menublock'
-        onClick={onClick}
-      >
+      <button className='menublock' onClick={handleClickOption}>
         <div className='menublock-content'>
           <div className='menublock-title'>
             {popular && (
@@ -44,15 +57,17 @@ export default function MenuBlock({
           <div className='menublock-image' />
         )}
       </button>
-      {isSeller  && (
+      {isSeller && (
         <div className='menublock-btn'>
           <button
             className='menublock-patchBtn'
-            onClick={() => navigate('/menuUpload/')}
+            onClick={handlePatchMenu}
           >
             수정
           </button>
-          <button className='menublock-deleteBtn'>삭제</button>
+          <button className='menublock-deleteBtn' onClick={handleDeleteMenu}>
+            삭제
+          </button>
         </div>
       )}
     </div>

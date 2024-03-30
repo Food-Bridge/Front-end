@@ -33,10 +33,6 @@ export default function MyStore() {
     fetchData();
   }, []);
 
-  const handleClickOption = (menuId) => {
-    navigate(`${menuId}/`, { state: { id: menuId } });
-  };
-
   const handleOpenReview = () => {
     navigate('review/');
   };
@@ -97,8 +93,8 @@ export default function MyStore() {
                 content={el.content}
                 popular={el.is_popular}
                 main={el.is_main}
+                menuId ={el.id}
                 isSeller
-                onClick={() => handleClickOption(el.id)}
               />
             </div>
           ))}
