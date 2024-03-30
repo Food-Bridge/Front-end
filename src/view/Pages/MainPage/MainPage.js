@@ -12,6 +12,8 @@ import { MiniPostData } from '../../../data/MiniPostData/MiniPostData';
 import { useSelector } from 'react-redux';
 import SellerMain from './SellerMain';
 import { selectIsSeller } from '../../../redux/reducers/authSlice';
+import coupon1 from '../../../data/CouponData/price1000.png'
+import coupon2 from '../../../data/CouponData/usersignup.png'
 
 export default function MainPage() {
   const [data, setData] = useState([]);
@@ -117,11 +119,11 @@ export default function MainPage() {
           <div className='main-group'>
             <img
               className='main-couponImg'
-              src='https://images.unsplash.com/photo-1575932444877-5106bee2a599?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+              src={coupon1}
             />
             <img
               className='main-couponImg'
-              src='https://images.unsplash.com/photo-1575932444877-5106bee2a599?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+              src={coupon2}
             />
           </div>
         </>
