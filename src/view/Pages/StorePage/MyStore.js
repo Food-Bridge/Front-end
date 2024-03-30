@@ -21,6 +21,7 @@ export default function MyStore() {
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +32,7 @@ export default function MyStore() {
       setMenuData(menuRes.data);
     };
     fetchData();
-  }, []);
+  }, [menuData]);
 
   const handleOpenReview = () => {
     navigate('review/');
@@ -43,6 +44,7 @@ export default function MyStore() {
 
   return (
     <div className='store'>
+
       <div className='store-img'>
         {sliderData && sliderData.length > 0 && (
           <ImageSlider slides={[sliderData]} />
@@ -93,7 +95,7 @@ export default function MyStore() {
                 content={el.content}
                 popular={el.is_popular}
                 main={el.is_main}
-                menuId ={el.id}
+                menuId={el.id}
                 isSeller
               />
             </div>
