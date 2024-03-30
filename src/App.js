@@ -90,6 +90,7 @@ function App() {
               <Route path='myStore/:id' element={<MyStoreOption />} />
               <Route path='storeUpload/' element={<StoreUpload />} />
               <Route path='menuUpload/' element={<MenuUpload />} />
+              <Route path='optionUpload/' element={<OptionUpload />} />
             </>
           )}
         </Routes>

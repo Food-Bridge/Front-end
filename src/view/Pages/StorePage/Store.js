@@ -25,13 +25,13 @@ export default function Store() {
   const [likeData, setLikeData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
   const [isLike, setIsLike] = useState(false);
-  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${resId}`);
       const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu`);
-      const likeRes = isLoggedIn && await axiosInstance.get('/like/');
+      const likeRes = isLoggedIn && (await axiosInstance.get('/like/'));
 
       setData(res.data);
       setSliderData(res.data.image);
@@ -46,7 +46,7 @@ export default function Store() {
   }, [likeData, resId]);
 
   const handleClickHeart = async () => {
-      await axiosInstance.post(`/like/${resId}/`);
+    await axiosInstance.post(`/like/${resId}/`);
     setIsLike((prevIsLike) => !prevIsLike);
   };
 
@@ -114,9 +114,7 @@ export default function Store() {
         <h2 className='store-menuTitle'>메뉴</h2>
         <div className='store-menuBlocks'>
           {menuData.map((el) => (
-            <div
-              className='store-menuBlock'
-              key={el.id}            >
+            <div className='store-menuBlock' key={el.id}>
               <MenuBlock
                 title={el.name}
                 price={el.price}

@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './MyStoreOption.scss';
 
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
+import { useSelector } from 'react-redux';
+import { selectOwner } from '../../../redux/reducers/authSlice';
 
 export default function MyStoreOption() {
-const location = useLocation()
-const menuId = location.state.id
-  console.log(menuId)
+  const owner = useSelector(selectOwner);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const menuId = location.state.id;
   const [data, setData] = useState([]);
   const [menuData, setMenuData] = useState([]);
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
 
-  const [option, setOption] = useState([]);
-  const [sOption, setSOption] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/1`);
+      const res = await axiosInstance.get(`/restaurant/${owner}`);
       const menuRes = await axiosInstance.get(
-        `/restaurant/1/menu/${menuId}`
+        `/restaurant/${owner}/menu/${menuId}`
       );
       const optionRes = await axiosInstance.get(
-        `/restaurant/1/menu/${menuId}/options`
+        `/restaurant/${owner}/menu/${menuId}/options`
       );
       const sOptionRes = await axiosInstance.get(
-        `restaurant/1/menu/${menuId}/soptions`
+        `restaurant/${owner}/menu/${menuId}/soptions`
       );
       setData(res.data);
       setMenuData(menuRes.data);
@@ -38,12 +38,8 @@ const menuId = location.state.id
     fetchData();
   }, []);
 
-  const handleOptionChange = (selectedOption) => {
-    setOption(selectedOption);
-  };
-
-  const handleSOptionChange = (selectedSOption) => {
-    setSOption(selectedSOption);
+  const handleAddOption = () => {
+    navigate('/optionUpload/');
   };
 
   return (
@@ -63,28 +59,20 @@ const menuId = location.state.id
         <h1 className='storeOpiton-name'>{menuData.name}</h1>
       </div>
       <p className='storeOption-detail'>{menuData.content}</p>
-      {menuData.required_options_count === 1 ? (
-        <MenuOptionBtn
-          data={optionData}
-          onOptionChange={handleOptionChange}
-          isSeller
-        />
-      ) : (
-        <MenuCheckBox
-          data={optionData}
-          count={menuData.required_options_count}
-          onOptionChange={handleOptionChange}
-          isSeller
-        />
-      )}
-      {sOptionData.length > 0 && <MenuCheckBox
-        data={sOptionData}
-        onOptionChange={handleSOptionChange}
-      />}
-      <div className='storeOption-buttons'>
-        <button className='storeOption-btn'>필수 옵션 추가</button>
-        <button className='storeOption-btn'>선택 옵션 추가</button>
-      </div>
+      {optionData.length > 0 &&
+        (menuData.required_options_count === 1 ? (
+          <MenuOptionBtn data={optionData} isSeller />
+        ) : (
+          <MenuCheckBox
+            data={optionData}
+            count={menuData.required_options_count}
+            isSeller
+          />
+        ))}
+      {sOptionData.length > 0 && <MenuCheckBox data={sOptionData} />}
+      <button className='storeOption-btn' onClick={handleAddOption}>
+        옵션 추가
+      </button>
     </div>
   );
 }
