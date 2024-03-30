@@ -25,7 +25,7 @@ export default function StoreReview() {
   function roundRates(number) {
     return Math.round(number * 2) / 2;
   }
-  const rate = roundRates(restaurant.rating);
+  const rate = roundRates(restaurant.averageRating);
 
   let rateStars;
   if (rate && !isNaN(rate)) {

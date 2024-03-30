@@ -51,7 +51,7 @@ function StoreList() {
                 storeName={el.name}
                 minimumPrice={el.minimumOrderPrice}
                 deliverPrice={el.delivertyFee}
-                storeScore={el.rating}
+                storeScore={el.averageRating}
               />
             </button>
           ))}
