@@ -11,9 +11,12 @@ import RateStars from '../../components/RateStars/RateStars.js';
 import Modal from '../../components/Modal/Modal.js';
 
 import { CiPhone } from 'react-icons/ci';
+import { useSelector } from 'react-redux';
+import { selectOwner } from '../../../redux/reducers/authSlice.js';
 
 export default function MyStore() {
   const navigate = useNavigate();
+  const owner = useSelector(selectOwner);
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
@@ -21,9 +24,8 @@ export default function MyStore() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/1`);
-      const menuRes = await axiosInstance.get(`/restaurant/1/menu`);
-
+      const res = await axiosInstance.get(`/restaurant/${owner}`);
+      const menuRes = await axiosInstance.get(`/restaurant/${owner}/menu`);
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
@@ -87,10 +89,7 @@ export default function MyStore() {
         <h2 className='store-menuTitle'>메뉴</h2>
         <div className='store-menuBlocks'>
           {menuData.map((el) => (
-            <div
-              className='store-menuBlock'
-              key={el.id}
-            >
+            <div className='store-menuBlock' key={el.id}>
               <MenuBlock
                 title={el.name}
                 price={el.price}
