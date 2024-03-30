@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import './MenuUpload.scss'
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function MenuUpload() {
 
@@ -14,21 +16,13 @@ function MenuUpload() {
     const [name, setName] = useState('');
     const [menuImage, setMenuImage] = useState(null);
     const [menuImageDisplay, setMenuImageDisplay] = useState(null);
+    const { resId } = useParams();
 
     const storeList = [
         { id: 1, name: '매장 1' },
         { id: 2, name: '매장 2' },
         { id: 3, name: '매장 3' },
       ];
-
-    //   const toggleDropdown = () => {
-    //     setIsOpen(!isOpen);
-    //   };
-
-    //   const handleStoreClick = (item) => {
-    //     setStoreName(item);
-    //     setIsOpen(false);
-    //   };
 
       const handleSetMenuImage = (event) => {
         const file = event.target.files[0];
@@ -39,7 +33,31 @@ function MenuUpload() {
           setMenuImageDisplay(reader.result);
         };
         reader.readAsDataURL(file);
+
+        formData.append('image', file);
       };
+
+      const formData = new FormData();
+      const navigate = useNavigate();
+
+      const onChangeName = (event) => {
+        formData.append('name', event.target.value);
+      }
+
+      const onChangePrice = (event) => {
+        formData.append('price', event.target.value);
+      }
+
+      const onChangeDescrip = (event) => {
+        formData.append('descrip', event.target.value);
+      }
+
+    //   const [image, setImage] = useState();
+    //   const onChangeImage = (event) => {
+    //     const { files } = event.target;
+    //     const uploadFile = files[0];
+    //     formData.append('image', uploadFile);
+    //   }
 
     return (
         <div className='MenuUpload'>
@@ -47,29 +65,6 @@ function MenuUpload() {
             <h1 className='menuUpload-pageTitle'>메뉴 등록</h1>
 
             <div className='menuUpload-fieldFrame'>
-                {/* 매장 리스트
-                <div
-                className='menuUpload-storeDropdown'
-                onClick={toggleDropdown}
-                >
-                <button className='menuUpload-storeList'>
-                    {storeName.name}
-                    <span className='menuUpload-dropdownIcon'>
-                        <IoMdArrowDropdown />
-                    </span>
-                </button>
-                {isOpen && (
-                    <ul className='menuUpload-dropdownStore'>
-                    {storeList.map((store) => {
-                        return (
-                        <button key={store.id} onClick={() => handleStoreClick(store)}>
-                            <li>{store.name}</li>
-                        </button>
-                        );
-                    })}
-                    </ul>
-                )}
-                </div> */}
 
                 {/* 메뉴 이름 */}
                 <div className='menuUpload-name'>
@@ -78,7 +73,7 @@ function MenuUpload() {
                     className='menuUpload-menuName'
                     type='text'
                     placeholder={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={onChangeName}
                     />
                 </div>
 
@@ -91,7 +86,7 @@ function MenuUpload() {
                     placeholder={
                     price ? price : '숫자만 입력해주세요'
                     }
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={onChangePrice}
                 />
                 </div>                
 
@@ -102,7 +97,7 @@ function MenuUpload() {
                     className='menuUpload-storeDescription'
                     type='text'
                     placeholder={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={onChangeDescrip}
                 />
                 </div>
 
@@ -120,22 +115,30 @@ function MenuUpload() {
             <div className='storeUpload-uploadBtn'>
                 <button
                 className='storeUpload-storeUploadBtn'
-                // onClick={handleAddMenu}
+                onClick={() => {
+                    axios
+                      .post(`http://localhost:8000/restaurant/${resId}/menu/`, 
+                      formData,
+                      {
+                        headers : {
+                          'Authorization': `Bearer ${localStorage.getItem('access')}`,
+                        },
+                      })
+                      .then(function (response) {
+                        console.log(response);
+                        navigate('/myStore/')
+                      })
+                      .catch(function (error) {
+                        console.log(error.response.data);
+                      });
+                  }} 
                 >
                 메뉴 저장하기
                 </button>
             </div>
-            <div className='storeUpload-deleteBtn'>
-                <button
-                className='storeUpload-storeDeleteBtn'
-                // onClick={handleDeleteMenu}
-                >
-                메뉴 삭제하기
-                </button>
-            </div>
             </div>
         </div>
-        );
+    );
 }
 
 export default MenuUpload

@@ -5,6 +5,8 @@ import { HiMiniXMark } from 'react-icons/hi2';
 import axiosInstance from '../../../api/instance';
 
 import DaumPostCode from 'react-daum-postcode';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function StoreUpload() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +33,7 @@ function StoreUpload() {
   });
   const [image, setImage] = useState(null);
   const [imageDisplay, setImageDisplay] = useState(null);
+  const { resId } = useParams();
 
   const categoryList = [
     { id: 1, name: '한식' },
@@ -133,6 +136,21 @@ function StoreUpload() {
     fetchData();
   }, []);
 
+  const formData = new FormData();
+  const navigate = useNavigate();
+
+  const onChangeName = (event) => {
+    formData.append('name', event.target.value);
+  }
+
+  const onChangePrice = (event) => {
+    formData.append('price', event.target.value);
+  }
+
+  const onChangeDescrip = (event) => {
+    formData.append('descrip', event.target.value);
+  }
+
   return (
     <div className='StoreUpload'>
       {addAddress && (
@@ -218,7 +236,7 @@ function StoreUpload() {
               className='storeUpload-storeName'
               type='text'
               placeholder={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={onChangeName}
             />
           </div>
 
@@ -239,7 +257,7 @@ function StoreUpload() {
               className='storeUpload-storeDescription'
               type='text'
               placeholder={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={onChangeDescrip}
             />
           </div>
           {/* 배달 최소 주문 금액 */}
@@ -251,7 +269,7 @@ function StoreUpload() {
               placeholder={
                 minOrderPrice ? minOrderPrice : '숫자만 입력해주세요'
               }
-              onChange={(e) => setMinOrderPrice(e.target.value)}
+              onChange={onChangePrice}
             />
           </div>
           {/* 픽업 최소 주문 금액 */}
@@ -356,7 +374,23 @@ function StoreUpload() {
         <div className='storeUpload-uploadBtn'>
           <button
             className='storeUpload-storeUploadBtn'
-            onClick={handleAddStore}
+            onClick={() => {
+              axios
+                .post(`http://localhost:8000/restaurant/`, 
+                formData,
+                {
+                  headers : {
+                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
+                  },
+                })
+                .then(function (response) {
+                  console.log(response);
+                  navigate('/')
+                })
+                .catch(function (error) {
+                  console.log(error.response.data);
+                });
+            }} 
           >
             저장하기
           </button>
