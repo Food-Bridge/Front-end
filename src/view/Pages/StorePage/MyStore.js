@@ -25,17 +25,17 @@ export default function MyStore() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${owner}`);
-      const menuRes = await axiosInstance.get(`/restaurant/${owner}/menu`);
+      const res = await axiosInstance.get(`/restaurant/${owner}/`);
+      const menuRes = await axiosInstance.get(`/restaurant/${owner}/menu/`);
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
     };
     fetchData();
-  }, [menuData]);
+  }, [owner]);
 
   const handleOpenReview = () => {
-    navigate('review/');
+    navigate('/review/');
   };
 
   const showNumber = () => {

@@ -29,8 +29,8 @@ export default function Store() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${resId}`);
-      const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu`);
+      const res = await axiosInstance.get(`/restaurant/${resId}/`);
+      const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu/`);
       const likeRes = isLoggedIn && await axiosInstance.get('/like/');
 
       setData(res.data);
