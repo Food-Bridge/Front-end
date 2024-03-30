@@ -15,22 +15,22 @@ export default function MenuBlock({
   content,
   image,
   isSeller,
-  menuId,
+  menuId
 }) {
   const navigate = useNavigate();
   const owner = useSelector(selectOwner);
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleDeleteMenu = () => {
     axiosInstance.delete(`/restaurant/${owner}/menu/${menuId}`);
-    setShowDeleteModal(false)
+    setShowDeleteModal(false);
   };
 
-  const handlePatchMenu = (menuId) => {
+  const handlePatchMenu = () => {
     navigate(`/menuUpload/`, { state: { id: menuId } });
   };
 
-  const handleClickOption = (menuId) => {
+  const handleClickOption = () => {
     navigate(`${menuId}/`, { state: { id: menuId } });
   };
 

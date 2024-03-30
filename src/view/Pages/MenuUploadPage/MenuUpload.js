@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-import './MenuUpload.scss'
+import './MenuUpload.scss';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,84 +18,80 @@ function MenuUpload() {
     const owner = useSelector(selectOwner);
     const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [restaurant,  setRestaurant] = useState(0)
+    const [storeName, setStoreName] = useState({
+        id: 0,
+        name: '매장 선택',
+    });
+    const [description, setDescription] = useState('');
+    const [menuImage, setMenuImage] = useState(null);
+    const [menuImageDisplay, setMenuImageDisplay] = useState(null);
+    const { resId } = useParams();
 
-    const storeList = [
-        { id: 1, name: '매장 1' },
-        { id: 2, name: '매장 2' },
-        { id: 3, name: '매장 3' },
-      ];
+  const storeList = [
+    { id: 1, name: '매장 1' },
+    { id: 2, name: '매장 2' },
+    { id: 3, name: '매장 3' },
+  ];
 
-    //   const handleSetMenuImage = (event) => {
-    //     const file = event.target.files[0];
-    //     setMenuImage(file);
-    
-    //     const reader = new FileReader();
-    //     reader.onloadend = () => {
-    //       setMenuImageDisplay(reader.result);
-    //     };
-    //     reader.readAsDataURL(file);
+  const handleSetMenuImage = (event) => {
+    const file = event.target.files[0];
+    setMenuImage(file);
 
-    //     formData.append('image', file);
-    //   };
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setMenuImageDisplay(reader.result);
+    };
+    reader.readAsDataURL(file);
 
-      const formData = new FormData();
-      const navigate = useNavigate();
+    formData.append('image', file);
+  };
 
-    //   const onChangeName = (event) => {
-    //     formData.append('name', event.target.value);
-    //   }
+    const formData = new FormData();
+    const navigate = useNavigate();
 
-    //   const onChangePrice = (event) => {
-    //     formData.append('price', event.target.value);
-    //   }
+    const onChangeName = (event) => {
+        formData.append('name', event.target.value);
+    };
 
-    //   const onChangeDescrip = (event) => {
-    //     formData.append('descrip', event.target.value);
-    //   }
+    const onChangePrice = (event) => {
+        formData.append('price', event.target.value);
+    };
 
-    //   const [image, setImage] = useState();
-    //   const onChangeImage = (event) => {
-    //     const { files } = event.target;
-    //     const uploadFile = files[0];
-    //     formData.append('image', uploadFile);
-    //   }
+    const onChangeDescrip = (event) => {
+        formData.append('descrip', event.target.value);
+    };
 
     const handleSetImage = (event) => {
         const file = event.target.files[0];
         setImage(file);
-    
+
         const reader = new FileReader();
         reader.onloadend = () => {
-          setImageDisplay(reader.result);
+            setImageDisplay(reader.result);
         };
         reader.readAsDataURL(file);
-      };
+        };
 
-      const handleAddMenu = async () => {
+        const handleAddMenu = async () => {
         try {
-          const formData = new FormData();
-          formData.append('image', image); // 이미지 파일 추가
-          formData.append('name', name); // 메뉴 이름 추가
-          formData.append('content', content); // 메뉴 설명 추가
-          formData.append('price', price); // 메뉴 가격 추가
-          formData.append('restaurant', restaurant);
-      
-          await axiosInstance.post(`/restaurant/${owner}/menu/`, formData, {
+            const formData = new FormData();
+            formData.append('image', image); // 이미지 파일 추가
+            formData.append('name', name); // 메뉴 이름 추가
+            formData.append('content', content); // 메뉴 설명 추가
+            formData.append('price', price); // 메뉴 가격 추가
+            formData.append('restaurant', restaurant);
+        
+            await axiosInstance.post(`/restaurant/${owner}/menu/`, formData, {
             headers: {
-              'Content-Type': 'multipart/form-data', // 필수: 파일 업로드 시에는 Content-Type을 설정해야 합니다.
+                'Content-Type': 'multipart/form-data', // 필수: 파일 업로드 시에는 Content-Type을 설정해야 합니다.
             },
-          });
-          navigate('/myStore/')
-          setShowConfirmModal(true);
+            });
+            navigate('/myStore/')
+            setShowConfirmModal(true);
         } catch (error) {
-          alert('에러가 발생했습니다', error);
+            alert('에러가 발생했습니다', error);
         }
-      };
-
-    // const handlePostMenu = () => {
-    //     axiosInstance.delete(`/restaurant/${owner}/menu/`);
-    //     // setShowDeleteModal(false)
-    //   };
+    };
 
     return (
         <div className='MenuUpload'>
@@ -169,7 +165,7 @@ function MenuUpload() {
             </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default MenuUpload
