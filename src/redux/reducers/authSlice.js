@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { persistStore } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 export const deleteTokens = createAsyncThunk(
   'auth/deleteTokens',
-  async (thunkAPI) => {
+  async () => {
     document.cookie =
       'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     sessionStorage.removeItem('refreshToken');
-    thunkAPI.dispatch(logout())
     return true;
   }
 );
@@ -21,6 +21,12 @@ export const setTokens = createAsyncThunk(
     return true;
   }
 );
+
+const authPersistConfig = {
+  key: 'auth',
+  storage: storage,
+  whitelist: ['isLoggedIn', 'isSeller', 'owner', 'profile'],
+};
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -39,6 +45,8 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.isLoggedIn = false;
+      state.isSeller = false;
+      state.owner = null;
       state.profile = {
         image: null,
         nickname: null,
@@ -46,9 +54,6 @@ export const authSlice = createSlice({
     },
     loginS: (state) => {
       state.isSeller = true;
-    },
-    logoutS: (state) => {
-      state.isSeller = false;
     },
     setOwner: (state, action) => {
       const owner = action.payload;
@@ -62,11 +67,6 @@ export const authSlice = createSlice({
       };
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(deleteTokens.fulfilled, (state) => {
-      persistStore(state.store).purge();
-    });
-  },
 });
 
 export const { login, logout, loginS, logoutS, setOwner, setProfile } =
@@ -77,4 +77,6 @@ export const selectProfile = (state) => state.auth.profile;
 export const selectIsSeller = (state) => state.auth.isSeller;
 export const selectOwner = (state) => state.auth.owner;
 
-export default authSlice.reducer;
+export const persistedAuthReducer = persistReducer(authPersistConfig, authSlice.reducer);
+
+export default persistedAuthReducer;
