@@ -5,11 +5,12 @@ import authReducer from './reducers/authSlice';
 import addressReducer from './reducers/addressSlice';
 import cartReducer from './reducers/cartSlice';
 
+const EXPIRATION_TIME = 30 * 60 * 1000;
+
 const storageConfig = {
   key: 'root',
   storage: storage,
   whitelist: ['auth', 'address', 'cart'],
-  expire: 1800000,
 };
 
 const reducers = combineReducers({
@@ -24,6 +25,14 @@ const store = configureStore({
   reducer: persistedReducer,
 });
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store, null, () => {
+  const now = new Date().getTime();
+  Object.keys(store.getState()).forEach(key => {
+    const state = store.getState()[key];
+    if (state?.timestamp && now - state.timestamp > EXPIRATION_TIME) {
+      store.dispatch({ type: 'REMOVE_EXPIRED_DATA', key });
+    }
+  });
+});
 
 export default store;
