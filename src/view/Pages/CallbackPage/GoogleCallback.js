@@ -13,9 +13,9 @@ const GoogleCallback = () => {
       const params = new URL(document.location.toString()).searchParams;
       const code = params.get('code');
       const client_id =
-        '792829001349-mhe10a1cvuqpruve9m1vajl11mipbvu5.apps.googleusercontent.com';
+        process.env.REACT_APP_GOOGLE_CLIENT_ID
       const redirect_uri = 'http://127.0.0.1:3000/users/signin/googleCallback/';
-      const CLIENT_SECRET = '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';
+      const CLIENT_SECRET = process.env.REACT_APP_GOOGLE_SECRET_ID;
 
       const response = await axiosInstance.post(
         `https://oauth2.googleapis.com/token?client_id=${client_id}&client_secret=${CLIENT_SECRET}&redirect_uri=${redirect_uri}&code=${code}&grant_type=authorization_code`,

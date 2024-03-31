@@ -73,13 +73,15 @@ export default function Payment() {
     0
   );
   const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
-  const totalPrice = totalValue + deliveryFee;
+  const totalPrice = selectedCoupon
+    ? totalValue + deliveryFee - selectedCoupon.discount_price
+    : totalValue + deliveryFee;
 
   const handleClickCoupon = (el) => {
     setSelectedCoupon(el);
     showCouponList(false);
   };
-  
+
   useEffect(() => {
     const fetchCoupon = async () => {
       const res = await axiosInstance.get('/userscoupon/');
@@ -90,7 +92,6 @@ export default function Payment() {
 
   const handlePostPayment = async () => {
     const data = {
-      required_options_count: 1,
       menu_list: menuList,
       option_list: optionList,
       soption_list: sOptionList,
@@ -103,7 +104,6 @@ export default function Payment() {
       is_deliver: isDeliver,
       payment_method: paymentMethod,
       restaurant: store.id,
-      order_State: 'order_complete',
     };
 
     console.log(data);
@@ -201,11 +201,15 @@ export default function Payment() {
             </button>
             {couponList && (
               <div className='payment-couponList'>
-                {couponData.map((el) => (
-                  <button key={el.id} onClick={() => handleClickCoupon(el)}>
-                    {el.coupon_code}
-                  </button>
-                ))}
+                {couponData
+                  .filter(
+                    (el) => el.minimum_order_price <= totalValue + deliveryFee
+                  )
+                  .map((el) => (
+                    <button key={el.id} onClick={() => handleClickCoupon(el)}>
+                      {el.coupon_code}
+                    </button>
+                  ))}
               </div>
             )}
           </div>
