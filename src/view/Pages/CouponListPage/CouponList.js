@@ -13,14 +13,16 @@ function CouponList() {
       .get('/userscoupon/')
       .then((result) => setUserCoupon(result.data));
   }, []);
-  console.log(userCoupon);
+
+  const userCouponIds = userCoupon.map(coupon => coupon.id);
   return (
     <div className='CouponList'>
       <header className='couponList-frame'>
         <h1 className='couponList-title'>할인쿠폰</h1>
         <div className='couponList-couponBlock'>
           {couponData.map((el) => {
-            return <Coupon className='couponList-coupon' data={el} />;
+            const isOwned = userCouponIds.includes(el.id)
+            return <Coupon className='couponList-coupon' data={el} downloaded={isOwned}/>;
           })}
         </div>
       </header>

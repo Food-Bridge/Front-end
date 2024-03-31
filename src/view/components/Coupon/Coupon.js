@@ -4,13 +4,11 @@ import './Coupon.scss';
 import { TfiDownload } from 'react-icons/tfi';
 import axiosInstance from '../../../api/instance';
 
-export default function Coupon({ data, downloaded }) {
-  const [couponClass, setCouponClass] = useState(
-    downloaded ? 'coupon-right downloaded' : 'coupon-right'
-  );
-  console.log(data);
+export default function Coupon({ data, downloaded }) {;
+  const [download, setDownload] = useState(downloaded ? true : false)
+
   const downloadCoupon = () => {
-    setCouponClass(couponClass + ' downloaded');
+    setDownload(true);
     axiosInstance.post('/userscoupon/', {
       code: data.code,
       content: data.content,
@@ -32,14 +30,20 @@ export default function Coupon({ data, downloaded }) {
           <p className='coupon-info '>
             <p className='coupon-expiration'>
               {data.formatted_expiration_date}
-            </p>{' '}
+            </p>
             사용 가능
           </p>
         </div>
       </div>
-      <button className={couponClass} onClick={downloadCoupon}>
-        <TfiDownload size='35' />
-      </button>
+      {download ? (
+        <div className='coupon-right downloaded'>
+          <TfiDownload size='35' />
+        </div>
+      ) : (
+        <button className='coupon-right' onClick={downloadCoupon}>
+          <TfiDownload size='35' />
+        </button>
+      )}
     </div>
   );
 }
