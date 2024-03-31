@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectIsSeller } from './redux/reducers/authSlice';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './redux/store';
@@ -33,8 +35,8 @@ import StoreLikes from './view/pages/StoreLikesPage/StoreLikes';
 import MenuUpload from './view/pages/MenuUploadPage/MenuUpload';
 import MyStore from './view/pages/StorePage/MyStore';
 import MyStoreOption from './view/pages/StoreOptionPage/MyStoreOption';
-import { useSelector } from 'react-redux';
-import { selectIsSeller } from './redux/reducers/authSlice';
+import Payment from './view/pages/PaymentPage/Payment';
+
 import OptionUpload from './view/pages/OptionUploadPage/OptionUpload';
 
 function App() {
@@ -86,6 +88,7 @@ function App() {
               // 주문 정보
               <Route path='cart/' element={<CartList />} />
               <Route path='orderlist/' element={<OrderList />} />
+              <Route path='payment/' element={<Payment />} />
               // 커뮤니티
               <Route path='commu/' element={<Community />} />
               <Route

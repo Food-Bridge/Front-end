@@ -96,9 +96,10 @@ function StoreUpload() {
         mainCategory: mainCategory.id,
         mainCategory_name: mainCategory.name,
       };
-      if (owner) {
-        await axiosInstance.patch(`/restaurant/${owner}`, data);
-        await axiosInstance.patch(`/restaurant/${owner}`, formData, {
+      console.log(data)
+      if (typeof owner === 'number') {
+        await axiosInstance.patch(`/restaurant/${owner}/`, data);
+        await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -106,7 +107,8 @@ function StoreUpload() {
       } else {
         const res = await axiosInstance.post(`/restaurant/`, data);
         dispatch(setOwner(res.data.id));
-        await axiosInstance.patch(`/restaurant/${owner}`, formData, {
+        console.log(owner)
+        await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -167,7 +169,7 @@ function StoreUpload() {
       setMinPickUpPrice(res.data.minimumPickupPrice);
       setMinDeliverTime(res.data.minDeliveryTimeMinutes);
       setMaxDeliverTime(res.data.maxDeliveryTimeMinutes);
-      setMinPickUpTime(res.data.minPickUpTime);
+      setMinPickUpTime(res.data.minPickupTime);
       setPackaging(res.data.packaging);
       setStatus(res.data.status);
       setStart(res.data.start);
@@ -179,8 +181,9 @@ function StoreUpload() {
         name: res.data.mainCategory_name,
       });
       setImageDisplay(res.data.image);
+      console.log(res)
     };
-    owner && fetchData();
+    typeof owner === 'number' && fetchData();
   }, []);
 
   return (
@@ -426,7 +429,7 @@ function StoreUpload() {
             className='storeUpload-storeUploadBtn'
             onClick={handleAddStore}
           >
-            {owner ? '수정하기' : '저장하기'}
+            {typeof owner === 'number' ? '수정하기' : '저장하기'}
           </button>
         </div>
         <div className='storeUpload-deleteBtn'>

@@ -28,7 +28,7 @@ export default function CartList() {
     (acc, item) => acc + item.price * item.quantity,
     0
   )
-  const deliveryFee = store.delivery_fee ? store.delivery_fee : 0;
+  const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
   const totalPrice = totalValue + deliveryFee
   const [deliverClass, setDeliverClass] = useState('cartlist-selectBtn');
   const [pickUpClass, setPickUpClass] = useState('cartlist-selectBtn');
@@ -85,6 +85,10 @@ export default function CartList() {
     }
   };
 
+const handleGoToPay = () => {
+  navigate('/payment/')
+}
+
   const handleGoToStore = () => {
     navigate('/restaurant/');
   };
@@ -92,6 +96,7 @@ export default function CartList() {
   const handleClickAdd = () => {
     navigate(`/restaurant/${store.id}/`);
   };
+
   console.log(store);
   return (
     <>
@@ -167,7 +172,7 @@ export default function CartList() {
               <p className='cartlist-value'>{totalPrice.toLocaleString('ko-KR')}원</p>
             </div>
           </div>
-          <button className='cartlist-orderBtn'>
+          <button className='cartlist-orderBtn' onClick={handleGoToPay}>
             {totalPrice.toLocaleString('ko-KR')}원 {isDeliver ? '배달' : '포장'} 결제하기
           </button>
         </div>
