@@ -13,7 +13,7 @@ function StoreUpload() {
   const dispatch = useDispatch();
   const owner = useSelector(selectOwner);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [addAddress, setAddAddress] = useState(false);
   const [packaging, setPackaging] = useState(false);
@@ -96,27 +96,28 @@ function StoreUpload() {
         mainCategory: mainCategory.id,
         mainCategory_name: mainCategory.name,
       };
-      console.log(data)
+      console.log(data);
       if (typeof owner === 'number') {
         await axiosInstance.patch(`/restaurant/${owner}/`, data);
-        await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        image !== null &&
+          (await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }));
       } else {
         const res = await axiosInstance.post(`/restaurant/`, data);
         dispatch(setOwner(res.data.id));
-        console.log(owner)
-        await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        image !== null &&
+          (await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }));
       }
-      setShowConfirmModal(true)
+      setShowConfirmModal(true);
     } catch (error) {
-      alert('에러가 발생했습니다', error);
+      console.log('에러가 발생했습니다', error);
     }
   };
 
@@ -155,8 +156,8 @@ function StoreUpload() {
   };
 
   const handleConfirmModal = () => {
-    setShowConfirmModal(false)
-  }
+    setShowConfirmModal(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -181,20 +182,22 @@ function StoreUpload() {
         name: res.data.mainCategory_name,
       });
       setImageDisplay(res.data.image);
-      console.log(res)
+      console.log(res);
     };
     typeof owner === 'number' && fetchData();
   }, []);
 
   return (
     <div className='StoreUpload'>
-      {showConfirmModal && (<div className='storeUpload-modal'>
+      {showConfirmModal && (
+        <div className='storeUpload-modal'>
           <Modal
             onConfirm={handleConfirmModal}
             contents={['요청이 정상적으로 이루어졌습니다.']}
             title={owner ? '매장 수정' : '매장 추가'}
           />
-        </div>)}
+        </div>
+      )}
       {showDeleteModal && (
         <div className='storeUpload-modal'>
           <Modal
