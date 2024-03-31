@@ -8,7 +8,8 @@ import cartReducer from './reducers/cartSlice';
 const storageConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'address', 'cart'],
+  expire: 1800000,
 };
 
 const reducers = combineReducers({
