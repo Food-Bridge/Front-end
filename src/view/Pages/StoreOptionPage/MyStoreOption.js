@@ -20,15 +20,15 @@ export default function MyStoreOption() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${owner}`);
+      const res = await axiosInstance.get(`/restaurant/${owner}/`);
       const menuRes = await axiosInstance.get(
-        `/restaurant/${owner}/menu/${menuId}`
+        `/restaurant/${owner}/menu/${menuId}/`
       );
       const optionRes = await axiosInstance.get(
-        `/restaurant/${owner}/menu/${menuId}/options`
+        `/restaurant/${owner}/menu/${menuId}/options/`
       );
       const sOptionRes = await axiosInstance.get(
-        `restaurant/${owner}/menu/${menuId}/soptions`
+        `restaurant/${owner}/menu/${menuId}/soptions/`
       );
       setData(res.data);
       setMenuData(menuRes.data);
@@ -39,7 +39,10 @@ export default function MyStoreOption() {
   }, []);
 
   const handleAddOption = () => {
-    navigate('/optionUpload/');
+    navigate('/optionUpload/', { state: { id: menuId } }); 
+  };
+  const handleAddSOption = () => {
+    navigate('/soptionUpload/', { state: { id: menuId } }); 
   };
 
   return (
@@ -71,7 +74,10 @@ export default function MyStoreOption() {
         ))}
       {sOptionData.length > 0 && <MenuCheckBox data={sOptionData} />}
       <button className='storeOption-btn' onClick={handleAddOption}>
-        옵션 추가
+        필수 옵션 추가
+      </button>
+      <button className='storeOption-btn' onClick={handleAddSOption}>
+        선택 옵션 추가
       </button>
     </div>
   );

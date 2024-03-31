@@ -5,18 +5,20 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { selectOwner } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 
-function OptionUpload() {
+function SOptionUpload() {
   const [price, setPrice] = useState(0);
   const [name, setName] = useState('');
 
   const dispatch = useDispatch()
   const owner = useSelector(selectOwner);
-  
+
   const location = useLocation();
   const menuId = location.state.id;
 
   const formData = new FormData();
   const navigate = useNavigate();
+
+  // const { menuId } = useParams();
 
   useEffect(() => {
     // menuId가 정상적으로 가져와지는지 확인하기 위해 추가한 console.log
@@ -29,7 +31,7 @@ function OptionUpload() {
         formData.append('name', name); // 옵션 이름 추가
         formData.append('price', price); // 옵션 가격 추가
     
-        await axiosInstance.post(`/restaurant/${owner}/menu/${menuId}/options/`, formData, {
+        await axiosInstance.post(`/restaurant/${owner}/menu/${menuId}/soptions/`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data', // 필수: 파일 업로드 시에는 Content-Type을 설정해야 합니다.
         },
@@ -86,4 +88,4 @@ function OptionUpload() {
   )
 }
 
-export default OptionUpload
+export default SOptionUpload

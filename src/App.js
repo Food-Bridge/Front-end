@@ -38,6 +38,7 @@ import MyStoreOption from './view/pages/StoreOptionPage/MyStoreOption';
 import Payment from './view/pages/PaymentPage/Payment';
 
 import OptionUpload from './view/pages/OptionUploadPage/OptionUpload';
+import SOptionUpload from './view/pages/OptionUploadPage/SOptionUpload';
 
 function App() {
   const isSeller = useSelector(selectIsSeller);
@@ -114,6 +115,7 @@ function App() {
                   <Route path='storeUpload/' element={<StoreUpload />} />
                   <Route path='menuUpload/' element={<MenuUpload />} />
                   <Route path='optionUpload/' element={<OptionUpload />} />
+                  <Route path='soptionUpload/' element={<SOptionUpload />} />
                 </>
               )}
             </Routes>

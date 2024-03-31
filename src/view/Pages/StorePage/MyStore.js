@@ -30,8 +30,10 @@ export default function MyStore() {
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
+      console.log(menuRes)
     };
     fetchData();
+
   }, [owner]);
 
   const handleOpenReview = () => {

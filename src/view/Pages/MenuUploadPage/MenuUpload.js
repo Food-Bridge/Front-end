@@ -79,7 +79,7 @@ function MenuUpload() {
             formData.append('name', name); // 메뉴 이름 추가
             formData.append('content', content); // 메뉴 설명 추가
             formData.append('price', price); // 메뉴 가격 추가
-            formData.append('restaurant', restaurant);
+            // formData.append('restaurant', restaurant);
         
             await axiosInstance.post(`/restaurant/${owner}/menu/`, formData, {
             headers: {
@@ -99,15 +99,15 @@ function MenuUpload() {
             <h1 className='menuUpload-pageTitle'>메뉴 등록</h1>
 
             <div className='menuUpload-fieldFrame'>
-                <div>
-                    {/* 레스토랑 선택 드롭다운 */}
+                {/* <div>
+                    레스토랑 선택 드롭다운
                     <select value={restaurant} onChange={(e) => setRestaurant(e.target.value)}>
                     <option value={0}>매장 선택</option>
                     {storeList.map((store) => (
                         <option key={store.id} value={store.id}>{store.name}</option>
                     ))}
                     </select>
-                </div>
+                </div> */}
 
                 {/* 메뉴 이름 */}
                 <div className='menuUpload-name'>
@@ -146,7 +146,7 @@ function MenuUpload() {
 
                 {/* 메뉴 이미지 */}
                 <div className='menuUpload-image'>
-                <h1 className='menuUpload-title'>매장 이미지 등록</h1>
+                <h1 className='menuUpload-title'>메뉴 이미지 등록</h1>
                 <img className='storeUpload-imageDisplay' src={imageDisplay} />
                 <input
                     className='menuUpload-imageInput'

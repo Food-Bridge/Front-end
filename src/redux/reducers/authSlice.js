@@ -17,7 +17,7 @@ export const setTokens = createAsyncThunk(
   async ({ access, refresh }, thunkAPI) => {
     document.cookie = `accessToken=${access}; path=/`;
     sessionStorage.setItem('refreshToken', refresh);
-    thunkAPI.dispatch(login());
+    thunkAPI.dispatch(login()); // Dispatch login action using thunkAPI
     return true;
   }
 );
