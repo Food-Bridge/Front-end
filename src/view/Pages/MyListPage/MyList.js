@@ -6,6 +6,7 @@ import {
   setProfile,
   deleteTokens,
   selectIsSeller,
+  logout,
 } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 import MyListBlock from '../../components/MyListBlock/MyListBlock';
@@ -18,7 +19,6 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { GoMegaphone } from 'react-icons/go';
 import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 import MyListProfile from '../../components/MyListProfile/MyListProfile';
-import { logoutS } from '../../../redux/reducers/authSlice';
 
 export default function MyList() {
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ export default function MyList() {
     await axiosInstance.post('/users/logout/', {
       refresh: sessionStorage.getItem('refreshToken'),
     });
-    isSeller && dispatch(logoutS());
-    dispatch(deleteTokens());
+    dispatch(logout());
+    dispatch(deleteTokens())
     navigate('/users/signin/');
   };
 
