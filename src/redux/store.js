@@ -13,26 +13,26 @@ const storageConfig = {
   whitelist: ['auth', 'address', 'cart'],
 };
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   auth: authReducer,
   address: addressReducer,
   cart: cartReducer,
 });
 
-const persistedReducer = persistReducer(storageConfig, reducers);
+const persistedReducer = persistReducer(storageConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
 });
 
-export const persistor = persistStore(store, null, () => {
+store.subscribe(() => {
   const now = new Date().getTime();
-  Object.keys(store.getState()).forEach(key => {
-    const state = store.getState()[key];
-    if (state?.timestamp && now - state.timestamp > EXPIRATION_TIME) {
-      store.dispatch({ type: 'REMOVE_EXPIRED_DATA', key });
-    }
-  });
+  const authState = store.getState().auth;
+  if (authState.timestamp && now - authState.timestamp > EXPIRATION_TIME) {
+    store.dispatch({ type: 'auth/REMOVE_EXPIRED_DATA' });
+  }
 });
+
+export const persistor = persistStore(store);
 
 export default store;
