@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import axiosInstance from '../../api/instance';
 
+
 export const deleteTokens = createAsyncThunk('auth/deleteTokens', async () => {
   document.cookie =
     'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -15,7 +16,7 @@ export const setTokens = createAsyncThunk(
   async ({ access, refresh }, thunkAPI) => {
     document.cookie = `accessToken=${access}; path=/`;
     sessionStorage.setItem('refreshToken', refresh);
-    thunkAPI.dispatch(login()); // Dispatch login action using thunkAPI
+    thunkAPI.dispatch(login());
     return true;
   }
 );

@@ -8,6 +8,14 @@ import {
   selectIsSeller,
   logout,
 } from '../../../redux/reducers/authSlice';
+import {
+  updateAddresses,
+  setDefaultId,
+} from '../../../redux/reducers/addressSlice';
+import {
+  setMenuData,
+  setCurrentStore,
+} from '../../../redux/reducers/cartSlice';
 import axiosInstance from '../../../api/instance';
 import MyListBlock from '../../components/MyListBlock/MyListBlock';
 import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
@@ -42,7 +50,11 @@ export default function MyList() {
       refresh: sessionStorage.getItem('refreshToken'),
     });
     dispatch(logout());
-    dispatch(deleteTokens())
+    dispatch(deleteTokens());
+    dispatch(setCurrentStore([]));
+    dispatch(setMenuData([]));
+    dispatch(setDefaultId(null));
+    dispatch(updateAddresses([]));
     navigate('/users/signin/');
   };
 
