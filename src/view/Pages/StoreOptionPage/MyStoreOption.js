@@ -87,9 +87,20 @@ export default function MyStoreOption() {
       {sOptionData.length > 0 && (
         <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
       )}
-      <button className='storeOption-btn' onClick={handleSOptionChange}>
-        옵션 추가
-      </button>
+      <div className='storeOption-buttons'>
+        <button
+          className='storeOption-btn'
+          onClick={() => navigate('/optionUpload')}
+        >
+          필수 옵션 추가
+        </button>
+        <button
+          className='storeOption-btn'
+          onClick={() => navigate('/soptionUpload')}
+        >
+          선택 옵션 추가
+        </button>
+      </div>
     </div>
   );
 }
