@@ -11,6 +11,7 @@ const storageConfig = {
   key: 'root',
   storage: storage,
   whitelist: ['auth', 'address', 'cart'],
+  timeout: 5000,
 };
 
 const rootReducer = combineReducers({

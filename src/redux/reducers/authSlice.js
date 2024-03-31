@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import axiosInstance from '../../api/instance';
 
-export const deleteTokens = createAsyncThunk(
-  'auth/deleteTokens',
-  async () => {
-    document.cookie =
-      'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    sessionStorage.removeItem('refreshToken');
-    return true;
-  }
-);
+export const deleteTokens = createAsyncThunk('auth/deleteTokens', async () => {
+  document.cookie =
+    'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  sessionStorage.removeItem('refreshToken');
+  return true;
+});
 
 export const setTokens = createAsyncThunk(
   'auth/setTokens',
@@ -21,6 +19,15 @@ export const setTokens = createAsyncThunk(
     return true;
   }
 );
+
+export const fetchProfile = createAsyncThunk('auth/fetchProfile', async () => {
+  try {
+    const response = await axiosInstance.get('/users/profile');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+});
 
 const authPersistConfig = {
   key: 'auth',
@@ -56,16 +63,18 @@ export const authSlice = createSlice({
       state.isSeller = true;
     },
     setOwner: (state, action) => {
-      const owner = action.payload;
-      state.owner = owner;
+      state.owner = action.payload;
     },
     setProfile: (state, action) => {
       const { image, nickname } = action.payload;
-      state.profile = {
-        image,
-        nickname,
-      };
+      state.profile.image = image;
+      state.profile.nickname = nickname;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchProfile.fulfilled, (state, action) => {
+      state.profile = action.payload;
+    });
   },
 });
 
@@ -77,6 +86,9 @@ export const selectProfile = (state) => state.auth.profile;
 export const selectIsSeller = (state) => state.auth.isSeller;
 export const selectOwner = (state) => state.auth.owner;
 
-export const persistedAuthReducer = persistReducer(authPersistConfig, authSlice.reducer);
+export const persistedAuthReducer = persistReducer(
+  authPersistConfig,
+  authSlice.reducer
+);
 
 export default persistedAuthReducer;
