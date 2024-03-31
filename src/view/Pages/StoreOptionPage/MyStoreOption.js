@@ -49,6 +49,7 @@ export default function MyStoreOption() {
   }, []);
 
   const handleAddOption = () => {
+    optionData ? alert('필수 옵션은 하나만 추가할 수 있습니다.') :
     navigate('/optionUpload/', { state: { id: menuId } }); 
   };
   const handleAddSOption = () => {
@@ -93,13 +94,13 @@ export default function MyStoreOption() {
       <div className='storeOption-buttons'>
         <button
           className='storeOption-btn'
-          onClick={() => navigate('/optionUpload')}
+          onClick={handleAddOption}
         >
           필수 옵션 추가
         </button>
         <button
           className='storeOption-btn'
-          onClick={() => navigate('/soptionUpload')}
+          onClick={handleAddSOption}
         >
           선택 옵션 추가
         </button>
