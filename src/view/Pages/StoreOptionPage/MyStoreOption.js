@@ -17,6 +17,16 @@ export default function MyStoreOption() {
   const [menuData, setMenuData] = useState([]);
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
+  const [option, setOption] = useState([]);
+  const [sOption, setSOption] = useState([]);
+
+  const handleOptionChange = (selectedOption) => {
+    setOption(selectedOption);
+  };
+
+  const handleSOptionChange = (selectedSOption) => {
+    setSOption(selectedSOption);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,20 +74,24 @@ export default function MyStoreOption() {
       <p className='storeOption-detail'>{menuData.content}</p>
       {optionData.length > 0 &&
         (menuData.required_options_count === 1 ? (
-          <MenuOptionBtn data={optionData} isSeller />
+          <MenuOptionBtn
+            data={optionData}
+            onOptionChange={handleOptionChange}
+            isSeller
+          />
         ) : (
           <MenuCheckBox
             data={optionData}
             count={menuData.required_options_count}
+            onOptionChange={handleOptionChange}
             isSeller
           />
         ))}
-      {sOptionData.length > 0 && <MenuCheckBox data={sOptionData} />}
-      <button className='storeOption-btn' onClick={handleAddOption}>
-        필수 옵션 추가
-      </button>
-      <button className='storeOption-btn' onClick={handleAddSOption}>
-        선택 옵션 추가
+      {sOptionData.length > 0 && (
+        <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
+      )}
+      <button className='storeOption-btn' onClick={handleSOptionChange}>
+        옵션 추가
       </button>
     </div>
   );
