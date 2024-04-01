@@ -7,8 +7,10 @@ import Swal from 'sweetalert2';
 import DaumPostCode from 'react-daum-postcode';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectOwner, setOwner } from '../../../redux/reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 function StoreUpload() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const owner = useSelector(selectOwner);
   const [isOpen, setIsOpen] = useState(false);
@@ -118,9 +120,7 @@ function StoreUpload() {
         showCancelButton: false,
         confirmButtonText: '확인',
         confirmButtonColor: 'black',
-      }).then((res) => {
-        res.isConfirmed && handleDeleteStore();
-      });
+      }).then(navigate('/'));
     } catch (error) {
       Swal.fire({
         icon: 'warning',
@@ -170,6 +170,8 @@ function StoreUpload() {
       cancelButtonText: '취소',
       confirmButtonColor: '#ca0000',
       cancelButtonColor: 'black',
+    }).then((res) => {
+      res.isConfirmed && handleDeleteStore();
     });
   };
 
