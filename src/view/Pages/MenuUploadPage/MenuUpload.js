@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 function MenuUpload() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { id } = location.state;
+  const { id } = location.state || { id: null };
   const [content, setContent] = useState('');
   const [price, setPrice] = useState(0);
   const [name, setName] = useState('');
