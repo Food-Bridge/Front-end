@@ -14,6 +14,10 @@ import SellerMain from './SellerMain';
 import { selectIsSeller } from '../../../redux/reducers/authSlice';
 import coupon1 from '../../../data/CouponData/price1000.png'
 import coupon2 from '../../../data/CouponData/usersignup.png'
+import main1 from '../../../data/MainImageData/Main1.png'
+import main2 from '../../../data/MainImageData/Main2.png'
+import main3 from '../../../data/MainImageData/Main3.png'
+
 
 export default function MainPage() {
   const [data, setData] = useState([]);
@@ -27,18 +31,7 @@ export default function MainPage() {
   }, []);
 
   const SliderData = [
-    {
-      image:
-        'https://images.unsplash.com/photo-1575932444877-5106bee2a599?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1627662168781-4345690f0bb3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1549759594-0d842f402b4d?q=80&w=949&auto= format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
+    main1, main2, main3
   ];
 
   const navigate = useNavigate();
