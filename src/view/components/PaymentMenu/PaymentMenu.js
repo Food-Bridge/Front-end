@@ -1,7 +1,6 @@
 import React from 'react';
 import './PaymentMenu.scss';
 
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function PaymentMenu({

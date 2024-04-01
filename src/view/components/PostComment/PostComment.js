@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './PostComment.scss'
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom';

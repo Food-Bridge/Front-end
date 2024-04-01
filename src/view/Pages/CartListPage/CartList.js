@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './CartList.scss';
-
+import { SlPresent } from "react-icons/sl";
 import { CiDeliveryTruck } from 'react-icons/ci';
 import PaymentMenu from '../../components/PaymentMenu/PaymentMenu';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,6 @@ import {
   setPickUp,
   deleteMenu,
   setMenuData,
-  setCurrentStore,
 } from '../../../redux/reducers/cartSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,10 +27,9 @@ export default function CartList() {
   const totalValue = menu.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
-  );
-  const deliveryFee = store.deliveryFee ? store.deliverFee : 0;
-  const totalPrice = (totalValue + deliveryFee).toLocaleString('ko-KR');
-
+  )
+  const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
+  const totalPrice = totalValue + deliveryFee
   const [deliverClass, setDeliverClass] = useState('cartlist-selectBtn');
   const [pickUpClass, setPickUpClass] = useState('cartlist-selectBtn');
 
@@ -58,7 +56,7 @@ export default function CartList() {
   };
 
   const handleDeleteMenu = (indexToDelete) => {
-    const updatedMenu = menu.filter((item, index) => index !== indexToDelete);
+    const updatedMenu = menu.filter(( index) => index !== indexToDelete);
     updatedMenu.length > 0
       ? dispatch(setMenuData(updatedMenu))
       : dispatch(deleteMenu());
@@ -87,6 +85,10 @@ export default function CartList() {
     }
   };
 
+const handleGoToPay = () => {
+  navigate('/payment/')
+}
+
   const handleGoToStore = () => {
     navigate('/restaurant/');
   };
@@ -94,6 +96,7 @@ export default function CartList() {
   const handleClickAdd = () => {
     navigate(`/restaurant/${store.id}/`);
   };
+
   console.log(store);
   return (
     <>
@@ -106,9 +109,9 @@ export default function CartList() {
               <h2 className='cartlist-storeName'>{store.name}</h2>
             </div>
             <div className='cartlist-deliver'>
-              <CiDeliveryTruck size='30' />
+              {isDeliver ? <CiDeliveryTruck size='30' /> : <SlPresent size='20' />}
               <h2 className='cartlist-deliverTime'>
-                {isDeliver ? '30~40분 후 도착 예정' : '30분 후 픽업 가능'}
+                {isDeliver ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정` : `${store.minPickupTime}분 후 픽업 가능`}
               </h2>
             </div>
           </div>
@@ -166,11 +169,11 @@ export default function CartList() {
           <div className='cartlist-priceGroup'>
             <div className='cartlist-price'>
               <h2 className='cartlist-title'>결제 예정 금액</h2>
-              <p className='cartlist-value'>{totalPrice}원</p>
+              <p className='cartlist-value'>{totalPrice.toLocaleString('ko-KR')}원</p>
             </div>
           </div>
-          <button className='cartlist-orderBtn'>
-            {totalPrice}원 {isDeliver ? '배달' : '포장'} 결제하기
+          <button className='cartlist-orderBtn' onClick={handleGoToPay}>
+            {totalPrice.toLocaleString('ko-KR')}원 {isDeliver ? '배달' : '포장'} 결제하기
           </button>
         </div>
       ) : (

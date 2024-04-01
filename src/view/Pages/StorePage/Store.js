@@ -6,35 +6,49 @@ import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
-import SearchBar from '../../components/SearchBar/SearchBar'
+import SearchBar from '../../components/SearchBar/SearchBar';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
+import Modal from '../../components/Modal/Modal.js';
 
 import { CiPhone } from 'react-icons/ci';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../../redux/reducers/authSlice.js';
 
-
-
-export default function Store({ count }) {
+export default function Store() {
   const { resId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
+  const [likeData, setLikeData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
   const [isLike, setIsLike] = useState(false);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${resId}`);
-      const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu`);
+      const res = await axiosInstance.get(`/restaurant/${resId}/`);
+      const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu/`);
+      const likeRes = isLoggedIn && await axiosInstance.get('/like/');
+
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
-      console.log(menuRes);
+      isLoggedIn && setLikeData(likeRes.data.liked_restaurants_ids);
     };
     fetchData();
-  }, []);
+  }, [resId]);
+
+  useEffect(() => {
+    setIsLike(likeData.includes(parseInt(resId)));
+  }, [likeData, resId]);
+
+  const handleClickHeart = async () => {
+    await axiosInstance.post(`/like/${resId}/`);
+    setIsLike((prevIsLike) => !prevIsLike);
+  };
 
   const handleClickOption = (menuId) => {
     navigate(`${menuId}/`);
@@ -48,18 +62,12 @@ export default function Store({ count }) {
     setShowPhoneNumber(!showPhoneNumber);
   };
 
-  const pressLike = () => {
-    setIsLike(!isLike);
-  };
-
   return (
     <div className='store'>
       <SearchBar />
       <div className='store-img'>
-        {sliderData && sliderData.length > 0 ? (
+        {sliderData && sliderData.length > 0 && (
           <ImageSlider slides={[sliderData]} />
-        ) : (
-          ''
         )}
       </div>
       <div className='store-main'>
@@ -69,7 +77,7 @@ export default function Store({ count }) {
             <button className='store-phone' onClick={showNumber}>
               <CiPhone size='30' />
             </button>
-            <button className='store-like ' onClick={pressLike}>
+            <button className='store-like ' onClick={handleClickHeart}>
               {isLike ? (
                 <IoIosHeart size='30' color='red' />
               ) : (
@@ -90,9 +98,13 @@ export default function Store({ count }) {
             <PlusInfo text='더보기' arrow='true' onClick={handleOpenReview} />
           </div>
           {showPhoneNumber && (
-            <div className='store-popup'>
-              <p className='store-popupText'> {data.phone_number}</p>
-            </div>
+            <Modal
+              title={'전화번호'}
+              contents={[
+                data.phone_number.replace(/^02(\d{3,4})-?(\d{4})$/, '02-$1-$2'),
+              ]}
+              onConfirm={() => setShowPhoneNumber(false)}
+            />
           )}
         </div>
       </div>
@@ -102,11 +114,7 @@ export default function Store({ count }) {
         <h2 className='store-menuTitle'>메뉴</h2>
         <div className='store-menuBlocks'>
           {menuData.map((el) => (
-            <div
-              className='store-menuBlock'
-              key={el.id}
-              onClick={() => handleClickOption(el.id)}
-            >
+            <div className='store-menuBlock' key={el.id}>
               <MenuBlock
                 title={el.name}
                 price={el.price}
@@ -114,6 +122,7 @@ export default function Store({ count }) {
                 content={el.content}
                 popular={el.is_popular}
                 main={el.is_main}
+                menuId={el.id}
               />
             </div>
           ))}

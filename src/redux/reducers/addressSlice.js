@@ -29,17 +29,13 @@ export const selectDefaultId = (state) => state.address.defaultId;
 export const { updateAddresses, setDefaultId, editAddressNickname } =
   AddressSlice.actions;
 
-export const fetchAddresses = () => async (dispatch, getState) => {
+export const fetchAddresses = () => async (dispatch) => {
   const res = await axiosInstance.get('/users/address/');
   dispatch(updateAddresses(res.data));
-  const state = getState();
-  const defaultId = selectDefaultId(state);
-  if (defaultId) {
-    const newDefaultAddress = res.data.find(
-      (address) => address.id === defaultId
-    );
-    dispatch(setDefaultAddress(newDefaultAddress));
-  }
+  const newDefaultAddress = res.data.find(
+    (address) => address.is_default === true
+  );
+  newDefaultAddress && dispatch(setDefaultAddress(newDefaultAddress));
 };
 
 export const setDefaultAddress = (address) => async (dispatch, getState) => {
@@ -49,25 +45,19 @@ export const setDefaultAddress = (address) => async (dispatch, getState) => {
     await axiosInstance.patch(`/users/address/${currentDefaultId}/`, {
       is_default: false,
     });
-    await axiosInstance.patch(`/users/address/${address.id}/`, {
-      is_default: true,
-    });
   }
-  if (currentDefaultId) {
-    dispatch(setDefaultId(address.id));
-  }
+  await axiosInstance.patch(`/users/address/${address.id}/`, {
+    is_default: true,
+  });
+  dispatch(setDefaultId(address.id));
 };
 
-export const editAddressesNicknames = (updates) => async (dispatch) => {
-  if (updates && updates.length > 0) {
-    for (const { id, nickname } of updates) {
-      const res = await axiosInstance.patch(`/users/address/${id}/`, {
-        nickname: nickname,
-      });
-      console.log(res);
-    }
-    dispatch(fetchAddresses());
-  }
+export const editAddressesNicknames = (update) => async (dispatch) => {
+  const { id, nickname } = update;
+  await axiosInstance.patch(`/users/address/${id}/`, {
+    nickname: nickname,
+  });
+  dispatch(fetchAddresses())
 };
 
 export const deleteAddress = (id) => async (dispatch, getState) => {

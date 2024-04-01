@@ -13,7 +13,6 @@ export default function StoreOption() {
   const [menuData, setMenuData] = useState([]);
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
-
   const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
 
@@ -40,7 +39,7 @@ export default function StoreOption() {
       setSOptionData(sOptionRes.data);
     };
     fetchData();
-  }, []);
+  }, [resId, menuId]);
 
   const handleOptionChange = (selectedOption) => {
     setOption(selectedOption);

@@ -3,7 +3,6 @@
   top: 150px;
   left: 50%;
   transform: translate(-50%, 0);
-  
 }
 .orderCard-frame {
   width: 560px;
@@ -22,6 +21,7 @@
       background-color: #c6c6c6;
       border-radius: 5px;
       margin-right: 20px;
+      object-fit: cover;
     }
     .orderCard-text {
       .orderCard-store {
@@ -32,7 +32,7 @@
         display: flex;
         flex-wrap: wrap;
         width: 350px;
-        height: 100px;
+        height: 80px;
         padding: 10px 0;
         .orderCard-menu {
           font-size: 14px;
@@ -44,13 +44,16 @@
           box-shadow: 2px 2px 2px #c6c6c6;
         }
       }
-      .orderCard-deliver {
+      .orderCard-order {
         display: flex;
         justify-content: space-between;
-        .orderCard-deliverStat {
+        .orderCard-orderTime {
         }
-        .orderCard-deliverPrice {
+        .orderCard-orderState {
         }
+      }
+      .orderCard-deliverPrice {
+        text-align: right;
       }
     }
   }

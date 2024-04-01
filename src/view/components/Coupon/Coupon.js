@@ -1,34 +1,49 @@
 import React, { useState } from 'react';
 
 import './Coupon.scss';
-import { TfiDownload } from "react-icons/tfi";
+import { TfiDownload } from 'react-icons/tfi';
+import axiosInstance from '../../../api/instance';
 
-export default function Coupon({sale, menuTag, price, year, month, day}) {
-  const [couponClass, setCouponClass] = useState('coupon-right')
-  
+export default function Coupon({ data, downloaded }) {;
+  const [download, setDownload] = useState(downloaded)
+
   const downloadCoupon = () => {
-    setCouponClass(couponClass + ' downloaded')
-  }
+    setDownload(true);
+    axiosInstance.post('/userscoupon/', {
+      code: data.code,
+      content: data.content,
+      minimum_order_price: data.minimum_order_price,
+      discount_price: data.discount_price,
+    });
+  };
 
   return (
     <div className='Coupon'>
       <div className='coupon-left'>
         <div className='coupon-content'>
-          <h1 className='coupon-title'>{sale}% 할인 쿠폰</h1>
-          <div className='coupon-tag'>
-            <div className='coupon-tag-box'>
-              <p className='coupon-tag-menu'>#{menuTag}</p>
-            </div>
-            <p className='coupon-tag-info'>#태그와 동일 카테고리 메뉴만 적용</p>
+          <h1 className='coupon-title'>{data.content}</h1>
+          <p className='coupon-detail'>{data.code}</p>
+          <p className='coupon-info'>
+            {data.minimum_order_price}원 이상 주문 시
+            <p className='coupon-price'>{data.discount_price}원</p> 할인
+          </p>
+          <div className='coupon-info '>
+            <p className='coupon-expiration'>
+              {data.formatted_expiration_date}
+            </p>
+            사용 가능
           </div>
-
-          <p className='coupon-info'>{price}원 이상 주문 시</p>
-          <p className='coupon-info'>{year} / {month} / {day} 까지 사용 가능</p>
         </div>
       </div>
-      <button className={couponClass} onClick = {downloadCoupon}>
-        <TfiDownload size="35"/>
-      </button>
+      {download ? (
+        <div className='coupon-right downloaded'>
+          <TfiDownload size='35' />
+        </div>
+      ) : (
+        <button className='coupon-right' onClick={downloadCoupon}>
+          <TfiDownload size='35' />
+        </button>
+      )}
     </div>
   );
 }

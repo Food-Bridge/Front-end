@@ -5,18 +5,21 @@ export default function Modal({
   twoBtn,
   onConfirm,
   onCancel,
-  content1,
-  content2,
+  contents,
+  title,
 }) {
   return (
     <div className='modal-container'>
       <div className='modal'>
-        <h1 className='modal-title'>알림</h1>
-        <p className='modal-content'>
-          {content1}
-          <br />
-          {content2}
-        </p>
+        <h1 className='modal-title'>{title}</h1>
+        {contents.map((content, index) => {
+          return (
+            <p key={index} className='modal-content'>
+              {content}
+            </p>
+          );
+        })}
+
         {twoBtn ? (
           <div className='modal-button'>
             <button className='modal-twoBtn' onClick={onConfirm}>

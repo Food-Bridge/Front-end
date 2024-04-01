@@ -11,7 +11,6 @@ import {
   fetchAddresses,
   selectAddresses,
   selectDefaultId,
-  setDefaultId,
   setDefaultAddress,
 } from '../../../redux/reducers/addressSlice';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
@@ -23,8 +22,6 @@ function SearchBar() {
   const defaultId = useSelector(selectDefaultId);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const [showList, setShowList] = useState(false);
-  console.log(defaultId);
-  console.log(addresses);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -38,7 +35,6 @@ function SearchBar() {
 
   const handleClickAddress = (address) => {
     dispatch(setDefaultAddress(address));
-    dispatch(setDefaultId(address.id));
   };
 
   const handleSearchClick = () => {
@@ -55,7 +51,7 @@ function SearchBar() {
   };
 
   const handleClickLikes = () => {
-    navigate('/likes/');
+    navigate('/users/likes/');
   };
 
   return (
@@ -69,17 +65,15 @@ function SearchBar() {
             <CiLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
               {isLoggedIn
-                ? defaultId
-                  ? addresses.length > 0
-                    ? addresses
-                        .find((address) => address.id === defaultId)
-                        ?.sigungu.split(' ')[0] ||
-                      addresses
-                        .find((address) => address.id === defaultId)
-                        ?.detail_address.split(' ')[1]
-                    : '주소 선택'
-                  : '로딩중'
-                : addresses.length === 0 && '주소 없음'}
+                ? defaultId && addresses.length > 0
+                  ? addresses
+                      .find((address) => address.id === defaultId)
+                      ?.sigungu.split(' ')[0] ||
+                    addresses
+                      .find((address) => address.id === defaultId)
+                      ?.detail_address.split(' ')[1]
+                  : '주소 선택'
+                : '로그인 필요'}
             </h1>
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
@@ -92,7 +86,7 @@ function SearchBar() {
             <button onClick={handleClickLikes}>
               <CiHeart className='searchBar-heartIcon' />
             </button>
-            <Basket count='1' />
+            <Basket />
           </div>
         </div>
         {showList && (

@@ -11,19 +11,21 @@ import axiosInstance from '../../../api/instance';
 
 function StoreList() {
   const [data, setData] = useState([]);
+  const [category, setCategory] = useState(0);
   const navigate = useNavigate();
-
   const handleClickStore = (id) => {
     navigate(`/restaurant/${id} `);
   };
 
+  let url = category ? `/search/category/?search=${category}` : '/restaurant/';
+
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get('/restaurant/');
-      setData(res.data);
+      const res = await axiosInstance.get(url);
+      category ? setData(res.data.results) : setData(res.data);
     };
     fetchData();
-  }, []);
+  }, [url]);
 
   return (
     <div className='StoreList'>
@@ -38,25 +40,21 @@ function StoreList() {
           <MenuBar name={'menuBar-pageLine2'} />
         </div>
       </div>
-      <div className='storeList-category'>
-        <div className='storeList-categoryComp'>
-          <CategoryBar />
-        </div>
-      </div>
+      <CategoryBar setCategory={setCategory} />
       <div className='storeList-store'>
-        {data.length > 0 && data.map((el) => (
-          <button key={el.id} onClick={() => handleClickStore(el.id)}>
-            <StoreCard
-              
-              img={el.image}
-              className={el.className}
-              storeName={el.name}
-              minimumPrice={el.minimumOrderPrice}
-              deliverPrice={el.delivertyFee}
-              storeScore={el.rating}
-            />
-          </button>
-        ))}
+        {data.length > 0 &&
+          data.map((el) => (
+            <button key={el.id} onClick={() => handleClickStore(el.id)}>
+              <StoreCard
+                img={el.image}
+                className={el.className}
+                storeName={el.name}
+                minimumPrice={el.minimumOrderPrice}
+                deliverPrice={el.delivertyFee}
+                storeScore={el.averageRating}
+              />
+            </button>
+          ))}
       </div>
     </div>
   );

@@ -1,0 +1,62 @@
+.OptionUpload {
+    font-size: 10px;
+  
+    .optionUpload-header {
+      width: 600px;
+  
+      .optionUpload-optionTitle {
+        width: 600px;
+        font-size: 28px;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .optionUpload-fieldFrame {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;      
+
+        // 메뉴 이름
+        .optionUpload-name {
+            margin-bottom: 20px;
+
+            .optionUpload-optionName {
+            width: 300px;
+            height: 40px;
+            padding-left: 10px;
+            }
+        }
+
+        // 옵션 금액
+        .optionUpload-optionPrice {
+            margin-bottom: 20px;
+
+            .optionUpload-priceInput {
+                width: 300px;
+                height: 40px;
+                padding-left: 10px;
+            }
+        }        
+    }
+  
+      .optionUpload-uploadBtn {
+        width: 600px;
+        text-align: center;
+        margin-top: 50px;
+  
+        .optionUpload-optionUploadBtn {
+          width: 300px;
+          height: 50px;
+          color: white;
+          margin-bottom: 20px;
+          background-color: black;
+        }
+      }
+      
+    }
+  }
+  
