@@ -8,37 +8,37 @@ const dataArr = [
     id: 1,
     category: '한식',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb5SsTfRyHJ2Dr56cutRnf2efxfaQamdHqtWvUF-VrRARC5fH9ZUJfpWSvqPtNcN9kZFQ&usqp=CAU',
+      'https://cdn.pixabay.com/photo/2020/02/28/12/43/bibimbap-4887417_1280.jpg',
   },
   {
     id: 2,
     category: '중식',
     image:
-      'https://mblogthumb-phinf.pstatic.net/MjAxODA2MjZfMjE2/MDAxNTI5OTg2MzU1NTI4.49f_7LCihB7L2Fg9v8mM_NthRjtueE1y5AKXyXM46YAg.Lc4YL8t6fAbZ2X5jKmHH8_oXzqK4K0DiQLgqIGfurXcg.JPEG.yunmilike83/output_285959496.jpg?type=w800',
+      'https://cdn.pixabay.com/photo/2021/02/11/02/00/chapaguri-6004034_1280.jpg',
   },
   {
     id: 3,
     category: '일식',
     image:
-      'https://d12zq4w4guyljn.cloudfront.net/750_750_20220506102505_photo1_9bd38c86ab74.jpg',
+      'https://cdn.pixabay.com/photo/2014/11/26/15/21/sushi-546311_1280.jpg',
   },
   {
     id: 4,
     category: '양식',
     image:
-      'https://st4.depositphotos.com/18508348/23001/i/1600/depositphotos_230012924-stock-photo-spaghetti-pasta-tomato-sauce-parmesan.jpg',
+      'https://cdn.pixabay.com/photo/2020/01/07/05/52/spaghetti-4746831_1280.jpg',
   },
   {
     id: 5,
     category: '분식',
     image:
-      'https://blog.kakaocdn.net/dn/bYsHRV/btqG6gHNXvN/DE3iOOga5l52RYQFAPskX0/img.jpg',
+      'https://cdn.pixabay.com/photo/2021/07/22/20/06/tteokbokki-6485983_1280.jpg',
   },
   {
     id: 6,
     category: '디저트',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqRFGC9UzRphyLINSCOd2ZhDpgBMSaJO0TxA&usqp=CAU',
+      'https://cdn.pixabay.com/photo/2023/09/04/20/39/cake-8233676_1280.jpg',
   },
 ];
 

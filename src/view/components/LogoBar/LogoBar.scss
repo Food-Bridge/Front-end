@@ -1,41 +1,37 @@
 .LogoBar {
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-    .logoBar-frame {
-        width: 600px;
-        height: 60px;
-        margin-bottom: 10px;
-        background-color: black;
-        
-        .logoBar-margin {
-            width: 560px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 0 auto;
+  .logoBar-frame {
+    width: 600px;
+    height: 60px;
+    margin-bottom: 10px;
+    background-color: black;
 
-            .logoBar-backIcon {
-                width: 24px;
-                height: 24px;
-                color: white;
-            }
-            .logoBar-logoText {
-                font-size: 24px;
-                color: white;
-                font-weight: 600;
-                font-style: normal;
-                font-family: 'Pretendard-Regular';    
-            }
-            .logoBar-userIcon {
-                width: 24px;
-                height: 24px;
-                color: white;
-            }            
-        }
+    .logoBar-margin {
+      width: 560px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto;
+      color: white;
 
+      .logoBar-backIcon {
+        width: 24px;
+        height: 24px;
+        color: white;
+      }
+      .logoBar-logoImage {
+        height: 50px;
+      }
+      .logoBar-userIcon {
+        width: 24px;
+        height: 24px;
+        color: white;
+      }
     }
+  }
 }

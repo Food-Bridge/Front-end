@@ -1,61 +1,43 @@
+import './MyStore.scss';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance.js';
 
-import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
-import SearchBar from '../../components/SearchBar/SearchBar';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
 import Modal from '../../components/Modal/Modal.js';
 
 import { CiPhone } from 'react-icons/ci';
-import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../../redux/reducers/authSlice.js';
+import { selectOwner } from '../../../redux/reducers/authSlice.js';
 
-export default function Store() {
-  const { resId } = useParams();
+export default function MyStore() {
   const navigate = useNavigate();
+  const owner = useSelector(selectOwner);
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
-  const [likeData, setLikeData] = useState([]);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
-  const [isLike, setIsLike] = useState(false);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${resId}/`);
-      const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu/`);
-      const likeRes = isLoggedIn && await axiosInstance.get('/like/');
-
+      const res = await axiosInstance.get(`/restaurant/${owner}/`);
+      const menuRes = await axiosInstance.get(`/restaurant/${owner}/menu/`);
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
-      isLoggedIn && setLikeData(likeRes.data.liked_restaurants_ids);
+      console.log(menuRes)
     };
     fetchData();
-  }, [resId]);
 
-  useEffect(() => {
-    setIsLike(likeData.includes(parseInt(resId)));
-  }, [likeData, resId]);
-
-  const handleClickHeart = async () => {
-    await axiosInstance.post(`/like/${resId}/`);
-    setIsLike((prevIsLike) => !prevIsLike);
-  };
-
-  const handleClickOption = (menuId) => {
-    navigate(`${menuId}/`);
-  };
+  }, [owner]);
 
   const handleOpenReview = () => {
-    navigate('review/');
+    navigate('/review/');
   };
 
   const showNumber = () => {
@@ -64,7 +46,7 @@ export default function Store() {
 
   return (
     <div className='store'>
-      <SearchBar />
+
       <div className='store-img'>
         {sliderData && sliderData.length > 0 && (
           <ImageSlider slides={[sliderData]} />
@@ -76,13 +58,6 @@ export default function Store() {
           <div className='store-icon'>
             <button className='store-phone' onClick={showNumber}>
               <CiPhone size='30' />
-            </button>
-            <button className='store-like ' onClick={handleClickHeart}>
-              {isLike ? (
-                <IoIosHeart size='30' color='red' />
-              ) : (
-                <IoIosHeartEmpty size='30' color='red' />
-              )}
             </button>
           </div>
         </div>
@@ -123,9 +98,16 @@ export default function Store() {
                 popular={el.is_popular}
                 main={el.is_main}
                 menuId={el.id}
+                isSeller
               />
             </div>
           ))}
+          <button
+            className='store-menuAdd'
+            onClick={() => navigate('/menuUpload/')}
+          >
+            메뉴 추가
+          </button>
         </div>
       </div>
     </div>

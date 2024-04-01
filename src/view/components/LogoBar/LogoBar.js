@@ -5,15 +5,16 @@ import './LogoBar.scss';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
+import logoImg from '../../../data/foodbridge.jpg'
 
 export default function LogoBar() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const handleBackClick = () => {
-    navigate(-1)
-  }
-  
+    navigate(-1);
+  };
+
   const handleHomeClick = () => {
     navigate('/');
   };
@@ -31,10 +32,14 @@ export default function LogoBar() {
       <header className='logoBar-frame'>
         <div className='logoBar-margin'>
           <button className='logoBar-back' onClick={handleBackClick}>
-            <IoIosArrowBack className='logoBar-backIcon'/>
+            <IoIosArrowBack className='logoBar-backIcon' />
           </button>
           <button className='logoBar-logo' onClick={handleHomeClick}>
-            <h1 className='logoBar-logoText'>LOGO</h1>
+            <img
+              className='logoBar-logoImage'
+              src={logoImg}
+              alt='로고이미지'
+            />
           </button>
           <button className='logoBar-user' onClick={handleUserClick}>
             <LuUserCircle2 className='logoBar-userIcon' />

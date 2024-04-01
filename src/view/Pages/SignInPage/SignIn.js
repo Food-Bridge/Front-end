@@ -6,7 +6,7 @@ import KakaoBox from '../../components/KakaoLogin/KakaoLogin';
 import GoogleBtn from '../../components/GoogleBtn/GoogleBtn';
 import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
-import { setTokens } from '../../../redux/reducers/authSlice';
+import { logout, setOwner, setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 import { loginS } from '../../../redux/reducers/authSlice';
 
@@ -19,16 +19,18 @@ function SignIn() {
 
   const handleLogin = async () => {
     try {
+      dispatch(logout())
       const data = {
         email: emailValue,
         password: passwordValue,
         is_seller: isSeller,
       };
       const res = await axiosInstance.post('/users/login/', data);
+      console.log(res)
       const { access, refresh } = res.data.tokens;
       dispatch(setTokens({ access, refresh }));
-      res.data.is_seller && dispatch(loginS());
-      navigate('/');
+      res.data.is_seller && dispatch(loginS()) && dispatch(setOwner(res.data.owner[0]))
+      navigate('/')
     } catch (error) {
       alert(error.response.data.message);
     }

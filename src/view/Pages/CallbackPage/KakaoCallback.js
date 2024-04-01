@@ -13,7 +13,7 @@ const KakaoCallback = () => {
       const params = new URL(document.location.toString()).searchParams;
       const code = params.get('code');
       const grantType = 'authorization_code';
-      const REST_API_KEY = 'e1ea08564695a809c2ea4becbb1f5e1d';
+      const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
       const REDIRECT_URI = 'http://127.0.0.1:3000/users/signin/callback/';
 
       const response = await axiosInstance.post(
@@ -23,7 +23,7 @@ const KakaoCallback = () => {
       const res = await axiosInstance.post('/users/kakao/login/callback/', {
         access_token: token,
       });
-      
+
       const { access, refresh } = res.data.token;
       dispatch(setTokens({ access, refresh }));
       navigate('/');

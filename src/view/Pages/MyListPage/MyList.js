@@ -6,7 +6,16 @@ import {
   setProfile,
   deleteTokens,
   selectIsSeller,
+  logout,
 } from '../../../redux/reducers/authSlice';
+import {
+  updateAddresses,
+  setDefaultId,
+} from '../../../redux/reducers/addressSlice';
+import {
+  setMenuData,
+  setCurrentStore,
+} from '../../../redux/reducers/cartSlice';
 import axiosInstance from '../../../api/instance';
 import MyListBlock from '../../components/MyListBlock/MyListBlock';
 import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
@@ -18,7 +27,6 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { GoMegaphone } from 'react-icons/go';
 import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
 import MyListProfile from '../../components/MyListProfile/MyListProfile';
-import { logoutS } from '../../../redux/reducers/authSlice';
 
 export default function MyList() {
   const navigate = useNavigate();
@@ -41,8 +49,12 @@ export default function MyList() {
     await axiosInstance.post('/users/logout/', {
       refresh: sessionStorage.getItem('refreshToken'),
     });
-    isSeller && dispatch(logoutS());
+    dispatch(logout());
     dispatch(deleteTokens());
+    dispatch(setCurrentStore([]));
+    dispatch(setMenuData([]));
+    dispatch(setDefaultId(null));
+    dispatch(updateAddresses([]));
     navigate('/users/signin/');
   };
 

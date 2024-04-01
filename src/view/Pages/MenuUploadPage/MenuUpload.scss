@@ -1,0 +1,133 @@
+.MenuUpload {
+    font-size: 10px;
+  
+    .menuUpload-header {
+      width: 600px;
+  
+      .menuUpload-pageTitle {
+        width: 600px;
+        font-size: 28px;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+  
+      .menuUpload-fieldFrame {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        
+        // 매장 리스트
+        .menuUpload-storeDropdown {
+          display: flex;
+          margin: 20px 0;
+
+          .menuUpload-storeList {
+            width: 300px;
+            height: 40px;
+            display: flex;
+            font-size: 14px;
+            padding-left: 10px;
+            border-radius: 2px;
+            align-items: center;
+            border: 1px solid gray;
+            background-color: white;
+            position: relative;
+  
+            .menuUpload-dropdownIcon {
+              top: 0;
+              right: 0;
+              width: 40px;
+              height: 40px;
+              padding-top: 10px;
+              padding-right: 10px;
+              margin-left: 20px;
+              position: absolute;
+              border-radius: 2px;
+            }
+          }
+          .menuUpload-dropdownStore {
+            width: 300px;
+            height: 190px;
+            border-radius: 0 0 5px 5px;
+            background-color: white;
+            position: absolute;
+            top: 210px;
+            text-align: center;
+            border: 1px solid #c6c6c6;
+            * {
+              width: 300px;
+              height: 30px;
+              align-items: center;
+              padding: 5px;
+              font-size: 14px;
+            }
+          }
+        }
+        // 메뉴 이름
+        .menuUpload-name {
+            margin-bottom: 20px;
+
+          .menuUpload-menuName {
+            width: 300px;
+            height: 40px;
+            padding-left: 10px;
+          }
+        }
+
+        // 매장 금액
+        .menuUpload-menuPrice {
+            margin-bottom: 20px;
+
+            .menuUpload-priceInput {
+              width: 300px;
+              height: 40px;
+              padding-left: 10px;
+            }
+        }        
+  
+        // 매장 설명
+        .menuUpload-description {
+            margin-bottom: 20px;
+
+          .menuUpload-storeDescription {
+            width: 300px;
+            height: 80px;
+            padding: 10px;
+          }
+        }
+  
+        // 매장 이미지
+        .menuUpload-image {
+          width: 300px;
+
+          .menuUpload-imageDisplay {
+            width: 300px;
+            height: 100px;
+            object-fit: cover;
+          }
+          .menuUpload-imageInput {
+
+          }
+        }
+      }
+  
+      .storeUpload-uploadBtn {
+        width: 600px;
+        text-align: center;
+        margin-top: 50px;
+  
+        .storeUpload-storeUploadBtn {
+          width: 300px;
+          height: 50px;
+          color: white;
+          margin-bottom: 20px;
+          background-color: black;
+        }
+      }
+    }
+  }
+  

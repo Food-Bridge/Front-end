@@ -1,20 +1,28 @@
+import { useSelector } from 'react-redux';
 import './MenuOptionButton.scss';
 import React, { useState } from 'react';
+import { selectIsSeller } from '../../../redux/reducers/authSlice';
 
-export default function MenuOptionBtn({data, onOptionChange}) {
-
+export default function MenuOptionBtn({ data, onOptionChange }) {
+  const isSeller = useSelector(selectIsSeller)
   const [selectedOption, setSelectedOption] = useState(data[0]);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
-    onOptionChange([option])
+    onOptionChange([option]);
   };
 
   return (
     <div className='menuOptionBtn'>
       <header className='menuOptionBtn-header'>
         <h1 className='menuOptionBtn-title'>필수 옵션</h1>
-        <p className='menuCheckBox-info'>1개 선택</p>
+        <p className='menuOptionBtn-info'>1개 선택</p>
+        {isSeller && (
+          <div className='menuOptionBtn-buttons'>
+            <button className='menuOptionBtn-patchBtn'>수정</button>
+            <button className='menuOptionBtn-deleteBtn'>삭제</button>
+          </div>
+        )}
       </header>
       {data.map((option, index) => (
         <div className='menuOptionBtn-row' key={index}>

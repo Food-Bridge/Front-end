@@ -1,60 +1,94 @@
-.menublock {
-  display: flex;
-  width: 560px;
-  height: 200px;
-  padding: 10px;
-  border: 1px solid #c6c6c6;
-  border-radius: 5px;
-  text-align: left;
-  margin-bottom: 20px;
-  box-shadow: 2px 2px 2px #c6c6c6;
+.menublock-container {
+  position: relative;
+  .menublock {
+    display: flex;
+    width: 560px;
+    height: 200px;
+    padding: 10px;
+    border: 1px solid #c6c6c6;
+    border-radius: 5px;
+    text-align: left;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 2px #c6c6c6;
 
-  .menublock-content {
-    width: 380px;
-    margin: 10px 20px;
+    .menublock-content {
+      width: 380px;
+      margin: 10px 20px;
 
-    .menublock-title {
-      margin: 10px 0;
-      display: flex;
-      align-items: center;
-
-      .menublock-tag {
+      .menublock-title {
+        margin: 10px 0;
         display: flex;
-        justify-content: center;
         align-items: center;
-        width: 52px;
-        height: 30px;
-        border: 1px solid #8d8d8d;
-        border-radius: 50px;
-        box-shadow: 2px 2px 2px #8d8d8d;
-        margin-right: 10px;
 
-        .menublock-tag-title {
-          font-size: 14px;
+        .menublock-tag {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 52px;
+          height: 30px;
+          border: 1px solid #8d8d8d;
+          border-radius: 50px;
+          box-shadow: 2px 2px 2px #8d8d8d;
+          margin-right: 10px;
+
+          .menublock-tag-title {
+            font-size: 14px;
+          }
+        }
+
+        .menublock-name {
+          font-size: 24px;
+          font-weight: 600;
         }
       }
 
-      .menublock-name {
+      .menublock-price {
         font-size: 24px;
         font-weight: 600;
+        margin-top: 25px;
+      }
+
+      .menublock-info {
+        font-size: 14px;
+        line-height: 1.6;
       }
     }
-
-    .menublock-price {
-      font-size: 24px;
-      font-weight: 600;
-      margin-top: 25px;
-    }
-
-    .menublock-info {
-      font-size: 14px;
-      line-height: 1.6;
+    .menublock-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 5px;
+      background-color: #c6c6c6;
     }
   }
-  .menublock-image {
-    width: 180px;
-    height: 180px;
-    border-radius: 5px;
-    background-color: #c6c6c6;
+  .menublock-btn {
+    display: none;
+    width: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate((-50%, -50%));
+    justify-content: space-around;
+    z-index: 5;
+
+    * {
+      width: 200px;
+      height: 50px;
+      font-size: 16px;
+      border-radius: 50px;
+      padding: 2px 10px;
+    }
+    .menublock-patchBtn {
+      border: 1px solid #c6c6c6;
+      background-color: white;
+    }
+    .menublock-deleteBtn {
+      background-color: #ca0000;
+      color: white;
+    }
+  }
+}
+.menublock-container:hover {
+  .menublock-btn {
+    display: flex;
   }
 }
