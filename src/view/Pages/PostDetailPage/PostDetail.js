@@ -10,7 +10,7 @@ import PostCommentInput from '../../components/PostCommentInput/PostCommentInput
 
 function PostDetail() {
   const [postData, setPostData] = useState([]);
-  const id = window.location.href.split('/').reverse()[0]
+  const id = window.location.href.split('/').reverse()[0] 
 
   console.log(id)
   console.log(postData)
@@ -52,7 +52,8 @@ function PostDetail() {
         // 성공적으로 데이터를 받아온 경우 state를 업데이트
         console.log(response)
         setCommentDatas(response.data);
-        // console.log('postData ids:', response.data.results.map(post => post.id));
+        // console.log(response.id)
+        console.log('postData ids:', response.data.results.map(comment => comment.id));
       })
       .catch(error => {
         // 오류 처리
@@ -76,7 +77,7 @@ function PostDetail() {
       <div className='postDetail-comment'>
         <div className='postDetail-commentList'>
           {commentData && commentData.map(comment => (
-            <PostComment key={commentData.id} id={commentData.id} content={comment.content} user={comment.author} />
+            <PostComment key={commentData.id} id={commentData.id} commentId={comment.id} content={comment.content} user={comment.author} />
           ))}
         </div>
         

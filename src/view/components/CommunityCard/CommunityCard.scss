@@ -4,22 +4,17 @@
   padding: 5px 10px;
   border: 1px solid #c6c6c6;
   border-radius: 5px;
-}
-.CommunityCard-margin {
-  margin-right: 20px;
-  width: 270px;
-  height: 160px;
-  padding: 5px 10px;
-  border: 1px solid #c6c6c6;
-  border-radius: 5px;
+  margin-right: 30px;
 }
 
 .communityCard-header {
   display: flex;
   justify-content: space-between;
+
   .communityCard-profile {
     display: flex;
     align-items: center;
+
     .communityCard-profileImg {
       width: 24px;
       height: 24px;
@@ -53,7 +48,13 @@
   }
   .communityCard-text {
     width: 140px;
+    height: 100px;
     font-size: 12px;
+    text-align: left;
+    overflow: hidden;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2; /* 두 줄까지만 표시 */
+    -webkit-box-orient: vertical; /* 세로 방향으로 정렬 */
   }
 }
 .communityCard-tags {

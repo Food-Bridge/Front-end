@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './PostCard.scss'
 import { postTagData } from '../../../data/PostCardData/PostTagData';
-import { CiFaceSmile, CiLocationOn } from "react-icons/ci";
+import { CiFaceSmile, CiHeart, CiLocationOn} from "react-icons/ci";
+import { LuView } from 'react-icons/lu';
+import { IoEyeOutline } from 'react-icons/io5';
 
-function PostCard({image, title, content}) {
+function PostCard({image, title, content, user, likeCount, views}) {
 
   return (
     <div className='PostCard'>
@@ -12,7 +14,19 @@ function PostCard({image, title, content}) {
         <div className='postCard-header'>
           <div className='postCard-userInfo'>
             <CiFaceSmile className='postCard-userIcon'/>
-            <div className='postCard-userName'>김선민 님</div>
+            <div className='postCard-userName'>{user} 님</div>
+            <div className='postCard-likeCount'>
+              <h1 className='postCard-fontSize'>
+                <CiHeart className='postCard-likeIcon'/>
+                {likeCount}
+              </h1>
+            </div>
+            <div className='postCard-viewCount'>
+            <h1 className='postCard-fontSize'>
+              <IoEyeOutline  className='postCard-viewIcon'/>
+              {views}
+            </h1>
+            </div>
           </div>
           <div className='postCard-location'>
             <CiLocationOn className='postCard-locaIcon'/> 

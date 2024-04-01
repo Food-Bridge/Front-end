@@ -30,14 +30,41 @@
                     font-weight: 800;
                 }
             }
-            .postComment-like {
+            .postComment-headerRight {
                 display: flex;
                 align-items: center;
 
-                .postComment-likeIcon {
-                    width: 24px;
-                    height: 24px;
-                    color: red;
+                .postComment-like {
+                    display: flex;
+                    align-items: center;
+
+                    .postComment-likeIcon {
+                        width: 24px;
+                        height: 24px;
+                        color: red;
+                    }
+                }
+
+                .postComment-editTool {
+                    display: flex;
+                    margin-left: 10px;
+            
+                    display: flex;
+                    position: relative;
+
+                    .postComment-cancelEdit {
+                        margin-right: 10px;
+                    }
+                    .postComment-update {
+                        margin-left: 10px;
+                    }
+
+                    .postComment-edit {
+                        margin-left: 10px;
+                    }
+                    .postComment-deleted {
+                        margin-right: 10px;
+                    }
                 }
             }
         }
@@ -50,6 +77,12 @@
             .postComment-comment {
                 font-size: 20px;
                 font-weight: 100;
+            }
+
+            .postComment-editInput {
+                margin-top: 20px;
+                width: 300px;
+                height: 30px;
             }
         }
     }
