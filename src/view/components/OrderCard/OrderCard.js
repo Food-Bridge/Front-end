@@ -24,7 +24,7 @@ export default function OrderCard({ order, isReview }) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+console.log(menuNames)
   return (
     <>
       {isModalOpen && (

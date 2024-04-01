@@ -17,17 +17,20 @@ import {
 } from '../../../redux/reducers/addressSlice';
 import axiosInstance from '../../../api/instance';
 import { RiArrowDropDownFill } from 'react-icons/ri';
+import Modal from '../../components/Modal/Modal';
 
 export default function Payment() {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   const [storeRequest, setStoreRequest] = useState('');
   const [disposable, setDisposable] = useState(false);
   const [deliverRequest, setDeliverRequest] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('credit_card');
   const [couponData, setCouponData] = useState([]);
   const [couponList, showCouponList] = useState(false);
-  const [selectedCoupon, setSelectedCoupon] = useState('');
-
+  const [selectedCoupon, setSelectedCoupon] = useState({ discount_price: 0 });
+  console.log(selectedCoupon);
+  console.log(couponData);
   const isDeliver = useSelector(selectIsDeliver);
   const store = useSelector(selectStore);
   const menuData = useSelector(selectMenu);
@@ -35,9 +38,13 @@ export default function Payment() {
   const address = useSelector(selectAddresses);
   const defaultAddress = address.find((address) => address.id === defaultId);
 
+  const handleConfirm = () => {
+    setShowModal(false);
+    navigate('/');
+  };
+
   const menuList = [];
-  const optionList = [];
-  const sOptionList = [];
+  const optionLists = [];
 
   menuData.forEach((menu) => {
     const menuInfo = {
@@ -48,15 +55,15 @@ export default function Payment() {
     };
     menuList.push(menuInfo);
 
-    const optionInfo = menu.options.map((option) => ({
+    const optionList = menu.options.map((option) => ({
       option_id: option.id,
       option_name: option.name,
       price: option.price,
       quantity: 1,
     }));
-    optionList.push(optionInfo);
+    optionLists.push(optionList);
 
-    const sOptionInfo =
+    const sOptionList =
       menu.sOption.length > 0
         ? menu.sOption.map((option) => ({
             option_id: option.id,
@@ -64,8 +71,8 @@ export default function Payment() {
             price: option.price,
             quantity: 1,
           }))
-        : undefined;
-    sOptionList.push(sOptionInfo);
+        : [];
+    optionLists.push(sOptionList);
   });
 
   const totalValue = menuData.reduce(
@@ -73,9 +80,7 @@ export default function Payment() {
     0
   );
   const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
-  const totalPrice = selectedCoupon
-    ? totalValue + deliveryFee - selectedCoupon.discount_price
-    : totalValue + deliveryFee;
+  const totalPrice = totalValue + deliveryFee - selectedCoupon.discount_price;
 
   const handleClickCoupon = (el) => {
     setSelectedCoupon(el);
@@ -89,12 +94,12 @@ export default function Payment() {
     };
     fetchCoupon();
   }, []);
-
+  console.log(selectedCoupon);
   const handlePostPayment = async () => {
     const data = {
       menu_list: menuList,
-      option_list: optionList,
-      soption_list: sOptionList,
+      option_list: optionLists[0],
+      soption_list: optionLists[1],
       total_price: totalPrice,
       coupon_code: selectedCoupon.coupon_code,
       deliver_address: defaultAddress.detail_address,
@@ -104,14 +109,22 @@ export default function Payment() {
       is_deliver: isDeliver,
       payment_method: paymentMethod,
       restaurant: store.id,
+      order_state: 'order_complete',
     };
 
     console.log(data);
-    await axiosInstance.post('/order/', data);
+    await axiosInstance.post('/order/', data).then(() => {
+      setShowModal(true);
+    });
   };
 
   return (
     <>
+      <Modal
+        title='결제 완료'
+        contents={['결제가 성공적으로 이루어졌습니다']}
+        onConfirm={handleConfirm}
+      />
       <h1 className='payment-header'>결제하기</h1>
       <div className='payment-list'>
         <div className='payment-info'>
@@ -201,15 +214,29 @@ export default function Payment() {
             </button>
             {couponList && (
               <div className='payment-couponList'>
-                {couponData
-                  .filter(
-                    (el) => el.minimum_order_price <= totalValue + deliveryFee
-                  )
-                  .map((el) => (
-                    <button key={el.id} onClick={() => handleClickCoupon(el)}>
-                      {el.coupon_code}
+                {couponData.filter(
+                  (el) => el.minimum_order_price <= totalValue + deliveryFee
+                ).length > 0 ? (
+                  couponData
+                    .filter(
+                      (el) => el.minimum_order_price <= totalValue + deliveryFee
+                    )
+                    .map((el) => (
+                      <button key={el.id} onClick={() => handleClickCoupon(el)}>
+                        {el.coupon_code}
+                      </button>
+                    ))
+                ) : (
+                  <div>
+                    <p>사용할 수 있는 쿠폰이 없습니다.</p>
+                    <button
+                      className='payment-couponDownload'
+                      onClick={() => navigate('/users/coupon/')}
+                    >
+                      쿠폰 다운로드하러 가기
                     </button>
-                  ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -233,7 +260,7 @@ export default function Payment() {
             <div className='payment-price'>
               <h2 className='payment-title'>쿠폰 할인</h2>
               <p className='payment-value'>
-                {deliveryFee.toLocaleString('ko-KR')}원
+                {selectedCoupon.discount_price.toLocaleString('ko-KR')}원
               </p>
             </div>
           </div>
