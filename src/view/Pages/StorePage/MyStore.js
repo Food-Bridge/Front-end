@@ -2,13 +2,12 @@ import './MyStore.scss';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance.js';
-
+import Swal from 'sweetalert2'
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
-import Modal from '../../components/Modal/Modal.js';
 
 import { CiPhone } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
@@ -20,8 +19,6 @@ export default function MyStore() {
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
-  const [showPhoneNumber, setShowPhoneNumber] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,10 +27,8 @@ export default function MyStore() {
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
-      console.log(menuRes)
     };
     fetchData();
-
   }, [owner]);
 
   const handleOpenReview = () => {
@@ -41,7 +36,14 @@ export default function MyStore() {
   };
 
   const showNumber = () => {
-    setShowPhoneNumber(!showPhoneNumber);
+    Swal.fire({
+      icon: 'info',
+      title: '매장 전화번호',
+      html: data.phone_number.replace(/^02(\d{3,4})-?(\d{4})$/, '02-$1-$2'),
+      showCancelButton: false,
+      confirmButtonText: '확인',
+      confirmButtonColor: 'black'
+    });
   };
 
   return (
@@ -72,15 +74,6 @@ export default function MyStore() {
             <p className='store-detailNum'>{data.reviewCount}</p>
             <PlusInfo text='더보기' arrow='true' onClick={handleOpenReview} />
           </div>
-          {showPhoneNumber && (
-            <Modal
-              title={'전화번호'}
-              contents={[
-                data.phone_number.replace(/^02(\d{3,4})-?(\d{4})$/, '02-$1-$2'),
-              ]}
-              onConfirm={() => setShowPhoneNumber(false)}
-            />
-          )}
         </div>
       </div>
 

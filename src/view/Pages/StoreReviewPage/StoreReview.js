@@ -14,7 +14,6 @@ export default function StoreReview() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${resId}/reviews/`);
-      console.log(res);
       setReviewData(res.data);
       const response = await axiosInstance.get(`/restaurant/${resId}`);
       setRestaurant(response.data);

@@ -3,17 +3,14 @@ import './StoreUpload.scss';
 import { IoMdArrowDropdown, IoIosSearch } from 'react-icons/io';
 import { HiMiniXMark } from 'react-icons/hi2';
 import axiosInstance from '../../../api/instance';
-
+import Swal from 'sweetalert2';
 import DaumPostCode from 'react-daum-postcode';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectOwner, setOwner } from '../../../redux/reducers/authSlice';
-import Modal from '../../components/Modal/Modal';
 
 function StoreUpload() {
   const dispatch = useDispatch();
   const owner = useSelector(selectOwner);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [addAddress, setAddAddress] = useState(false);
   const [packaging, setPackaging] = useState(false);
@@ -96,7 +93,6 @@ function StoreUpload() {
         mainCategory: mainCategory.id,
         mainCategory_name: mainCategory.name,
       };
-      console.log(data);
       if (typeof owner === 'number') {
         await axiosInstance.patch(`/restaurant/${owner}/`, data);
         image !== null &&
@@ -115,16 +111,33 @@ function StoreUpload() {
             },
           }));
       }
-      setShowConfirmModal(true);
+      Swal.fire({
+        icon: 'warning',
+        title: owner ? '매장 수정' : '매장 추가',
+        html: '요청이 정상적으로 이루어졌습니다.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        confirmButtonColor: 'black',
+      }).then((res) => {
+        res.isConfirmed && handleDeleteStore();
+      });
     } catch (error) {
-      console.log('에러가 발생했습니다', error);
+      Swal.fire({
+        icon: 'warning',
+        title: '알림',
+        html: '입력한 데이터를 확인해주세요.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+        confirmButtonColor: '#ca0000',
+        cancelButtonColor: 'black',
+      });
     }
   };
 
   const handleDeleteStore = () => {
     axiosInstance.delete(`/restaurant/${owner}`);
     dispatch(setOwner(null));
-    setShowDeleteModal(false);
     setName('');
     setAddress('매장 주소 추가');
     setPhone('');
@@ -148,15 +161,16 @@ function StoreUpload() {
   };
 
   const handleClickDelete = () => {
-    setShowDeleteModal(true);
-  };
-
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
-  };
-
-  const handleConfirmModal = () => {
-    setShowConfirmModal(false);
+    Swal.fire({
+      icon: 'warning',
+      title: '매장 삭제',
+      html: '매장을 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+      confirmButtonColor: '#ca0000',
+      cancelButtonColor: 'black',
+    });
   };
 
   useEffect(() => {
@@ -189,26 +203,6 @@ function StoreUpload() {
 
   return (
     <div className='StoreUpload'>
-      {showConfirmModal && (
-        <div className='storeUpload-modal'>
-          <Modal
-            onConfirm={handleConfirmModal}
-            contents={['요청이 정상적으로 이루어졌습니다.']}
-            title={owner ? '매장 수정' : '매장 추가'}
-          />
-        </div>
-      )}
-      {showDeleteModal && (
-        <div className='storeUpload-modal'>
-          <Modal
-            twoBtn
-            onConfirm={handleDeleteStore}
-            onCancel={handleCancelDelete}
-            contents={['정말로 매장을 삭제하시겠습니까?']}
-            title={'매장 삭제'}
-          />
-        </div>
-      )}
       {addAddress && (
         <div className='storeUpload-addAddress'>
           <header className='storeUpload-addAddress-header'>

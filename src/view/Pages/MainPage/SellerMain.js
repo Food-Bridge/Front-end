@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import './SellerMain.scss';
 import { useSelector } from 'react-redux';
 import { selectOwner } from '../../../redux/reducers/authSlice';
-import Modal from '../../components/Modal/Modal';
+import Swal from 'sweetalert2';
 
 export default function SellerMain() {
   const owner = useSelector(selectOwner);
@@ -10,7 +10,13 @@ export default function SellerMain() {
   const handleClickShowStore = () => {
     if (owner) navigate('/myStore/');
     else {
-      alert('아직 매장이 등록되지 않았습니다.');
+      Swal.fire({
+        icon: 'info',
+        title: '알림',
+        html: '아직 매장이 등록되지 않았습니다.<br>매장 등록 페이지로 이동합니다.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+      });
       navigate('/storeUpload/');
     }
   };

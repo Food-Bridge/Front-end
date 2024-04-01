@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import './Coupon.scss';
 import { TfiDownload } from 'react-icons/tfi';
 import axiosInstance from '../../../api/instance';

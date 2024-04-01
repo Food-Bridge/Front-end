@@ -24,7 +24,6 @@ export default function StoreLikes() {
         return response.data.find((restaurant) => restaurant.id === id);
       });
 
-      console.log(filteredData);
       setData(filteredData);
     };
     fetchData();

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import './ReviewUpload.scss';
 import { CiImageOn } from 'react-icons/ci';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -6,18 +6,17 @@ import axiosInstance from '../../../api/instance';
 import Rate from 'rc-rate';
 import 'rc-rate/assets/index.css';
 import { FaStar } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 function ReviewUpload() {
   const navigate = useNavigate();
   const [image, setImage] = useState([]);
-  const [imageDisplay, setImageDisplay] = useState(null)
   const [caption, setCaption] = useState('');
   const [rating, setRating] = useState(5);
   const formData = new FormData();
   const {
     state: { orderId: id, menuName: menu },
   } = useLocation();
-
 
   const imageInput = useRef();
 
@@ -42,12 +41,17 @@ function ReviewUpload() {
     formData.append('menu_name', menu);
     formData.append('img', image);
 
-    axiosInstance
-      .post(`/review/${id}/create/`, formData)
-      .then(function (response) {
-        console.log(response);
-        navigate('/orderlist/');
-      });
+    axiosInstance.post(`/review/${id}/create/`, formData).then(
+      Swal.fire({
+        icon: 'info',
+        title: '등록 완료',
+        html: '리뷰가 성공적으로 등록되었습니다.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+      }).then((res) => {
+        res.isConfirmed && navigate('/');
+      })
+    );
   };
 
   return (

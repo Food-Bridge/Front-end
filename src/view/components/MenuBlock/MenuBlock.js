@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './MenuBlock.scss';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectOwner } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
-import Modal from '../Modal/Modal';
+import Swal from 'sweetalert2';
 
 export default function MenuBlock({
   popular,
@@ -15,16 +15,10 @@ export default function MenuBlock({
   content,
   image,
   isSeller,
-  menuId
+  menuId,
 }) {
   const navigate = useNavigate();
   const owner = useSelector(selectOwner);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  const handleDeleteMenu = () => {
-    axiosInstance.delete(`/restaurant/${owner}/menu/${menuId}`);
-    setShowDeleteModal(false);
-  };
 
   const handlePatchMenu = () => {
     navigate(`/menuUpload/`, { state: { id: menuId } });
@@ -35,26 +29,21 @@ export default function MenuBlock({
   };
 
   const handleClickDelete = () => {
-    setShowDeleteModal(true);
-  };
-
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
+    Swal.fire({
+      icon: 'warning',
+      title: '알림',
+      html: '메뉴를 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+    }).then((res) => {
+      res.isConfirmed &&
+        axiosInstance.delete(`/restaurant/${owner}/menu/${menuId}`);
+    });
   };
 
   return (
     <div className='menublock-container'>
-      {showDeleteModal && (
-        <div className='storeUpload-modal'>
-          <Modal
-            twoBtn
-            onConfirm={handleDeleteMenu}
-            onCancel={handleCancelDelete}
-            contents={['정말로 메뉴를 삭제하시겠습니까?']}
-            title={'메뉴 삭제'}
-          />
-        </div>
-      )}
       <button className='menublock' onClick={handleClickOption}>
         <div className='menublock-content'>
           <div className='menublock-title'>

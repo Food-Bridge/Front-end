@@ -5,6 +5,7 @@ import { RiArrowDropDownFill } from 'react-icons/ri';
 import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import Basket from '../Basket/Basket';
+import Swal from 'sweetalert2'
 
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -43,7 +44,13 @@ function SearchBar() {
 
   const handleControlClick = () => {
     if (!isLoggedIn) {
-      alert('로그인이 필요합니다');
+      Swal.fire({
+        icon: 'warning',
+        text: '알림',
+        text: '로그인이 필요합니다.',
+        showCancelButton: false,
+        confirmButtonText: '로그인하기',
+      });
       navigate('/users/signin');
     } else {
       navigate(`/users/address/`);

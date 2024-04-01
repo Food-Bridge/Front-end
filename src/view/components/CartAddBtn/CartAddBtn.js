@@ -10,7 +10,7 @@ import {
   selectMenu,
 } from '../../../redux/reducers/cartSlice';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../Modal/Modal';
+import Swal from 'sweetalert2';
 
 const CartAddBtn = ({ price, menuData, data }) => {
   const navigate = useNavigate();
@@ -18,10 +18,6 @@ const CartAddBtn = ({ price, menuData, data }) => {
   const isMenuIn = useSelector(selectIsMenuIn);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
-  const [modal, showModal] = useState(false);
-
-  const modalTitle = '알림'
-  const contents = ['장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.', '기존에 담은 메뉴를 삭제하시겠습니까?']
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -53,12 +49,22 @@ const CartAddBtn = ({ price, menuData, data }) => {
         dispatch(setMenuData([...menu, { ...menuData, quantity }]));
       }
       dispatch(addMenu());
-      showModal(false);
       navigate(-1);
     } else {
       dispatch(setCurrentStore(data));
       if (isMenuIn) {
-        showModal(true);
+        Swal.fire({
+          icon: 'warning',
+          title: '알림',
+          html: '장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.<br>기존에 담은 메뉴를 삭제하시겠습니까?',
+          showCancelButton: true,
+          confirmButtonText: '삭제',
+          cancelButtonText: '취소',
+          confirmButtonColor: '#ca0000',
+          cancelButtonColor: 'black',
+        }).then((res) => {
+          res.isConfirmed && dispatch(deleteMenu());
+        });
       } else {
         dispatch(setMenuData([{ ...menuData, quantity }]));
         dispatch(addMenu());
@@ -74,15 +80,6 @@ const CartAddBtn = ({ price, menuData, data }) => {
     }
     return true;
   }
-
-  const handleCancel = () => {
-    showModal(false);
-  };
-
-  const handleConfirm = () => {
-    dispatch(deleteMenu());
-    showModal(false);
-  };
 
   return (
     <div>
@@ -111,15 +108,6 @@ const CartAddBtn = ({ price, menuData, data }) => {
           {(price * quantity).toLocaleString('ko-KR')}원 담기
         </button>
       </div>
-      {modal && (
-        <Modal
-          contents={contents}
-          twoBtn
-          onCancel={handleCancel}
-          onConfirm={handleConfirm}
-          title={modalTitle}
-        />
-      )}
     </div>
   );
 };

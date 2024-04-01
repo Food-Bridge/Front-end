@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { logout, setOwner, setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 import { loginS } from '../../../redux/reducers/authSlice';
+import Swal from 'sweetalert2';
 
 function SignIn() {
   const [emailValue, setEmail] = useState('');
@@ -19,20 +20,28 @@ function SignIn() {
 
   const handleLogin = async () => {
     try {
-      dispatch(logout())
+      dispatch(logout());
       const data = {
         email: emailValue,
         password: passwordValue,
         is_seller: isSeller,
       };
       const res = await axiosInstance.post('/users/login/', data);
-      console.log(res)
+      console.log(res);
       const { access, refresh } = res.data.tokens;
       dispatch(setTokens({ access, refresh }));
-      res.data.is_seller && dispatch(loginS()) && dispatch(setOwner(res.data.owner[0]))
-      navigate('/')
+      res.data.is_seller &&
+        dispatch(loginS()) &&
+        dispatch(setOwner(res.data.owner[0]));
+      navigate('/');
     } catch (error) {
-      alert(error.response.data.message);
+      Swal.fire({
+        icon: 'warning',
+        title: '알림',
+        html: '아이디 또는 비밀번호를 확인해주세요.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+      });
     }
   };
   const handleSignUp = () => {

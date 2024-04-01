@@ -10,23 +10,28 @@ import {
   selectDefaultId,
 } from '../../../redux/reducers/addressSlice';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
-const LocationList = ({ isEdit,editedNicknames, handleEditAddressNickname }) => {
+
+const LocationList = ({
+  isEdit,
+  editedNicknames,
+  handleEditAddressNickname,
+}) => {
   const dispatch = useDispatch();
   const addresses = useSelector(selectAddresses);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const defaultId = useSelector(selectDefaultId)
+  const defaultId = useSelector(selectDefaultId);
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(fetchAddresses());
     }
   }, [dispatch, isLoggedIn]);
 
-
   const handleDefaultAddress = (address) => {
-      dispatch(setDefaultAddress(address));
-      dispatch(fetchAddresses())
-    }
-  
+    dispatch(setDefaultAddress(address));
+    dispatch(fetchAddresses());
+  };
+
   return (
     <div className='location-list'>
       {addresses.map((address) => (
@@ -40,14 +45,14 @@ const LocationList = ({ isEdit,editedNicknames, handleEditAddressNickname }) => 
 
           <div className='location-content'>
             {isEdit ? (
-              <>
-                <input
-                  className='location-input'
-                  placeholder={address.nickname}
-                  value={editedNicknames[address.id] || address.nickname}
-                  onChange={(e) => handleEditAddressNickname(address.id, e.target.value)}
-                />
-              </>
+              <input
+                className='location-input'
+                placeholder={address.nickname}
+                value={editedNicknames[address.id] || address.nickname}
+                onChange={(e) =>
+                  handleEditAddressNickname(address.id, e.target.value)
+                }
+              />
             ) : (
               <h1 className='location-name'>{address.nickname}</h1>
             )}

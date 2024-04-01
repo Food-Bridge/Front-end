@@ -17,11 +17,10 @@ import {
 } from '../../../redux/reducers/addressSlice';
 import axiosInstance from '../../../api/instance';
 import { RiArrowDropDownFill } from 'react-icons/ri';
-import Modal from '../../components/Modal/Modal';
+import Swal from 'sweetalert2';
 
 export default function Payment() {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
   const [storeRequest, setStoreRequest] = useState('');
   const [disposable, setDisposable] = useState(false);
   const [deliverRequest, setDeliverRequest] = useState('');
@@ -29,20 +28,12 @@ export default function Payment() {
   const [couponData, setCouponData] = useState([]);
   const [couponList, showCouponList] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState({ discount_price: 0 });
-  console.log(selectedCoupon);
-  console.log(couponData);
   const isDeliver = useSelector(selectIsDeliver);
   const store = useSelector(selectStore);
   const menuData = useSelector(selectMenu);
   const defaultId = useSelector(selectDefaultId);
   const address = useSelector(selectAddresses);
   const defaultAddress = address.find((address) => address.id === defaultId);
-
-  const handleConfirm = () => {
-    setShowModal(false);
-    navigate('/');
-  };
-
   const menuList = [];
   const optionLists = [];
 
@@ -111,20 +102,22 @@ export default function Payment() {
       restaurant: store.id,
       order_state: 'order_complete',
     };
-
-    console.log(data);
     await axiosInstance.post('/order/', data).then(() => {
-      setShowModal(true);
+      Swal.fire({
+        icon: 'info',
+        title: '결제 완료',
+        html: '결제가 성공적으로 이루어졌습니다.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        confirmButtonColor: 'black',
+      }).then((res) => {
+        res.isConfirmed && navigate('/');
+      });
     });
   };
 
   return (
     <>
-      <Modal
-        title='결제 완료'
-        contents={['결제가 성공적으로 이루어졌습니다']}
-        onConfirm={handleConfirm}
-      />
       <h1 className='payment-header'>결제하기</h1>
       <div className='payment-list'>
         <div className='payment-info'>
@@ -196,7 +189,7 @@ export default function Payment() {
         </div>
 
         <div className='payment-method'>
-          <PaymentMethod />
+          <PaymentMethod click={setPaymentMethod} selected={paymentMethod} />
           <div className='payment-coupon'>
             <h3 className='payment-couponTitle'>쿠폰 사용</h3>
             <button

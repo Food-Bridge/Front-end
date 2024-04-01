@@ -4,6 +4,7 @@ import { HiMiniXMark } from 'react-icons/hi2';
 
 export default function OrderReceipt({ order, closeModal, created }) {
   const menu = order.menu_list;
+  console.log(menu)
   const isDeliver = order.is_deliver;
   console.log(order)
   return (

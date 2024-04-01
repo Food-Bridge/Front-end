@@ -17,7 +17,6 @@ export default function MenuCheckBox({ data, count, onOptionChange }) {
     }));
   };
   
-
   return (
     <div className='menuCheckBox'>
       <header className='menuCheckBox-header'>

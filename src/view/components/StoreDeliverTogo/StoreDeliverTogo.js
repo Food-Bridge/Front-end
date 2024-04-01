@@ -3,21 +3,27 @@ import PlusInfo from '../PlusInfo/PlusInfo';
 import './StoreDelierTogo.scss';
 import { useDispatch } from 'react-redux';
 import { setPickUp, setDeliver } from '../../../redux/reducers/cartSlice';
-import Modal from '../../components/Modal/Modal.js';
+import Swal from 'sweetalert2';
 
 export default function StoreDeliverTogo({ data }) {
   const dispatch = useDispatch();
   const [isDeliver, setIsDeliver] = useState(true);
-  const [showInfo, setShowInfo] = useState(false);
 
   isDeliver ? dispatch(setDeliver()) : dispatch(setPickUp());
 
-  const contents = [
-    `매장 설명 : ${data.description}`,
-    `매장 주소 : ${data.address}`,
-    `매장 운영 시간 : ${data.start}시 ~ ${data.end}시`,
-    `${data.operatingTime}`
-  ]
+  const handleShowInfo = () => {
+    Swal.fire({
+      icon: 'info',
+      title: '매장 정보',
+      html: `매장 설명 : ${data.description}<br>
+      매장 주소 : ${data.address}<br>
+      매장 운영 시간 : ${data.start}시 ~ ${data.end}시<br>
+      ${data.operatingTime}`,
+      showCancelButton: false,
+      confirmButtonText: '확인',
+      confirmButtonColor: 'black'
+    });
+  };
 
   return (
     <div className='storeDeliverTogo'>
@@ -50,8 +56,10 @@ export default function StoreDeliverTogo({ data }) {
           <h3 className='storeDeliverTogo-detailTitle'>최소 주문 금액</h3>
           <p className='storeDeliverTogo-detailContent'>
             {isDeliver
-              ? data.minimumOrderPrice && `${data.minimumOrderPrice.toLocaleString('ko-KR')}원`
-              : data.minimumPickupPrice && `${data.minimumPickupPrice.toLocaleString('ko-KR')}원`}
+              ? data.minimumOrderPrice &&
+                `${data.minimumOrderPrice.toLocaleString('ko-KR')}원`
+              : data.minimumPickupPrice &&
+                `${data.minimumPickupPrice.toLocaleString('ko-KR')}원`}
           </p>
         </div>
         <div className='storeDeliverTogo-detail'>
@@ -59,25 +67,16 @@ export default function StoreDeliverTogo({ data }) {
             {isDeliver ? '배달비' : '픽업주소'}
           </h3>
           <p className='storeDeliverTogo-detailContent'>
-            {isDeliver ? data.deliveryFee && `${data.deliveryFee.toLocaleString('ko-KR')}원` : data.address}
+            {isDeliver
+              ? data.deliveryFee &&
+                `${data.deliveryFee.toLocaleString('ko-KR')}원`
+              : data.address}
           </p>
         </div>
         <div className='storeDeliverTogo-info'>
-          <PlusInfo
-            text='매장정보'
-            arrow='true'
-            onClick={() => setShowInfo(true)}
-          />
+          <PlusInfo text='매장정보' arrow='true' onClick={handleShowInfo} />
         </div>
       </div>
-      {showInfo && (
-        <Modal
-          info
-          title={'매장정보'}
-          contents={contents}
-          onConfirm={() => setShowInfo(false)}
-        />
-      )}
     </div>
   );
 }

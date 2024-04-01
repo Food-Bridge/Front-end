@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './MyStoreOption.scss';
-
+import Swal from 'sweetalert2'
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,6 @@ export default function MyStoreOption() {
   const navigate = useNavigate();
   const location = useLocation();
   const menuId = location.state.id;
-  const [data, setData] = useState([]);
   const [menuData, setMenuData] = useState([]);
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
@@ -30,7 +29,6 @@ export default function MyStoreOption() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${owner}/`);
       const menuRes = await axiosInstance.get(
         `/restaurant/${owner}/menu/${menuId}/`
       );
@@ -40,7 +38,6 @@ export default function MyStoreOption() {
       const sOptionRes = await axiosInstance.get(
         `restaurant/${owner}/menu/${menuId}/soptions/`
       );
-      setData(res.data);
       setMenuData(menuRes.data);
       setOptionData(optionRes.data);
       setSOptionData(sOptionRes.data);
@@ -49,11 +46,20 @@ export default function MyStoreOption() {
   }, []);
 
   const handleAddOption = () => {
-    optionData ? alert('필수 옵션은 하나만 추가할 수 있습니다.') :
-    navigate('/optionUpload/', { state: { id: menuId } }); 
+    optionData
+      ? Swal.fire({
+          icon: 'warning',
+          title: '알림',
+          html: '필수 옵션은 하나만 추가할 수 있습니다.',
+          showCancelButton: false,
+          confirmButtonText: '확인',
+        }).then((res) => {
+          res.isConfirmed && navigate('/');
+        })
+      : navigate('/optionUpload/', { state: { id: menuId } });
   };
   const handleAddSOption = () => {
-    navigate('/soptionUpload/', { state: { id: menuId } }); 
+    navigate('/soptionUpload/', { state: { id: menuId } });
   };
 
   return (
@@ -92,16 +98,10 @@ export default function MyStoreOption() {
         <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
       )}
       <div className='storeOption-buttons'>
-        <button
-          className='storeOption-btn'
-          onClick={handleAddOption}
-        >
+        <button className='storeOption-btn' onClick={handleAddOption}>
           필수 옵션 추가
         </button>
-        <button
-          className='storeOption-btn'
-          onClick={handleAddSOption}
-        >
+        <button className='storeOption-btn' onClick={handleAddSOption}>
           선택 옵션 추가
         </button>
       </div>

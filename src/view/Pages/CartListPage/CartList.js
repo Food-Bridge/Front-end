@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2'
 import './CartList.scss';
-import { SlPresent } from "react-icons/sl";
+import { SlPresent } from 'react-icons/sl';
 import { CiDeliveryTruck } from 'react-icons/ci';
 import PaymentMenu from '../../components/PaymentMenu/PaymentMenu';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +16,7 @@ import {
   setMenuData,
 } from '../../../redux/reducers/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import { selectAddresses, selectDefaultId } from '../../../redux/reducers/addressSlice';
 
 export default function CartList() {
   const navigate = useNavigate();
@@ -23,13 +25,15 @@ export default function CartList() {
   const isDeliver = useSelector(selectIsDeliver);
   const store = useSelector(selectStore);
   const menu = useSelector(selectMenu);
+  const address = useSelector(selectAddresses);
+  const defaultId = useSelector(selectDefaultId)
 
   const totalValue = menu.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
-  )
+  );
   const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
-  const totalPrice = totalValue + deliveryFee
+  const totalPrice = totalValue + deliveryFee;
   const [deliverClass, setDeliverClass] = useState('cartlist-selectBtn');
   const [pickUpClass, setPickUpClass] = useState('cartlist-selectBtn');
 
@@ -56,7 +60,7 @@ export default function CartList() {
   };
 
   const handleDeleteMenu = (indexToDelete) => {
-    const updatedMenu = menu.filter(( index) => index !== indexToDelete);
+    const updatedMenu = menu.filter((index) => index !== indexToDelete);
     updatedMenu.length > 0
       ? dispatch(setMenuData(updatedMenu))
       : dispatch(deleteMenu());
@@ -85,9 +89,19 @@ export default function CartList() {
     }
   };
 
-const handleGoToPay = () => {
-  navigate('/payment/')
-}
+  const handleGoToPay = () => {
+    if (address.length > 0 && defaultId) {
+      navigate('/payment/');
+    } else {
+      Swal.fire({
+        title: '알림',
+        html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+      });
+      navigate('/users/address/');
+    }
+  };
 
   const handleGoToStore = () => {
     navigate('/restaurant/');
@@ -109,9 +123,15 @@ const handleGoToPay = () => {
               <h2 className='cartlist-storeName'>{store.name}</h2>
             </div>
             <div className='cartlist-deliver'>
-              {isDeliver ? <CiDeliveryTruck size='30' /> : <SlPresent size='20' />}
+              {isDeliver ? (
+                <CiDeliveryTruck size='30' />
+              ) : (
+                <SlPresent size='20' />
+              )}
               <h2 className='cartlist-deliverTime'>
-                {isDeliver ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정` : `${store.minPickupTime}분 후 픽업 가능`}
+                {isDeliver
+                  ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정`
+                  : `${store.minPickupTime}분 후 픽업 가능`}
               </h2>
             </div>
           </div>
@@ -169,11 +189,14 @@ const handleGoToPay = () => {
           <div className='cartlist-priceGroup'>
             <div className='cartlist-price'>
               <h2 className='cartlist-title'>결제 예정 금액</h2>
-              <p className='cartlist-value'>{totalPrice.toLocaleString('ko-KR')}원</p>
+              <p className='cartlist-value'>
+                {totalPrice.toLocaleString('ko-KR')}원
+              </p>
             </div>
           </div>
           <button className='cartlist-orderBtn' onClick={handleGoToPay}>
-            {totalPrice.toLocaleString('ko-KR')}원 {isDeliver ? '배달' : '포장'} 결제하기
+            {totalPrice.toLocaleString('ko-KR')}원 {isDeliver ? '배달' : '포장'}{' '}
+            결제하기
           </button>
         </div>
       ) : (

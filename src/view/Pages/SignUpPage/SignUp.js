@@ -3,6 +3,7 @@ import './SignUp.scss';
 import SignUpBtn from '../../components/SignUpBtn/SignUpBtn';
 import axiosInstance from '../../../api/instance';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function SignUp() {
   const [emailValue, setEmail] = useState('');
@@ -74,10 +75,25 @@ function SignUp() {
         phone_number: phoneNumberValue,
         is_seller: isSeller,
       });
-      navigate('/users/signin/');
+      Swal.fire({
+        icon: 'info',
+        title: '회원가입 성공',
+        html: '푸드브릿지의 회원이 되신 것을 축하합니다.<br>다시 로그인 해주세요.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+      }).then((res) => {
+        res.isConfirmed && navigate('/users/signin/');
+      });
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
+        Swal.fire({
+          icon: 'warning',
+          title: '회원가입 오류',
+          html: '입력된 정보를 확인해주세요.',
+          showCancelButton: false,
+          confirmButtonText: '확인',
+        });
       }
     }
   };
