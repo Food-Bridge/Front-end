@@ -1,6 +1,5 @@
 .orderReceipt-frame {
   width: 500px;
-  height: 750px;
   border: 1px solid #c6c6c6;
   border-radius: 5px;
   box-shadow: 2px 2px 2px #c6c6c6;
@@ -31,7 +30,7 @@
     }
     .orderReceipt-menuList {
       border-top: 1px solid #c6c6c6;
-      height: 300px;
+      height: 200px;
 
       .orderReceipt-menu {
         display: flex;
@@ -67,9 +66,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 20px;
+      padding: 20px 0;
       margin: 20px 0;
       border-top: 1px solid #c6c6c6;
+      border-bottom: 1px solid #c6c6c6;
+
       .orderReceipt-totalText {
         font-size: 20px;
         font-weight: 600;

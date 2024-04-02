@@ -61,7 +61,7 @@ export default function OrderReceipt({ order, closeModal, created }) {
           </div>
           <div className='orderReceipt-row'>
                 <h3 className='orderReceipt-text'>가게 요청사항</h3>
-                <p className='orderReceipt-value'>{order.restaurant_request}</p>
+                <p className='orderReceipt-value'>{order.restaurant_request || '없음'}</p>
               </div>
           {isDeliver && (
             <>
@@ -72,7 +72,7 @@ export default function OrderReceipt({ order, closeModal, created }) {
               <div className='orderReceipt-row'>
                 <h3 className='orderReceipt-text'>배달 요청사항</h3>
                 <p className='orderReceipt-value'>
-                  {order.deliveryman_request}
+                  {order.deliveryman_request ||'없음'}
                 </p>
               </div>
             </>

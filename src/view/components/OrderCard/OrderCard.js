@@ -1,11 +1,11 @@
 import React from 'react';
 import './OrderCard.scss';
 import { useState } from 'react';
-
 import OrderReceipt from '../OrderReceipt/OrderReceipt';
 import { useNavigate } from 'react-router-dom';
 
 export default function OrderCard({ order, isReview }) {
+  console.log(order);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const created = `${new Date(order.created_at).toLocaleDateString(

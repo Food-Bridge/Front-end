@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
 
 function ReviewUpload() {
   const navigate = useNavigate();
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState(null);
+  const [imageDisplay, setImageDisplay] = useState(null)
   const [caption, setCaption] = useState('');
   const [rating, setRating] = useState(5);
   const formData = new FormData();
@@ -31,8 +32,13 @@ function ReviewUpload() {
 
   const handleImageChange = (event) => {
     const { files } = event.target;
-    const uploadFile = files[0];
-    setImage(uploadFile);
+    const file = files[0];
+    setImage(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageDisplay(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleClickUpload = () => {
@@ -41,18 +47,24 @@ function ReviewUpload() {
     formData.append('menu_name', menu);
     formData.append('img', image);
 
-    axiosInstance.post(`/review/${id}/create/`, formData).then(
-      Swal.fire({
-        icon: 'info',
-        title: '등록 완료',
-        html: '리뷰가 성공적으로 등록되었습니다.',
-        showCancelButton: false,
-        confirmButtonText: '확인',
-        confirmButtonColor: 'black',
-      }).then((res) => {
-        res.isConfirmed && navigate('/orderlist/');
+    axiosInstance
+      .post(`/review/${id}/create/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
-    );
+      .then(
+        Swal.fire({
+          icon: 'info',
+          title: '등록 완료',
+          html: '리뷰가 성공적으로 등록되었습니다.',
+          showCancelButton: false,
+          confirmButtonText: '확인',
+          confirmButtonColor: 'black',
+        }).then((res) => {
+          res.isConfirmed && navigate('/orderlist/');
+        })
+      );
   };
 
   return (
@@ -77,7 +89,7 @@ function ReviewUpload() {
         />
         <div className='reviewUpload-etcIcons'>
           <div className='reviewUpload-photo'>
-            <img className='reviewUpload-img' src={image} />
+            <img className='reviewUpload-img' src={imageDisplay} />
             <input
               className='reviewUpload-imgUpload'
               id='file'
