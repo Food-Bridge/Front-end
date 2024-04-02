@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './MyStoreOption.scss';
-import Swal from 'sweetalert2';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import { useSelector } from 'react-redux';

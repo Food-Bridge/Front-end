@@ -16,6 +16,7 @@ export default function SellerMain() {
         html: '아직 매장이 등록되지 않았습니다.<br>매장 등록 페이지로 이동합니다.',
         showCancelButton: false,
         confirmButtonText: '확인',
+        confrimButtonColor:'black'
       });
       navigate('/storeUpload/');
     }

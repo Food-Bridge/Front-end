@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import './Community.scss'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import MenuBar from '../../components/MenuBar/MenuBar'
-import SliderTime from '../../SliderTime/SliderTime'
+import SliderTime from '../../components/SliderTime/SliderTime';
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData'
 import CommunityCard from '../../components/CommunityCard/CommunityCard'
-import { MiniPostData } from '../../../data/MiniPostData/MiniPostData'
 import axios from 'axios';
 
 function Community() {

@@ -50,6 +50,7 @@ function SearchBar() {
         text: '로그인이 필요합니다.',
         showCancelButton: false,
         confirmButtonText: '로그인하기',
+        confirmButtonColor: 'black'
       });
       navigate('/users/signin');
     } else {

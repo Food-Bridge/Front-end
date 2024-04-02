@@ -32,6 +32,7 @@ export default function MyList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
+  const isDelivering = false
 
   const onChangeImage = async (event) => {
     const { files } = event.target;
@@ -48,6 +49,7 @@ export default function MyList() {
       text: '프로필을 변경하였습니다.',
       showCancelButton: false,
       confirmButtonText: '확인',
+      confirmButtonColor: 'black',
     });
   };
 
@@ -67,6 +69,7 @@ export default function MyList() {
       text: '성공적으로 로그아웃 되었습니다.',
       showCancelButton: false,
       confirmButtonText: '확인',
+      confirmButtonColor: 'black',
     });
     navigate('/users/signin/');
   };
@@ -82,6 +85,7 @@ export default function MyList() {
       text: '추후 업데이트 예정입니다.',
       showCancelButton: false,
       confirmButtonText: '확인',
+      confirmButtonColor: 'black',
     });
   };
 
@@ -92,7 +96,7 @@ export default function MyList() {
         handleLogout={handleLogout}
       />
       <MyListMain />
-      <MyListDeliver />
+      {isDelivering && <MyListDeliver />}
       <div className='mylistBlocks-row'>
         <MyListBlock
           icon={<CiDiscount1 size='35' />}

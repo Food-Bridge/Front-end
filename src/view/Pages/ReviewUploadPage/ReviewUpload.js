@@ -48,8 +48,9 @@ function ReviewUpload() {
         html: '리뷰가 성공적으로 등록되었습니다.',
         showCancelButton: false,
         confirmButtonText: '확인',
+        confirmButtonColor: 'black',
       }).then((res) => {
-        res.isConfirmed && navigate('/');
+        res.isConfirmed && navigate('/orderlist/');
       })
     );
   };

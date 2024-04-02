@@ -81,6 +81,7 @@ function SignUp() {
         html: '푸드브릿지의 회원이 되신 것을 축하합니다.<br>다시 로그인 해주세요.',
         showCancelButton: false,
         confirmButtonText: '확인',
+        confirmButtonColor: 'black',
       }).then((res) => {
         res.isConfirmed && navigate('/users/signin/');
       });
@@ -93,6 +94,7 @@ function SignUp() {
           html: '입력된 정보를 확인해주세요.',
           showCancelButton: false,
           confirmButtonText: '확인',
+          confirmButtonColor: 'black',
         });
       }
     }

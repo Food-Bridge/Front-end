@@ -3,7 +3,7 @@ import './StoreList.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import CategoryBar from '../../components/CategoryBar/CategoryBar';
-import SliderTime from '../../SliderTime/SliderTime';
+import SliderTime from '../../components/SliderTime/SliderTime';
 import StoreCard from '../../components/StoreCard/StoreCard';
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ function StoreList() {
     <div className='StoreList'>
       <div className='storeList-header'>
         <div className='storeList-searchBar'>
-          <SearchBar location={'강남구'} />
+          <SearchBar />
         </div>
         <div className='storeList-imageSlider'>
           <SliderTime className='storeList-img1' slides={SliderImgData} />

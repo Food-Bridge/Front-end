@@ -34,7 +34,7 @@ export default function StoreLikes() {
       <SearchBar />
       <h1 className='storeLikes-title'>즐겨찾기</h1>
       <div className='storeLikes-store'>
-        {data.length > 0 &&
+        {data.length > 0 ?
           data.map((el) => (
             <button key={el.id} onClick={() => handleClickStore(el.id)}>
               <StoreCard
@@ -46,7 +46,7 @@ export default function StoreLikes() {
                 storeScore={el.rating}
               />
             </button>
-          ))}
+          )):<p className='storeLikes-nothing'>즐겨찾는 매장이 없습니다.</p>}
       </div>
     </>
   );

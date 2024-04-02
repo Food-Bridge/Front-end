@@ -98,6 +98,7 @@ export default function CartList() {
         html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
         showCancelButton: false,
         confirmButtonText: '확인',
+        confirmButtonColor: 'black'
       });
       navigate('/users/address/');
     }
@@ -111,7 +112,6 @@ export default function CartList() {
     navigate(`/restaurant/${store.id}/`);
   };
 
-  console.log(store);
   return (
     <>
       <h1 className='cartlist-header'>주문하기</h1>
@@ -195,7 +195,7 @@ export default function CartList() {
             </div>
           </div>
           <button className='cartlist-orderBtn' onClick={handleGoToPay}>
-            {totalPrice.toLocaleString('ko-KR')}원 {isDeliver ? '배달' : '포장'}{' '}
+            {totalPrice.toLocaleString('ko-KR')}원 {isDeliver ? '배달' : '포장'}
             결제하기
           </button>
         </div>
