@@ -4,9 +4,8 @@ import { HiMiniXMark } from 'react-icons/hi2';
 
 export default function OrderReceipt({ order, closeModal, created }) {
   const menu = order.menu_list;
-  console.log(menu)
   const isDeliver = order.is_deliver;
-  console.log(order)
+  
   return (
     <>
       <div className='orderReceipt-frame'>
@@ -22,9 +21,9 @@ export default function OrderReceipt({ order, closeModal, created }) {
             {created} {order.order_state_name}
           </p>
           <div className='orderReceipt-menuList'>
-            {menu.map(({ menu_id, menu_name, price }) => (
+            {menu.map(({ menu_id, menu_name, price,quantity }) => (
               <div className='orderReceipt-menu' key={menu_id}>
-                <h2 className='orderReceipt-menuName'>{menu_name}</h2>
+                <h2 className='orderReceipt-menuName'>{menu_name} {quantity}개</h2>
                 <p className='orderReceipt-menuPrice'>
                   {price.toLocaleString('ko-KR')}원
                 </p>
@@ -60,6 +59,10 @@ export default function OrderReceipt({ order, closeModal, created }) {
             <h3 className='orderReceipt-text'>결제방법</h3>
             <p className='orderReceipt-value'>{order.payment_method_name}</p>
           </div>
+          <div className='orderReceipt-row'>
+                <h3 className='orderReceipt-text'>가게 요청사항</h3>
+                <p className='orderReceipt-value'>{order.restaurant_request}</p>
+              </div>
           {isDeliver && (
             <>
               <div className='orderReceipt-row'>
@@ -67,7 +70,7 @@ export default function OrderReceipt({ order, closeModal, created }) {
                 <p className='orderReceipt-value'>{order.deliver_address}</p>
               </div>
               <div className='orderReceipt-row'>
-                <h3 className='orderReceipt-text'>요청사항</h3>
+                <h3 className='orderReceipt-text'>배달 요청사항</h3>
                 <p className='orderReceipt-value'>
                   {order.deliveryman_request}
                 </p>
