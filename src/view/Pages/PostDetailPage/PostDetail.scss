@@ -1,42 +1,17 @@
 .PostDetail {
-    margin-bottom: 40px;
-
-    .postDetail-menuBar {
-        margin-top: 20px;
+  margin-bottom: 40px;
+  .postDetail-menuBar {
+    margin-top: 20px;
+  }
+  .postDetail-comment {
+    width: 500px;
+    padding: 5px 10px;
+    border: 1px solid #c6c6c6;
+    border-bottom: none;
+    border-radius: 5px;
+    margin: 20px 50px;
+    .postDetail-commentList {
+      font-size: 20px;
     }
-
-    .postDetail-comment {
-        width: 560px;
-        height: 100%;
-        padding: 5px 10px;
-        border: 1px solid #c6c6c6;
-        border-bottom: none;
-        border-radius: 5px;
-        margin-left: 20px;
-        margin-top: 20px;
-
-        .postDetail-commentList {
-            font-size: 20px;
-        }
-
-        .postDetail-commentInput {
-            display: flex;
-            align-items: center;
-
-            .postDetail-InputBox {
-                width: 470px;
-                height: 40px;
-                border: 1px solid lightgray;
-                border-radius: 50px;
-                margin-left: 20px;
-                padding-left: 20px;
-            }
-            
-            .postDetail-sendIcon {
-                width: 20px;
-                height: 20px;
-                margin-left: 10px;
-            }
-        }
-    }
+  }
 }

@@ -1,52 +1,46 @@
-import React, {useState, useEffect} from 'react'
-import './PostCommentInput.scss'
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { LuSend } from "react-icons/lu";
+import React, { useState } from 'react';
+import './PostCommentInput.scss';
+import { LuSend } from 'react-icons/lu';
+import axiosInstance from '../../../api/instance';
+import Swal from 'sweetalert2';
 
-function PostCommentInput() {
-
-    const formData = new FormData();
-    const navigate = useNavigate();
-  
-    const onCommentChange = (event) => {
-      formData.append('content', event.target.value)
-    }
-
-
-    const id = window.location.href.split('/').reverse()[0]
-    
+function PostCommentInput({ id }) {
+  const [content, setContent] = useState('');
+  const onCommentChange = (event) => {
+    setContent(event.target.value);
+  };
+  const handlePostComment = () => {
+    axiosInstance
+      .post(`/community/${id}/comment/create/`, {
+        content,
+        content,
+      })
+      .then(
+        Swal.fire({
+          icon: 'info',
+          title: '댓글 등록',
+          html: '댓글이 정상적으로 등록되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: 'black',
+        }).then((res) => res.isConfirmed && window.location.reload())
+      );
+  };
 
   return (
     <>
-        <div className='postDetail-commentInput'>
-            <input onChange={onCommentChange} type="text" className='postDetail-InputBox' placeholder='댓글을 입력해주세요...'/>
-            <button
-            onClick={() => {
-                axios
-                .post(`http://localhost:8000/community/${id}/comment/create/`, 
-                formData,
-                {
-                    headers : {
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                    },
-                })
-                .then(function (response) {
-                    console.log(response);
-                    console.log(response.data.results)
-                    window.location.reload();
-                    
-                })
-                .catch(function (error) {
-                    console.log(error.response.data);
-                });
-            }} 
-            >
-            <LuSend className='postDetail-sendIcon'/>
-            </button>
-        </div>
+      <div className='postDetail-commentInput'>
+        <input
+          onChange={onCommentChange}
+          type='text'
+          className='postDetail-InputBox'
+          placeholder='댓글을 입력해주세요'
+        />
+        <button className='postDetail-sendIcon' onClick={handlePostComment}>
+          <LuSend size='20' />
+        </button>
+      </div>
     </>
-  )
+  );
 }
 
-export default PostCommentInput
+export default PostCommentInput;

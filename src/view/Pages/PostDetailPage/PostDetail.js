@@ -1,91 +1,78 @@
-import React, { useEffect, useState } from 'react'
-import './PostDetail.scss'
-import SearchBar from '../../components/SearchBar/SearchBar'
-import MenuBar from '../../components/MenuBar/MenuBar'
-import DetailPost from '../../components/DetailPost/DetailPost'
-import PostComment from '../../components/PostComment/PostComment'
-import axios from 'axios'
-import PostCommentInput from '../../components/PostCommentInput/PostCommentInput'
-
+import React, { useEffect, useState } from 'react';
+import './PostDetail.scss';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import MenuBar from '../../components/MenuBar/MenuBar';
+import DetailPost from '../../components/DetailPost/DetailPost';
+import PostComment from '../../components/PostComment/PostComment';
+import PostCommentInput from '../../components/PostCommentInput/PostCommentInput';
+import { useNavigate, useParams } from 'react-router-dom';
+import axiosInstance from '../../../api/instance';
+import Swal from 'sweetalert2';
 
 function PostDetail() {
+  const navigate = useNavigate();
   const [postData, setPostData] = useState([]);
-  const id = window.location.href.split('/').reverse()[0] 
-
-  console.log(id)
-  console.log(postData)
+  const [commentData, setCommentData] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
-    // if () {
-      // Axios를 사용하여 GET 요청을 보냄
-      axios.get(`http://localhost:8000/community/${id}/`,
-      {
-        headers : {
-          'Authorization': `Bearer ${localStorage.getItem('access')}`,
-        },
-      })
-      .then(response => {
-          // 성공적으로 데이터를 받아온 경우 state를 업데이트
-          console.log(response)
-          setPostData(response.data);
-          // setPostId(response.data.results.id)
+    const fetchData = async () => {
+      await axiosInstance
+        .get(`/community/${id}/`)
+        .then((res) => {
+          setPostData(res.data);
         })
-        .catch(error => {
-          // 오류 처리
-          console.error('Error fetching data:', error);
-        });
-  }, [id]);
-
-
-  const [commentData, setCommentDatas] = useState([]);
-  console.log(commentData)
-
-  useEffect(() => {
-    // Axios를 사용하여 GET 요청을 보냄
-    axios.get(`http://localhost:8000/community/${id}/comment/`,
-    {
-      headers : {
-        'Authorization': `Bearer ${localStorage.getItem('access')}`,
-      },
-    })
-      .then(response => {
-        // 성공적으로 데이터를 받아온 경우 state를 업데이트
-        console.log(response)
-        setCommentDatas(response.data);
-        // console.log(response.id)
-        console.log('postData ids:', response.data.results.map(comment => comment.id));
-      })
-      .catch(error => {
-        // 오류 처리
-        console.error('Error fetching data:', error);
-      });
+        .catch((error) =>
+          Swal.fire({
+            icon: 'warning',
+            title: '알림',
+            html: '오류가 발생했습니다.<br>다시 시도해주세요.',
+            confirmButtonText: '확인',
+            confirmButtonColor: 'black',
+          }).then((res) => {
+            res.isConfirmed && navigate(-1);
+          })
+        );
+      await axiosInstance
+        .get(`/community/${id}/comment`)
+        .then((res) => {
+          setCommentData(res.data);
+          console.log(commentData);
+        })
+        .catch((error) =>
+          Swal.fire({
+            icon: 'warning',
+            title: '알림',
+            html: '오류가 발생했습니다.<br>다시 시도해주세요.',
+            confirmButtonText: '확인',
+            confirmButtonColor: 'black',
+          }).then((res) => {
+            res.isConfirmed && navigate(-1);
+          })
+        );
+    };
+    fetchData();
   }, [id]);
 
   return (
     <div className='PostDetail'>
       <SearchBar />
-      <div className="postDetail-menuBar"><MenuBar name={"menuBar-pageLine3"} /></div>
-      <DetailPost
-        id={postData.id}
-        user={postData.author}
-        location={"강남역"}
-        title={postData.title}
-        image={postData.image}
-        content={postData.content}
-      />
+      <div className='postDetail-menuBar'>
+        <MenuBar name={'menuBar-pageLine3'} />
+      </div>
+      {postData && <DetailPost data={postData} />}
 
       <div className='postDetail-comment'>
+        <PostCommentInput id={id} />
         <div className='postDetail-commentList'>
-          {commentData && commentData.map(comment => (
-            <PostComment key={commentData.id} id={commentData.id} commentId={comment.id} content={comment.content} user={comment.author} />
-          ))}
+          {commentData &&
+            commentData.map((comment) => (
+              <PostComment postId={id} data={comment} key={comment.id} />
+            ))}
         </div>
-        
-        <PostCommentInput/>
-
       </div>
     </div>
-  )    
+  );
 }
 
-export default PostDetail
+export default PostDetail;

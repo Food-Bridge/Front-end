@@ -8,31 +8,32 @@ import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import CommunityCard from '../../components/CommunityCard/CommunityCard';
 import PlusInfo from '../../components/PlusInfo/PlusInfo';
-import { MiniPostData } from '../../../data/MiniPostData/MiniPostData';
 import { useSelector } from 'react-redux';
 import SellerMain from './SellerMain';
 import { selectIsSeller } from '../../../redux/reducers/authSlice';
-import coupon1 from '../../../data/CouponData/price1000.png'
-import coupon2 from '../../../data/CouponData/usersignup.png'
-import main1 from '../../../data/MainImageData/Main1.png'
-import main2 from '../../../data/MainImageData/Main2.png'
-import main3 from '../../../data/MainImageData/Main3.png'
-
+import coupon1 from '../../../data/CouponData/price1000.png';
+import coupon2 from '../../../data/CouponData/usersignup.png';
+import main1 from '../../../data/MainImageData/Main1.png';
+import main2 from '../../../data/MainImageData/Main2.png';
+import main3 from '../../../data/MainImageData/Main3.png';
 
 export default function MainPage() {
   const [data, setData] = useState([]);
+  const [postData, setPostData] = useState([]);
   const isSeller = useSelector(selectIsSeller);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get('/restaurant/');
-      setData(res.data.slice(0, 3));
+      await axiosInstance.get('/restaurant/').then((res) => {
+        setData(res.data.slice(0, 3));
+      });
+      await axiosInstance.get('/community/').then((res) => {
+        setPostData(res.data.results.slice(0, 2));
+      });
     };
     fetchData();
   }, []);
 
-  const SliderData = [
-    main1, main2, main3
-  ];
+  const SliderData = [main1, main2, main3];
 
   const navigate = useNavigate();
 
@@ -82,27 +83,18 @@ export default function MainPage() {
             })}
           </div>
           <div className='main-title'>
-            <h1 className='main-text'>인기 글</h1>
+            <h1 className='main-text'>커뮤니티</h1>
             <PlusInfo
               text='더보기'
               arrow='true'
               onClick={() => {
-                navigate('/commuPostWeek/');
+                navigate('/commu/');
               }}
             />
           </div>
-          <div className='main-group'>
-            {MiniPostData.map((el, index) => {
-              return (
-                <CommunityCard
-                  key={index}
-                  user={el.user}
-                  location={el.location}
-                  img={el.img}
-                  text={el.text}
-                  className={el.className}
-                />
-              );
+          <div className='main-group main-postData'>
+            {postData.map((post) => {
+              return <CommunityCard post={post} />;
             })}
           </div>
           <div className='main-title'>
@@ -110,14 +102,8 @@ export default function MainPage() {
             <PlusInfo text='더보기' arrow='true' onClick={handleClickCoupon} />
           </div>
           <div className='main-group'>
-            <img
-              className='main-couponImg'
-              src={coupon1}
-            />
-            <img
-              className='main-couponImg'
-              src={coupon2}
-            />
+            <img className='main-couponImg' src={coupon1} />
+            <img className='main-couponImg' src={coupon2} />
           </div>
         </>
       )}

@@ -7,7 +7,7 @@ function PostCard({ post }) {
   return (
     <div className='PostCard'>
       <div className='postCard-frame'>
-        <div className='postCard-header'>
+        <header className='postCard-header'>
           <div className='postCard-userInfo'>
             <img className='postCard-userIcon' src={post.user_image} />
             <div className='postCard-userName'>
@@ -28,7 +28,7 @@ function PostCard({ post }) {
               </h1>
             </div>
           </div>
-        </div>
+        </header>
 
         <div className='postCard-section'>
           {post.image && (

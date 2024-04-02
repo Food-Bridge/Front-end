@@ -5,7 +5,9 @@
   overflow: hidden;
   margin-bottom: 20px;
   z-index: 1;
-
+  &.mini {
+    height: 150px;
+  }
   .imageSlider-arrow {
     position: absolute;
     top: 150px;
@@ -34,10 +36,13 @@
       transform: translateX(100%);
     }
 
-    img {
+    .imageSlider-image {
       width: 600px;
       height: 300px;
       object-fit: cover;
+      &.mini {
+        height: 150px;
+      }
     }
   }
 }
