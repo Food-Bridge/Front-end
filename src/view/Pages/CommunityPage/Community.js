@@ -75,14 +75,7 @@ function Community() {
           {daily.length > 0 &&
             daily
               .slice(0, visiblePostCount)
-              .map((post) => (
-                <CommunityCard
-                  user={post.author}
-                  id={post.id}
-                  content={post.content}
-                  img={post.image}
-                />
-              ))}
+              .map((post) => <CommunityCard post={post} />)}
         </div>
       </div>
       <div className='community-newestSection'>
@@ -99,14 +92,7 @@ function Community() {
           {latest.length > 0 &&
             latest
               .slice(0, visiblePostCount)
-              .map((post) => (
-                <CommunityCard
-                  user={post.author}
-                  id={post.id}
-                  content={post.content}
-                  img={post.image}
-                />
-              ))}
+              .map((post) => <CommunityCard post={post} />)}
         </div>
       </div>
     </div>
