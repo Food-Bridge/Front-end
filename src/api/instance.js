@@ -22,6 +22,8 @@ const refreshToken = async () => {
       html: '다시 로그인해주세요.',
       showCancelButton: false,
       confirmButtonText: '확인',
+    }).then(() => {
+      window.location.href = '/users/signin';
     });
   }
 };
@@ -41,6 +43,8 @@ axiosInstance.interceptors.request.use(async (config) => {
         html: '다시 로그인해주세요.',
         showCancelButton: false,
         confirmButtonText: '확인',
+      }).then(() => {
+        window.location.href = '/users/signin';
       });
     }
   }
@@ -70,8 +74,9 @@ axiosInstance.interceptors.response.use(
           html: '다시 로그인해주세요.',
           showCancelButton: false,
           confirmButtonText: '확인',
+        }).then(() => {
+          window.location.href = '/users/signin';
         });
-        window.location.href = '/users/signin';
         return Promise.reject(error);
       }
     }

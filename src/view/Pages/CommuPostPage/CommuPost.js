@@ -32,9 +32,9 @@ function CommuPost({ title }) {
         console.log(response);
         setPostData(response.data.results);
         console.log(
-          'postData ids:',
-          response.data.results.map((post) => post.id)
+          response.data
         );
+        
       })
       .catch((error) => {
         // 오류 처리
