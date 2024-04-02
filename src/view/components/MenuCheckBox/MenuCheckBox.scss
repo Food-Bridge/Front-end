@@ -24,6 +24,13 @@
     .menuCheckBox-choice {
       display: flex;
       align-items: center;
+      .menuCheckBox-deleteBtn {
+        margin-right: 10px;
+        border-radius: 50px;
+        padding: 3px 10px;
+        background-color: #ca0000;
+        color: white;
+      }
       .menuCheckBox-button {
         width: 20px;
         height: 20px;

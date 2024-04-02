@@ -17,9 +17,9 @@ export default function StoreOption() {
   const [sOption, setSOption] = useState([]);
 
   const price =
-  (menuData.price +
+    menuData.price +
     (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
-    (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0))
+    (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,10 +67,7 @@ export default function StoreOption() {
       </div>
       <p className='storeOption-detail'>{menuData.content}</p>
       {menuData.required_options_count === 1 ? (
-        <MenuOptionBtn
-          data={optionData}
-          onOptionChange={handleOptionChange}
-        />
+        <MenuOptionBtn data={optionData} onOptionChange={handleOptionChange} />
       ) : (
         <MenuCheckBox
           data={optionData}
@@ -78,10 +75,9 @@ export default function StoreOption() {
           onOptionChange={handleOptionChange}
         />
       )}
-      {sOptionData.length > 0 && <MenuCheckBox
-        data={sOptionData}
-        onOptionChange={handleSOptionChange}
-      />}
+      {sOptionData.length > 0 && (
+        <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
+      )}
       <CartAddBtn
         price={price}
         data={data}

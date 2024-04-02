@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './MyStoreOption.scss';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import { useSelector } from 'react-redux';
@@ -43,23 +43,14 @@ export default function MyStoreOption() {
       setSOptionData(sOptionRes.data);
     };
     fetchData();
-  }, []);
+  }, [optionData, sOptionData]);
 
   const handleAddOption = () => {
-    optionData
-      ? Swal.fire({
-          icon: 'warning',
-          title: '알림',
-          html: '필수 옵션은 하나만 추가할 수 있습니다.',
-          showCancelButton: false,
-          confirmButtonText: '확인',
-        }).then((res) => {
-          res.isConfirmed && navigate('/');
-        })
-      : navigate('/optionUpload/', { state: { id: menuId } });
+    navigate('/optionUpload/', { state: { id: menuId, type: 'option' } });
   };
+
   const handleAddSOption = () => {
-    navigate('/soptionUpload/', { state: { id: menuId } });
+    navigate('/optionUpload/', { state: { id: menuId, type: 'soption' } });
   };
 
   return (
@@ -83,19 +74,31 @@ export default function MyStoreOption() {
         (menuData.required_options_count === 1 ? (
           <MenuOptionBtn
             data={optionData}
+            type={'option'}
             onOptionChange={handleOptionChange}
+            id={menuId}
             isSeller
+            setOptionData={setOptionData}
           />
         ) : (
           <MenuCheckBox
             data={optionData}
+            type={'option'}
             count={menuData.required_options_count}
+            id={menuId}
             onOptionChange={handleOptionChange}
             isSeller
+            setOptionData={setOptionData}
           />
         ))}
       {sOptionData.length > 0 && (
-        <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
+        <MenuCheckBox
+          data={sOptionData}
+          type={'soption'}
+          id={menuId}
+          onOptionChange={handleSOptionChange}
+          setOptionData={setSOptionData}
+        />
       )}
       <div className='storeOption-buttons'>
         <button className='storeOption-btn' onClick={handleAddOption}>

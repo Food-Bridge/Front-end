@@ -36,6 +36,8 @@ export default function MenuBlock({
       showCancelButton: true,
       confirmButtonText: '삭제',
       cancelButtonText: '취소',
+      confirmButtonColor: '#ca0000',
+      cancelButtonColor: 'black',
     }).then((res) => {
       res.isConfirmed &&
         axiosInstance.delete(`/restaurant/${owner}/menu/${menuId}`);

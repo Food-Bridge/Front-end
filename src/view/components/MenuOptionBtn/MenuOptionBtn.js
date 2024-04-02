@@ -1,10 +1,19 @@
 import { useSelector } from 'react-redux';
 import './MenuOptionButton.scss';
 import React, { useState } from 'react';
-import { selectIsSeller } from '../../../redux/reducers/authSlice';
+import { selectIsSeller, selectOwner } from '../../../redux/reducers/authSlice';
+import axiosInstance from '../../../api/instance';
+import Swal from 'sweetalert2';
 
-export default function MenuOptionBtn({ data, onOptionChange }) {
-  const isSeller = useSelector(selectIsSeller)
+export default function MenuOptionBtn({
+  id,
+  data,
+  onOptionChange,
+  type,
+  setOptionData,
+}) {
+  const owner = useSelector(selectOwner);
+  const isSeller = useSelector(selectIsSeller);
   const [selectedOption, setSelectedOption] = useState(data[0]);
 
   const handleOptionChange = (option) => {
@@ -12,21 +21,45 @@ export default function MenuOptionBtn({ data, onOptionChange }) {
     onOptionChange([option]);
   };
 
+  const handleDeleteOption = (optionId) => {
+    Swal.fire({
+      icon: 'warning',
+      title: '알림',
+      html: '옵션을 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+      confirmButtonColor: '#ca0000',
+      cancelButtonColor: 'black',
+    }).then((res) => {
+      res.isConfirmed &&
+        axiosInstance
+          .delete(`/restaurant/${owner}/menu/${id}/${type}s/${optionId}/`)
+          .then(() => {
+            axiosInstance
+              .get(`/restaurant/${owner}/menu/${id}/options/`)
+              .then((res) => setOptionData(res.data));
+          });
+    });
+  };
+
   return (
     <div className='menuOptionBtn'>
       <header className='menuOptionBtn-header'>
         <h1 className='menuOptionBtn-title'>필수 옵션</h1>
         <p className='menuOptionBtn-info'>1개 선택</p>
-        {isSeller && (
-          <div className='menuOptionBtn-buttons'>
-            <button className='menuOptionBtn-patchBtn'>수정</button>
-            <button className='menuOptionBtn-deleteBtn'>삭제</button>
-          </div>
-        )}
       </header>
-      {data.map((option, index) => (
-        <div className='menuOptionBtn-row' key={index}>
+      {data.map((option) => (
+        <div className='menuOptionBtn-row' key={option.id}>
           <div className='menuOptionBtn-choice'>
+            {isSeller && (
+              <button
+                className='menuOptionBtn-deleteBtn'
+                onClick={() => handleDeleteOption(option.id)}
+              >
+                삭제
+              </button>
+            )}
             <input
               className='menuOptionBtn-button'
               type='radio'
