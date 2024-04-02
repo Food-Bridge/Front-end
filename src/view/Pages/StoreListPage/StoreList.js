@@ -3,7 +3,7 @@ import './StoreList.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import CategoryBar from '../../components/CategoryBar/CategoryBar';
-import SliderTime from '../../components/SliderTime/SliderTime';
+import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import StoreCard from '../../components/StoreCard/StoreCard';
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import { useNavigate } from 'react-router-dom';
@@ -34,7 +34,7 @@ function StoreList() {
           <SearchBar />
         </div>
         <div className='storeList-imageSlider'>
-          <SliderTime className='storeList-img1' slides={SliderImgData} />
+          <ImageSlider mini slides={SliderImgData} />
         </div>
         <div className='storeList-menuBar'>
           <MenuBar name={'menuBar-pageLine2'} />
