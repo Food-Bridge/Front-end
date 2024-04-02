@@ -1,57 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import './PostCard.scss'
-import { postTagData } from '../../../data/PostCardData/PostTagData';
-import { CiFaceSmile, CiHeart, CiLocationOn} from "react-icons/ci";
+import React from 'react';
+import './PostCard.scss';
+import { CiHeart } from 'react-icons/ci';
 import { IoEyeOutline } from 'react-icons/io5';
 
-function PostCard({image, title, content, user, likeCount, views}) {
-
+function PostCard({ post }) {
   return (
     <div className='PostCard'>
       <div className='postCard-frame'>
         <div className='postCard-header'>
           <div className='postCard-userInfo'>
-            <CiFaceSmile className='postCard-userIcon'/>
-            <div className='postCard-userName'>{user} 님</div>
+            <img className='postCard-userIcon' src={post.user_image} />
+            <div className='postCard-userName'>
+              {post.user_nickname || '닉네임'}
+            </div>
+          </div>
+          <div className='postCard-icons'>
             <div className='postCard-likeCount'>
               <h1 className='postCard-fontSize'>
-                <CiHeart className='postCard-likeIcon'/>
-                {likeCount}
+                <CiHeart className='postCard-likeIcon' />
+                {post.like_users.length}
               </h1>
             </div>
             <div className='postCard-viewCount'>
-            <h1 className='postCard-fontSize'>
-              <IoEyeOutline  className='postCard-viewIcon'/>
-              {views}
-            </h1>
+              <h1 className='postCard-fontSize'>
+                <IoEyeOutline className='postCard-viewIcon' />
+                {post.views}
+              </h1>
             </div>
-          </div>
-          <div className='postCard-location'>
-            <CiLocationOn className='postCard-locaIcon'/> 
-            <h1 className='postCard-locaName'>강남구</h1>
           </div>
         </div>
+
         <div className='postCard-section'>
-          <div className='postCard-img'>
-            <img className='postCard-imgSize' src={image} alt="img" />
-          </div>
-          <div className='postCard-contents'>
-            <div className='postCard-postTitle'>{title}</div>
-            {/* {postData.map(post => (<h2>{post.content}</h2>))} */}
-            <div className='postCard-postWriting'>
-              <p>{content}</p>
+          {post.image && (
+            <div className='postCard-img'>
+              <img
+                className='postCard-imgSize'
+                src={post.image}
+                alt='게시물 이미지'
+              />
             </div>
-            <div className='postCard-postTag'>
-              {postTagData.map((el) => {
-                return <h1 className='postCard-postTagName'># {el.tagName}</h1>
-              })} 
-              {/* {postData.map(post => (<h2>{post.content}</h2>))} */}
+          )}
+          <div
+            className={
+              post.image ? 'postCard-contents' : 'postCard-contents noImage'
+            }
+          >
+            <div className='postCard-postTitle'>{post.title}</div>
+            <div
+              className={
+                post.image
+                  ? 'postCard-postWriting'
+                  : 'postCard-postWriting noImage'
+              }
+            >
+              <p>{post.content}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default PostCard
+export default PostCard;

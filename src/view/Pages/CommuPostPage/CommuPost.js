@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './CommuPost.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import PostCard from '../../components/PostCard/PostCard';
 import { LuPencilLine } from 'react-icons/lu';
-import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../../api/instance';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function CommuPost({ title }) {
+  const location = useLocation();
   const navigate = useNavigate();
-  let type;
-  if (title === '주간 인기') {
-    type = 'weekly';
-  } else if (title === '일간 인기') {
-    type = 'daily';
-  } else if (title === '최신') {
-    type = 'latest';
-  }
+  const { postData } = location.state;
 
   const handleEditClick = () => {
     navigate('/postUpload/');
@@ -25,14 +18,6 @@ function CommuPost({ title }) {
   const handleCardClick = (id) => {
     navigate(`/postCard/${id}`);
   };
-
-  const [postData, setPostData] = useState([]);
-
-  useEffect(() => {
-    axiosInstance.get(`/community/${type}/`).then((response) => {
-      setPostData(response.data);
-    });
-  }, []);
 
   return (
     <div className='CommuPost'>
@@ -56,15 +41,7 @@ function CommuPost({ title }) {
                 }}
                 key={post.id}
               >
-                <PostCard
-                  user={post.author}
-                  id={post.id}
-                  title={post.title}
-                  content={post.content}
-                  image={post.image}
-                  likeCount={post.likes_count}
-                  views={post.views}
-                />
+                <PostCard post={post} />
               </button>
             ))
           ) : (
