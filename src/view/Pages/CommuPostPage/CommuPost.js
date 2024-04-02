@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './CommuPost.scss';
-import LogoBar from '../../components/LogoBar/LogoBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
-import CommunityCard from '../../components/CommunityCard/CommunityCard';
 import PostCard from '../../components/PostCard/PostCard';
-import { postCardData } from '../../../data/PostCardData/PostCardData';
 import { LuPencilLine } from 'react-icons/lu';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../../api/instance';
 
 function CommuPost({ title }) {
   const navigate = useNavigate();
+  let type;
+  if (title === '주간 인기') {
+    type = 'weekly';
+  } else if (title === '일간 인기') {
+    type = 'daily';
+  } else if (title === '최신') {
+    type = 'latest';
+  }
 
   const handleEditClick = () => {
     navigate('/postUpload/');
@@ -24,57 +29,47 @@ function CommuPost({ title }) {
   const [postData, setPostData] = useState([]);
 
   useEffect(() => {
-    // Axios를 사용하여 GET 요청을 보냄
-    axios
-      .get('http://localhost:8000/community/')
-      .then((response) => {
-        // 성공적으로 데이터를 받아온 경우 state를 업데이트
-        console.log(response);
-        setPostData(response.data.results);
-        console.log(
-          response.data
-        );
-        
-      })
-      .catch((error) => {
-        // 오류 처리
-        console.error('Error fetching data:', error);
-      });
+    axiosInstance.get(`/community/${type}/`).then((response) => {
+      setPostData(response.data);
+    });
   }, []);
 
   return (
     <div className='CommuPost'>
-      <SearchBar location={'강남구'} />
+      <SearchBar />
       <div className='commuPost-menuBar'>
         <MenuBar name={'menuBar-pageLine3'} />
       </div>
       <div className='commuPost-postSection'>
         <div className='commuPost-header'>
           <div className='commuPost-title'>{title} 글</div>
-          <LuPencilLine
-            className='commuPost-editIcon'
-            onClick={handleEditClick}
-          />
+          <button className='commuPost-editIcon' onClick={handleEditClick}>
+            <LuPencilLine size='24' />
+          </button>
         </div>
         <div className='commuPost-postList'>
-          {postData.map((post) => (
-            <button
-              onClick={() => {
-                handleCardClick(post.id);
-              }}
-              key={post.id}
-            >
-              <PostCard
-                user={post.author}
-                id={post.id}
-                title={post.title}
-                content={post.content}
-                image={post.image}
-                likeCount={post.likes_count}
-                views={post.views}
-              />
-            </button>
-          ))}
+          {postData.length > 0 ? (
+            postData.map((post) => (
+              <button
+                onClick={() => {
+                  handleCardClick(post.id);
+                }}
+                key={post.id}
+              >
+                <PostCard
+                  user={post.author}
+                  id={post.id}
+                  title={post.title}
+                  content={post.content}
+                  image={post.image}
+                  likeCount={post.likes_count}
+                  views={post.views}
+                />
+              </button>
+            ))
+          ) : (
+            <p className='commuPost-nothing'>게시글이 존재하지 않습니다.</p>
+          )}
         </div>
       </div>
     </div>

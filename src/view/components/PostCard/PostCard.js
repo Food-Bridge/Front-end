@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react'
 import './PostCard.scss'
 import { postTagData } from '../../../data/PostCardData/PostTagData';
 import { CiFaceSmile, CiHeart, CiLocationOn} from "react-icons/ci";
-import { LuView } from 'react-icons/lu';
 import { IoEyeOutline } from 'react-icons/io5';
 
 function PostCard({image, title, content, user, likeCount, views}) {
 
   return (
     <div className='PostCard'>
-      {/* {id} */}
       <div className='postCard-frame'>
         <div className='postCard-header'>
           <div className='postCard-userInfo'>
