@@ -22,7 +22,7 @@ function PostDetail() {
         .then(async (res) => {
           setPostData(res.data);
           await axiosInstance
-            .get(`/community/${id}/comment`)
+            .get(`/community/${id}/comment/`)
             .then((res) => {
               setCommentData(res.data);
               console.log(commentData);
