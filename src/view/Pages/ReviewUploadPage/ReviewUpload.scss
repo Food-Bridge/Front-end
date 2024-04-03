@@ -2,9 +2,8 @@
   .reviewUpload-header {
     width: 600px;
     height: 60px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid #c6c6c6;
     display: flex;
-
     .reviewUpload-headerTitle {
       height: 60px;
       display: flex;
@@ -17,33 +16,20 @@
     .reviewUpload-rate {
       margin-top: 18px;
     }
-    
   }
   .reviewUpload-title {
     width: 600px;
     height: 45px;
     border-bottom: 1px solid lightgray;
-
-    .reviewUpload-inputTitle {
-      width: 540px;
-      border: none;
-      font-size: 20px;
-      margin-top: 12.5px;
-      margin-left: 30px;
-    }
-    .reviewUpload-inputTitle::placeholder {
-      color: lightgray;
-    }
   }
   .reviewUpload-inputMain {
     margin-top: 20px;
-    height: 480px;
+    height: 240px;
     border-bottom: 1px solid lightgray;
-
     .reviewUpload-inputForm {
       border: none;
-      width: 540px;
-      height: 430px;
+      width: 320px;
+      height: 200px;
       resize: none;
       font-size: 16px;
       margin-left: 30px;
@@ -59,21 +45,20 @@
       display: flex;
       align-items: center;
       margin-left: 30px;
-
       .reviewUpload-photo {
         .reviewUpload-img {
           width: 200px;
-          height: 140px;
-          top: -120px;
+          height: 200px;
+          top: -200px;
           left: 350px;
           z-index: 10;
           object-fit: cover;
           position: relative;
+          border-radius: 10px;
         }
         .reviewUpload-imgUpload {
           display: none;
         }
-
         .reviewUpload-photoIcon {
           width: 30px;
           height: 30px;

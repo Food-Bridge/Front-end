@@ -1,22 +1,43 @@
-// communitySlice.js 파일
-
 import { createSlice } from '@reduxjs/toolkit';
+import axiosInstance from '../../api/instance';
 
-const initialState = {
-  like: {
-    isLiked: false,
-  },
-};
-
-const communitySlice = createSlice({
+const CommunitySlice = createSlice({
   name: 'community',
-  initialState,
+  initialState: {
+    weekly: [],
+    daily: [],
+    latest: [],
+  },
   reducers: {
-    toggleLike(state, action) {
-      state.like.isLiked = action.payload;
+    setWeeklyPost(state, action) {
+      state.weekly = action.payload;
+    },
+    setDailyPost(state, action) {
+      state.daily = action.payload;
+    },
+    setLatestPost(state, action) {
+      state.latest = action.payload;
     },
   },
 });
 
-export const { toggleLike } = communitySlice.actions;
-export default communitySlice.reducer;
+export const selectWeeklyPost = (state) => state.community.weekly;
+export const selectDailyPost = (state) => state.community.weekly;
+export const selectLatestPost = (state) => state.community.weekly;
+
+export const { setWeeklyPost, setDailyPost, setLatestPost } =
+  CommunitySlice.actions;
+
+export const fetchPostData = () => async (dispatch) => {
+  await axiosInstance.get('/community/weekly/').then((response) => {
+    dispatch(setWeeklyPost(response.data));
+  });
+  await axiosInstance.get('/community/daily/').then((response) => {
+    dispatch(setDailyPost(response.data));
+  });
+  await axiosInstance.get('/community/latest/').then((response) => {
+    dispatch(setLatestPost(response.data));
+  });
+};
+
+export default CommunitySlice.reducer;

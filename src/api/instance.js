@@ -1,5 +1,6 @@
 import axios from 'axios';
-import store from '../redux/store'
+import store from '../redux/store';
+import Swal from 'sweetalert2';
 
 const REFRESH_URL = 'http://localhost:8000/users/token/refresh/';
 const axiosInstance = axios.create({
@@ -15,30 +16,42 @@ const refreshToken = async () => {
     document.cookie = `accessToken=${access}; httpOnly; path=/`;
     return access;
   } catch (error) {
-    throw new Error('토큰 갱신에 실패했습니다.');
+    Swal.fire({
+      icon: 'warning',
+      title: '알림',
+      html: '다시 로그인해주세요.',
+      showCancelButton: false,
+      confirmButtonText: '확인',
+    }).then(() => {
+      window.location.href = '/users/signin';
+    });
+    return Promise.reject(error);
   }
 };
 
-axiosInstance.interceptors.request.use(
-  async (config) => {
-    const isLoggedIn = store.getState().auth.isLoggedIn;
-    if (isLoggedIn) {
-      try {
-        let access = getAccessTokenFromCookie(); 
-        if (access) {
-          config.headers['Authorization'] = `Bearer ${access}`;
-        }
-      } catch (error) {
-        console.error('로그인 실패', error);
-        throw new Error('로그인에 실패했습니다.');
+axiosInstance.interceptors.request.use(async (config) => {
+  const isLoggedIn = store.getState().auth.isLoggedIn;
+  if (isLoggedIn) {
+    try {
+      let access = getAccessTokenFromCookie();
+      if (access) {
+        config.headers['Authorization'] = `Bearer ${access}`;
       }
+    } catch (error) {
+      Swal.fire({
+        icon: 'warning',
+        title: '알림',
+        html: '다시 로그인해주세요.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+      }).then(() => {
+        window.location.href = '/users/signin';
+      });
+      return Promise.reject(error);
     }
-    return config;
   }
-);
-
-
-
+  return config;
+});
 
 axiosInstance.interceptors.response.use(
   (response) => {
@@ -57,9 +70,15 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers['Authorization'] = `Bearer ${access}`;
         return axios(originalRequest);
       } catch (error) {
-        console.error('토큰 갱신에 실패했습니다.', error);
-        alert('로그인이 필요합니다.');
-        window.location.href = '/users/signin';
+        Swal.fire({
+          icon: 'warning',
+          title: '알림',
+          html: '다시 로그인해주세요.',
+          showCancelButton: false,
+          confirmButtonText: '확인',
+        }).then(() => {
+          window.location.href = '/users/signin';
+        });
         return Promise.reject(error);
       }
     }

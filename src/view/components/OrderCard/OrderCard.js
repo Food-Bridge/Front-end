@@ -1,7 +1,6 @@
 import React from 'react';
 import './OrderCard.scss';
 import { useState } from 'react';
-
 import OrderReceipt from '../OrderReceipt/OrderReceipt';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,10 +12,15 @@ export default function OrderCard({ order, isReview, time }) {
   )} ${new Date(order.created_at).toLocaleTimeString('ko-KR')}`;
   const menuList = order.menu_list;
   const receiptBtn = isReview ? 'orderCard-receipt' : 'orderCard-receipt-long';
-  const menuNames = order.menu_list.map(menu => menu.menu_name).join('/');
+
+  const menuNames = order.menu_list.map((menu) => menu.menu_name).join('/');
+
   const handleClickReview = () => {
-    navigate('/restaurant/reviewUpload', { state: { orderId: order.id, menuName: menuNames } });
+    navigate('/restaurant/reviewUpload', {
+      state: { orderId: order.id, menuName: menuNames },
+    });
   };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -24,7 +28,7 @@ export default function OrderCard({ order, isReview, time }) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-console.log(menuNames)
+
   return (
     <>
       {isModalOpen && (

@@ -1,19 +1,14 @@
 .postDetail-commentInput {
-    display: flex;
-    align-items: center;
-
-    .postDetail-InputBox {
-        width: 470px;
-        height: 40px;
-        border: 1px solid lightgray;
-        border-radius: 50px;
-        margin-left: 20px;
-        padding-left: 20px;
-    }
-    
-    .postDetail-sendIcon {
-        width: 20px;
-        height: 20px;
-        margin-left: 10px;
-    }
+  width: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  .postDetail-InputBox {
+    width: 420px;
+    height: 40px;
+    border: 1px solid #c6c6c6;
+    border-radius: 50px;
+    padding-left: 20px;
+  }
 }

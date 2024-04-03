@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './reducers/authSlice';
 import addressReducer from './reducers/addressSlice';
 import cartReducer from './reducers/cartSlice';
+import communityReducer from './reducers/communitySlice'
 
 const EXPIRATION_TIME = 30 * 60 * 1000;
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   address: addressReducer,
   cart: cartReducer,
+  community: communityReducer,
 });
 
 const persistedReducer = persistReducer(storageConfig, rootReducer);

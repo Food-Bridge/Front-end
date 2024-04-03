@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import './MyListProfile.scss'
+import './MyListProfile.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectProfile, setProfile } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 import PlusInfo from '../PlusInfo/PlusInfo';
 
-export default function MyListProfile({onChangeImage, handleLogout}) {
+export default function MyListProfile({ onChangeImage, handleLogout }) {
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
   const [isNicknameChange, setIsNicknameChange] = useState(false);
+  const [orderNum, setOrderNum] = useState(0);
+  const [reviewNum, setReviewNum] = useState(0);
+  const [likeNum, setLikeNum] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get('/users/profile/');
-      console.log(res)
-      dispatch(setProfile({ image: res.data.image, nickname: res.data.nickname }));
+      dispatch(
+        setProfile({ image: res.data.image, nickname: res.data.nickname })
+      );
+      const orderRes = await axiosInstance.get('/order/');
+      setOrderNum(orderRes.data.length);
+      const reviewRes = await axiosInstance.get('/review/');
+      setReviewNum(reviewRes.data.length);
+      const likeRes = await axiosInstance.get('/like/');
+      setLikeNum(likeRes.data.liked_restaurants_ids.length);
     };
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   const handleChangeNickname = async () => {
     setIsNicknameChange(!isNicknameChange);
@@ -26,14 +36,20 @@ export default function MyListProfile({onChangeImage, handleLogout}) {
       formData.append('nickname', profile.nickname);
 
       const res = await axiosInstance.put('/users/profile/', formData);
-      dispatch(setProfile({ image: profile.image, nickname: res.data.nickname }));
+      dispatch(
+        setProfile({ image: profile.image, nickname: res.data.nickname })
+      );
     }
   };
 
   return (
     <div className='mylistUser'>
       <div className='mylistUser-profile'>
-        <img className='mylistUser-profileImg' src={profile.image} alt='프로필이미지'/>
+        <img
+          className='mylistUser-profileImg'
+          src={profile.image}
+          alt='프로필이미지'
+        />
         <input
           className='mylistUser-profileInput'
           id='file'
@@ -62,12 +78,11 @@ export default function MyListProfile({onChangeImage, handleLogout}) {
               }
             ></input>
           ) : (
-            <h1 className='mylistUser-id-name'>{profile.nickname || '닉네임'}</h1>
+            <h1 className='mylistUser-id-name'>
+              {profile.nickname || '닉네임'}
+            </h1>
           )}
-          <div
-            className='mylistUser-id-change'
-            onClick={handleChangeNickname}
-          >
+          <div className='mylistUser-id-change' onClick={handleChangeNickname}>
             <PlusInfo text={isNicknameChange ? '변경 완료' : '닉네임 변경'} />
           </div>
           <div className='mylistUser-id-logout' onClick={handleLogout}>
@@ -76,15 +91,15 @@ export default function MyListProfile({onChangeImage, handleLogout}) {
         </div>
         <div className='mylistUser-detail'>
           <div className='mylistUser-detailBox'>
-            <h2 className='mylistUser-detailBox-num'>123</h2>
+            <h2 className='mylistUser-detailBox-num'>{orderNum}</h2>
             <p className='mylistUser-detailBox-title'>주문 내역</p>
           </div>
           <div className='mylistUser-detailBox'>
-            <h2 className='mylistUser-detailBox-num'>34</h2>
+            <h2 className='mylistUser-detailBox-num'>{reviewNum}</h2>
             <p className='mylistUser-detailBox-title'>나의 리뷰</p>
           </div>
           <div className='mylistUser-detailBox'>
-            <h2 className='mylistUser-detailBox-num'>54</h2>
+            <h2 className='mylistUser-detailBox-num'>{likeNum}</h2>
             <p className='mylistUser-detailBox-title'>즐겨찾기</p>
           </div>
         </div>

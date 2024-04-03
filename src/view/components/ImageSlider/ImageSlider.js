@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ImageSlider.scss';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
-export default function ImageSlider({ slides }) {
+export default function ImageSlider({ mini, slides }) {
   const [current, setCurrent] = useState(0);
   const length = slides ? slides.length : 0;
 
@@ -27,7 +27,7 @@ export default function ImageSlider({ slides }) {
   }
 
   return (
-    <div className='imageSlider'>
+    <div className={mini ? 'imageSlider mini' : 'imageSlider'}>
       <IoIosArrowBack
         className='imageSlider-arrow left'
         size='30'
@@ -44,7 +44,7 @@ export default function ImageSlider({ slides }) {
             className={index === current ? 'slide active' : 'slide'}
             key={index}
           >
-            {index === current && <img src={slide} className='image' />}
+            {index === current && <img src={slide} className={mini ? 'imageSlider-image mini' : 'imageSlider-image'} />}
           </div>
         );
       })}

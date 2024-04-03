@@ -67,7 +67,7 @@ function MenuUpload() {
           ));
       }
       Swal.fire({
-        icon: 'warning',
+        icon: 'success',
         title: id ? '메뉴 수정' : '메뉴 추가',
         html: '요청이 정상적으로 이루어졌습니다.',
         showCancelButton: false,
@@ -81,9 +81,7 @@ function MenuUpload() {
         html: '입력한 데이터를 확인해주세요.',
         showCancelButton: false,
         confirmButtonText: '확인',
-        cancelButtonText: '취소',
-        confirmButtonColor: '#ca0000',
-        cancelButtonColor: 'black',
+        confirmButtonColor: 'black',
       });
     }
   };
@@ -91,12 +89,10 @@ function MenuUpload() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${owner}/menu/${id}/`);
-      console.log(res);
       setName(res.data.name);
       setContent(res.data.content);
       setPrice(res.data.price);
       setImageDisplay(res.data.image);
-      console.log(res);
     };
     typeof id === 'number' && fetchData();
   }, []);

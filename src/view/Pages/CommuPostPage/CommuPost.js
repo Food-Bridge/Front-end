@@ -1,17 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CommuPost.scss';
-import LogoBar from '../../components/LogoBar/LogoBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
-import CommunityCard from '../../components/CommunityCard/CommunityCard';
 import PostCard from '../../components/PostCard/PostCard';
-import { postCardData } from '../../../data/PostCardData/PostCardData';
 import { LuPencilLine } from 'react-icons/lu';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchPostData,
+  selectDailyPost,
+  selectLatestPost,
+  selectWeeklyPost,
+} from '../../../redux/reducers/communitySlice';
 
 function CommuPost({ title }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [postData, setPostData] = useState([]);
+  const weekly = useSelector(selectWeeklyPost);
+  const daily = useSelector(selectDailyPost);
+  const latest = useSelector(selectLatestPost);
+
+  useEffect(() => {
+    dispatch(fetchPostData()).then(() => {
+      if (title === '주간 인기') {
+        setPostData(weekly);
+      } else if (title === '일간 인기') {
+        setPostData(daily);
+      } else if (title === '최신') {
+        setPostData(latest);
+      }
+    });
+  }, []);
 
   const handleEditClick = () => {
     navigate('/postUpload/');
@@ -21,60 +41,34 @@ function CommuPost({ title }) {
     navigate(`/postCard/${id}`);
   };
 
-  const [postData, setPostData] = useState([]);
-
-  useEffect(() => {
-    // Axios를 사용하여 GET 요청을 보냄
-    axios
-      .get('http://localhost:8000/community/')
-      .then((response) => {
-        // 성공적으로 데이터를 받아온 경우 state를 업데이트
-        console.log(response);
-        setPostData(response.data.results);
-        console.log(
-          'postData ids:',
-          response.data.results.map((post) => post.id)
-        );
-      })
-      .catch((error) => {
-        // 오류 처리
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-
   return (
     <div className='CommuPost'>
-      <SearchBar location={'강남구'} />
+      <SearchBar />
       <div className='commuPost-menuBar'>
         <MenuBar name={'menuBar-pageLine3'} />
       </div>
       <div className='commuPost-postSection'>
         <div className='commuPost-header'>
           <div className='commuPost-title'>{title} 글</div>
-          <LuPencilLine
-            className='commuPost-editIcon'
-            onClick={handleEditClick}
-          />
+          <button className='commuPost-editIcon' onClick={handleEditClick}>
+            <LuPencilLine size='24' />
+          </button>
         </div>
         <div className='commuPost-postList'>
-          {postData.map((post) => (
-            <button
-              onClick={() => {
-                handleCardClick(post.id);
-              }}
-              key={post.id}
-            >
-              <PostCard
-                user={post.author}
-                id={post.id}
-                title={post.title}
-                content={post.content}
-                image={post.image}
-                likeCount={post.likes_count}
-                views={post.views}
-              />
-            </button>
-          ))}
+          {postData && postData.length > 0 ? (
+            postData.map((post) => (
+              <button
+                key={post.id}
+                onClick={() => {
+                  handleCardClick(post.id);
+                }}
+              >
+                <PostCard post={post} />
+              </button>
+            ))
+          ) : (
+            <p className='commuPost-nothing'>게시물이 존재하지 않습니다.</p>
+          )}
         </div>
       </div>
     </div>

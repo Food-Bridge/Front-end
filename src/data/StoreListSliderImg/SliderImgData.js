@@ -1,14 +1,7 @@
 export const SliderImgData = [
-    {
-        image :
-            'https://images.unsplash.com/photo-1627662168781-4345690f0bb3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-    },
-    {
-        image :
-            'https://st4.depositphotos.com/6975596/29994/i/1600/depositphotos_299942922-stock-photo-freshly-picked-autumn-fruits-black.jpg', 
-    },
-    {
-        image :
-            'https://st4.depositphotos.com/14426936/26798/i/1600/depositphotos_267987514-stock-photo-bowl-plate-full-warm-salad.jpg', 
-    },
-  ]
+  'https://cdn.pixabay.com/photo/2020/02/28/12/43/bibimbap-4887417_1280.jpg',
+  'https://cdn.pixabay.com/photo/2020/01/07/05/52/spaghetti-4746831_1280.jpg',
+  'https://cdn.pixabay.com/photo/2023/09/04/20/39/cake-8233676_1280.jpg',
+  '  https://cdn.pixabay.com/photo/2019/08/15/09/03/pizza-4407510_1280.jpg',
+  'https://cdn.pixabay.com/photo/2019/10/03/10/07/food-4522872_1280.jpg',
+];

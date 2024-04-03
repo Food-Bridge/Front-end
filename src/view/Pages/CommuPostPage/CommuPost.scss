@@ -1,33 +1,37 @@
 .CommuPost {
+  .commuPost-menuBar {
+    margin-top: 20px;
+  }
 
-    .commuPost-menuBar {
-        margin-top: 20px;
-    }
+  .commuPost-tagBar {
+    // margin-top: 20px;
+  }
+  .commuPost-postSection {
+    margin-top: 20px;
+    margin-left: 20px;
 
-    .commuPost-tagBar {
-        // margin-top: 20px;
-    }
-    .commuPost-postSection {
-        margin-top: 20px;
-        margin-left: 20px;
-        
-        .commuPost-header {
-            width: 550px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+    .commuPost-header {
+      width: 550px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-            .commuPost-title {
-                font-size: 18px;
-            }
-            .commuPost-editIcon {
-                width: 24px;
-                height: 24px;
-            }
-        }
-        .commuPost-postList {
-            margin-top: 20px;
-        }
+      .commuPost-title {
+        font-size: 18px;
+      }
+      .commuPost-editIcon {
+        width: 24px;
+        height: 24px;
+      }
     }
+    .commuPost-postList {
+      margin-top: 20px;
+    }
+    .commuPost-nothing {
+      margin-top: 200px;
+      width: 600px;
+      text-align: center;
+    }
+  }
 }

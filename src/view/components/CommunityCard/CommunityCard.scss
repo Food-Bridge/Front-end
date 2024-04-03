@@ -4,7 +4,7 @@
   padding: 5px 10px;
   border: 1px solid #c6c6c6;
   border-radius: 5px;
-  margin-right: 30px;
+  box-shadow: 2px 2px 2px #c6c6c6;
 }
 
 .communityCard-header {
@@ -26,43 +26,56 @@
       font-size: 12px;
     }
   }
-  .communityCard-location {
+  .communityCard-icons {
     display: flex;
+    justify-content: space-between;
+    text-align: right;
     align-items: center;
-    .communityCard-locaIcon {
-    }
-    .communityCard-locaText {
+    .communityCard-fontSize {
+      display: flex;
       font-size: 12px;
+      align-items: center;
+      margin-right: 5px;
+      * {
+        font-size: 16px;
+        margin-right: 5px;
+      }
     }
   }
 }
-.communityCard-content {
+
+.communityCard-box {
   display: flex;
   justify-content: space-between;
   height: 100px;
   margin: 5px 0;
+  text-align: left;
   .communityCard-image {
     width: 100px;
     height: 100px;
     object-fit: cover;
+    background-color: #c6c6c6;
+    border-radius: 5px;
   }
-  .communityCard-text {
-    width: 140px;
-    height: 100px;
-    font-size: 12px;
-    text-align: left;
-    overflow: hidden;
-    word-wrap: break-word;
-    -webkit-line-clamp: 2; /* 두 줄까지만 표시 */
-    -webkit-box-orient: vertical; /* 세로 방향으로 정렬 */
-  }
-}
-.communityCard-tags {
-  display: flex;
-  justify-content: right;
-  .communityCard-tag {
-    font-size: 12px;
-    color: #750D0D;
-    margin-left: 5px;
+
+  .communityCard-content {
+    margin-left: 10px;
+    &.noImage {
+      margin: 0;
+    }
+    .communityCard-title {
+      font-size: 16px;
+    }
+    .communityCard-text {
+      width: 130px;
+      height: 90px;
+      font-size: 12px;
+      text-align: left;
+      overflow: hidden;
+      word-wrap: break-word;
+      &.noImage {
+        width: 240px;
+      }
+    }
   }
 }
