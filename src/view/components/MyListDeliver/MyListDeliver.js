@@ -72,7 +72,7 @@ export default function MyListDeliver() {
           <div className='mylistDeliver-time-group'>
             <CiClock2 size='24' />
             <p className='mylistDeliver-time-minute'>
-              {restTime >= 0 ? restTime : 5}분
+              {restTime >= 0 ? restTime : 0}분
             </p>
           </div>
         </div>

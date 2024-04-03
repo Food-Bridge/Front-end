@@ -121,17 +121,17 @@ export default function Payment() {
         dispatch(setPrepareTime(prepareTime));
         dispatch(setShowMyListDeliver(true));
       }
-      // Swal.fire({
-      //   icon: 'success',
-      //   title: '결제 완료',
-      //   html: '결제가 성공적으로 이루어졌습니다.',
-      //   showCancelButton: false,
-      //   confirmButtonText: '확인',
-      //   confirmButtonColor: 'black',
-      // }).then((res) => {
-      //   dispatch(deleteMenu())
-      //   res.isConfirmed && navigate('/');
-      // });
+      Swal.fire({
+        icon: 'success',
+        title: '결제 완료',
+        html: '결제가 성공적으로 이루어졌습니다.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        confirmButtonColor: 'black',
+      }).then((res) => {
+        dispatch(deleteMenu());
+        res.isConfirmed && navigate('/');
+      });
     });
   };
 
