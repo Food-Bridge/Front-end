@@ -1,26 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './ReviewBox.scss';
-
 import { FaStar } from 'react-icons/fa';
-import axiosInstance from '../../../api/instance';
 
 export default function ReviewBox({ data, myReview }) {
-  const [userNickname, setUserNickname] = useState('');
-  const [userImage, setUserImage] = useState('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axiosInstance.get('/users/profile/');
-      console.log(res);
-      setUserNickname(res.data.user_nickname ? res.data.nickname : '닉네임');
-      setUserImage(res.data.user_image);
-    };
-    fetchData();
-  }, []);
-
+console.log(data)
   const rate = data.rating;
   const rateStars = Array(rate).fill(<FaStar color='#ffc700' size='14' />);
-
   const menuName = data.menu_name;
   const dateTimeString = data.created_at;
   const dateTime = new Date(dateTimeString);
@@ -32,11 +17,11 @@ export default function ReviewBox({ data, myReview }) {
         <div className='reviewBox-profile'>
           <img
             className='reviewBox-profileImg'
-            src={myReview ? data.restaurant_image : userImage}
+            src={myReview ? data.restaurant_image : data.user_image}
           />
           <div className='reviewBox-profileContent'>
             <p className='reviewBox-profileName'>
-              {myReview ? data.restaurnat_name : userNickname}
+              {myReview ? data.restaurnat_name : (data.user_nickname || '닉네임')}
             </p>
             <p className='reviewBox-rate'>{rateStars}</p>
           </div>
@@ -44,8 +29,8 @@ export default function ReviewBox({ data, myReview }) {
         <p className='reviewBox-date'>{formattedDate}</p>
       </header>
       <div className='reviewBox-content'>
-        <img className='reviewBox-contentImg' src={data.image[0].image} />
-        <p className='reviewBox-contentText'>{data.caption}.</p>
+        {data.image.length > 0 && <img className='reviewBox-contentImg' src={data.image.image} />}
+        <p className='reviewBox-contentText'>{data.caption}</p>
       </div>
       <div className='reviewBox-menuList'>
         {menuName.split('/').map((menu, index) => (

@@ -94,6 +94,7 @@ export default function CartList() {
       navigate('/payment/');
     } else {
       Swal.fire({
+        icon: 'info',
         title: '알림',
         html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
         showCancelButton: false,

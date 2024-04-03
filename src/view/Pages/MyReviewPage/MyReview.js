@@ -7,7 +7,6 @@ import RateStars from '../../components/RateStars/RateStars';
 
 export default function MyReview() {
   const [reviewData, setReviewData] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get(`/review/`);
