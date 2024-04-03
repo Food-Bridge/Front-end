@@ -25,6 +25,14 @@
       object-fit: cover;
     }
     .orderCard-text {
+
+      .orderCard-header {
+        display: flex;
+
+        .orderCard-time {
+          margin-left: -15px;
+        }
+      }
       .orderCard-store {
         width: 220px;
         font-size: 24px;

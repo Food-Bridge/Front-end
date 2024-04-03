@@ -4,8 +4,7 @@ import { useState } from 'react';
 import OrderReceipt from '../OrderReceipt/OrderReceipt';
 import { useNavigate } from 'react-router-dom';
 
-export default function OrderCard({ order, isReview }) {
-  console.log(order);
+export default function OrderCard({ order, isReview, time }) {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const created = `${new Date(order.created_at).toLocaleDateString(
@@ -49,7 +48,10 @@ export default function OrderCard({ order, isReview }) {
             alt='레스토랑 이미지'
           />
           <div className='orderCard-text'>
-            <h1 className='orderCard-store'>{order.restaurant_name}</h1>
+            <div className='orderCard-header'>
+              <h1 className='orderCard-store'>{order.restaurant_name}</h1>
+              <p className='orderCard-time'>도착 예정 시간 : {time}분</p>
+            </div>
             <div className='orderCard-menuList'>
               {menuList.map((menu) => (
                 <p className='orderCard-menu' key={menu.menu_id}>
