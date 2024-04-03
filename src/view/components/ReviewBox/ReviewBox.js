@@ -3,7 +3,7 @@ import './ReviewBox.scss';
 import { FaStar } from 'react-icons/fa';
 
 export default function ReviewBox({ data, myReview }) {
-console.log(data)
+  console.log(data);
   const rate = data.rating;
   const rateStars = Array(rate).fill(<FaStar color='#ffc700' size='14' />);
   const menuName = data.menu_name;
@@ -21,7 +21,7 @@ console.log(data)
           />
           <div className='reviewBox-profileContent'>
             <p className='reviewBox-profileName'>
-              {myReview ? data.restaurnat_name : (data.user_nickname || '닉네임')}
+              {myReview ? data.restaurant_name : data.user_nickname || '닉네임'}
             </p>
             <p className='reviewBox-rate'>{rateStars}</p>
           </div>
@@ -29,7 +29,9 @@ console.log(data)
         <p className='reviewBox-date'>{formattedDate}</p>
       </header>
       <div className='reviewBox-content'>
-        {data.image.length > 0 && <img className='reviewBox-contentImg' src={data.image.image} />}
+        {data.image.length > 0 && (
+          <img className='reviewBox-contentImg' src={data.image[0].image} />
+        )}
         <p className='reviewBox-contentText'>{data.caption}</p>
       </div>
       <div className='reviewBox-menuList'>

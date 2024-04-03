@@ -40,7 +40,6 @@ function PostUpload() {
     formData.append('img', image);
     formData.append('title', title);
     formData.append('content', content);
-    console.log([...formData.entries()]);
     await axiosInstance
       .post('/community/create/', formData, {
         headers: {
