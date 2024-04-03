@@ -9,14 +9,24 @@ import Swal from 'sweetalert2';
 
 function DetailPost({ data }) {
   const navigate = useNavigate();
-  const [isLiked, setIsLiked] = useState(false);
+  const created = new Date(data.created_at);
+  const formedCreated = created.toLocaleString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
+  // const [isLiked, setIsLiked] = useState(false);
 
   // if (data.like_users.includes()) {
   //   setIsLiked(true);
   // }
 
   const handleLike = () => {
-    axiosInstance.post(`/community/${data.id}/likes/`);
+    // const res = axiosInstance.post(`/community/${data.id}/likes/`);
+    // console.log(res)
   };
 
   const handleDeletePost = () => {
@@ -60,7 +70,7 @@ function DetailPost({ data }) {
           </p>
         </div>
         <div className='detailPost-headerRight'>
-          <button onClick={handleLike}>
+          {/* <button onClick={handleLike}>
             {isLiked ? (
               <IoIosHeart size='24' color='red' className='detailPost-like' />
             ) : (
@@ -70,7 +80,7 @@ function DetailPost({ data }) {
                 className='detailPost-like'
               />
             )}
-          </button>
+          </button> */}
           <button className='detailPost-deleted' onClick={handleDeletePost}>
             <MdOutlineDelete size='24' />
           </button>
@@ -78,9 +88,10 @@ function DetailPost({ data }) {
       </header>
       <div className='detailPost-content'>
         <h1 className='detailPost-title'>{data.title}</h1>
-        <img className='detailPost-image' src={data.image} />
+        {data.image && <img className='detailPost-image' src={data.image} />}
 
         <p className='detailPost-text'>{data.content}</p>
+        <p className='detailPost-created'>{formedCreated}</p>
       </div>
     </div>
   );

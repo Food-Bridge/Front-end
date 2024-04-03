@@ -14,7 +14,7 @@ const LocationSearch = ({ complete }) => {
       sigungu: sigungu,
     });
     Swal.fire({
-      icon: 'info',
+      icon: 'success',
       title: '주소 등록',
       text: '주소가 성공적으로 등록되었습니다.',
       showCancelButton: false,

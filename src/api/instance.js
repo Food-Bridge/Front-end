@@ -25,6 +25,7 @@ const refreshToken = async () => {
     }).then(() => {
       window.location.href = '/users/signin';
     });
+    return Promise.reject(error);
   }
 };
 
@@ -46,6 +47,7 @@ axiosInstance.interceptors.request.use(async (config) => {
       }).then(() => {
         window.location.href = '/users/signin';
       });
+      return Promise.reject(error);
     }
   }
   return config;

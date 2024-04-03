@@ -47,13 +47,19 @@
     .detailPost-image {
       width: 360px;
       height: 360px;
-      margin: 20px 40px;
+      margin: 20px 40px 20px 40px;
       object-fit: cover;
       border-radius: 10px;
     }
     .detailPost-text {
+      margin-top: 20px;
       width: 440px;
       font-size: 16px;
+    }
+    .detailPost-created {
+      margin-top: 20px;
+      width: 440px;
+      text-align: right;
     }
   }
 }

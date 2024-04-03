@@ -104,7 +104,7 @@ export default function Payment() {
     };
     await axiosInstance.post('/order/', data).then(() => {
       Swal.fire({
-        icon: 'info',
+        icon: 'success',
         title: '결제 완료',
         html: '결제가 성공적으로 이루어졌습니다.',
         showCancelButton: false,

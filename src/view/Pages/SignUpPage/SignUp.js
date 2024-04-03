@@ -76,7 +76,7 @@ function SignUp() {
         is_seller: isSeller,
       });
       Swal.fire({
-        icon: 'info',
+        icon: 'success',
         title: '회원가입 성공',
         html: '푸드브릿지의 회원이 되신 것을 축하합니다.<br>다시 로그인 해주세요.',
         showCancelButton: false,

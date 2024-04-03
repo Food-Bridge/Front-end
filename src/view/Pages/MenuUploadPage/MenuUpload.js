@@ -67,7 +67,7 @@ function MenuUpload() {
           ));
       }
       Swal.fire({
-        icon: 'info',
+        icon: 'success',
         title: id ? '메뉴 수정' : '메뉴 추가',
         html: '요청이 정상적으로 이루어졌습니다.',
         showCancelButton: false,

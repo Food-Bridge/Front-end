@@ -37,7 +37,7 @@ function PostUpload() {
   };
 
   const handleUploadBlog = async () => {
-    formData.append('image', image);
+    formData.append('img', image);
     formData.append('title', title);
     formData.append('content', content);
     console.log([...formData.entries()]);
@@ -49,7 +49,7 @@ function PostUpload() {
       })
       .then(() => {
         Swal.fire({
-          icon: 'info',
+          icon: 'success',
           title: '등록',
           html: '게시물이 등록되었습니다.',
           showCancelButton: false,

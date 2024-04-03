@@ -29,7 +29,7 @@ function OptionUpload() {
         }
       );
       Swal.fire({
-        icon: 'warning',
+        icon: 'success',
         title: '옵션 추가',
         html: '요청이 정상적으로 이루어졌습니다.',
         showCancelButton: false,

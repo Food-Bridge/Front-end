@@ -55,7 +55,7 @@ function ReviewUpload() {
       })
       .then(
         Swal.fire({
-          icon: 'info',
+          icon: 'success',
           title: '등록 완료',
           html: '리뷰가 성공적으로 등록되었습니다.',
           showCancelButton: false,

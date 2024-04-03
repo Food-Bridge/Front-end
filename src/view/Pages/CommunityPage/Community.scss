@@ -17,10 +17,18 @@
       height: 30px;
       display: flex;
       align-items: center;
-      .community-weekTitle {
+      justify-content: space-between;
+      .community-weekBox {
+        display: flex;
+        .community-weekTitle {
         font-size: 16px;
         margin-right: 10px;
       }
+      }
+      .community-editIcon {
+
+      }
+      
     }
     .community-weekMiniPost {
       display: flex;

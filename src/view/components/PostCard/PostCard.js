@@ -9,16 +9,16 @@ function PostCard({ post }) {
       <div className='postCard-frame'>
         <header className='postCard-header'>
           <div className='postCard-userInfo'>
-            <img className='postCard-userIcon' src={post.user_image} />
+            <img className='postCard-userIcon' src={post.author_info.image} />
             <div className='postCard-userName'>
-              {post.user_nickname || '닉네임'}
+              {post.author_info.nickname ? post.author_info.nickname : '닉네임'}
             </div>
           </div>
           <div className='postCard-icons'>
             <div className='postCard-likeCount'>
               <h1 className='postCard-fontSize'>
                 <CiHeart className='postCard-likeIcon' />
-                {post.like_users.length}
+                {post.likes_count}
               </h1>
             </div>
             <div className='postCard-viewCount'>

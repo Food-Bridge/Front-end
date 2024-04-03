@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import axiosInstance from '../../../api/instance';
 
 const PostComment = ({ data, postId }) => {
+  console.log(data)
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(data.content);
 
@@ -12,7 +13,7 @@ const PostComment = ({ data, postId }) => {
       .delete(`/community/${postId}/comment/${data.id}/`)
       .then(
         Swal.fire({
-          icon: 'info',
+          icon: 'warning',
           title: '댓글 삭제',
           html: '댓글을 정말로 삭제하시겠습니까?.',
           showCancelButton: true,
@@ -51,7 +52,7 @@ const PostComment = ({ data, postId }) => {
       })
       .then(
         Swal.fire({
-          icon: 'info',
+          icon: 'success',
           title: '수정 완료',
           html: '댓글이 정상적으로 수정되었습니다.',
           confirmButtonText: '확인',
@@ -75,10 +76,10 @@ const PostComment = ({ data, postId }) => {
       <div className='postComment-frame'>
         <div className='postComment-top'>
           <div className='postComment-userInfo'>
-            <div className='postComment-profile'></div>
-            <div className='postComment-userName'>
-              {data.user_nickname || '닉네임'}
-            </div>
+            {/* <img className='postComment-profile' src={data.author_info.image} /> */}
+            {/* <div className='postComment-userName'>
+              {data.author_info.nickname ? data.author_info.nickname : '닉네임'}
+            </div> */}
           </div>
           <div className='postComment-headerRight'>
             <button

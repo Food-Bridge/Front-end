@@ -64,7 +64,7 @@ export default function MyList() {
     dispatch(setDefaultId(null));
     dispatch(updateAddresses([]));
     Swal.fire({
-      icon: 'info',
+      icon: 'success',
       title: '로그아웃',
       text: '성공적으로 로그아웃 되었습니다.',
       showCancelButton: false,
