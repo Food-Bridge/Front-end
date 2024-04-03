@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 function ReviewUpload() {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  const [imageDisplay, setImageDisplay] = useState(null)
+  const [imageDisplay, setImageDisplay] = useState(null);
   const [caption, setCaption] = useState('');
   const [rating, setRating] = useState(5);
   const formData = new FormData();
@@ -34,6 +34,7 @@ function ReviewUpload() {
     const { files } = event.target;
     const file = files[0];
     setImage(file);
+    formData.append('img', image);
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageDisplay(reader.result);
@@ -45,7 +46,6 @@ function ReviewUpload() {
     formData.append('caption', caption);
     formData.append('rating', rating);
     formData.append('menu_name', menu);
-    formData.append('img', image);
 
     axiosInstance
       .post(`/review/${id}/create/`, formData, {
