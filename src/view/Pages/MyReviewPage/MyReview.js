@@ -7,7 +7,6 @@ import RateStars from '../../components/RateStars/RateStars';
 
 export default function MyReview() {
   const [reviewData, setReviewData] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get(`/review/`);
@@ -34,15 +33,15 @@ export default function MyReview() {
               <RateStars rate={rate} starOnly />
             </p>
             <p className='myReview-num'>리뷰 {reviewData.length}개</p>
+            <div className='myReview-review'>
+              {reviewData.map((review) => {
+                return <ReviewBox key={review.id} data={review} myReview />;
+              })}
+            </div>
           </>
         ) : (
           <p className='myReview-noReview'>리뷰가 존재하지 않습니다.</p>
         )}
-        <div className='myReview-review'>
-          {reviewData.map((review) => {
-            return <ReviewBox key={review.id} data={review} myReview />;
-          })}
-        </div>
       </div>
     </>
   );

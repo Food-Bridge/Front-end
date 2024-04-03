@@ -1,12 +1,17 @@
 import React from 'react';
-
 import { CiLocationOn } from 'react-icons/ci';
 import { CiClock2 } from 'react-icons/ci';
 import { HiOutlineXMark } from 'react-icons/hi2';
-
 import './MyListDeliver.scss';
 
 export default function MyListDeliver() {
+  // const [deliverState, setDeliverState] = useState(0)
+  // const prepareTime = Math.random() * (20 - 10) + 10;
+  // let deliverTime // 모빌리티 시간 가져오기
+  // const totalTime = prepareTime + deliverTime
+  // const restTime = timeNow
+
+  // deliverState
   return (
     <div className='mylistDeliver'>
       <div className='mylistDeliver-header'>

@@ -29,7 +29,6 @@ const LocationList = ({
 
   const handleDefaultAddress = (address) => {
     dispatch(setDefaultAddress(address));
-    dispatch(fetchAddresses());
   };
 
   return (
