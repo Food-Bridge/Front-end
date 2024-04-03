@@ -5,7 +5,7 @@ import './LogoBar.scss';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
-import logoImg from '../../../data/foodbridge.jpg'
+import logoImg from '../../../data/foodbridge.jpg';
 
 export default function LogoBar() {
   const navigate = useNavigate();
@@ -35,11 +35,7 @@ export default function LogoBar() {
             <IoIosArrowBack className='logoBar-backIcon' />
           </button>
           <button className='logoBar-logo' onClick={handleHomeClick}>
-            <img
-              className='logoBar-logoImage'
-              src={logoImg}
-              alt='로고이미지'
-            />
+            <img className='logoBar-logoImage' src={logoImg} alt='로고이미지' />
           </button>
           <button className='logoBar-user' onClick={handleUserClick}>
             <LuUserCircle2 className='logoBar-userIcon' />
