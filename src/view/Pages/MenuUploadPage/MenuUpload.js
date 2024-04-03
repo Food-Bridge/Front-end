@@ -54,7 +54,6 @@ function MenuUpload() {
           `/restaurant/${owner}/menu/`,
           data
         );
-        dispatch(setOwner(res.data.id));
         image !== null &&
           (await axiosInstance.patch(
             `/restaurant/${owner}/menu/${id}/`,

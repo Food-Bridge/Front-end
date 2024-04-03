@@ -4,11 +4,12 @@ import './Payment.scss';
 import { SlPresent } from 'react-icons/sl';
 import { MdOutlineHouse } from 'react-icons/md';
 import { CiDeliveryTruck } from 'react-icons/ci';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectMenu,
   selectStore,
   selectIsDeliver,
+  deleteMenu,
 } from '../../../redux/reducers/cartSlice';
 import PaymentMethod from '../../components/PaymentMethod/PaymentMethod';
 import {
@@ -18,8 +19,17 @@ import {
 import axiosInstance from '../../../api/instance';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import Swal from 'sweetalert2';
+import {
+  selectDeliverInfo,
+  setCreated,
+  setDeliverTime,
+  setPrepareTime,
+  setRestaurantName,
+  setShowMyListDeliver,
+} from '../../../redux/reducers/deliverSlice';
 
 export default function Payment() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [storeRequest, setStoreRequest] = useState('');
   const [disposable, setDisposable] = useState(false);
@@ -85,7 +95,7 @@ export default function Payment() {
     };
     fetchCoupon();
   }, []);
-  console.log(selectedCoupon);
+
   const handlePostPayment = async () => {
     const data = {
       menu_list: menuList,
@@ -102,17 +112,26 @@ export default function Payment() {
       restaurant: store.id,
       order_state: 'order_complete',
     };
-    await axiosInstance.post('/order/', data).then(() => {
-      Swal.fire({
-        icon: 'success',
-        title: '결제 완료',
-        html: '결제가 성공적으로 이루어졌습니다.',
-        showCancelButton: false,
-        confirmButtonText: '확인',
-        confirmButtonColor: 'black',
-      }).then((res) => {
-        res.isConfirmed && navigate('/');
-      });
+    await axiosInstance.post('/order/', data).then((res) => {
+      if (res.data.is_deliver) {
+        const prepareTime = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+        dispatch(setRestaurantName(res.data.restaurant_name));
+        dispatch(setCreated(res.data.created_at));
+        dispatch(setDeliverTime(res.data.estimate_time));
+        dispatch(setPrepareTime(prepareTime));
+        dispatch(setShowMyListDeliver(true));
+      }
+      // Swal.fire({
+      //   icon: 'success',
+      //   title: '결제 완료',
+      //   html: '결제가 성공적으로 이루어졌습니다.',
+      //   showCancelButton: false,
+      //   confirmButtonText: '확인',
+      //   confirmButtonColor: 'black',
+      // }).then((res) => {
+      //   dispatch(deleteMenu())
+      //   res.isConfirmed && navigate('/');
+      // });
     });
   };
 

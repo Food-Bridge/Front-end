@@ -4,14 +4,15 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './reducers/authSlice';
 import addressReducer from './reducers/addressSlice';
 import cartReducer from './reducers/cartSlice';
-import communityReducer from './reducers/communitySlice'
+import communityReducer from './reducers/communitySlice';
+import deliverReducer from './reducers/deliverSlice';
 
 const EXPIRATION_TIME = 30 * 60 * 1000;
 
 const storageConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['auth', 'address', 'cart'],
+  whitelist: ['auth', 'address', 'cart', 'deliver'],
   timeout: 5000,
 };
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   address: addressReducer,
   cart: cartReducer,
   community: communityReducer,
+  deliver: deliverReducer,
 });
 
 const persistedReducer = persistReducer(storageConfig, rootReducer);

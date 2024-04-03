@@ -32,7 +32,7 @@ function SignIn() {
       dispatch(setTokens({ access, refresh }));
       res.data.is_seller &&
         dispatch(loginS()) &&
-        dispatch(setOwner(res.data.owner[0]));
+        dispatch(setOwner(res.data.owner));
       navigate('/');
     } catch (error) {
       Swal.fire({

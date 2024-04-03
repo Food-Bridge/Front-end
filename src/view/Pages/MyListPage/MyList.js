@@ -27,12 +27,13 @@ import { CiDiscount1, CiGift } from 'react-icons/ci';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { GoMegaphone } from 'react-icons/go';
 import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
+import { selectShowMyListDeliver } from '../../../redux/reducers/deliverSlice';
 
 export default function MyList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
-  const isDelivering = false
+  const isDelivering = true;
 
   const onChangeImage = async (event) => {
     const { files } = event.target;
