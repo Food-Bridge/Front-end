@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import { setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
@@ -14,6 +14,7 @@ const GoogleCallback = () => {
       const code = params.get('code');
       const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
       const redirect_uri = `${process.env.REACT_APP_URL}/signin/googleCallback/ `;
+      console.log(redirect_uri)
       const CLIENT_SECRET = process.env.REACT_APP_GOOGLE_SECRET_ID;
 
       const response = await axiosInstance.post(
