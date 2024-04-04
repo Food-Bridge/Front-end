@@ -5,7 +5,7 @@ function SignUpBtn({className1, className2}) {
   return (
     <div className='SignUpBtn'>
       <div className={`${className1}`}>
-        <div className={`${className2}`}>회원가입</ㅇ>
+        <div className={`${className2}`}>회원가입</div>
       </div>
     </div>
   )
