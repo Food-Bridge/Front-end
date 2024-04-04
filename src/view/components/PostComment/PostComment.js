@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import axiosInstance from '../../../api/instance';
 
 const PostComment = ({ data, postId }) => {
-  console.log(data)
+  console.log(data);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(data.content);
 
@@ -76,10 +76,13 @@ const PostComment = ({ data, postId }) => {
       <div className='postComment-frame'>
         <div className='postComment-top'>
           <div className='postComment-userInfo'>
-            {/* <img className='postComment-profile' src={data.author_info.image} /> */}
-            {/* <div className='postComment-userName'>
-              {data.author_info.nickname ? data.author_info.nickname : '닉네임'}
-            </div> */}
+            <img
+              className='postComment-profile'
+              src='http://localhost:8000/media/default.png'
+            />
+            <div className='postComment-userName'>
+              {data.author_info ? data.author_info.nickname : '닉네임'}
+            </div>
           </div>
           <div className='postComment-headerRight'>
             <button

@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 
 function PostDetail() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState([]);
   const [commentData, setCommentData] = useState([]);
   const { id } = useParams();
@@ -25,7 +26,7 @@ function PostDetail() {
             .get(`/community/${id}/comment/`)
             .then((res) => {
               setCommentData(res.data);
-              console.log(commentData);
+              setLoading(false)
             })
             .catch((error) =>
               Swal.fire({
@@ -60,17 +61,18 @@ function PostDetail() {
       <div className='postDetail-menuBar'>
         <MenuBar name={'menuBar-pageLine3'} />
       </div>
-      {postData && <DetailPost data={postData} />}
-
-      <div className='postDetail-comment'>
-        <PostCommentInput id={id} />
-        <div className='postDetail-commentList'>
-          {commentData &&
-            commentData.map((comment) => (
-              <PostComment postId={id} data={comment} key={comment.id} />
-            ))}
+      {!loading && <DetailPost data={postData} />}
+      {!loading && (
+        <div className='postDetail-comment'>
+          <PostCommentInput id={id} />
+          <div className='postDetail-commentList'>
+            {commentData &&
+              commentData.map((comment) => (
+                <PostComment postId={id} data={comment} key={comment.id} />
+              ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -28,7 +28,7 @@ export const selectLatestPost = (state) => state.community.latest;
 export const { setWeeklyPost, setDailyPost, setLatestPost } =
   CommunitySlice.actions;
 
-export const fetchPostData = () => async (dispatch, getState) => {
+export const fetchPostData = () => async (dispatch) => {
   await axiosInstance.get('/community/weekly/').then((response) => {
     dispatch(setWeeklyPost(response.data));
   });

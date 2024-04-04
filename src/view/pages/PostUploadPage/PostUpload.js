@@ -37,16 +37,16 @@ function PostUpload() {
   };
 
   const handleUploadBlog = async () => {
-    formData.append('img', image);
     formData.append('title', title);
     formData.append('content', content);
+    image && formData.append('img', image);
     await axiosInstance
       .post('/community/create/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then(() => {
+      .then((res) => {
         Swal.fire({
           icon: 'success',
           title: '등록',

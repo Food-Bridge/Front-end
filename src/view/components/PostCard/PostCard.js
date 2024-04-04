@@ -2,8 +2,17 @@ import React from 'react';
 import './PostCard.scss';
 import { CiHeart } from 'react-icons/ci';
 import { IoEyeOutline } from 'react-icons/io5';
+import { FaRegComment } from 'react-icons/fa';
 
 function PostCard({ post }) {
+  const created = new Date(post.created_at);
+  const formedCreated = created.toLocaleString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
   return (
     <div className='PostCard'>
       <div className='postCard-frame'>
@@ -14,6 +23,7 @@ function PostCard({ post }) {
               {post.author_info.nickname ? post.author_info.nickname : '닉네임'}
             </div>
           </div>
+
           <div className='postCard-icons'>
             <div className='postCard-likeCount'>
               <h1 className='postCard-fontSize'>
@@ -27,34 +37,35 @@ function PostCard({ post }) {
                 {post.views}
               </h1>
             </div>
+            <div className='postCard-commentCount'>
+              <h1 className='postCard-fontSize'>
+                <FaRegComment className='postCard-commentIcon' />
+                {post.comment_count}
+              </h1>
+            </div>
           </div>
         </header>
 
         <div className='postCard-section'>
-          {post.image && (
+          {post.img.length > 0 && (
             <div className='postCard-img'>
               <img
                 className='postCard-imgSize'
-                src={post.image}
+                src={post.img[0].image}
                 alt='게시물 이미지'
               />
             </div>
           )}
           <div
             className={
-              post.image ? 'postCard-contents' : 'postCard-contents noImage'
+              post.img.length > 0
+                ? 'postCard-contents'
+                : 'postCard-contents noImage'
             }
           >
-            <div className='postCard-postTitle'>{post.title}</div>
-            <div
-              className={
-                post.image
-                  ? 'postCard-postWriting'
-                  : 'postCard-postWriting noImage'
-              }
-            >
-              <p>{post.content}</p>
-            </div>
+            <h1 className='postCard-postTitle'>{post.title}</h1>
+            <p className='postCard-postWriting'>{post.content}</p>
+            <p className='postCard-created'>{formedCreated}</p>
           </div>
         </div>
       </div>

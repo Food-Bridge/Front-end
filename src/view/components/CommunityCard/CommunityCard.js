@@ -43,28 +43,22 @@ export default function CommunityCard({ post }) {
           </div>
         </header>
         <div className='communityCard-box'>
-          {post.image && (
+          {post.img.length > 0 && (
             <img
               className='communityCard-image'
-              src={post.image[0]}
+              src={post.img[0].image}
               alt='게시물 이미지'
             />
           )}
           <div
             className={
-              post.image
+              post.img.length > 0
                 ? 'communityCard-content'
                 : 'communityCard-content noImage'
             }
           >
             <h1 className='communityCard-title'>{post.title}</h1>
-            <p
-              className={
-                post.image ? 'communityCard-text' : 'communityCard-text noImage'
-              }
-            >
-              {post.content}
-            </p>
+            <p className='communityCard-text'>{post.content}</p>
           </div>
         </div>
       </button>

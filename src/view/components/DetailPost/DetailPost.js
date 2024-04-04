@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import axiosInstance from '../../../api/instance';
 import { MdOutlineDelete } from 'react-icons/md';
+import { CiHeart } from 'react-icons/ci';
+import { IoEyeOutline } from 'react-icons/io5';
+import { FaRegComment } from 'react-icons/fa';
 
 import Swal from 'sweetalert2';
 
@@ -17,7 +20,6 @@ function DetailPost({ data }) {
     hour: '2-digit',
     minute: '2-digit',
   });
-
   // const [isLiked, setIsLiked] = useState(false);
 
   // if (data.like_users.includes()) {
@@ -46,27 +48,24 @@ function DetailPost({ data }) {
           res.isConfirmed && navigate(-1);
         })
       )
-      .catch(
+      .catch((error) => {
         Swal.fire({
           icon: 'warning',
           title: '알림',
           html: '게시물이 정상적으로 삭제되지 않았습니다.',
           confirmButtonText: '확인',
           confirmButtonColor: 'black',
-        })
-      );
+        });
+      });
   };
 
   return (
     <div className='DetailPost'>
       <header className='detailPost-header'>
         <div className='detailPost-profile'>
-          <img
-            className='detailPost-profileImg'
-            src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-          />
+          <img className='detailPost-profileImg' src={data.author_info.image} />
           <p className='detailPost-profileName'>
-            {data.user_nickname || '닉네임'}
+            {data.author_info.nickname || '닉네임'}
           </p>
         </div>
         <div className='detailPost-headerRight'>
@@ -88,10 +87,22 @@ function DetailPost({ data }) {
       </header>
       <div className='detailPost-content'>
         <h1 className='detailPost-title'>{data.title}</h1>
-        {data.image && <img className='detailPost-image' src={data.image} />}
+        {data._img.length > 0 && (
+          <img className='detailPost-image' src={data._img[0].image} />
+        )}
 
         <p className='detailPost-text'>{data.content}</p>
-        <p className='detailPost-created'>{formedCreated}</p>
+        <footer className='detailPost-footer'>
+          <div className='detailPost-icons'>
+            <CiHeart className='detailPost-icon' size='18'/>
+            <p className='detailPost-numData'>{data.likes_count}</p>
+            <IoEyeOutline className='detailPost-icon' size='18'/>
+            <p className='detailPost-numData'>{data.views}</p>
+            <FaRegComment className='detailPost-icon' />
+            <p className='detailPost-numData'>{data.comment_count}</p>
+          </div>
+          <p className='detailPost-created'>{formedCreated}</p>
+        </footer>
       </div>
     </div>
   );

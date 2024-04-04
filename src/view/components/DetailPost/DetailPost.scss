@@ -5,8 +5,10 @@
   border-radius: 5px;
   margin: 20px 50px;
   .detailPost-header {
+    width: 440px;
     display: flex;
     margin-top: 10px;
+    margin-left: 20px;
     align-items: center;
     justify-content: space-between;
     .detailPost-profile {
@@ -41,7 +43,7 @@
       font-size: 24px;
       font-weight: 800;
       padding-bottom: 10px;
-      border-bottom: 2px solid #c6c6c6;
+      border-bottom: 1px solid #c6c6c6;
       text-align: center;
     }
     .detailPost-image {
@@ -56,10 +58,24 @@
       width: 440px;
       font-size: 16px;
     }
-    .detailPost-created {
-      margin-top: 20px;
+    .detailPost-footer {
+      display: flex;
       width: 440px;
-      text-align: right;
+      justify-content: space-between;
+      margin-top: 20px;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid #c6c6c6;
+      .detailPost-icons {
+        display: flex;
+        align-items: center;
+        .detailPost-icon {
+          margin-right: 5px;
+        }
+        .detailPost-numData {
+          margin-right: 5px;
+        }
+      }
     }
   }
 }
