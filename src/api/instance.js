@@ -2,9 +2,9 @@ import axios from 'axios';
 import store from '../redux/store';
 import Swal from 'sweetalert2';
 
-const REFRESH_URL = 'http://localhost:8000/users/token/refresh/';
+const REFRESH_URL = 'https://smartorder-api.fly.dev/users/token/refresh/';
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000/',
+  baseURL: 'https://smartorder-api.fly.dev/',
   timeout: 10000,
 });
 
