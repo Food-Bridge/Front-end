@@ -98,12 +98,12 @@ function SignIn() {
                 <button className='signIn-signInBtn' onClick={handleLogin}>
                   <LogInBtn />
                 </button>
-                <div className='signIn-signUpBtn' onClick={handleSignUp}>
+                <button className='signIn-signUpBtn' onClick={handleSignUp}>
                   <SignUpBtn
                     className1={'signUpBtn-frame2'}
                     className2={'signUpBtn-text2'}
                   />
-                </div>
+                </button>
               </div>
             </div>
             <div className='signIn-btn'>
