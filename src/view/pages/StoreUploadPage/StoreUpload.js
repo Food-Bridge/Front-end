@@ -75,44 +75,34 @@ function StoreUpload() {
   const handleAddStore = async () => {
     try {
       const formData = new FormData();
-      formData.append('image', image);
-      const data = {
-        name: name,
-        address: address,
-        phone_number: phone,
-        description: description,
-        minimumOrderPrice: minOrderPrice,
-        minimumPickupPrice: minPickUpPrice,
-        minDeliveryTimeMinutes: minDeliverTime,
-        maxDeliveryTimeMinutes: maxDeliverTime,
-        minPickupTime: minPickUpTime,
-        packaging: packaging,
-        status: status,
-        start: start,
-        end: end,
-        operatingTime: operating,
-        deliveryFee: deliveryFee,
-        mainCategory: mainCategory.id,
-        mainCategory_name: mainCategory.name,
-      };
-      if (typeof owner === 'number') {
-        await axiosInstance.patch(`/restaurant/${owner}/`, data);
-        image !== null &&
-          (await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }));
-      } else {
-        const res = await axiosInstance.post(`/restaurant/`, data);
-        dispatch(setOwner(res.data.id));
-        image !== null &&
-          (await axiosInstance.patch(`/restaurant/${owner}/`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }));
+      if (image) {
+        formData.append('image', image);
       }
+      formData.append('name', name);
+      formData.append('address', address);
+      formData.append('phone_number', phone);
+      formData.append('description', description);
+      formData.append('minimumOrderPrice', minOrderPrice);
+      formData.append('minimumPickupPrice', minPickUpPrice);
+      formData.append('minDeliveryTimeMinutes', minDeliverTime);
+      formData.append('maxDeliveryTimeMinutes', maxDeliverTime);
+      formData.append('minPickupTime', minPickUpTime);
+      formData.append('packaging', packaging);
+      formData.append('status', status);
+      formData.append('start', start);
+      formData.append('end', end);
+      formData.append('operatingTime', operating);
+      formData.append('deliveryFee', deliveryFee);
+      formData.append('mainCategory', mainCategory.id);
+      formData.append('mainCategory_name', mainCategory.name);
+  
+      if (typeof owner === 'number') {
+        await axiosInstance.patch(`/restaurant/${owner}/`, formData);
+      } else {
+        const response = await axiosInstance.post(`/restaurant/`, formData);
+        dispatch(setOwner(response.data.id));
+      }
+  
       Swal.fire({
         icon: 'success',
         title: owner ? '매장 수정' : '매장 추가',
@@ -120,7 +110,9 @@ function StoreUpload() {
         showCancelButton: false,
         confirmButtonText: '확인',
         confirmButtonColor: 'black',
-      }).then(navigate('/'));
+      }).then(() => {
+        navigate('/');
+      });
     } catch (error) {
       Swal.fire({
         icon: 'warning',
@@ -134,6 +126,7 @@ function StoreUpload() {
       });
     }
   };
+  
 
   const handleDeleteStore = () => {
     axiosInstance.delete(`/restaurant/${owner}`);

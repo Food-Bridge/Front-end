@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import './CartList.scss';
 import { SlPresent } from 'react-icons/sl';
 import { CiDeliveryTruck } from 'react-icons/ci';
@@ -16,7 +16,10 @@ import {
   setMenuData,
 } from '../../../redux/reducers/cartSlice';
 import { useNavigate } from 'react-router-dom';
-import { selectAddresses, selectDefaultId } from '../../../redux/reducers/addressSlice';
+import {
+  selectAddresses,
+  selectDefaultId,
+} from '../../../redux/reducers/addressSlice';
 
 export default function CartList() {
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ export default function CartList() {
   const store = useSelector(selectStore);
   const menu = useSelector(selectMenu);
   const address = useSelector(selectAddresses);
-  const defaultId = useSelector(selectDefaultId)
+  const defaultId = useSelector(selectDefaultId);
 
   const totalValue = menu.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -60,7 +63,7 @@ export default function CartList() {
   };
 
   const handleDeleteMenu = (indexToDelete) => {
-    const updatedMenu = menu.filter((index) => index !== indexToDelete);
+    const updatedMenu = menu.filter((_, index) => index !== indexToDelete);
     updatedMenu.length > 0
       ? dispatch(setMenuData(updatedMenu))
       : dispatch(deleteMenu());
@@ -99,7 +102,7 @@ export default function CartList() {
         html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
         showCancelButton: false,
         confirmButtonText: '확인',
-        confirmButtonColor: 'black'
+        confirmButtonColor: 'black',
       });
       navigate('/users/address/');
     }
@@ -116,7 +119,7 @@ export default function CartList() {
   return (
     <>
       <h1 className='cartlist-header'>주문하기</h1>
-      {isMenuIn ? (
+      {isMenuIn && !isNaN(totalPrice) ? (
         <div className='cartlist-list'>
           <div className='cartlist-info'>
             <div className='cartlist-store'>

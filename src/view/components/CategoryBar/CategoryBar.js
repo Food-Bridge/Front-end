@@ -3,14 +3,14 @@ import './CategoryBar.scss';
 import dataArr from '../../../data/CategoryData/CategoryData'
 import Category from '../../components/Category/Category';
 
-function CategoryBar({setCategory}) {
+function CategoryBar({category, setCategory}) {
   return (
     <div className='CategoryBar'>
       <div className='categoryBar-category'>
-        <div className='categoryBar-categoryComp'>
           {dataArr.map((el, index) => {
             return (
               <Category
+                selected = {category == el.id}
                 category={el.category}
                 key={index}
                 image={el.image}
@@ -18,7 +18,6 @@ function CategoryBar({setCategory}) {
               />
             );
           })}
-        </div>
       </div>
     </div>
   );

@@ -21,15 +21,14 @@
       .community-weekBox {
         display: flex;
         .community-weekTitle {
-        font-size: 16px;
-        margin-right: 10px;
-      }
+          font-size: 16px;
+          margin-right: 10px;
+        }
       }
       .community-editIcon {
-
       }
-      
     }
+
     .community-weekMiniPost {
       display: flex;
       justify-content: space-between;
@@ -84,5 +83,10 @@
       justify-content: space-between;
       margin-top: 10px;
     }
+  }
+  .community-nothing {
+    width: 500px;
+    margin: 50px;
+    text-align: center;
   }
 }

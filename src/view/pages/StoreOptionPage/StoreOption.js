@@ -15,6 +15,7 @@ export default function StoreOption() {
   const [sOptionData, setSOptionData] = useState([]);
   const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const price =
     menuData.price +
@@ -39,6 +40,7 @@ export default function StoreOption() {
       setSOptionData(sOptionRes.data);
     };
     fetchData();
+    setLoading(false);
   }, [resId, menuId]);
 
   const handleOptionChange = (selectedOption) => {
@@ -49,9 +51,9 @@ export default function StoreOption() {
     setSOption(selectedSOption);
   };
 
-  return (
+  return loading ? null : (
     <div className='storeOption'>
-      <img src={menuData.image} className='storeOption-img' />
+      <img src={menuData.image} alt='메뉴이미지' className='storeOption-img' />
       <div className='storeOption-title'>
         {menuData.is_popular && (
           <div className='storeOption-tag'>
@@ -78,11 +80,13 @@ export default function StoreOption() {
       {sOptionData.length > 0 && (
         <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
       )}
-      <CartAddBtn
-        price={price}
-        data={data}
-        menuData={{ ...menuData, option, sOption }}
-      />
+      {!isNaN(price) && (
+        <CartAddBtn
+          price={price}
+          data={data}
+          menuData={{ ...menuData, option, sOption }}
+        />
+      )}
     </div>
   );
 }

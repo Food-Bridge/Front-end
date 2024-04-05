@@ -11,6 +11,7 @@ const Location = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [editedNicknames, setEditedNicknames] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const handleEditAddressNickname = (id, value) => {
     setEditedNicknames((prevState) => ({
@@ -49,17 +50,22 @@ const Location = () => {
         <div>
           <header className='location-header'>
             <h1 className='location-title'>주소 관리</h1>
-            <button
-              className='location-edit'
-              onClick={isEdit ? handleCompleteEditing : handleToggleEdit}
-            >
-              {isEdit ? '완료' : '편집'}
-            </button>
+            {loading ? (
+              <p className='location-nothing'>로딩중입니다.</p>
+            ) : (
+              <button
+                className='location-edit'
+                onClick={isEdit ? handleCompleteEditing : handleToggleEdit}
+              >
+                {isEdit ? '완료' : '편집'}
+              </button>
+            )}
           </header>
           <button className='location-add' onClick={handleClickAdd}>
             주소 추가
           </button>
           <LocationList
+            setLoading={setLoading}
             isEdit={isEdit}
             handleEditAddressNickname={handleEditAddressNickname}
             editedNicknames={editedNicknames}

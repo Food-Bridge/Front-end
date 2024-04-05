@@ -15,6 +15,7 @@ const LocationList = ({
   isEdit,
   editedNicknames,
   handleEditAddressNickname,
+  setLoading
 }) => {
   const dispatch = useDispatch();
   const addresses = useSelector(selectAddresses);
@@ -24,6 +25,7 @@ const LocationList = ({
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(fetchAddresses());
+      setLoading(false);
     }
   }, [dispatch, isLoggedIn]);
 
