@@ -13,7 +13,7 @@ const GoogleCallback = () => {
       const params = new URL(document.location.toString()).searchParams;
       const code = params.get('code');
       const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-      const redirect_uri = `${process.env.REACT_APP_URL}/users/signin/googleCallback/ `;
+      const redirect_uri = `${process.env.REACT_APP_URL}/signin/googleCallback/ `;
       const CLIENT_SECRET = process.env.REACT_APP_GOOGLE_SECRET_ID;
 
       const response = await axiosInstance.post(

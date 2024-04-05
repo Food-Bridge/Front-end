@@ -27,7 +27,6 @@ function SignIn() {
         is_seller: isSeller,
       };
       const res = await axiosInstance.post('/users/login/', data);
-      console.log(res);
       const { access, refresh } = res.data.tokens;
       dispatch(setTokens({ access, refresh }));
       res.data.is_seller &&
