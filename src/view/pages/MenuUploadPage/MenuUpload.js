@@ -32,38 +32,25 @@ function MenuUpload() {
     try {
       const formData = new FormData();
       formData.append('image', image);
-      const data = {
-        name: name,
-        content: content,
-        price: price,
-      };
+      formData.append('name', name);
+      formData.append('content', content);
+      formData.append('price', price);
       if (id !== null) {
-        await axiosInstance.patch(`/restaurant/${owner}/menu/${id}/`, data);
-        image !== null &&
-          (await axiosInstance.patch(
-            `/restaurant/${owner}/menu/${id}/`,
-            formData,
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-          ));
-      } else {
-        const res = await axiosInstance.post(
-          `/restaurant/${owner}/menu/`,
-          data
+        await axiosInstance.patch(
+          `/restaurant/${owner}/menu/${id}/`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
         );
-        image !== null &&
-          (await axiosInstance.patch(
-            `/restaurant/${owner}/menu/${id}/`,
-            formData,
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-          ));
+      } else {
+        await axiosInstance.post(`/restaurant/${owner}/menu/`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       }
       Swal.fire({
         icon: 'success',
