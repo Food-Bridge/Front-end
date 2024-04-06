@@ -34,7 +34,6 @@ function ReviewUpload() {
     const { files } = event.target;
     const file = files[0];
     setImage(file);
-    formData.append('img', image);
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageDisplay(reader.result);
@@ -42,42 +41,41 @@ function ReviewUpload() {
     reader.readAsDataURL(file);
   };
 
-  const handleClickUpload = () => 
-  {
+  const handleClickUpload = () => {
     if (image !== null) {
-    formData.append('caption', caption);
-    formData.append('rating', rating);
-    formData.append('menu_name', menu);
+      formData.append('caption', caption);
+      formData.append('rating', rating);
+      formData.append('menu_name', menu);
+      formData.append('img', image);
 
-    axiosInstance
-      .post(`/review/${id}/create/`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then(
-        Swal.fire({
-          icon: 'success',
-          title: '등록 완료',
-          html: '리뷰가 성공적으로 등록되었습니다.',
-          showCancelButton: false,
-          confirmButtonText: '확인',
-          confirmButtonColor: 'black',
-        }).then((res) => {
-          res.isConfirmed && navigate('/orderlist/');
+      axiosInstance
+        .post(`/review/${id}/create/`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         })
-      )}
-      else {
-        Swal.fire({
-          icon: 'warning',
-          title: '등록 실패',
-          html: '이미지를 넣어주세요.',
-          showCancelButton: false,
-          confirmButtonText: '확인',
-          confirmButtonColor: 'black',
-        })
-      }
-
+        .then(
+          Swal.fire({
+            icon: 'success',
+            title: '등록 완료',
+            html: '리뷰가 성공적으로 등록되었습니다.',
+            showCancelButton: false,
+            confirmButtonText: '확인',
+            confirmButtonColor: 'black',
+          }).then((res) => {
+            res.isConfirmed && navigate('/orderlist/');
+          })
+        );
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: '등록 실패',
+        html: '이미지를 넣어주세요.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        confirmButtonColor: 'black',
+      });
+    }
   };
 
   return (

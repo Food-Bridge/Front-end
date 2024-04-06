@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 const REFRESH_URL = `${process.env.REACT_APP_URL}/users/token/refresh/`;
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_URL,
-  timeout: 10000,
 });
 
 const refreshToken = async () => {

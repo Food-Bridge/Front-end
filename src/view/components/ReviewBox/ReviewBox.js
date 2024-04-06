@@ -3,7 +3,6 @@ import './ReviewBox.scss';
 import { FaStar } from 'react-icons/fa';
 
 export default function ReviewBox({ data, myReview }) {
-  console.log(data);
   const rate = data.rating;
   const rateStars = Array(rate).fill(<FaStar color='#ffc700' size='14' />);
   const menuName = data.menu_name;
