@@ -22,11 +22,9 @@ const KakaoCallback = () => {
       const res = await axiosInstance.post('/users/kakao/login/callback/', {
         access_token: token,
       });
-console.log(response)
       const { access, refresh } = res.data.token;
       dispatch(setTokens({ access, refresh }));
       navigate('/');
-console.log(access, refresh)
     };
 
     fetchData();

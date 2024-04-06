@@ -40,7 +40,7 @@ export default function MyList() {
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
-    nickname && formData.append('nickname', profile.nickname);
+    profile.nickname && formData.append('nickname', profile.nickname);
 
     const res = await axiosInstance.patch('/users/profile/', formData);
     dispatch(setProfile({ image: res.data.image, nickname: profile.nickname }));
