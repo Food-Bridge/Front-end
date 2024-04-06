@@ -48,15 +48,15 @@ export default function MyListDeliver() {
       <div className='mylistDeliver-content'>
         <div className='mylistDeliver-status'>
           <div className='mylistDeliver-status-group'>
-            <div className='mylistDeliver-status-stage'>
+            <div className={`mylistDeliver-status-stage ${data.deliverState >= 0 ? 'active' : ''}`}>
               <h3 className='mylistDeliver-status-title'>주문 접수</h3>
               <CiLocationOn size='24' />
             </div>
-            <div className='mylistDeliver-status-stage'>
+            <div className={`mylistDeliver-status-stage ${data.deliverState >= 1 ? 'active' : ''}`}>
               <h3 className='mylistDeliver-status-title'>배달 시작</h3>
               <CiLocationOn size='24' />
             </div>
-            <div className='mylistDeliver-status-stage'>
+            <div className={`mylistDeliver-status-stage ${data.deliverState >= 2 ? 'active' : ''}`}>
               <h3 className='mylistDeliver-status-title'>도착 완료</h3>
               <CiLocationOn size='24' />
             </div>
