@@ -33,14 +33,14 @@ export default function MyList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
-  const isDelivering = true;
+  const isDelivering = useSelector(selectShowMyListDeliver);
 
   const onChangeImage = async (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
-    formData.append('nickname', profile.nickname);
+    nickname && formData.append('nickname', profile.nickname);
 
     const res = await axiosInstance.patch('/users/profile/', formData);
     dispatch(setProfile({ image: res.data.image, nickname: profile.nickname }));
@@ -97,7 +97,7 @@ export default function MyList() {
         handleLogout={handleLogout}
       />
       <MyListMain />
-      {isDelivering && <MyListDeliver />}
+      {isDelivering && <MyListDeliver />}z
       <div className='mylistBlocks-row'>
         <MyListBlock
           icon={<CiDiscount1 size='35' />}
