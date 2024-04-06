@@ -22,10 +22,10 @@ export default function Coupon({ data, downloaded }) {;
         <div className='coupon-content'>
           <h1 className='coupon-title'>{data.content}</h1>
           <p className='coupon-detail'>{data.code}</p>
-          <p className='coupon-info'>
+          <div className='coupon-info'>
             {data.minimum_order_price}원 이상 주문 시
             <p className='coupon-price'>{data.discount_price}원</p> 할인
-          </p>
+          </div>
           <div className='coupon-info '>
             <p className='coupon-expiration'>
               {data.formatted_expiration_date}
