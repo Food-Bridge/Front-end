@@ -42,7 +42,7 @@ export default function StoreLikes() {
                 className={el.className}
                 storeName={el.name}
                 minimumPrice={el.minimumOrderPrice}
-                deliverPrice={el.delivertyFee}
+                deliverPrice={el.deliveryFee}
                 storeScore={el.rating}
               />
             </button>
