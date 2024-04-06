@@ -42,7 +42,9 @@ function ReviewUpload() {
     reader.readAsDataURL(file);
   };
 
-  const handleClickUpload = () => {
+  const handleClickUpload = () => 
+  {
+    if (image) {
     formData.append('caption', caption);
     formData.append('rating', rating);
     formData.append('menu_name', menu);
@@ -64,7 +66,18 @@ function ReviewUpload() {
         }).then((res) => {
           res.isConfirmed && navigate('/orderlist/');
         })
-      );
+      )}
+      else {
+        Swal.fire({
+          icon: 'warning',
+          title: '등록 실패',
+          html: '이미지를 넣어주세요.',
+          showCancelButton: false,
+          confirmButtonText: '확인',
+          confirmButtonColor: 'black',
+        })
+      }
+
   };
 
   return (

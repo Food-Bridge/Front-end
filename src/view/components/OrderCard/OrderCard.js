@@ -50,7 +50,6 @@ export default function OrderCard({ order, isReview, time }) {
           <div className='orderCard-text'>
             <div className='orderCard-header'>
               <h1 className='orderCard-store'>{order.restaurant_name}</h1>
-              <p className='orderCard-time'>도착 예정 시간 : {time}분</p>
             </div>
             <div className='orderCard-menuList'>
               {menuList.map((menu) => (
