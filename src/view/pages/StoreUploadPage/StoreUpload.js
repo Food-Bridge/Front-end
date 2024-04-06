@@ -95,14 +95,14 @@ function StoreUpload() {
       formData.append('deliveryFee', deliveryFee);
       formData.append('mainCategory', mainCategory.id);
       formData.append('mainCategory_name', mainCategory.name);
-  
+
       if (typeof owner === 'number') {
         await axiosInstance.patch(`/restaurant/${owner}/`, formData);
       } else {
         const response = await axiosInstance.post(`/restaurant/`, formData);
         dispatch(setOwner(response.data.id));
       }
-  
+
       Swal.fire({
         icon: 'success',
         title: owner ? '매장 수정' : '매장 추가',
@@ -126,7 +126,6 @@ function StoreUpload() {
       });
     }
   };
-  
 
   const handleDeleteStore = () => {
     axiosInstance.delete(`/restaurant/${owner}`);

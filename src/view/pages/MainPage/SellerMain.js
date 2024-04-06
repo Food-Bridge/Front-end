@@ -8,7 +8,7 @@ export default function SellerMain() {
   const owner = useSelector(selectOwner);
   const navigate = useNavigate();
   const handleClickShowStore = () => {
-    if (owner.length > 0) navigate('/myStore/');
+    if (owner) navigate('/myStore/');
     else {
       Swal.fire({
         icon: 'info',
