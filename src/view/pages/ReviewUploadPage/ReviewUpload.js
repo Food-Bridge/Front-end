@@ -44,7 +44,7 @@ function ReviewUpload() {
 
   const handleClickUpload = () => 
   {
-    if (image) {
+    if (image !== null) {
     formData.append('caption', caption);
     formData.append('rating', rating);
     formData.append('menu_name', menu);
