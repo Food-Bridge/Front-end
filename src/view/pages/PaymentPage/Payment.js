@@ -20,12 +20,17 @@ import axiosInstance from '../../../api/instance';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import {
+  addDeliverList,
   selectDeliverInfo,
   setCreated,
+  setDeliverId,
   setDeliverTime,
   setPrepareTime,
   setRestaurantName,
-  setShowMyListDeliver,
+  showMyListDeliver,
+  setTotalTime,
+  resetDeliverInfo,
+  setDeliverState,
 } from '../../../redux/reducers/deliverSlice';
 
 export default function Payment() {
@@ -38,6 +43,7 @@ export default function Payment() {
   const [couponData, setCouponData] = useState([]);
   const [couponList, showCouponList] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState({ discount_price: 0 });
+  const deliverInfo = useSelector(selectDeliverInfo);
   const isDeliver = useSelector(selectIsDeliver);
   const store = useSelector(selectStore);
   const menuData = useSelector(selectMenu);
@@ -115,11 +121,14 @@ export default function Payment() {
     await axiosInstance.post('/order/', data).then((res) => {
       if (res.data.is_deliver) {
         const prepareTime = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+        dispatch(setDeliverId(res.data.id));
         dispatch(setRestaurantName(res.data.restaurant_name));
         dispatch(setCreated(res.data.created_at));
         dispatch(setDeliverTime(res.data.estimate_time));
         dispatch(setPrepareTime(prepareTime));
-        dispatch(setShowMyListDeliver(true));
+        dispatch(setTotalTime(prepareTime + res.data.estimate_time));
+        dispatch(showMyListDeliver(true));
+        dispatch(addDeliverList());
       }
       Swal.fire({
         icon: 'success',

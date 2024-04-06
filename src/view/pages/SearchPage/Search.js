@@ -64,7 +64,7 @@ export default function Search() {
                   );
                 })}
             </div>
-            <h1 className='search-title'>실시간 인기 맛집</h1>
+            {/* <h1 className='search-title'>실시간 인기 맛집</h1>
             <div className='search-store'>
               {storeData.map((el, index) => {
                 return (
@@ -79,7 +79,7 @@ export default function Search() {
                   />
                 );
               })}
-            </div>
+            </div> */}
           </div>
         </div>
       )}

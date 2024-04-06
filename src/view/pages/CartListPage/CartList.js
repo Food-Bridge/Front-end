@@ -59,7 +59,18 @@ export default function CartList() {
   };
 
   const handleDeleteMenuAll = () => {
-    dispatch(deleteMenu());
+    Swal.fire({
+      icon: 'warning',
+      title: '전체 삭제',
+      html: '모든 메뉴를 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+      confirmButtonColor: '#ca0000',
+      cancelButtonColor: 'black',
+    }).then((res) => {
+      res.isConfirmed && dispatch(deleteMenu());
+    });
   };
 
   const handleDeleteMenu = (indexToDelete) => {
@@ -159,6 +170,7 @@ export default function CartList() {
             {menu.map((item, index) => {
               return (
                 <PaymentMenu
+                  key={index}
                   item={item}
                   index={index}
                   onDelete={handleDeleteMenu}
