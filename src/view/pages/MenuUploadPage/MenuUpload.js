@@ -37,7 +37,7 @@ function MenuUpload() {
         content: content,
         price: price,
       };
-      if (typeof id === 'number') {
+      if (id !== null) {
         await axiosInstance.patch(`/restaurant/${owner}/menu/${id}/`, data);
         image !== null &&
           (await axiosInstance.patch(
