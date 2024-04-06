@@ -7,12 +7,6 @@ import { useDispatch } from 'react-redux';
 
 export default function OrderList() {
   const [orders, setOrders] = useState(null);
-  const data = useSelector(selectDeliverInfo);
-  const created = new Date(data.created);
-  const currentTime = new Date();
-  const totalTime = data.prepareTime + data.deliverTime;
-  const restTime = Math.round(
-    totalTime - (currentTime - created) / (1000 * 60))
 
   useEffect(() => {
     axiosInstance.get('/order/').then((res) => {
