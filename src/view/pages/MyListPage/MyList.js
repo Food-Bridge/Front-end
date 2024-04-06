@@ -97,7 +97,7 @@ export default function MyList() {
         handleLogout={handleLogout}
       />
       <MyListMain />
-      {isDelivering && <MyListDeliver />}z
+      {isDelivering && <MyListDeliver />}
       <div className='mylistBlocks-row'>
         <MyListBlock
           icon={<CiDiscount1 size='35' />}

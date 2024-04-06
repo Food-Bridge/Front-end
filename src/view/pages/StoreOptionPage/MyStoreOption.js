@@ -42,7 +42,7 @@ export default function MyStoreOption() {
       setSOptionData(sOptionRes.data);
     };
     fetchData();
-  }, [optionData, sOptionData]);
+  }, []);
 
   const handleAddOption = () => {
     navigate('/optionUpload/', { state: { id: menuId, type: 'option' } });

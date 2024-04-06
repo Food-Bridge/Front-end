@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectProfile, setProfile } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 import PlusInfo from '../PlusInfo/PlusInfo';
+import Swal from 'sweetalert2';
 
 export default function MyListProfile({ onChangeImage, handleLogout }) {
   const dispatch = useDispatch();
@@ -39,6 +40,14 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
       dispatch(
         setProfile({ image: profile.image, nickname: res.data.nickname })
       );
+      Swal.fire({
+        icon: 'info',
+        title: '프로필 변경',
+        text: '프로필을 변경하였습니다.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        confirmButtonColor: 'black',
+      });
     }
   };
 
