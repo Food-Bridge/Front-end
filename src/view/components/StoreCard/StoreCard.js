@@ -11,7 +11,7 @@ function StoreCard({
   storeScore,
 }) {
   return (
-    <div className={className}>
+    <div className='StoreCard'>
       <div className='storeCard-frame'>
         <div className='storeCard-imgFrame'>
           <div className='storeCard-imgBlock1'>
