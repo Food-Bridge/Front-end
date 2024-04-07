@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 
 function MenuUpload() {
   const location = useLocation();
-  const dispatch = useDispatch();
   const { id } = location.state || { id: null };
   const [content, setContent] = useState('');
   const [price, setPrice] = useState(0);
@@ -79,6 +78,7 @@ function MenuUpload() {
       setContent(res.data.content);
       setPrice(res.data.price);
       setImageDisplay(res.data.image);
+      setImage(res.data.image);
     };
     typeof id === 'number' && fetchData();
   }, []);

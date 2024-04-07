@@ -29,26 +29,32 @@ const refreshToken = async () => {
 };
 
 axiosInstance.interceptors.request.use(async (config) => {
-  const isLoggedIn = store.getState().auth.isLoggedIn;
-  if (isLoggedIn) {
-    try {
-      let access = getAccessTokenFromCookie();
-      if (access) {
-        config.headers['Authorization'] = `Bearer ${access}`;
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: 'warning',
-        title: '알림',
-        html: '다시 로그인해주세요.',
-        showCancelButton: false,
-        confirmButtonText: '확인',
-      }).then(() => {
-        window.location.href = '/users/signin';
-      });
-      return Promise.reject(error);
+  let isLoggedIn = store.getState().auth.isLoggedIn;
+  
+  try {
+    const access = getAccessTokenFromCookie();
+    if (access) {
+      config.headers['Authorization'] = `Bearer ${access}`;
+      isLoggedIn = true;
+    } else {
+      isLoggedIn = false;
     }
+  } catch (error) {
+    isLoggedIn = false;
   }
+
+  if (!isLoggedIn) {
+    Swal.fire({
+      icon: 'warning',
+      title: '알림',
+      html: '다시 로그인해주세요.',
+      showCancelButton: false,
+      confirmButtonText: '확인',
+    }).then(() => {
+      window.location.href = '/users/signin';
+    });
+  }
+
   return config;
 });
 
