@@ -36,11 +36,9 @@ axiosInstance.interceptors.request.use(async (config) => {
     if (access) {
       config.headers['Authorization'] = `Bearer ${access}`;
       isLoggedIn = true;
-    } else {
-      isLoggedIn = false;
     }
   } catch (error) {
-    isLoggedIn = false;
+    console.error("Error getting access token from cookie:", error);
   }
 
   if (!isLoggedIn) {
@@ -53,6 +51,7 @@ axiosInstance.interceptors.request.use(async (config) => {
     }).then(() => {
       window.location.href = '/users/signin';
     });
+    return Promise.reject(new Error("User not logged in"));
   }
 
   return config;
