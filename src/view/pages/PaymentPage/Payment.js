@@ -43,7 +43,6 @@ export default function Payment() {
   const [couponData, setCouponData] = useState([]);
   const [couponList, showCouponList] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState({ discount_price: 0 });
-  const deliverInfo = useSelector(selectDeliverInfo);
   const isDeliver = useSelector(selectIsDeliver);
   const store = useSelector(selectStore);
   const menuData = useSelector(selectMenu);
@@ -206,14 +205,16 @@ export default function Payment() {
               <p className='payment-disposableText'>일회용 수저, 포크 받기</p>
             </div>
           </div>
-          <div className='payment-deliverRequest'>
-            <h3 className='payment-deliverRequest-title'>배달 요청사항</h3>
-            <input
-              className='payment-deliverRequest-input'
-              placeholder='예) 문 앞에 놔주세요.'
-              onChange={(e) => setDeliverRequest(e.target.value)}
-            />
-          </div>
+          {isDeliver && (
+            <div className='payment-deliverRequest'>
+              <h3 className='payment-deliverRequest-title'>배달 요청사항</h3>
+              <input
+                className='payment-deliverRequest-input'
+                placeholder='예) 문 앞에 놔주세요.'
+                onChange={(e) => setDeliverRequest(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
         <div className='payment-method'>

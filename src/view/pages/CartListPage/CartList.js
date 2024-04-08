@@ -104,7 +104,7 @@ export default function CartList() {
   };
 
   const handleGoToPay = () => {
-    if (totalPrice >= store.minimumOrderPrice) {
+    if (totalValue >= store.minimumOrderPrice) {
       if (address.length > 0 && defaultId) {
         navigate('/payment/');
       } else {
