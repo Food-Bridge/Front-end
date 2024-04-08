@@ -43,7 +43,7 @@ export default function StoreLikes() {
                 storeName={el.name}
                 minimumPrice={el.minimumOrderPrice}
                 deliverPrice={el.deliveryFee}
-                storeScore={el.rating}
+                storeScore={el.averageRating}
               />
             </button>
           )):<p className='storeLikes-nothing'>즐겨찾는 매장이 없습니다.</p>}
