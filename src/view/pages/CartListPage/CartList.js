@@ -142,7 +142,7 @@ export default function CartList() {
   return (
     <>
       <h1 className='cartlist-header'>주문하기</h1>
-      {isMenuIn && !isNaN(totalPrice) ? (
+      {isMenuIn && menu.length > 0 && !isNaN(totalPrice) ? (
         <div className='cartlist-list'>
           <div className='cartlist-info'>
             <div className='cartlist-store'>
