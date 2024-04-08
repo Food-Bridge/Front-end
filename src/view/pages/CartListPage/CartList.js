@@ -218,7 +218,10 @@ export default function CartList() {
             <div className='cartlist-price'>
               <h2 className='cartlist-title'>결제 예정 금액</h2>
               <p className='cartlist-value'>
-                {totalPrice.toLocaleString('ko-KR')}원
+                {isDeliver
+                  ? totalPrice.toLocaleString('ko-KR')
+                  : totalValue.toLocaleString('ko-KR')}
+                원
               </p>
             </div>
           </div>
