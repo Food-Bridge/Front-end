@@ -104,18 +104,30 @@ export default function CartList() {
   };
 
   const handleGoToPay = () => {
-    if (address.length > 0 && defaultId) {
-      navigate('/payment/');
+    if (totalPrice >= store.minimumOrderPrice) {
+      if (address.length > 0 && defaultId) {
+        navigate('/payment/');
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: '알림',
+          html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
+          showCancelButton: false,
+          confirmButtonText: '확인',
+          confirmButtonColor: 'black',
+        }).then((res) => {
+          res.confirmed && navigate('/users/address/');
+        });
+      }
     } else {
       Swal.fire({
-        icon: 'info',
+        icon: 'warning',
         title: '알림',
-        html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
+        html: '총 주문 금액이 최소 주문 금액 보다 적습니다.',
         showCancelButton: false,
         confirmButtonText: '확인',
         confirmButtonColor: 'black',
       });
-      navigate('/users/address/');
     }
   };
 
