@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useParams } from 'react-router-dom';
 import './StoreOption.scss';
-
+import Loading from '../../components/Loading/Loading';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import CartAddBtn from '../../components/CartAddBtn/CartAddBtn';
@@ -38,9 +38,9 @@ export default function StoreOption() {
       setMenuData(menuRes.data);
       setOptionData(optionRes.data);
       setSOptionData(sOptionRes.data);
+      setLoading(false);
     };
     fetchData();
-    setLoading(false);
   }, [resId, menuId]);
 
   const handleOptionChange = (selectedOption) => {
@@ -51,7 +51,9 @@ export default function StoreOption() {
     setSOption(selectedSOption);
   };
 
-  return loading ? null : (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className='storeOption'>
       <img src={menuData.image} alt='메뉴이미지' className='storeOption-img' />
       <div className='storeOption-title'>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './CouponList.scss';
 import Coupon from '../../components/Coupon/Coupon';
 import axiosInstance from '../../../api/instance';
+import Loading from '../../components/Loading/Loading';
 
 function CouponList() {
   const [couponData, setCouponData] = useState([]);
@@ -25,6 +26,7 @@ function CouponList() {
 
   return (
     <div className='CouponList'>
+      {loading && <Loading />}
       <header className='couponList-frame'>
         <h1 className='couponList-title'>할인쿠폰</h1>
         <div className='couponList-couponBlock'>

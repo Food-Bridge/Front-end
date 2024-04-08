@@ -5,6 +5,7 @@ import { selectProfile, setProfile } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 import PlusInfo from '../PlusInfo/PlusInfo';
 import Swal from 'sweetalert2';
+import Loading from '../../components/Loading/Loading'
 
 export default function MyListProfile({ onChangeImage, handleLogout }) {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
   const [orderNum, setOrderNum] = useState(0);
   const [reviewNum, setReviewNum] = useState(0);
   const [likeNum, setLikeNum] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +28,7 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
       setReviewNum(reviewRes.data.length);
       const likeRes = await axiosInstance.get('/like/');
       setLikeNum(likeRes.data.liked_restaurants_ids.length);
+      setLoading(false)
     };
     fetchData();
   }, []);
@@ -53,6 +56,7 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
 
   return (
     <div className='mylistUser'>
+      {loading && <Loading />}
       <div className='mylistUser-profile'>
         <img
           className='mylistUser-profileImg'

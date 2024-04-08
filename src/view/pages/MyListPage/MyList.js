@@ -34,7 +34,6 @@ export default function MyList() {
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
   const deliverList = useSelector(selectDeliverList);
-  console.log(deliverList)
   const onChangeImage = async (event) => {
     const { files } = event.target;
     const uploadFile = files[0];

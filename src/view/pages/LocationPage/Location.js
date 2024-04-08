@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import LocationList from '../../components/LocationList/LocationList';
 import LocationSearch from '../LocationSearchPage/LocationSearch';
+import Loading from '../../components/Loading/Loading';
 
 const Location = () => {
   const dispatch = useDispatch();
@@ -44,22 +45,20 @@ const Location = () => {
 
   return (
     <div className='location'>
+      {loading && <Loading />}
+
       {isAdd ? (
         <LocationSearch complete={handleCompleteAdd} />
       ) : (
         <div>
           <header className='location-header'>
             <h1 className='location-title'>주소 관리</h1>
-            {loading ? (
-              <p className='location-nothing'>로딩중입니다.</p>
-            ) : (
-              <button
-                className='location-edit'
-                onClick={isEdit ? handleCompleteEditing : handleToggleEdit}
-              >
-                {isEdit ? '완료' : '편집'}
-              </button>
-            )}
+            <button
+              className='location-edit'
+              onClick={isEdit ? handleCompleteEditing : handleToggleEdit}
+            >
+              {isEdit ? '완료' : '편집'}
+            </button>
           </header>
           <button className='location-add' onClick={handleClickAdd}>
             주소 추가

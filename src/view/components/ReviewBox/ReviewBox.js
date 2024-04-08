@@ -1,6 +1,5 @@
 import React from 'react';
 import './ReviewBox.scss';
-import { FaStar } from 'react-icons/fa';
 import RateStars from '../RateStars/RateStars';
 
 export default function ReviewBox({ data, myReview }) {

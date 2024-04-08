@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './MyReview.scss';
 import axiosInstance from '../../../api/instance';
+import Loading from '../../components/Loading/Loading';
 
 import ReviewBox from '../../components/ReviewBox/ReviewBox';
 import RateStars from '../../components/RateStars/RateStars';
 
 export default function MyReview() {
   const [reviewData, setReviewData] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get(`/review/`);
       setReviewData(response.data);
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -21,6 +24,7 @@ export default function MyReview() {
 
   return (
     <>
+      {loading && <Loading />}
       <div className='myReview-header'>
         <div className='myReview-title'>
           <h2 className='myReview-titleText'>나의 리뷰</h2>

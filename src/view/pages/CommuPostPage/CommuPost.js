@@ -12,6 +12,7 @@ import {
   selectLatestPost,
   selectWeeklyPost,
 } from '../../../redux/reducers/communitySlice';
+import Loading from '../../components/Loading/Loading';
 
 function CommuPost({ title }) {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function CommuPost({ title }) {
   const weekly = useSelector(selectWeeklyPost);
   const daily = useSelector(selectDailyPost);
   const latest = useSelector(selectLatestPost);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(fetchPostData()).then(() => {
@@ -30,6 +32,7 @@ function CommuPost({ title }) {
       } else if (title === '최신') {
         setPostData(latest);
       }
+      setLoading(false)
     });
   }, []);
 
@@ -43,6 +46,8 @@ function CommuPost({ title }) {
 
   return (
     <div className='CommuPost'>
+      {loading && <Loading />}
+
       <SearchBar />
       <div className='commuPost-menuBar'>
         <MenuBar name={'menuBar-pageLine3'} />

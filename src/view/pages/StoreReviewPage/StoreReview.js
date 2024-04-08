@@ -5,11 +5,13 @@ import { useParams } from 'react-router-dom';
 
 import ReviewBox from '../../components/ReviewBox/ReviewBox';
 import axiosInstance from '../../../api/instance';
+import Loading from '../../components/Loading/Loading';
 
 export default function StoreReview() {
   const { resId } = useParams();
   const [reviewData, setReviewData] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +19,7 @@ export default function StoreReview() {
       setReviewData(res.data);
       const response = await axiosInstance.get(`/restaurant/${resId}`);
       setRestaurant(response.data);
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -43,16 +46,26 @@ export default function StoreReview() {
         <div className='storeReview-title'>
           <h2 className='storeReview-titleText'>{restaurant.name} 리뷰</h2>
         </div>
-        <p className='storeReview-average'>평균</p>
-        <h1 className='storeReview-rateValue'>{restaurant.averageRating}</h1>
-        <p className='storeReview-rateStars'>{rateStars}</p>
-        <p className='storeReview-num'>리뷰 {restaurant.reviewCount}</p>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <p className='storeReview-average'>평균</p>
+            <h1 className='storeReview-rateValue'>
+              {restaurant.averageRating}
+            </h1>
+            <p className='storeReview-rateStars'>{rateStars}</p>
+            <p className='storeReview-num'>리뷰 {restaurant.reviewCount}</p>
+          </>
+        )}
       </div>
-      <div className='storeReview-review'>
-        {reviewData.map((data) => {
-          return <ReviewBox data={data} />;
-        })}
-      </div>
+      {!loading && (
+        <div className='storeReview-review'>
+          {reviewData.map((data) => {
+            return <ReviewBox data={data} />;
+          })}
+        </div>
+      )}
     </>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './StoreLikes.scss';
+import Loading from '../../components/Loading/Loading'
 import axiosInstance from '../../../api/instance';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import StoreCard from '../../components/StoreCard/StoreCard';
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export default function StoreLikes() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   const handleClickStore = (id) => {
     navigate(`/restaurant/${id} `);
@@ -25,6 +27,7 @@ export default function StoreLikes() {
       });
 
       setData(filteredData);
+      setLoading(false)
     };
     fetchData();
   }, []);
@@ -32,6 +35,7 @@ export default function StoreLikes() {
   return (
     <>
       <SearchBar />
+      {loading && <Loading />}
       <h1 className='storeLikes-title'>즐겨찾기</h1>
       <div className='storeLikes-store'>
         {data.length > 0 ?

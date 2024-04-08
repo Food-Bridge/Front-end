@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './MyStoreOption.scss';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
+import Loading from '../../components/Loading/Loading';
 import { useSelector } from 'react-redux';
 import { selectOwner } from '../../../redux/reducers/authSlice';
 
@@ -17,6 +18,7 @@ export default function MyStoreOption() {
   const [sOptionData, setSOptionData] = useState([]);
   const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleOptionChange = (selectedOption) => {
     setOption(selectedOption);
@@ -40,6 +42,7 @@ export default function MyStoreOption() {
       setMenuData(menuRes.data);
       setOptionData(optionRes.data);
       setSOptionData(sOptionRes.data);
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -52,7 +55,9 @@ export default function MyStoreOption() {
     navigate('/optionUpload/', { state: { id: menuId, type: 'soption' } });
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className='storeOption'>
       <img src={menuData.image} className='storeOption-img' />
       <div className='storeOption-title'>

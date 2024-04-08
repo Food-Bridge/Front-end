@@ -41,7 +41,6 @@ import OptionUpload from './view/pages/OptionUploadPage/OptionUpload';
 
 function App() {
   const isSeller = useSelector(selectIsSeller);
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
