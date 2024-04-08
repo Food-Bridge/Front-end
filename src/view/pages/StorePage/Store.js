@@ -86,7 +86,7 @@ export default function Store() {
           </div>
         </div>
         <div className='store-rate'>
-          <RateStars rate={data.rating} />
+          <RateStars rate={data.averageRating}/>
         </div>
         <div className='store-detailContainer'>
           <div className='store-detail'>
