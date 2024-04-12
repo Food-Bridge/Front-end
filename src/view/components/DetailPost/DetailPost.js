@@ -1,5 +1,5 @@
 import './DetailPost.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import axiosInstance from '../../../api/instance';
@@ -20,17 +20,34 @@ function DetailPost({ data }) {
     hour: '2-digit',
     minute: '2-digit',
   });
-  // const [isLiked, setIsLiked] = useState(false);
 
-  // if (data.like_users.includes()) {
-  //   setIsLiked(true);
-  // }
+  const [currentUser, setCurrentUser] = useState(null) // 로그인유저
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await axiosInstance.get('/users/profile/');
+      setCurrentUser(response.data.user_id);
+    } catch (error) {
+      console.error('Error fetching current user:', error);
+    }
+  };
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
 
-  const handleLike = () => {
-    // const res = axiosInstance.post(`/community/${data.id}/likes/`);
-    // console.log(res)
+
+  const userLike = data.like_users.some(user => user.id === currentUser)
+  const [isLiked, setIsLiked] = useState(userLike);
+  const handleLike = async () => {
+    try {
+      await axiosInstance.post(`/community/${data.id}/likes/`);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error('Error liking post:', error);
+      setIsLiked(!isLiked);
+    }
   };
 
+  const isUserPost = currentUser === data.author_info.user
   const handleDeletePost = () => {
     axiosInstance
       .delete(`/community/${data.id}/`)
@@ -69,7 +86,7 @@ function DetailPost({ data }) {
           </p>
         </div>
         <div className='detailPost-headerRight'>
-          {/* <button onClick={handleLike}>
+          <button onClick={handleLike}>
             {isLiked ? (
               <IoIosHeart size='24' color='red' className='detailPost-like' />
             ) : (
@@ -79,10 +96,12 @@ function DetailPost({ data }) {
                 className='detailPost-like'
               />
             )}
-          </button> */}
-          <button className='detailPost-deleted' onClick={handleDeletePost}>
-            <MdOutlineDelete size='24' />
           </button>
+          {isUserPost && (
+            <button className='detailPost-deleted' onClick={handleDeletePost}>
+              <MdOutlineDelete size='24' />
+            </button>
+          )}
         </div>
       </header>
       <div className='detailPost-content'>
@@ -94,9 +113,9 @@ function DetailPost({ data }) {
         <p className='detailPost-text'>{data.content}</p>
         <footer className='detailPost-footer'>
           <div className='detailPost-icons'>
-            <CiHeart className='detailPost-icon' size='18'/>
+            <CiHeart className='detailPost-icon' size='18' />
             <p className='detailPost-numData'>{data.likes_count}</p>
-            <IoEyeOutline className='detailPost-icon' size='18'/>
+            <IoEyeOutline className='detailPost-icon' size='18' />
             <p className='detailPost-numData'>{data.views}</p>
             <FaRegComment className='detailPost-icon' />
             <p className='detailPost-numData'>{data.comment_count}</p>
