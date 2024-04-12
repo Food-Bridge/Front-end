@@ -37,10 +37,13 @@ function DetailPost({ data }) {
 
   const userLike = data.like_users.some(user => user.id === currentUser)
   const [isLiked, setIsLiked] = useState(userLike);
+  const [likesCount, setLikesCount] = useState(data.likes_count)
   const handleLike = async () => {
     try {
       await axiosInstance.post(`/community/${data.id}/likes/`);
       setIsLiked(!isLiked);
+      const response = await axiosInstance.get(`/community/${data.id}`);
+      setLikesCount(response.data.likes_count)
     } catch (error) {
       console.error('Error liking post:', error);
       setIsLiked(!isLiked);
@@ -114,7 +117,7 @@ function DetailPost({ data }) {
         <footer className='detailPost-footer'>
           <div className='detailPost-icons'>
             <CiHeart className='detailPost-icon' size='18' />
-            <p className='detailPost-numData'>{data.likes_count}</p>
+            <p className='detailPost-numData'>{likesCount}</p>
             <IoEyeOutline className='detailPost-icon' size='18' />
             <p className='detailPost-numData'>{data.views}</p>
             <FaRegComment className='detailPost-icon' />
