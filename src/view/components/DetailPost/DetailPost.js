@@ -9,6 +9,7 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { FaRegComment } from 'react-icons/fa';
 
 import Swal from 'sweetalert2';
+import { useGetId } from '../../../api/useGetId';
 
 function DetailPost({ data }) {
   const navigate = useNavigate();
@@ -21,19 +22,7 @@ function DetailPost({ data }) {
     minute: '2-digit',
   });
 
-  const [currentUser, setCurrentUser] = useState(null) // 로그인유저
-  const fetchCurrentUser = async () => {
-    try {
-      const response = await axiosInstance.get('/users/profile/');
-      setCurrentUser(response.data.user_id);
-    } catch (error) {
-      console.error('Error fetching current user:', error);
-    }
-  };
-  useEffect(() => {
-    fetchCurrentUser();
-  }, []);
-
+  const currentUser = useGetId();
 
   const userLike = data.like_users.some(user => user.id === currentUser)
   const [isLiked, setIsLiked] = useState(userLike);
