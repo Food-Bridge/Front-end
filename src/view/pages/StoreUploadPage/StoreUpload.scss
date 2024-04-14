@@ -36,12 +36,9 @@
       justify-content: space-between;
       .storeUpload-checkedList {
         display: flex;
-
-        // 포장 여부
         .storeUpload-packaging {
           display: flex;
           margin-right: 35px;
-
           .storeUpload-packagingCheck {
             font-size: 18px;
             margin-right: 10px;
