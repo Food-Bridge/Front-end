@@ -1,5 +1,5 @@
 import './DetailPost.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import axiosInstance from '../../../api/instance';
@@ -9,6 +9,7 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { FaRegComment } from 'react-icons/fa';
 
 import Swal from 'sweetalert2';
+import { useGetId } from '../../../api/useGetId';
 
 function DetailPost({ data }) {
   const navigate = useNavigate();
@@ -20,17 +21,25 @@ function DetailPost({ data }) {
     hour: '2-digit',
     minute: '2-digit',
   });
-  // const [isLiked, setIsLiked] = useState(false);
 
-  // if (data.like_users.includes()) {
-  //   setIsLiked(true);
-  // }
+  const currentUser = useGetId();
 
-  const handleLike = () => {
-    // const res = axiosInstance.post(`/community/${data.id}/likes/`);
-    // console.log(res)
+  const userLike = data.like_users.some(user => user.id === currentUser)
+  const [isLiked, setIsLiked] = useState(userLike);
+  const [likesCount, setLikesCount] = useState(data.likes_count)
+  const handleLike = async () => {
+    try {
+      await axiosInstance.post(`/community/${data.id}/likes/`);
+      setIsLiked(!isLiked);
+      const response = await axiosInstance.get(`/community/${data.id}`);
+      setLikesCount(response.data.likes_count)
+    } catch (error) {
+      console.error('Error liking post:', error);
+      setIsLiked(!isLiked);
+    }
   };
 
+  const isUserPost = currentUser === data.author_info.user
   const handleDeletePost = () => {
     axiosInstance
       .delete(`/community/${data.id}/`)
@@ -69,7 +78,7 @@ function DetailPost({ data }) {
           </p>
         </div>
         <div className='detailPost-headerRight'>
-          {/* <button onClick={handleLike}>
+          <button onClick={handleLike}>
             {isLiked ? (
               <IoIosHeart size='24' color='red' className='detailPost-like' />
             ) : (
@@ -79,10 +88,12 @@ function DetailPost({ data }) {
                 className='detailPost-like'
               />
             )}
-          </button> */}
-          <button className='detailPost-deleted' onClick={handleDeletePost}>
-            <MdOutlineDelete size='24' />
           </button>
+          {isUserPost && (
+            <button className='detailPost-deleted' onClick={handleDeletePost}>
+              <MdOutlineDelete size='24' />
+            </button>
+          )}
         </div>
       </header>
       <div className='detailPost-content'>
@@ -94,9 +105,9 @@ function DetailPost({ data }) {
         <p className='detailPost-text'>{data.content}</p>
         <footer className='detailPost-footer'>
           <div className='detailPost-icons'>
-            <CiHeart className='detailPost-icon' size='18'/>
-            <p className='detailPost-numData'>{data.likes_count}</p>
-            <IoEyeOutline className='detailPost-icon' size='18'/>
+            <CiHeart className='detailPost-icon' size='18' />
+            <p className='detailPost-numData'>{likesCount}</p>
+            <IoEyeOutline className='detailPost-icon' size='18' />
             <p className='detailPost-numData'>{data.views}</p>
             <FaRegComment className='detailPost-icon' />
             <p className='detailPost-numData'>{data.comment_count}</p>

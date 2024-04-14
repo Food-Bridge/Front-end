@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import './PostComment.scss';
 import Swal from 'sweetalert2';
 import axiosInstance from '../../../api/instance';
+import { useGetId } from '../../../api/useGetId';
 
 const PostComment = ({ data, postId }) => {
-  console.log(data);
+  const currentUser = useGetId();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(data.content);
 
@@ -85,18 +86,22 @@ const PostComment = ({ data, postId }) => {
             </div>
           </div>
           <div className='postComment-headerRight'>
-            <button
-              className='postComment-button'
-              onClick={isEditing ? handleCancelEdit : handleEdit}
-            >
-              {isEditing ? '취소' : '수정'}
-            </button>
-            <button
-              className='postComment-button'
-              onClick={isEditing ? handleUpdatePost : handleDeletePost}
-            >
-              {isEditing ? '완료' : '삭제'}
-            </button>
+            {currentUser === data.author &&
+              <>
+                <button
+                  className='postComment-button'
+                  onClick={isEditing ? handleCancelEdit : handleEdit}
+                >
+                  {isEditing ? '취소' : '수정'}
+                </button>
+                <button
+                  className='postComment-button'
+                  onClick={isEditing ? handleUpdatePost : handleDeletePost}
+                >
+                  {isEditing ? '완료' : '삭제'}
+                </button>
+              </>
+            }
           </div>
         </div>
         <div className='postComment-commentFrame'>
