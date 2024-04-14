@@ -14,7 +14,15 @@
     .menublock-content {
       width: 320px;
       margin: 10px 20px;
-
+      .menublock-tag {
+        padding: 7px 12px;
+        border: 1px solid #c6c6c6;
+        border-radius: 50px;
+        margin-right: 5px;
+        .menublock-tagText {
+          font-size: 14px;
+        }
+      }
       .menublock-title {
         margin: 10px 0;
         display: flex;

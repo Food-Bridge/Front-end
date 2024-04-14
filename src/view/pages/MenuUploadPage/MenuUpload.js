@@ -36,6 +36,8 @@ function MenuUpload() {
       formData.append('name', name);
       formData.append('content', content);
       formData.append('price', price);
+      formData.append('is_main', isMain);
+      formData.append('is_popular', isPopular)
       if (id !== null) {
         await axiosInstance.patch(
           `/restaurant/${owner}/menu/${id}/`,
