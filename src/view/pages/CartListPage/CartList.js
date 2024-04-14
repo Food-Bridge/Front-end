@@ -35,6 +35,7 @@ export default function CartList() {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
   const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
   const totalPrice = totalValue + deliveryFee;
   const [deliverClass, setDeliverClass] = useState('cartlist-selectBtn');
@@ -138,7 +139,7 @@ export default function CartList() {
   const handleClickAdd = () => {
     navigate(`/restaurant/${store.id}/`);
   };
-
+console.log(menu)
   return (
     <>
       <h1 className='cartlist-header'>주문하기</h1>

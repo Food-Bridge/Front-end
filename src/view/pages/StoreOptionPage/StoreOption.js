@@ -23,6 +23,16 @@ export default function StoreOption() {
     (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
     (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0);
 
+    const menuInfo = {
+      id: menuData.id,
+      image: menuData.image,
+      name: menuData.name,
+      option: option,
+      sOption: sOption,
+      price: price,
+      restaurant: menuData.restaurant
+    };
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get(`/restaurant/${resId}`);
@@ -85,9 +95,8 @@ export default function StoreOption() {
       )}
       {!isNaN(price) && (
         <CartAddBtn
-          price={price}
           data={data}
-          menuData={{ ...menuData, option, sOption }}
+          menuData={menuInfo}
           isRequiredCount={isRequiredCount}
         />
       )}

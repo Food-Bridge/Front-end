@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 
-const CartAddBtn = ({ price, menuData, data, isRequiredCount }) => {
+const CartAddBtn = ({menuData, data, isRequiredCount }) => {
   const navigate = useNavigate();
   const menu = useSelector(selectMenu);
   const isMenuIn = useSelector(selectIsMenuIn);
@@ -30,6 +30,7 @@ const CartAddBtn = ({ price, menuData, data, isRequiredCount }) => {
       setQuantity(quantity - 1);
     }
   };
+
   const handleAddCart = () => {
     if (!isLoggedIn) {
       Swal.fire({
@@ -129,7 +130,7 @@ const CartAddBtn = ({ price, menuData, data, isRequiredCount }) => {
         </div>
 
         <button className='cartAddBtn-add' onClick={handleAddCart}>
-          {(price * quantity).toLocaleString('ko-KR')}원 담기
+          {(menuData.price * quantity).toLocaleString('ko-KR')}원 담기
         </button>
       </div>
     </div>
