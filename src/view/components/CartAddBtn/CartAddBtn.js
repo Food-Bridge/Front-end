@@ -75,7 +75,10 @@ const CartAddBtn = ({ price, menuData, data }) => {
             confirmButtonColor: '#ca0000',
             cancelButtonColor: 'black',
           }).then((res) => {
-            res.isConfirmed && dispatch(deleteMenu());
+            if (res.isConfirmed) {
+              dispatch(deleteMenu());
+              handleAddCart();
+            }
           });
         } else {
           dispatch(setMenuData([{ ...menuData, quantity }]));
