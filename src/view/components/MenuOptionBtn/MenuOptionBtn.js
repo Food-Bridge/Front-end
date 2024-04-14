@@ -14,8 +14,8 @@ export default function MenuOptionBtn({
 }) {
   const owner = useSelector(selectOwner);
   const isSeller = useSelector(selectIsSeller);
-  const [selectedOption, setSelectedOption] = useState(data[0]);
-
+  const [selectedOption, setSelectedOption] = useState([]);
+  
   const handleOptionChange = (option) => {
     setSelectedOption(option);
     onOptionChange([option]);

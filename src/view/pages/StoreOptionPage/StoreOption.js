@@ -16,6 +16,7 @@ export default function StoreOption() {
   const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isRequiredCount = option && menuData.required_options_count === option.length;
 
   const price =
     menuData.price +
@@ -87,6 +88,7 @@ export default function StoreOption() {
           price={price}
           data={data}
           menuData={{ ...menuData, option, sOption }}
+          isRequiredCount={isRequiredCount}
         />
       )}
     </div>

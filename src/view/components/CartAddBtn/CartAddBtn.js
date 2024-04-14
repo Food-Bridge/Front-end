@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 
-const CartAddBtn = ({ price, menuData, data }) => {
+const CartAddBtn = ({ price, menuData, data, isRequiredCount }) => {
   const navigate = useNavigate();
   const menu = useSelector(selectMenu);
   const isMenuIn = useSelector(selectIsMenuIn);
@@ -40,6 +40,15 @@ const CartAddBtn = ({ price, menuData, data }) => {
         confirmButtonText: '로그인하기',
         confirmButtonColor: 'black',
       }).then((res) => res.isConfirmed && navigate('/users/signin'));
+    } else if (!isRequiredCount) {
+      Swal.fire({
+        icon: 'warning',
+        text: '알림',
+        text: '필수 옵션을 다시 확인해주세요.',
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        confirmButtonColor: 'black',
+      });
     } else {
       if (isMenuIn && menu[0]?.restaurant === menuData.restaurant) {
         const existingMenuItem = menu.find(
@@ -77,7 +86,6 @@ const CartAddBtn = ({ price, menuData, data }) => {
           }).then((res) => {
             if (res.isConfirmed) {
               dispatch(deleteMenu());
-              handleAddCart();
             }
           });
         } else {
