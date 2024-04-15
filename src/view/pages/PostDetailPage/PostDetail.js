@@ -27,7 +27,6 @@ function PostDetail() {
     const existingCookie = document.cookie.match(regex);
     if (existingCookie) {
       const ids = existingCookie[1].split('|');
-      console.log(ids)
       if (!ids.includes(id)) {
         const updatedValue = existingCookie[1] ? existingCookie[1] + "|" + id : id;
         document.cookie = `${cookieKey}=${updatedValue}; expires=${expiresGMT}; path=/`;
