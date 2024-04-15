@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import './PostDetail.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
@@ -8,6 +8,11 @@ import PostCommentInput from '../../components/PostCommentInput/PostCommentInput
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useGetId } from '../../../api/useGetId';
+
+
+axios.defaults.withCredentials = true;
 
 function PostDetail() {
   const navigate = useNavigate();
@@ -16,11 +21,23 @@ function PostDetail() {
   const [commentData, setCommentData] = useState([]);
   const { id } = useParams();
 
+
   useEffect(() => {
     const fetchData = async () => {
       await axiosInstance
         .get(`/community/${id}/`)
         .then(async (res) => {
+
+          const setCookieHeader = res.headers['Set-Cookie'];
+          console.log(res.headers);
+          console.log(res.headers);
+          console.log(setCookieHeader);
+          if (setCookieHeader) {
+            const cookieValue = setCookieHeader;
+            console.log(cookieValue);
+            document.cookie = `${cookieValue}; httpOnly; path=/`;
+          }
+
           setPostData(res.data);
           await axiosInstance
             .get(`/community/${id}/comment/`)
@@ -53,6 +70,7 @@ function PostDetail() {
         );
     };
     fetchData();
+
   }, [id]);
 
   return (
