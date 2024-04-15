@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import axiosInstance from '../../api/instance';
-
+import { deleteMenu } from './cartSlice';
 
 export const deleteTokens = createAsyncThunk('auth/deleteTokens', async () => {
   document.cookie =
@@ -59,6 +59,7 @@ export const authSlice = createSlice({
         image: null,
         nickname: null,
       };
+      deleteMenu()
     },
     loginS: (state) => {
       state.isSeller = true;

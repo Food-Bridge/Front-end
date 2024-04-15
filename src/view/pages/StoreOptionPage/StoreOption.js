@@ -16,11 +16,22 @@ export default function StoreOption() {
   const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isRequiredCount = option && menuData.required_options_count === option.length;
 
   const price =
     menuData.price +
     (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
     (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0);
+
+    const menuInfo = {
+      id: menuData.id,
+      image: menuData.image,
+      name: menuData.name,
+      option: option,
+      sOption: sOption,
+      price: price,
+      restaurant: menuData.restaurant
+    };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,9 +95,9 @@ export default function StoreOption() {
       )}
       {!isNaN(price) && (
         <CartAddBtn
-          price={price}
           data={data}
-          menuData={{ ...menuData, option, sOption }}
+          menuData={menuInfo}
+          isRequiredCount={isRequiredCount}
         />
       )}
     </div>
