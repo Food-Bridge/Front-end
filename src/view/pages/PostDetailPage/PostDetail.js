@@ -8,11 +8,7 @@ import PostCommentInput from '../../components/PostCommentInput/PostCommentInput
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import { useGetId } from '../../../api/useGetId';
-
-
-axios.defaults.withCredentials = true;
 
 function PostDetail() {
   const navigate = useNavigate();
@@ -20,24 +16,32 @@ function PostDetail() {
   const [postData, setPostData] = useState([]);
   const [commentData, setCommentData] = useState([]);
   const { id } = useParams();
+  const userId = useGetId();
 
+  const onPostClick = () => {
+    const currentDate = new Date();
+    const expiresDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+    const expiresGMT = expiresDate.toGMTString();
+    const cookieKey = `user_${userId}_hit`;
+    const regex = new RegExp("(?:^|; )" + cookieKey + "(?:(?:=([^;]*))|;|$)");
+    const existingCookie = document.cookie.match(regex);
+    if (existingCookie) {
+      const ids = existingCookie[1].split('|');
+      console.log(ids)
+      if (!ids.includes(id)) {
+        const updatedValue = existingCookie[1] ? existingCookie[1] + "|" + id : id;
+        document.cookie = `${cookieKey}=${updatedValue}; expires=${expiresGMT}; path=/`;
+      }
+    } else {
+      document.cookie = `${cookieKey}=${id}; expires=${expiresGMT}; path=/`;
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       await axiosInstance
         .get(`/community/${id}/`)
         .then(async (res) => {
-
-          const setCookieHeader = res.headers['Set-Cookie'];
-          console.log(res.headers);
-          console.log(res.headers);
-          console.log(setCookieHeader);
-          if (setCookieHeader) {
-            const cookieValue = setCookieHeader;
-            console.log(cookieValue);
-            document.cookie = `${cookieValue}; httpOnly; path=/`;
-          }
-
           setPostData(res.data);
           await axiosInstance
             .get(`/community/${id}/comment/`)
@@ -70,7 +74,7 @@ function PostDetail() {
         );
     };
     fetchData();
-
+    onPostClick();
   }, [id]);
 
   return (
