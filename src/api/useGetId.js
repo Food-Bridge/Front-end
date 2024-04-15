@@ -1,14 +1,20 @@
 const getCookie = () => {
-    const value = document.cookie.split(`; `).map((el) => el.split('='));
-    return value[0][1];
-}
+    const cookieString = document.cookie;
+    const cookies = cookieString.split('; ').reduce((prev, current) => {
+        const [name, value] = current.split('=');
+        prev[name] = value;
+        return prev;
+    }, {});
+
+    return cookies.accessToken;
+};
 
 export function useGetId() {
     const accessToken = getCookie('access_token');
 
     if (!accessToken) {
         console.error('Access token not found');
-        return null; // or appropriate error handling
+        return null;
     }
 
     const tokenParts = accessToken.split('.');
