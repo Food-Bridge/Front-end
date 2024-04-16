@@ -88,6 +88,7 @@ function MenuUpload() {
           <input
             className='menuUpload-checkBox'
             type='checkbox'
+            aria-label='메인 메뉴'
             checked={isMain}
             onChange={() => {
               setIsMain(!isMain);
@@ -99,6 +100,7 @@ function MenuUpload() {
           <input
             className='menuUpload-checkBox'
             type='checkbox'
+            aria-label='인기 메뉴'
             checked={isPopular}
             onChange={() => {
               setIsPopular(!isPopular);
@@ -112,6 +114,7 @@ function MenuUpload() {
           <input
             className='menuUpload-menuName'
             type='text'
+            aria-label='메뉴이름'
             placeholder={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -121,6 +124,7 @@ function MenuUpload() {
           <input
             className='menuUpload-priceInput'
             type='number'
+            aria-label='메뉴 금액'
             placeholder={price ? price : '숫자만 입력해주세요'}
             onChange={(e) => setPrice(e.target.value)}
           />
@@ -130,13 +134,14 @@ function MenuUpload() {
           <textarea
             className='menuUpload-storeDescription'
             type='text'
+            aria-label='메뉴 설명'
             placeholder={content}
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
         <div className='menuUpload-image'>
           <h1 className='menuUpload-title'>메뉴 이미지 등록</h1>
-          <img className='menuUpload-imageDisplay' src={imageDisplay} />
+          <img className='menuUpload-imageDisplay' src={imageDisplay} alt='이미지 프리뷰'/>
           <BrowserImageCompression
             className='menuUpload-imageInput'
             setImage={setImage}

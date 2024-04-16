@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './StoreOption.scss'
+import './StoreOption.scss';
 import axiosInstance from '../../../api/instance';
 import { useNavigate, useParams } from 'react-router-dom';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
@@ -47,18 +47,18 @@ export default function MyStoreOption() {
   }, []);
 
   const handleAddOption = () => {
-    navigate('/optionUpload/', { state: { id: menuId, type: 'option' } });
+    navigate(`/optionUpload/${menuId}/option`);
   };
 
   const handleAddSOption = () => {
-    navigate('/optionUpload/', { state: { id: menuId, type: 'soption' } });
+    navigate(`/optionUpload/${menuId}/soption`);
   };
 
   return loading ? (
     <Loading />
   ) : (
     <div className='storeOption'>
-      <img src={menuData.image} className='storeOption-img' alt='메뉴 이미지'/>
+      <img src={menuData.image} className='storeOption-img' alt='메뉴 이미지' />
       <div className='storeOption-title'>
         {menuData.is_popular && (
           <div className='storeOption-tag'>
