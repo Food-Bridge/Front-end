@@ -1,7 +1,7 @@
 import React from 'react';
 import './Basket.scss';
 
-import { CiShoppingBasket } from 'react-icons/ci';
+import { IoMdBasket } from '@react-icons/all-files/io/IoMdBasket';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectMenu } from '../../../redux/reducers/cartSlice';
@@ -31,7 +31,7 @@ export default function Basket() {
 
   return (
     <button className='basket' onClick={handleOpenBasket}>
-      <CiShoppingBasket className='basket-icon' />
+      <IoMdBasket className='basket-icon' />
       <div className='basket-count'>
         <h1 className='basket-text'>{count}</h1>
       </div>

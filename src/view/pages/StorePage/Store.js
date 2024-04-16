@@ -9,8 +9,9 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
 import Swal from 'sweetalert2';
-import { CiPhone } from 'react-icons/ci';
-import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
+import { FaPhoneAlt } from '@react-icons/all-files/fa/FaPhoneAlt.js';
+import { IoIosHeart } from '@react-icons/all-files/io/IoIosHeart.js';
+import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty.js';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice.js';
 import Loading from '../../components/Loading/Loading.js';
@@ -81,7 +82,7 @@ export default function Store() {
               <h1 className='store-name'>{data.name}</h1>
               <div className='store-icon'>
                 <button className='store-phone' onClick={showNumber}>
-                  <CiPhone size='30' />
+                  <FaPhoneAlt size='30' />
                 </button>
                 <button className='store-like ' onClick={handleClickHeart}>
                   {isLike ? (

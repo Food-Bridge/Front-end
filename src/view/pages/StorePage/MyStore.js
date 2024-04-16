@@ -9,7 +9,7 @@ import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
 
-import { CiPhone } from 'react-icons/ci';
+import { FaPhoneAlt } from '@react-icons/all-files/fa/FaPhoneAlt.js';
 import { useSelector } from 'react-redux';
 import { selectOwner } from '../../../redux/reducers/authSlice.js';
 import Loading from '../../components/Loading/Loading.js';
@@ -63,7 +63,7 @@ export default function MyStore() {
           <h1 className='store-name'>{data.name}</h1>
           <div className='store-icon'>
             <button className='store-phone' onClick={showNumber}>
-              <CiPhone size='30' />
+              <FaPhoneAlt size='30' />
             </button>
           </div>
         </div>

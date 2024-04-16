@@ -1,12 +1,12 @@
 import './DetailPost.scss';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
+import React, { useState } from 'react';
 import axiosInstance from '../../../api/instance';
-import { MdOutlineDelete } from 'react-icons/md';
-import { CiHeart } from 'react-icons/ci';
-import { IoEyeOutline } from 'react-icons/io5';
-import { FaRegComment } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { IoIosHeart } from '@react-icons/all-files/io/IoIosHeart';
+import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
+import { AiOutlineDelete } from '@react-icons/all-files/ai/AiOutlineDelete';
+import { IoEyeOutline } from '@react-icons/all-files/io5/IoEyeOutline';
+import { FaRegComment } from '@react-icons/all-files/fa/FaRegComment';
 
 import Swal from 'sweetalert2';
 import { useGetId } from '../../../api/useGetId';
@@ -24,22 +24,22 @@ function DetailPost({ data }) {
 
   const currentUser = useGetId();
 
-  const userLike = data.like_users.some(user => user.id === currentUser)
+  const userLike = data.like_users.some((user) => user.id === currentUser);
   const [isLiked, setIsLiked] = useState(userLike);
-  const [likesCount, setLikesCount] = useState(data.likes_count)
+  const [likesCount, setLikesCount] = useState(data.likes_count);
   const handleLike = async () => {
     try {
       await axiosInstance.post(`/community/${data.id}/likes/`);
       setIsLiked(!isLiked);
       const response = await axiosInstance.get(`/community/${data.id}`);
-      setLikesCount(response.data.likes_count)
+      setLikesCount(response.data.likes_count);
     } catch (error) {
       console.error('Error liking post:', error);
       setIsLiked(!isLiked);
     }
   };
 
-  const isUserPost = currentUser === data.author_info.user
+  const isUserPost = currentUser === data.author_info.user;
   const handleDeletePost = () => {
     axiosInstance
       .delete(`/community/${data.id}/`)
@@ -91,7 +91,7 @@ function DetailPost({ data }) {
           </button>
           {isUserPost && (
             <button className='detailPost-deleted' onClick={handleDeletePost}>
-              <MdOutlineDelete size='24' />
+              <AiOutlineDelete size='24' />
             </button>
           )}
         </div>
@@ -105,7 +105,7 @@ function DetailPost({ data }) {
         <p className='detailPost-text'>{data.content}</p>
         <footer className='detailPost-footer'>
           <div className='detailPost-icons'>
-            <CiHeart className='detailPost-icon' size='18' />
+            <IoIosHeart className='detailPost-icon' size='18' />
             <p className='detailPost-numData'>{likesCount}</p>
             <IoEyeOutline className='detailPost-icon' size='18' />
             <p className='detailPost-numData'>{data.views}</p>

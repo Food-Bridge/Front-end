@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ImageSlider.scss';
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward';
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack';
 
 export default function ImageSlider({ mini, slides }) {
   const [current, setCurrent] = useState(0);

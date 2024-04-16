@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './SearchBar.scss';
-import { CiLocationOn, CiHeart } from 'react-icons/ci';
-import { RiArrowDropDownFill } from 'react-icons/ri';
-import { IoIosSearch } from 'react-icons/io';
+import {MdLocationOn} from '@react-icons/all-files/md/MdLocationOn'
+import { IoIosHeartEmpty} from '@react-icons/all-files/io/IoIosHeartEmpty'
+import { RiArrowDropDownFill } from '@react-icons/all-files/ri/RiArrowDropDownFill';
+import { IoIosSearch } from '@react-icons/all-files/io/IoIosSearch';
 import { useNavigate } from 'react-router-dom';
 import Basket from '../Basket/Basket';
 import Swal from 'sweetalert2';
@@ -80,7 +81,7 @@ function SearchBar() {
             className='searchBar-location'
             onClick={handleToggleLocationList}
           >
-            <CiLocationOn className='searchBar-locaIcon' />
+            <MdLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
               {isLoggedIn
                 ? defaultId && addresses.length > 0
@@ -102,7 +103,7 @@ function SearchBar() {
           </div>
           <div className='searchBar-etcIcon'>
             <button onClick={handleClickLikes}>
-              <CiHeart className='searchBar-heartIcon' />
+              <IoIosHeartEmpty className='searchBar-heartIcon' />
             </button>
             <Basket />
           </div>

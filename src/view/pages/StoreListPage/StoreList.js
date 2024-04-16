@@ -9,7 +9,6 @@ import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Loading from '../../components/Loading/Loading';
-
 function StoreList() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);

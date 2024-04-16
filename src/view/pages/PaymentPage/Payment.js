@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Payment.scss';
-import { SlPresent } from 'react-icons/sl';
-import { MdOutlineHouse } from 'react-icons/md';
-import { CiDeliveryTruck } from 'react-icons/ci';
+import { GoGift } from '@react-icons/all-files/go/GoGift';
+import { FaHome } from '@react-icons/all-files/fa/FaHome';
+import { FaTruck } from '@react-icons/all-files/fa/FaTruck';
+import { RiArrowDropDownFill } from '@react-icons/all-files/ri/RiArrowDropDownFill';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectMenu,
@@ -17,7 +18,6 @@ import {
   selectDefaultId,
 } from '../../../redux/reducers/addressSlice';
 import axiosInstance from '../../../api/instance';
-import { RiArrowDropDownFill } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import {
   addDeliverList,
@@ -101,7 +101,7 @@ export default function Payment() {
   }, []);
 
   const handlePostPayment = async () => {
-    setLoading(true)
+    setLoading(true);
     const data = {
       menu_list: menuList,
       option_list: optionLists[0],
@@ -155,11 +155,7 @@ export default function Payment() {
             <h2 className='payment-storeName'>{store.name}</h2>
           </div>
           <div className='payment-deliver'>
-            {isDeliver ? (
-              <CiDeliveryTruck size='30' />
-            ) : (
-              <SlPresent size='20' />
-            )}
+            {isDeliver ? <FaTruck size='30' /> : <GoGift size='20' />}
             <h2 className='payment-deliverTime'>
               {isDeliver
                 ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정`
@@ -172,7 +168,7 @@ export default function Payment() {
             <div className='payment-addressGroup'>
               <div className='payment-addressGroup-header'>
                 <h3 className='payment-addressNickname'>
-                  <MdOutlineHouse size='20' />
+                  <FaHome size='20' />
                   {defaultAddress.nickname
                     ? defaultAddress.nickname
                     : defaultAddress.detail_address}

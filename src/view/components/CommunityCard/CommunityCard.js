@@ -1,7 +1,7 @@
 import React from 'react';
 import './CommunityCard.scss';
-import { CiHeart } from 'react-icons/ci';
-import { IoEyeOutline } from 'react-icons/io5';
+import { IoIosHeartEmpty} from '@react-icons/all-files/io/IoIosHeartEmpty'
+import { IoEyeOutline } from '@react-icons/all-files/io5/IoEyeOutline';
 import { useNavigate } from 'react-router-dom';
 
 export default function CommunityCard({ post }) {
@@ -29,7 +29,7 @@ export default function CommunityCard({ post }) {
           <div className='communityCard-icons'>
             <div className='communityCard-likeCount'>
               <h1 className='communityCard-fontSize'>
-                <CiHeart className='communityCard-likeIcon' />
+                <IoIosHeartEmpty className='communityCard-likeIcon' />
                 {post.likes_count}
               </h1>
             </div>

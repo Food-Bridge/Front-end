@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './StoreUpload.scss';
-import { IoMdArrowDropdown, IoIosSearch } from 'react-icons/io';
-import { HiMiniXMark } from 'react-icons/hi2';
+import { IoMdArrowDropdown } from '@react-icons/all-files/io/IoMdArrowDropdown';
+import { IoIosSearch } from '@react-icons/all-files/io/IoIosSearch';
+
+import { IoClose } from '@react-icons/all-files/io5/IoClose';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
 import DaumPostCode from 'react-daum-postcode';
@@ -201,7 +203,7 @@ function StoreUpload() {
         <div className='storeUpload-addAddress'>
           <header className='storeUpload-addAddress-header'>
             <button onClick={() => setAddAddress(false)}>
-              <HiMiniXMark size='30' />
+              <IoClose size='30' />
             </button>
           </header>
           <DaumPostCode onComplete={handleComplete} className='post-code' />

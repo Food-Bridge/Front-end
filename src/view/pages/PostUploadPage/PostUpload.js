@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './PostUpload.scss';
-import { CiImageOn } from 'react-icons/ci';
+import { FaImage } from '@react-icons/all-files/fa/FaImage';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
@@ -14,7 +14,7 @@ function PostUpload() {
   const formData = new FormData();
   const imageInput = useRef();
 
-  const onCickImageUpload = () => {
+  const onClickImageUpload = () => {
     imageInput.current.click();
   };
 
@@ -100,8 +100,8 @@ function PostUpload() {
               type='file'
               onChange={onChangeImage}
             />
-            <button onClick={onCickImageUpload}>
-              <CiImageOn className='postUpload-photoIcon' />
+            <button onClick={onClickImageUpload}>
+              <FaImage className='postUpload-photoIcon' />
             </button>
           </div>
         </div>

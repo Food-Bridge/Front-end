@@ -1,6 +1,6 @@
 import React from 'react';
-import { LuUserCircle2 } from 'react-icons/lu';
-import { IoIosArrowBack } from 'react-icons/io';
+import { FaUser } from '@react-icons/all-files/fa/FaUser';
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack';
 import './LogoBar.scss';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
@@ -42,7 +42,7 @@ export default function LogoBar() {
             <img className='logoBar-logoImage' src={logoImg} alt='로고이미지' />
           </button>
           <button className='logoBar-user' onClick={handleUserClick}>
-            <LuUserCircle2 className='logoBar-userIcon' />
+            <FaUser className='logoBar-userIcon' />
           </button>
         </div>
       </header>

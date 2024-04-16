@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import './CartList.scss';
-import { SlPresent } from 'react-icons/sl';
-import { CiDeliveryTruck } from 'react-icons/ci';
+import { IoGiftOutline } from '@react-icons/all-files/io5/IoGiftOutline';
+import { FaTruck } from '@react-icons/all-files/fa/FaTruck';
 import PaymentMenu from '../../components/PaymentMenu/PaymentMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -152,9 +152,9 @@ console.log(menu)
             </div>
             <div className='cartlist-deliver'>
               {isDeliver ? (
-                <CiDeliveryTruck size='30' />
+                <FaTruck size='30' />
               ) : (
-                <SlPresent size='20' />
+                <IoGiftOutline size='20' />
               )}
               <h2 className='cartlist-deliverTime'>
                 {isDeliver

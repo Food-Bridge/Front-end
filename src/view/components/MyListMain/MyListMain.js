@@ -3,9 +3,9 @@ import React from 'react';
 import './MyListMain.scss';
 import { useNavigate } from 'react-router-dom';
 
-import { TfiReceipt } from 'react-icons/tfi';
-import { HiOutlineChatBubbleLeftEllipsis } from 'react-icons/hi2';
-import { CiHeart } from 'react-icons/ci';
+import { IoReceiptOutline } from '@react-icons/all-files/io5/IoReceiptOutline';
+import { IoChatbubbleEllipsesOutline } from '@react-icons/all-files/io5/IoChatbubbleEllipsesOutline';
+import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
 
 export default function MyListMain() {
   const navigate = useNavigate('');
@@ -26,19 +26,19 @@ export default function MyListMain() {
     <div className='mylistMain'>
       <button className='mylistMain-box' onClick={handleOpenOrder}>
         <div className='mylistMain-content'>
-          <TfiReceipt size='40' />
+          <IoReceiptOutline size='40' />
           <h2 className='mylistMain-title'>주문내역</h2>
         </div>
       </button>
       <button className='mylistMain-box' onClick={handleOpenReview}>
-        <HiOutlineChatBubbleLeftEllipsis size='40' />
+        <IoChatbubbleEllipsesOutline size='40' />
         <h2 className='mylistMain-title'>나의 리뷰</h2>
       </button>
       <button
         className='mylistMain-box mylistMain-last'
         onClick={handleOpenLikes}
       >
-        <CiHeart size='40' />
+        <IoIosHeartEmpty size='40' />
         <h2 className='mylistMain-title'>찜 목록</h2>
       </button>
     </div>
