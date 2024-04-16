@@ -74,6 +74,7 @@ export default function MenuCheckBox({
             <input
               className='menuCheckBox-button'
               type='checkbox'
+              aria-label='옵션 버튼'
               checked={ids.includes(option.id)}
               onChange={() => handleButtonClick(option)}
             />
