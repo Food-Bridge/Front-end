@@ -4,7 +4,6 @@ import axiosInstance from '../../../api/instance.js';
 import './Store.scss';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
-import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
@@ -20,7 +19,7 @@ export default function Store() {
   const { resId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [sliderData, setSliderData] = useState([]);
+  const [storeImg, setStoreImg] = useState('');
   const [menuData, setMenuData] = useState([]);
   const [likeData, setLikeData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,13 +32,13 @@ export default function Store() {
       const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu/`);
       const likeRes = isLoggedIn && (await axiosInstance.get('/like/'));
       setData(res.data);
-      setSliderData(res.data.image);
+      setStoreImg(res.data.image);
       setMenuData(menuRes.data);
       isLoggedIn && setLikeData(likeRes.data.liked_restaurants_ids);
       setLoading(false);
     };
     fetchData();
-  }, [resId]);
+  }, [resId, isLoggedIn]);
 
   useEffect(() => {
     setIsLike(likeData.includes(parseInt(resId)));
@@ -72,19 +71,23 @@ export default function Store() {
         <Loading />
       ) : (
         <>
-          <div className='store-img'>
-            {sliderData && sliderData.length > 0 && (
-              <ImageSlider slides={[sliderData]} />
-            )}
-          </div>
+          <img className='store-img' src={storeImg} alt='매장사진' />
           <div className='store-main'>
             <div className='store-title'>
               <h1 className='store-name'>{data.name}</h1>
               <div className='store-icon'>
-                <button className='store-phone' onClick={showNumber}>
-                  <FaPhoneAlt size='30' />
+                <button
+                  className='store-phone'
+                  onClick={showNumber}
+                  aria-label='매장 번호'
+                >
+                  <FaPhoneAlt size='24' />
                 </button>
-                <button className='store-like ' onClick={handleClickHeart}>
+                <button
+                  className='store-like '
+                  onClick={handleClickHeart}
+                  aria-label='매장 좋아요'
+                >
                   {isLike ? (
                     <IoIosHeart size='30' color='red' />
                   ) : (

@@ -80,6 +80,7 @@ function SearchBar() {
           <button
             className='searchBar-location'
             onClick={handleToggleLocationList}
+            aria-label='주소 선택'
           >
             <MdLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
@@ -97,12 +98,13 @@ function SearchBar() {
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
           <div className='searchBar-input'>
-            <button className='searchBar-inputBox' onClick={handleSearchClick}>
+            <button className='searchBar-inputBox'
+            aria-label='검색창' onClick={handleSearchClick}>
               <IoIosSearch className='searchBar-searchIcon' />
             </button>
           </div>
           <div className='searchBar-etcIcon'>
-            <button onClick={handleClickLikes}>
+            <button onClick={handleClickLikes} aria-label='즐겨찾기'>
               <IoIosHeartEmpty className='searchBar-heartIcon' />
             </button>
             <Basket />

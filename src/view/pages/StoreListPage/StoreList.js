@@ -27,7 +27,7 @@ function StoreList() {
       setLoading(false);
     };
     fetchData();
-  }, [url]);
+  }, [url, category]);
 
   return (
     <div className='StoreList'>

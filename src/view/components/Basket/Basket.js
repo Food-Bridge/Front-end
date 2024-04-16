@@ -30,7 +30,7 @@ export default function Basket() {
   };
 
   return (
-    <button className='basket' onClick={handleOpenBasket}>
+    <button className='basket' onClick={handleOpenBasket} aria-label='장바구니'>
       <IoMdBasket className='basket-icon' />
       <div className='basket-count'>
         <h1 className='basket-text'>{count}</h1>

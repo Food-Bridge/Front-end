@@ -1,11 +1,10 @@
-import './MyStore.scss';
+import './Store.scss';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance.js';
 import Swal from 'sweetalert2';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
-import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
 import PlusInfo from '../../components/PlusInfo/PlusInfo.js';
 import RateStars from '../../components/RateStars/RateStars.js';
 
@@ -18,7 +17,7 @@ export default function MyStore() {
   const navigate = useNavigate();
   const owner = useSelector(selectOwner);
   const [data, setData] = useState([]);
-  const [sliderData, setSliderData] = useState([]);
+  const [storeImg, setStoreImg] = useState('');
   const [menuData, setMenuData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +26,7 @@ export default function MyStore() {
       const res = await axiosInstance.get(`/restaurant/${owner}/`);
       const menuRes = await axiosInstance.get(`/restaurant/${owner}/menu/`);
       setData(res.data);
-      setSliderData(res.data.image);
+      setStoreImg(res.data.image);
       setMenuData(menuRes.data);
       setLoading(false);
     };
@@ -53,17 +52,18 @@ export default function MyStore() {
     <Loading />
   ) : (
     <div className='store'>
-      <div className='store-img'>
-        {sliderData && sliderData.length > 0 && (
-          <ImageSlider slides={[sliderData]} />
-        )}
-      </div>
+      <img className='store-img' src={storeImg} alt='매장사진' />
+
       <div className='store-main'>
         <div className='store-title'>
           <h1 className='store-name'>{data.name}</h1>
           <div className='store-icon'>
-            <button className='store-phone' onClick={showNumber}>
-              <FaPhoneAlt size='30' />
+            <button
+              className='store-phone'
+              onClick={showNumber}
+              aria-label='매장 번호'
+            >
+              <FaPhoneAlt size='24' />
             </button>
           </div>
         </div>
