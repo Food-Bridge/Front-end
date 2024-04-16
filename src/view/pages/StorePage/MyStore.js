@@ -33,6 +33,18 @@ export default function MyStore() {
     fetchData();
   }, [owner]);
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = storeImg;
+  }, [storeImg]);
+
+  useEffect(() => {
+    menuData.forEach((menu) => {
+      const img = new Image();
+      img.src = menu.image;
+    });
+  }, [menuData]);
+
   const handleOpenReview = () => {
     navigate('/review/');
   };
@@ -52,8 +64,7 @@ export default function MyStore() {
     <Loading />
   ) : (
     <div className='store'>
-      <img className='store-img' src={storeImg} alt='매장사진' />
-
+      <img className='store-img' src={storeImg} alt='매장 사진' width='600' height='600' />
       <div className='store-main'>
         <div className='store-title'>
           <h1 className='store-name'>{data.name}</h1>
