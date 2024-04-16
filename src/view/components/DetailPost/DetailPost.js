@@ -1,10 +1,10 @@
 import './DetailPost.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import axiosInstance from '../../../api/instance';
 import { MdOutlineDelete } from 'react-icons/md';
-import { CiHeart } from 'react-icons/ci';
+import { CiHeart, CiImageOn } from 'react-icons/ci';
 import { IoEyeOutline } from 'react-icons/io5';
 import { FaRegComment } from 'react-icons/fa';
 import { TbEdit } from "react-icons/tb";
@@ -28,8 +28,14 @@ function DetailPost({ data }) {
   const userLike = data.like_users.some(user => user.id === currentUser)
   const [isLiked, setIsLiked] = useState(userLike);
   const [likesCount, setLikesCount] = useState(data.likes_count);
-  const [updateContent, setUpdateContent] = useState(data.content);
   const [editBtn, setEditBtn] = useState(false);
+  const [updateContent, setUpdateContent] = useState(data.content);
+  const [updateTitle, setUpdateTitle] = useState(data.title);
+  const imageCheck = data._img.length > 0
+  const [updateImage, setUpdateImage] = useState(imageCheck ? data._img[0].image : null);
+  const [imageDisplay, setImageDisplay] = useState(imageCheck ? data._img[0].image : null);
+
+
 
   const handleLike = async () => {
     try {
@@ -74,24 +80,46 @@ function DetailPost({ data }) {
 
   const onEdit = () => {
     setEditBtn(!editBtn);
-    setUpdateContent(data.content);
   }
 
-  const onChange = (e) => {
+  const onContentChange = (e) => {
     setUpdateContent(e.target.value);
   }
+
+  const onTitleChange = (e) => {
+    setUpdateTitle(e.target.value);
+  }
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    setUpdateImage(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageDisplay(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
 
   const handleEditPost = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.put(`/community/${data.id}/`,
-        { content: updateContent },
+      const formData = new FormData();
+      formData.append('title', updateTitle);
+      formData.append('content', updateContent);
+      if (updateImage) {
+        formData.append('img', updateImage);
+      }
+      await axiosInstance.patch(`/community/${data.id}/`, formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
           }
         })
-      setEditBtn(false);
+      setEditBtn(!editBtn)
+      if (updateImage) {
+        setUpdateImage(URL.createObjectURL(updateImage));
+        setImageDisplay(URL.createObjectURL(updateImage));
+      }
     } catch (error) {
       console.log(error);
       Swal.fire({
@@ -144,30 +172,43 @@ function DetailPost({ data }) {
         </div>
       </header>
       <div className='detailPost-content'>
-        <h1 className='detailPost-title'>{data.title}</h1>
-        {editBtn ?
+        {editBtn ? <>
+          <input className='editTitle' onChange={onTitleChange} value={updateTitle} />
           <textarea
-            className='editInput'
-            onChange={onChange}
+            className='editContent'
+            onChange={onContentChange}
             value={updateContent} />
-          : <>
-            {data._img.length > 0 && (
-              <img className='detailPost-image' src={data._img[0].image} alt='게시글 이미지' />
-            )}
+          <label htmlFor="updateFile">
+            <CiImageOn className='postUpload-photoIcon' />
+          </label>
+          <input
+            id="updateFile"
+            className='editImg'
+            type='file'
+            accept='image/*'
+            onChange={onChangeImage} />
+          {imageDisplay && (
+            <img className='detailPost-image' src={imageDisplay} alt='DisplayImage' />
+          )}
+        </> : <>
+          <h1 className='detailPost-title'>{updateTitle}</h1>
+          {imageDisplay && (
+            <img className='detailPost-image' src={imageDisplay} alt='DisplayImage' />
+          )}
 
-            <p className='detailPost-text'>{data.content}</p>
-            <footer className='detailPost-footer'>
-              <div className='detailPost-icons'>
-                <CiHeart className='detailPost-icon' size='18' />
-                <p className='detailPost-numData'>{likesCount}</p>
-                <IoEyeOutline className='detailPost-icon' size='18' />
-                <p className='detailPost-numData'>{data.views}</p>
-                <FaRegComment className='detailPost-icon' />
-                <p className='detailPost-numData'>{data.comment_count}</p>
-              </div>
-              <p className='detailPost-created'>{formedCreated}</p>
-            </footer>
-          </>
+          <p className='detailPost-text'>{updateContent}</p>
+          <footer className='detailPost-footer'>
+            <div className='detailPost-icons'>
+              <CiHeart className='detailPost-icon' size='18' />
+              <p className='detailPost-numData'>{likesCount}</p>
+              <IoEyeOutline className='detailPost-icon' size='18' />
+              <p className='detailPost-numData'>{data.views}</p>
+              <FaRegComment className='detailPost-icon' />
+              <p className='detailPost-numData'>{data.comment_count}</p>
+            </div>
+            <p className='detailPost-created'>{formedCreated}</p>
+          </footer>
+        </>
         }
       </div>
     </div>
