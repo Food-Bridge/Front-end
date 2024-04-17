@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './MyListProfile.scss';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectProfile, setProfile } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 import PlusInfo from '../PlusInfo/PlusInfo';
 import Swal from 'sweetalert2';
-import Loading from '../../components/Loading/Loading'
+import Loading from '../../components/Loading/Loading';
+import ImageUploader from '../../../api/compress';
 
-export default function MyListProfile({ onChangeImage, handleLogout }) {
-  const dispatch = useDispatch();
-  const profile = useSelector(selectProfile);
-  const [isNicknameChange, setIsNicknameChange] = useState(false);
+export default function MyListProfile({ handleLogout }) {
+  const [userEmail, setuserEmail] = useState(null)
+  const [userNickname, setUserNickname] = useState("null")
+  const [userImg, setUserImg] = useState(null)
+  const [changeImg, setChangeImg] = useState(userImg)
+  const [imageDisplay, setImageDisplay] = useState(null)
+  const [changeNickname, setChangeNickname] = useState(userNickname)
+  const [isEdit, setIsEdit] = useState(false);
   const [orderNum, setOrderNum] = useState(0);
   const [reviewNum, setReviewNum] = useState(0);
   const [likeNum, setLikeNum] = useState(0);
@@ -19,9 +22,10 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axiosInstance.get('/users/profile/');
-      dispatch(
-        setProfile({ image: res.data.image, nickname: res.data.nickname })
-      );
+      setUserNickname(res.data.nickname)
+      setUserImg(res.data.image)
+      setImageDisplay(res.data.image)
+      setuserEmail(res.data.user)
       const orderRes = await axiosInstance.get('/order/');
       setOrderNum(orderRes.data.length);
       const reviewRes = await axiosInstance.get('/review/');
@@ -33,16 +37,20 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
     fetchData();
   }, []);
 
-  const handleChangeNickname = async () => {
-    setIsNicknameChange(!isNicknameChange);
-    if (isNicknameChange) {
-      const formData = new FormData();
-      formData.append('nickname', profile.nickname);
+  const onNicknameClick = () => {
+    setIsEdit(!isEdit)
+    setChangeNickname(userNickname)
+    setImageDisplay(userImg)
+  }
 
-      const res = await axiosInstance.put('/users/profile/', formData);
-      dispatch(
-        setProfile({ image: profile.image, nickname: res.data.nickname })
-      );
+  const handleChangeNickname = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('user', userEmail);
+      formData.append('nickname', userNickname);
+      if (changeImg)
+        formData.append('image', changeImg);
+      await axiosInstance.put('/users/profile/', formData);
       Swal.fire({
         icon: 'info',
         title: '프로필 변경',
@@ -51,6 +59,11 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
         confirmButtonText: '확인',
         confirmButtonColor: 'black',
       });
+      setIsEdit(false);
+      setUserNickname(changeNickname)
+      setUserImg(imageDisplay)
+    } catch {
+      console.log("fail profile edit")
     }
   };
 
@@ -58,49 +71,57 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
     <div className='mylistUser'>
       {loading && <Loading />}
       <div className='mylistUser-profile'>
-        <img
-          className='mylistUser-profileImg'
-          src={profile.image}
-          alt='프로필이미지'
-        />
-        <input
-          className='mylistUser-profileInput'
-          id='file'
-          type='file'
-          accept='image/*'
-          onChange={onChangeImage}
-        />
-        <label htmlFor='file' className='mylistUser-profileBtn'>
-          편집
-        </label>
+        {isEdit ?
+          <>
+            <img
+              className='mylistUser-profileImg'
+              src={imageDisplay}
+              alt='프로필이미지'
+            />
+            <div className='mylistUser-profileInput'>
+              <ImageUploader
+                size='1.5'
+                setImage={setChangeImg}
+                setImageDisplay={setImageDisplay}
+                length='1000'
+              />
+            </div>
+            <label htmlFor='file' className='mylistUser-profileBtn'>
+              편집
+            </label>
+          </> :
+          <img
+            className='mylistUser-profileImg'
+            src={userImg}
+            alt='프로필이미지' />
+        }
       </div>
       <div className='mylistUser-group'>
         <div className='mylistUser-id'>
-          {isNicknameChange ? (
+          {isEdit ? (<>
             <input
               className='mylistUser-id-input'
               type='text'
-              value={profile.nickname}
-              onChange={(event) =>
-                dispatch(
-                  setProfile({
-                    image: profile.image,
-                    nickname: event.target.value,
-                  })
-                )
-              }
-            ></input>
-          ) : (
+              value={changeNickname}
+              onChange={(e) => setChangeNickname(e.target.value)}
+            />
+            <div className='mylistUser-id-change' onClick={handleChangeNickname}>
+              <PlusInfo text='저장' />
+            </div>
+            <div className='mylistUser-id-logout' onClick={onNicknameClick}>
+              <PlusInfo text='취소' />
+            </div>
+          </>) : (<>
             <h1 className='mylistUser-id-name'>
-              {profile.nickname || '닉네임'}
+              {userNickname || '닉네임'}
             </h1>
-          )}
-          <div className='mylistUser-id-change' onClick={handleChangeNickname}>
-            <PlusInfo text={isNicknameChange ? '변경 완료' : '닉네임 변경'} />
-          </div>
-          <div className='mylistUser-id-logout' onClick={handleLogout}>
-            <PlusInfo text='로그아웃' />
-          </div>
+            <div className='mylistUser-id-change' onClick={onNicknameClick}>
+              <PlusInfo text='프로필 수정' />
+            </div>
+            <div className='mylistUser-id-logout' onClick={handleLogout}>
+              <PlusInfo text='로그아웃' />
+            </div>
+          </>)}
         </div>
         <div className='mylistUser-detail'>
           <div className='mylistUser-detailBox'>
