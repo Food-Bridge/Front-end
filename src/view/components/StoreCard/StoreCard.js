@@ -1,9 +1,8 @@
 import React from 'react';
 import './StoreCard.scss';
-import { IoIosStar } from 'react-icons/io';
+import { IoIosStar } from '@react-icons/all-files/io/IoIosStar';
 
 function StoreCard({
-  className,
   img,
   storeName,
   minimumPrice,

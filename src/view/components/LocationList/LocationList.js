@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './LocationList.scss';
-import { CiLocationOn } from 'react-icons/ci';
+import {MdLocationOn} from '@react-icons/all-files/md/MdLocationOn'
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchAddresses,
@@ -38,7 +38,7 @@ const LocationList = ({
       {addresses.map((address) => (
         <div className='location-button' key={address.id}>
           <button onClick={() => handleDefaultAddress(address)}>
-            <CiLocationOn
+            <MdLocationOn
               className='location-icon'
               style={{ color: address.id === defaultId ? 'red' : 'black' }}
             />

@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaStar, FaStarHalf } from 'react-icons/fa';
+import { FaStar } from '@react-icons/all-files/fa/FaStar';
+import { FaStarHalf } from '@react-icons/all-files/fa/FaStarHalf';
 
 export default function RateStars({ rate, starOnly }) {
   const rates = rate !== 0 ? Math.round(rate * 2) / 2 : 0;

@@ -1,7 +1,8 @@
 import React from 'react';
 import './SearchRank.scss';
-import { RxTriangleUp, RxTriangleDown } from 'react-icons/rx';
-import { MdOutlineHorizontalRule } from 'react-icons/md';
+import { GoTriangleUp } from '@react-icons/all-files/go/GoTriangleUp';
+import { GoTriangleDown } from '@react-icons/all-files/go/GoTriangleDown';
+import { GoHorizontalRule } from '@react-icons/all-files/go/GoHorizontalRule';
 
 export default function SearchRank({ rank, text, type }) {
   return (
@@ -10,11 +11,11 @@ export default function SearchRank({ rank, text, type }) {
       <p className='searchRank-text'>{text}</p>
       <div className='searchRank-icon'>
         {type === 'up' ? (
-          <RxTriangleUp color='red' size='24' />
+          <GoTriangleUp color='red' size='24' />
         ) : type === 'down' ? (
-          <RxTriangleDown color='blue' size='24' />
+          <GoTriangleDown color='blue' size='24' />
         ) : (
-          <MdOutlineHorizontalRule size='20' />
+          <GoHorizontalRule size='20' />
         )}
       </div>
     </div>

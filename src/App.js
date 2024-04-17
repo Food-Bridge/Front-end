@@ -109,10 +109,10 @@ function App() {
               {isSeller && (
                 <>
                   <Route path='myStore/' element={<MyStore />} />
-                  <Route path='myStore/:id' element={<MyStoreOption />} />
+                  <Route path='myStore/:menuId' element={<MyStoreOption />} />
                   <Route path='storeUpload/' element={<StoreUpload />} />
                   <Route path='menuUpload/' element={<MenuUpload />} />
-                  <Route path='optionUpload/' element={<OptionUpload />} />
+                  <Route path='optionUpload/:menuId/:type' element={<OptionUpload />} />
                 </>
               )}
             </Routes>

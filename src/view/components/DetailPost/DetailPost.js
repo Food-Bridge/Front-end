@@ -1,13 +1,12 @@
 import './DetailPost.scss';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import axiosInstance from '../../../api/instance';
-import { MdOutlineDelete } from 'react-icons/md';
-import { CiHeart, CiImageOn } from 'react-icons/ci';
-import { IoEyeOutline } from 'react-icons/io5';
-import { FaRegComment } from 'react-icons/fa';
-import { TbEdit } from "react-icons/tb";
+import { useNavigate } from 'react-router-dom';
+import { IoIosHeart } from '@react-icons/all-files/io/IoIosHeart';
+import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
+import { AiOutlineDelete } from '@react-icons/all-files/ai/AiOutlineDelete';
+import { IoEyeOutline } from '@react-icons/all-files/io5/IoEyeOutline';
+import { FaRegComment } from '@react-icons/all-files/fa/FaRegComment';
 
 import Swal from 'sweetalert2';
 import { useGetId } from '../../../api/useGetId';
@@ -25,7 +24,7 @@ function DetailPost({ data }) {
 
   const currentUser = useGetId();
 
-  const userLike = data.like_users.some(user => user.id === currentUser)
+  const userLike = data.like_users.some((user) => user.id === currentUser);
   const [isLiked, setIsLiked] = useState(userLike);
   const [likesCount, setLikesCount] = useState(data.likes_count);
   const [editBtn, setEditBtn] = useState(false);
@@ -42,14 +41,14 @@ function DetailPost({ data }) {
       await axiosInstance.post(`/community/${data.id}/likes/`);
       setIsLiked(!isLiked);
       const response = await axiosInstance.get(`/community/${data.id}`);
-      setLikesCount(response.data.likes_count)
+      setLikesCount(response.data.likes_count);
     } catch (error) {
       console.error('Error liking post:', error);
       setIsLiked(!isLiked);
     }
   };
 
-  const isUserPost = currentUser === data.author_info.user
+  const isUserPost = currentUser === data.author_info.user;
   const handleDeletePost = () => {
     axiosInstance
       .delete(`/community/${data.id}/`)

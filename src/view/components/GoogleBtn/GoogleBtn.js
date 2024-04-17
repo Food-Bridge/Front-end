@@ -1,6 +1,6 @@
 import React from 'react';
 import './GoogleBtn.scss';
-import { FcGoogle } from 'react-icons/fc';
+import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../redux/reducers/authSlice';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import './PostCard.scss';
-import { CiHeart } from 'react-icons/ci';
-import { IoEyeOutline } from 'react-icons/io5';
-import { FaRegComment } from 'react-icons/fa';
+import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
+import { IoEyeOutline } from '@react-icons/all-files/io5/IoEyeOutline';
+import { FaRegComment } from '@react-icons/all-files/fa/FaRegComment';
 
 function PostCard({ post }) {
   const created = new Date(post.created_at);
@@ -27,7 +27,7 @@ function PostCard({ post }) {
           <div className='postCard-icons'>
             <div className='postCard-likeCount'>
               <h1 className='postCard-fontSize'>
-                <CiHeart className='postCard-likeIcon' />
+                <IoIosHeartEmpty className='postCard-likeIcon' />
                 {post.likes_count}
               </h1>
             </div>

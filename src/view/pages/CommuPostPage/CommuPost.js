@@ -3,7 +3,7 @@ import './CommuPost.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import PostCard from '../../components/PostCard/PostCard';
-import { LuPencilLine } from 'react-icons/lu';
+import { GoPencil } from '@react-icons/all-files/go/GoPencil';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -56,7 +56,7 @@ function CommuPost({ title }) {
         <div className='commuPost-header'>
           <div className='commuPost-title'>{title} 글</div>
           <button className='commuPost-editIcon' onClick={handleEditClick}>
-            <LuPencilLine size='24' />
+            <GoPencil size='24' />
           </button>
         </div>
         <div className='commuPost-postList'>

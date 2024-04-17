@@ -6,7 +6,7 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import CommunityCard from '../../components/CommunityCard/CommunityCard';
-import { LuPencilLine } from 'react-icons/lu';
+import { GoPencil } from '@react-icons/all-files/go/GoPencil';
 import PlusInfo from '../../components/PlusInfo/PlusInfo';
 import Loading from '../../components/Loading/Loading'
 import {
@@ -63,7 +63,7 @@ function Community() {
             <PlusInfo text='더보기' arrow='true' onClick={handleMoreClick} />
           </div>
           <button className='community-editIcon' onClick={handleEditClick}>
-            <LuPencilLine size='24' />
+            <GoPencil size='24' />
           </button>
         </div>
         <div className='community-weekMiniPost'>

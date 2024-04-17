@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './StoreReview.scss';
-import { FaStar, FaStarHalf } from 'react-icons/fa';
+import { FaStar } from '@react-icons/all-files/fa/FaStar';
+import { FaStarHalf } from '@react-icons/all-files/fa/FaStarHalf';
 import { useParams } from 'react-router-dom';
 
 import ReviewBox from '../../components/ReviewBox/ReviewBox';
