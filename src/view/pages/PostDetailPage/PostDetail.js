@@ -42,23 +42,8 @@ function PostDetail() {
         .get(`/community/${id}/`)
         .then(async (res) => {
           setPostData(res.data);
-          await axiosInstance
-            .get(`/community/${id}/comment/`)
-            .then((res) => {
-              setCommentData(res.data);
-              setLoading(false)
-            })
-            .catch((error) =>
-              Swal.fire({
-                icon: 'warning',
-                title: '알림',
-                html: '오류가 발생했습니다.<br>다시 시도해주세요.',
-                confirmButtonText: '확인',
-                confirmButtonColor: 'black',
-              }).then((res) => {
-                res.isConfirmed && navigate('/commu/');
-              })
-            );
+          setCommentData(res.data.comments);
+          setLoading(false)
         })
         .catch((error) =>
           Swal.fire({
