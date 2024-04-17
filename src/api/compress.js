@@ -42,8 +42,8 @@ export default function ImageUploader({ setImage, setImageDisplay, size, length 
   };
 
   return (
-    <div>
-      <input type='file' accept='image/*' onChange={handleImageUpload} />
-    </div>
+    <>
+      <input id='file' type='file' accept='image/*' onChange={handleImageUpload} />
+    </>
   );
 }
