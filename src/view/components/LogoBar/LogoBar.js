@@ -7,7 +7,7 @@ import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../../data/foodbridge.jpg';
 
-export default function LogoBar() {
+function LogoBar() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -45,3 +45,5 @@ export default function LogoBar() {
     </div>
   );
 }
+
+export default React.memo(LogoBar);
