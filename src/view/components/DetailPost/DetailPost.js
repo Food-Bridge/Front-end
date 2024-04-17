@@ -7,7 +7,7 @@ import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
 import { AiOutlineDelete } from '@react-icons/all-files/ai/AiOutlineDelete';
 import { IoEyeOutline } from '@react-icons/all-files/io5/IoEyeOutline';
 import { FaRegComment } from '@react-icons/all-files/fa/FaRegComment';
-
+import { GoPencil } from '@react-icons/all-files/go/GoPencil';
 import Swal from 'sweetalert2';
 import { useGetId } from '../../../api/useGetId';
 
@@ -161,10 +161,10 @@ function DetailPost({ data }) {
 
               {isUserPost && (<>
                 <button className='detailPost-deleted' onClick={onEdit}>
-                  <TbEdit size='24' />
+                  <GoPencil size='24' />
                 </button >
                 <button className='detailPost-deleted' onClick={handleDeletePost}>
-                  <MdOutlineDelete size='24' />
+                  <AiOutlineDelete size='24' />
                 </button></>
               )}</>
           }
@@ -178,7 +178,7 @@ function DetailPost({ data }) {
             onChange={onContentChange}
             value={updateContent} />
           <label htmlFor="updateFile">
-            <CiImageOn className='postUpload-photoIcon' />
+            <IoIosHeart className='detailPost-icon' size='18' />
           </label>
           <input
             id="updateFile"
@@ -198,7 +198,7 @@ function DetailPost({ data }) {
           <p className='detailPost-text'>{updateContent}</p>
           <footer className='detailPost-footer'>
             <div className='detailPost-icons'>
-              <CiHeart className='detailPost-icon' size='18' />
+              <IoIosHeart className='detailPost-icon' size='18' />
               <p className='detailPost-numData'>{likesCount}</p>
               <IoEyeOutline className='detailPost-icon' size='18' />
               <p className='detailPost-numData'>{data.views}</p>
