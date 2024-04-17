@@ -31,7 +31,7 @@ export default function MyListProfile({ onChangeImage, handleLogout }) {
       setLoading(false)
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const handleChangeNickname = async () => {
     setIsNicknameChange(!isNicknameChange);

@@ -35,7 +35,7 @@ const CartAddBtn = ({menuData, data, isRequiredCount }) => {
     if (!isLoggedIn) {
       Swal.fire({
         icon: 'warning',
-        text: '알림',
+        title: '알림',
         text: '로그인이 필요합니다.',
         showCancelButton: false,
         confirmButtonText: '로그인하기',
@@ -44,7 +44,7 @@ const CartAddBtn = ({menuData, data, isRequiredCount }) => {
     } else if (!isRequiredCount) {
       Swal.fire({
         icon: 'warning',
-        text: '알림',
+        title: '알림',
         text: '필수 옵션을 다시 확인해주세요.',
         showCancelButton: false,
         confirmButtonText: '확인',

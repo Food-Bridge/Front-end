@@ -151,7 +151,7 @@ export default function Payment() {
       <div className='payment-list'>
         <div className='payment-info'>
           <div className='payment-store'>
-            <img className='payment-storeImg' src={store.image} />
+            <img className='payment-storeImg' src={store.image} alt='매장 이미지'/>
             <h2 className='payment-storeName'>{store.name}</h2>
           </div>
           <div className='payment-deliver'>

@@ -72,7 +72,7 @@ function DetailPost({ data }) {
     <div className='DetailPost'>
       <header className='detailPost-header'>
         <div className='detailPost-profile'>
-          <img className='detailPost-profileImg' src={data.author_info.image} />
+          <img className='detailPost-profileImg' src={data.author_info.image} alt='프로필 이미지'/>
           <p className='detailPost-profileName'>
             {data.author_info.nickname || '닉네임'}
           </p>
@@ -99,7 +99,7 @@ function DetailPost({ data }) {
       <div className='detailPost-content'>
         <h1 className='detailPost-title'>{data.title}</h1>
         {data._img.length > 0 && (
-          <img className='detailPost-image' src={data._img[0].image} />
+          <img className='detailPost-image' src={data._img[0].image} alt='게시물 이미지'/>
         )}
 
         <p className='detailPost-text'>{data.content}</p>

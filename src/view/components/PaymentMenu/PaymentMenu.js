@@ -19,7 +19,7 @@ export default function PaymentMenu({
 
   return (
     <div className='paymentMenu'>
-      <img src={item.image} className='paymentMenu-image' />
+      <img src={item.image} className='paymentMenu-image' alt='메뉴 이미지'/>
       <div className='paymentMenu-content'>
         <div className='paymentMenu-header'>
           <h1 className='paymentMenu-title'>{item.name}</h1>

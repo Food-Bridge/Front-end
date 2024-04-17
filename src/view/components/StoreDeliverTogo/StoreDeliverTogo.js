@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PlusInfo from '../PlusInfo/PlusInfo';
-import './StoreDelierTogo.scss';
+import './StoreDeliverTogo.scss';
 import { useDispatch } from 'react-redux';
 import { setPickUp, setDeliver } from '../../../redux/reducers/cartSlice';
 import Swal from 'sweetalert2';

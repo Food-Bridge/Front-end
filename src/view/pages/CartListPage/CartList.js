@@ -147,7 +147,7 @@ console.log(menu)
         <div className='cartlist-list'>
           <div className='cartlist-info'>
             <div className='cartlist-store'>
-              <img className='cartlist-storeImg' src={store.image} />
+              <img className='cartlist-storeImg' src={store.image} alt='매장 이미지'/>
               <h2 className='cartlist-storeName'>{store.name}</h2>
             </div>
             <div className='cartlist-deliver'>

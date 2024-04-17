@@ -20,7 +20,7 @@ export default function CommunityCard({ post }) {
           <div className='communityCard-profile'>
             <img
               className='communityCard-profileImg'
-              src={post.author_info.image}
+              src={post.author_info.image} alt='프로필 이미지'
             />
             <p className='communityCard-profileName'>
               {post.author_info.nickname ? post.author_info.nickname : '닉네임'}

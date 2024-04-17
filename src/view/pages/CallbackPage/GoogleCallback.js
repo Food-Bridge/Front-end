@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 

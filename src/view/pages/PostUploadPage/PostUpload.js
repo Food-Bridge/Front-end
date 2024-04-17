@@ -92,7 +92,7 @@ function PostUpload() {
         <div className='postUpload-etcIcons'>
           <div className='postUpload-photo'>
             {imageDisplay && (
-              <img className='postUpload-img' src={imageDisplay} />
+              <img className='postUpload-img' src={imageDisplay} alt='게시물 이미지' />
             )}
             <input
               ref={imageInput}

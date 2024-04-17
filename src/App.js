@@ -48,10 +48,10 @@ function App() {
           <Router>
             <LogoBar />
             <Routes>
-              // 메인
+              {/* 메인 */}
               <Route path='/' element={<MainPage />} />
               <Route path='search/' element={<Search />} />
-              // 유저 로그인
+              {/* 유저 로그인 */}
               <Route path='users/signin/' element={<SignIn />} />
               <Route path='users/signup/' element={<SignUp />} />
               <Route
@@ -62,13 +62,13 @@ function App() {
                 path='users/signin/googleCallback'
                 element={<GoogleCallback />}
               />
-              // 유저 정보
+              {/* 유저 정보 */}
               <Route path='users/' element={<MyList />} />
               <Route path='users/review' element={<MyReview />} />
               <Route path='users/coupon/' element={<CouponList />} />
               <Route path='users/address/' element={<Location />} />
               <Route path='users/likes/' element={<StoreLikes />} />
-              // 식당 정보
+              {/* 식당 정보 */}
               <Route path='restaurant/:resId/' element={<Store />} />
               <Route
                 path='restaurant/:resId/:menuId'
@@ -84,11 +84,11 @@ function App() {
                 element={<ReviewUpload />}
               />
               <Route path='optionUpload' element={<OptionUpload />} />
-              // 주문 정보
+              {/* 주문 정보 */}
               <Route path='cart/' element={<CartList />} />
               <Route path='orderlist/' element={<OrderList />} />
               <Route path='payment/' element={<Payment />} />
-              // 커뮤니티
+              {/* 커뮤니티 */}
               <Route path='commu/' element={<Community />} />
               <Route
                 path='commuPostWeek/'
@@ -105,14 +105,17 @@ function App() {
               <Route path='postCard/:id' element={<PostDetail />} />
               <Route path='postUpload/' element={<PostUpload />} />
               <Route path='poster/' element={<Poster />} />
-              //판매자 페이지
+              {/* 판매자 페이지 */}
               {isSeller && (
                 <>
                   <Route path='myStore/' element={<MyStore />} />
                   <Route path='myStore/:menuId' element={<MyStoreOption />} />
                   <Route path='storeUpload/' element={<StoreUpload />} />
                   <Route path='menuUpload/' element={<MenuUpload />} />
-                  <Route path='optionUpload/:menuId/:type' element={<OptionUpload />} />
+                  <Route
+                    path='optionUpload/:menuId/:type'
+                    element={<OptionUpload />}
+                  />
                 </>
               )}
             </Routes>

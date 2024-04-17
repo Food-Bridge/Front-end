@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './OptionUpload.scss';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectOwner } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';

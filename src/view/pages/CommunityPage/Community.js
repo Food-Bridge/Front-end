@@ -44,7 +44,7 @@ function Community() {
   useEffect(() => {
     dispatch(fetchPostData());
     setLoading(false);
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className='Community'>

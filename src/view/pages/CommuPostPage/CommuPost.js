@@ -34,7 +34,7 @@ function CommuPost({ title }) {
       }
       setLoading(false)
     });
-  }, []);
+  }, [daily, weekly, latest, dispatch, title]);
 
   const handleEditClick = () => {
     navigate('/postUpload/');

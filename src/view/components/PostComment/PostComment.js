@@ -79,7 +79,7 @@ const PostComment = ({ data, postId }) => {
           <div className='postComment-userInfo'>
             <img
               className='postComment-profile'
-              src='http://localhost:8000/media/default.png'
+              src='http://localhost:8000/media/default.png' alt='프로필 이미지'
             />
             <div className='postComment-userName'>
               {data.author_info ? data.author_info.nickname : '닉네임'}

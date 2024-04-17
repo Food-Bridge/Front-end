@@ -16,6 +16,7 @@ export default function ReviewBox({ data, myReview }) {
           <img
             className='reviewBox-profileImg'
             src={myReview ? data.restaurant_image : data.user_image}
+            alt={myReview ? '매장 이미지' : '프로필 이미지'}
           />
           <div className='reviewBox-profileContent'>
             <p className='reviewBox-profileName'>
@@ -28,7 +29,7 @@ export default function ReviewBox({ data, myReview }) {
       </header>
       <div className='reviewBox-content'>
         {data.image.length > 0 && (
-          <img className='reviewBox-contentImg' src={data.image[0].image} />
+          <img className='reviewBox-contentImg' src={data.image[0].image} alt='리뷰 이미지'/>
         )}
         <p className='reviewBox-contentText'>{data.caption}</p>
       </div>

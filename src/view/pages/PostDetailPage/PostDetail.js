@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PostDetail.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
@@ -9,8 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { useGetId } from '../../../api/useGetId';
-
 
 axios.defaults.withCredentials = true;
 
@@ -71,7 +69,7 @@ function PostDetail() {
     };
     fetchData();
 
-  }, [id]);
+  }, [id, navigate]);
 
   return (
     <div className='PostDetail'>

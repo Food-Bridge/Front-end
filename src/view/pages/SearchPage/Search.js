@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './Search.scss';
 import axiosInstance from '../../../api/instance';
 import SearchRank from '../../components/SearchRank/SearchRank';
-import StoreCard from '../../components/StoreCard/StoreCard';
 import SearchBarPlus from '../../components/SearchBar/SearchBarPlus';
 import SearchResult from '../../components/SearchResult/SearchResult';
 
 export default function Search() {
   const [rankData, setRankData] = useState([]);
-  const [storeData, setStoreData] = useState([]);
   const [isResult, setIsResult] = useState(false);
   const [searchText, setSearchText] = useState('');
 
@@ -64,22 +62,6 @@ export default function Search() {
                   );
                 })}
             </div>
-            {/* <h1 className='search-title'>실시간 인기 맛집</h1>
-            <div className='search-store'>
-              {storeData.map((el, index) => {
-                return (
-                  <StoreCard
-                    key={index}
-                    img={el.image}
-                    className={el.className}
-                    storeName={el.name}
-                    minimumPrice={el.minimumOrderPrice}
-                    deliverPrice={el.deliverPrice}
-                    storeScore={el.rating}
-                  />
-                );
-              })}
-            </div> */}
           </div>
         </div>
       )}

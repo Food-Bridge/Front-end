@@ -77,7 +77,7 @@ function MenuUpload() {
       setImage(res.data.image);
     };
     typeof id === 'number' && fetchData();
-  }, []);
+  }, [id, owner]);
 
   return (
     <div className='MenuUpload'>

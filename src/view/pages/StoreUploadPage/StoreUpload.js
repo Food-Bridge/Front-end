@@ -185,7 +185,7 @@ function StoreUpload() {
       console.log(res);
     };
     typeof owner === 'number' && fetchData();
-  }, []);
+  }, [owner]);
 
   return (
     <div className='StoreUpload'>
@@ -388,7 +388,13 @@ function StoreUpload() {
               src={imageDisplay}
               alt='매장 이미지'
             />
-            <BrowserImageCompression className='storeUpload-imageInput' setImage={setImage} setImageDisplay={setImageDisplay} size='1.5' length='1000'/>
+            <BrowserImageCompression
+              className='storeUpload-imageInput'
+              setImage={setImage}
+              setImageDisplay={setImageDisplay}
+              size='1.5'
+              length='1000'
+            />
           </div>
         </div>
         <div className='storeUpload-uploadBtn'>
