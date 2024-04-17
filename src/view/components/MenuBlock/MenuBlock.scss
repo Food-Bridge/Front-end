@@ -14,27 +14,19 @@
     .menublock-content {
       width: 320px;
       margin: 10px 20px;
-
+      .menublock-tag {
+        padding: 7px 12px;
+        border: 1px solid #c6c6c6;
+        border-radius: 50px;
+        margin-right: 5px;
+        .menublock-tagText {
+          font-size: 14px;
+        }
+      }
       .menublock-title {
         margin: 10px 0;
         display: flex;
         align-items: center;
-
-        .menublock-tag {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 52px;
-          height: 30px;
-          border: 1px solid #8d8d8d;
-          border-radius: 50px;
-          box-shadow: 2px 2px 2px #8d8d8d;
-          margin-right: 10px;
-
-          .menublock-tag-title {
-            font-size: 14px;
-          }
-        }
 
         .menublock-name {
           font-size: 24px;
@@ -58,6 +50,7 @@
       height: 180px;
       border-radius: 5px;
       background-color: #c6c6c6;
+      object-fit: cover;
     }
   }
   .menublock-btn {

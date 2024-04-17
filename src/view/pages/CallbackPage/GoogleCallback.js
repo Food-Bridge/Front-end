@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import { setTokens } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
@@ -12,9 +12,8 @@ const GoogleCallback = () => {
     const fetchData = async () => {
       const params = new URL(document.location.toString()).searchParams;
       const code = params.get('code');
-      const client_id =
-        process.env.REACT_APP_GOOGLE_CLIENT_ID
-      const redirect_uri = 'http://127.0.0.1:3000/users/signin/googleCallback/';
+      const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+      const redirect_uri = 'https://foodbridge.vercel.app/users/signin/googleCallback/';
       const CLIENT_SECRET = process.env.REACT_APP_GOOGLE_SECRET_ID;
 
       const response = await axiosInstance.post(

@@ -5,12 +5,14 @@ import { useDispatch } from 'react-redux';
 
 import LocationList from '../../components/LocationList/LocationList';
 import LocationSearch from '../LocationSearchPage/LocationSearch';
+import Loading from '../../components/Loading/Loading';
 
 const Location = () => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [editedNicknames, setEditedNicknames] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const handleEditAddressNickname = (id, value) => {
     setEditedNicknames((prevState) => ({
@@ -43,6 +45,8 @@ const Location = () => {
 
   return (
     <div className='location'>
+      {loading && <Loading />}
+
       {isAdd ? (
         <LocationSearch complete={handleCompleteAdd} />
       ) : (
@@ -60,6 +64,7 @@ const Location = () => {
             주소 추가
           </button>
           <LocationList
+            setLoading={setLoading}
             isEdit={isEdit}
             handleEditAddressNickname={handleEditAddressNickname}
             editedNicknames={editedNicknames}

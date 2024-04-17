@@ -12,7 +12,7 @@ const EXPIRATION_TIME = 30 * 60 * 1000;
 const storageConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['auth', 'address', 'cart', 'deliver'],
+  whitelist: ['auth', 'cart', 'deliver'],
   timeout: 5000,
 };
 

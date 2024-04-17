@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useParams } from 'react-router-dom';
 import './StoreOption.scss';
-
+import Loading from '../../components/Loading/Loading';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import CartAddBtn from '../../components/CartAddBtn/CartAddBtn';
@@ -15,11 +15,23 @@ export default function StoreOption() {
   const [sOptionData, setSOptionData] = useState([]);
   const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const isRequiredCount = option && menuData.required_options_count === option.length;
 
   const price =
     menuData.price +
     (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
     (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0);
+
+    const menuInfo = {
+      id: menuData.id,
+      image: menuData.image,
+      name: menuData.name,
+      option: option,
+      sOption: sOption,
+      price: price,
+      restaurant: menuData.restaurant
+    };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +49,7 @@ export default function StoreOption() {
       setMenuData(menuRes.data);
       setOptionData(optionRes.data);
       setSOptionData(sOptionRes.data);
+      setLoading(false);
     };
     fetchData();
   }, [resId, menuId]);
@@ -49,9 +62,11 @@ export default function StoreOption() {
     setSOption(selectedSOption);
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className='storeOption'>
-      <img src={menuData.image} className='storeOption-img' />
+      <img src={menuData.image} alt='메뉴이미지' className='storeOption-img' />
       <div className='storeOption-title'>
         {menuData.is_popular && (
           <div className='storeOption-tag'>
@@ -78,11 +93,13 @@ export default function StoreOption() {
       {sOptionData.length > 0 && (
         <MenuCheckBox data={sOptionData} onOptionChange={handleSOptionChange} />
       )}
-      <CartAddBtn
-        price={price}
-        data={data}
-        menuData={{ ...menuData, option, sOption }}
-      />
+      {!isNaN(price) && (
+        <CartAddBtn
+          data={data}
+          menuData={menuInfo}
+          isRequiredCount={isRequiredCount}
+        />
+      )}
     </div>
   );
 }

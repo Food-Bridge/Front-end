@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './PaymentMethod.scss';
-import logo from '../../../data/tossIcon.png';
 
 const PaymentMethod = ({ selected, click }) => {
   const handleOptionChange = (event) => {
@@ -23,23 +22,16 @@ const PaymentMethod = ({ selected, click }) => {
             />
             <h1 className='paymentMethod-directText'>신용카드</h1>
           </div>
-          <div className='paymentMethod-toss'>
+          <div className='paymentMethod-direct'>
             <input
               type='radio'
               name='react-tips'
-              value='toss_pay'
-              checked={selected === 'toss_pay'}
+              value='cash'
+              checked={selected === 'cash'}
               onChange={handleOptionChange}
-              className='paymentMethod-tossRadio'
+              className='paymentMethod-directRadio'
             />
-            <h1 className='paymentMethod-tossText'>
-              <img
-                src={logo}
-                alt='tossLogo'
-                className='paymentMethod-tossLogo'
-              />{' '}
-              토스페이
-            </h1>
+            <h1 className='paymentMethod-directText'>현금</h1>
           </div>
         </div>
       </div>

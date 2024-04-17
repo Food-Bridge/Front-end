@@ -1,11 +1,9 @@
 import React from 'react';
 import './ReviewBox.scss';
-import { FaStar } from 'react-icons/fa';
+import RateStars from '../RateStars/RateStars';
 
 export default function ReviewBox({ data, myReview }) {
-  console.log(data);
   const rate = data.rating;
-  const rateStars = Array(rate).fill(<FaStar color='#ffc700' size='14' />);
   const menuName = data.menu_name;
   const dateTimeString = data.created_at;
   const dateTime = new Date(dateTimeString);
@@ -23,7 +21,7 @@ export default function ReviewBox({ data, myReview }) {
             <p className='reviewBox-profileName'>
               {myReview ? data.restaurant_name : data.user_nickname || '닉네임'}
             </p>
-            <p className='reviewBox-rate'>{rateStars}</p>
+            <RateStars rate={rate} />
           </div>
         </div>
         <p className='reviewBox-date'>{formattedDate}</p>

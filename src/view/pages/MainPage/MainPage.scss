@@ -6,8 +6,7 @@
   }
   .main-imageSliderContainer {
     margin-top: 20px;
-    .main-imageSlider {
-    }
+
   }
 
   .main-title {
@@ -30,12 +29,25 @@
       height: 125px;
       object-fit: cover;
       border-radius: 5px;
+      box-shadow: 2px solid #8d8d8d;
+      background-color: #c6c6c6;
+      .main-postData {
+        height: 125px;
+      }
     }
 
     .main-couponImg {
       width: 270px;
       height: 120px;
       object-fit: cover;
+      border-radius: 10px;
     }
+  }
+  .main-nothing {
+    display: flex;
+    width: 600px;
+    height: 125px;
+    align-items: center;
+    justify-content: center;
   }
 }

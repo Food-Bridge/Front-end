@@ -20,17 +20,21 @@ import axiosInstance from '../../../api/instance';
 import { RiArrowDropDownFill } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import {
-  selectDeliverInfo,
+  addDeliverList,
   setCreated,
+  setDeliverId,
   setDeliverTime,
   setPrepareTime,
   setRestaurantName,
-  setShowMyListDeliver,
+  showMyListDeliver,
+  setTotalTime,
 } from '../../../redux/reducers/deliverSlice';
+import Loading from '../../components/Loading/Loading';
 
 export default function Payment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [storeRequest, setStoreRequest] = useState('');
   const [disposable, setDisposable] = useState(false);
   const [deliverRequest, setDeliverRequest] = useState('');
@@ -97,6 +101,7 @@ export default function Payment() {
   }, []);
 
   const handlePostPayment = async () => {
+    setLoading(true)
     const data = {
       menu_list: menuList,
       option_list: optionLists[0],
@@ -115,12 +120,16 @@ export default function Payment() {
     await axiosInstance.post('/order/', data).then((res) => {
       if (res.data.is_deliver) {
         const prepareTime = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+        dispatch(setDeliverId(res.data.id));
         dispatch(setRestaurantName(res.data.restaurant_name));
         dispatch(setCreated(res.data.created_at));
         dispatch(setDeliverTime(res.data.estimate_time));
         dispatch(setPrepareTime(prepareTime));
-        dispatch(setShowMyListDeliver(true));
+        dispatch(setTotalTime(prepareTime + res.data.estimate_time));
+        dispatch(showMyListDeliver(true));
+        dispatch(addDeliverList());
       }
+      setLoading(false);
       Swal.fire({
         icon: 'success',
         title: '결제 완료',
@@ -137,6 +146,7 @@ export default function Payment() {
 
   return (
     <>
+      {loading && <Loading />}
       <h1 className='payment-header'>결제하기</h1>
       <div className='payment-list'>
         <div className='payment-info'>
@@ -197,14 +207,16 @@ export default function Payment() {
               <p className='payment-disposableText'>일회용 수저, 포크 받기</p>
             </div>
           </div>
-          <div className='payment-deliverRequest'>
-            <h3 className='payment-deliverRequest-title'>배달 요청사항</h3>
-            <input
-              className='payment-deliverRequest-input'
-              placeholder='예) 문 앞에 놔주세요.'
-              onChange={(e) => setDeliverRequest(e.target.value)}
-            />
-          </div>
+          {isDeliver && (
+            <div className='payment-deliverRequest'>
+              <h3 className='payment-deliverRequest-title'>배달 요청사항</h3>
+              <input
+                className='payment-deliverRequest-input'
+                placeholder='예) 문 앞에 놔주세요.'
+                onChange={(e) => setDeliverRequest(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
         <div className='payment-method'>

@@ -5,7 +5,6 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 export default function CommunityCard({ post }) {
-  console.log(post);
   const navigate = useNavigate();
   const id = post.id;
   const handleClickCard = () => {

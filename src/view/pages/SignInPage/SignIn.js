@@ -27,12 +27,11 @@ function SignIn() {
         is_seller: isSeller,
       };
       const res = await axiosInstance.post('/users/login/', data);
-      console.log(res);
       const { access, refresh } = res.data.tokens;
       dispatch(setTokens({ access, refresh }));
       res.data.is_seller &&
         dispatch(loginS()) &&
-        dispatch(setOwner(res.data.owner));
+        dispatch(setOwner(res.data.owner[0]));
       navigate('/');
     } catch (error) {
       Swal.fire({
@@ -98,12 +97,12 @@ function SignIn() {
                 <button className='signIn-signInBtn' onClick={handleLogin}>
                   <LogInBtn />
                 </button>
-                <div className='signIn-signUpBtn' onClick={handleSignUp}>
+                <button className='signIn-signUpBtn' onClick={handleSignUp}>
                   <SignUpBtn
                     className1={'signUpBtn-frame2'}
                     className2={'signUpBtn-text2'}
                   />
-                </div>
+                </button>
               </div>
             </div>
             <div className='signIn-btn'>

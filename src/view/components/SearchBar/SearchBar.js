@@ -51,15 +51,25 @@ function SearchBar() {
         showCancelButton: false,
         confirmButtonText: '로그인하기',
         confirmButtonColor: 'black',
-      });
-      navigate('/users/signin');
+      }).then((res) => res.isConfirmed && navigate('/users/signin'));
     } else {
       navigate(`/users/address/`);
     }
   };
 
   const handleClickLikes = () => {
-    navigate('/users/likes/');
+    if (!isLoggedIn) {
+      Swal.fire({
+        icon: 'warning',
+        text: '알림',
+        text: '로그인이 필요합니다.',
+        showCancelButton: false,
+        confirmButtonText: '로그인하기',
+        confirmButtonColor: 'black',
+      }).then((res) => res.isConfirmed && navigate('/users/signin'));
+    } else {
+      navigate('/users/likes/');
+    }
   };
 
   return (

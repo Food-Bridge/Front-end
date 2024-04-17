@@ -27,20 +27,19 @@ import { CiDiscount1, CiGift } from 'react-icons/ci';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { GoMegaphone } from 'react-icons/go';
 import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
-import { selectShowMyListDeliver } from '../../../redux/reducers/deliverSlice';
+import { selectDeliverList } from '../../../redux/reducers/deliverSlice';
 
 export default function MyList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector(selectProfile);
-  const isDelivering = true;
-
+  const deliverList = useSelector(selectDeliverList);
   const onChangeImage = async (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
-    formData.append('nickname', profile.nickname);
+    profile.nickname && formData.append('nickname', profile.nickname);
 
     const res = await axiosInstance.patch('/users/profile/', formData);
     dispatch(setProfile({ image: res.data.image, nickname: profile.nickname }));
@@ -53,7 +52,6 @@ export default function MyList() {
       confirmButtonColor: 'black',
     });
   };
-
   const handleLogout = async () => {
     await axiosInstance.post('/users/logout/', {
       refresh: sessionStorage.getItem('refreshToken'),
@@ -97,7 +95,13 @@ export default function MyList() {
         handleLogout={handleLogout}
       />
       <MyListMain />
-      {isDelivering && <MyListDeliver />}
+      {deliverList.length > 0 &&
+        deliverList.map(
+          (data) =>
+            data.showMyListDeliver && (
+              <MyListDeliver data={data} key={data.id} />
+            )
+        )}
       <div className='mylistBlocks-row'>
         <MyListBlock
           icon={<CiDiscount1 size='35' />}
@@ -132,7 +136,6 @@ export default function MyList() {
           press={handleClickButton}
         />
       </div>
-      <div className='mylistBanner' />
     </div>
   );
 }

@@ -65,22 +65,24 @@ export default function MainPage() {
           </div>
 
           <div className='main-group'>
-            {data.map((store, index) => {
-              return (
-                <button
-                  key={index}
-                  onClick={() => {
-                    navigate(`/restaurant/${store.id}`);
-                  }}
-                >
-                  <img
-                    className='main-storeImg'
-                    src={store.image}
-                    alt='인기 맛집'
-                  />
-                </button>
-              );
-            })}
+            {data.length > 0 ? (
+              data.map((store, index) => {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      navigate(`/restaurant/${store.id}`);
+                    }}
+                  >
+                    <img className='main-storeImg' src={store.image} />
+                  </button>
+                );
+              })
+            ) : (
+              <div className='main-nothing'>
+                <p>매장이 존재하지 않습니다.</p>
+              </div>
+            )}
           </div>
           <div className='main-title'>
             <h1 className='main-text'>커뮤니티</h1>
@@ -92,11 +94,17 @@ export default function MainPage() {
               }}
             />
           </div>
-          <div className='main-group main-postData'>
-            {postData.map((post) => {
-              return <CommunityCard post={post} />;
-            })}
-          </div>
+          {postData.length > 0 ? (
+            <div className='main-group main-postData'>
+              {postData.map((post) => {
+                return <CommunityCard post={post} />;
+              })}
+            </div>
+          ) : (
+            <div className='main-nothing'>
+              <p>게시물이 존재하지 않습니다.</p>
+            </div>
+          )}
           <div className='main-title'>
             <h1 className='main-text'>할인 쿠폰</h1>
             <PlusInfo text='더보기' arrow='true' onClick={handleClickCoupon} />

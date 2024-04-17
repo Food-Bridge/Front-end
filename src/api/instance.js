@@ -2,10 +2,9 @@ import axios from 'axios';
 import store from '../redux/store';
 import Swal from 'sweetalert2';
 
-const REFRESH_URL = 'http://localhost:8000/users/token/refresh/';
+const REFRESH_URL = `${process.env.REACT_APP_URL}/users/token/refresh/`;
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000/',
-  timeout: 10000,
+  baseURL: process.env.REACT_APP_URL,
 });
 
 const refreshToken = async () => {
@@ -50,7 +49,7 @@ axiosInstance.interceptors.request.use(async (config) => {
       return Promise.reject(error);
     }
   }
-  return config;
+  return config
 });
 
 axiosInstance.interceptors.response.use(

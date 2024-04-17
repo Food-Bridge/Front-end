@@ -8,6 +8,7 @@ import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import CommunityCard from '../../components/CommunityCard/CommunityCard';
 import { LuPencilLine } from 'react-icons/lu';
 import PlusInfo from '../../components/PlusInfo/PlusInfo';
+import Loading from '../../components/Loading/Loading'
 import {
   fetchPostData,
   selectDailyPost,
@@ -47,6 +48,7 @@ function Community() {
 
   return (
     <div className='Community'>
+      {loading && <Loading />}
       <SearchBar />
       <div className='community-imageSlider'>
         <ImageSlider mini slides={SliderImgData} />
@@ -65,11 +67,15 @@ function Community() {
           </button>
         </div>
         <div className='community-weekMiniPost'>
-          {!loading &&
-            weekly.length > 0 &&
+          {weekly.length > 0 ? (
             weekly
               .slice(0, visiblePostCount)
-              .map((post) => <CommunityCard post={post} />)}
+              .map((post) => <CommunityCard post={post} />)
+          ) : (
+            <p className='community-nothing'>
+              {loading ? '로딩중입니다.' : '게시물이 존재하지 않습니다.'}
+            </p>
+          )}
         </div>
       </div>
       <div className='community-dailySection'>
@@ -78,11 +84,15 @@ function Community() {
           <PlusInfo text='더보기' arrow='true' onClick={handleMoreClick2} />
         </div>
         <div className='community-dailyMiniPost'>
-          {!loading &&
-            daily.length > 0 &&
+          {daily.length > 0 ? (
             daily
               .slice(0, visiblePostCount)
-              .map((post) => <CommunityCard post={post} />)}
+              .map((post) => <CommunityCard post={post} />)
+          ) : (
+            <p className='community-nothing'>
+              {loading ? '로딩중입니다.' : '게시물이 존재하지 않습니다.'}
+            </p>
+          )}
         </div>
       </div>
       <div className='community-newestSection'>
@@ -91,11 +101,15 @@ function Community() {
           <PlusInfo text='더보기' arrow='true' onClick={handleMoreClick3} />
         </div>
         <div className='community-newestMiniPost'>
-          {!loading &&
-            latest.length > 0 &&
+          {latest.length > 0 ? (
             latest
               .slice(0, visiblePostCount)
-              .map((post) => <CommunityCard post={post} />)}
+              .map((post) => <CommunityCard post={post} />)
+          ) : (
+            <p className='community-nothing'>
+              {loading ? '로딩중입니다.' : '게시물이 존재하지 않습니다.'}
+            </p>
+          )}
         </div>
       </div>
     </div>

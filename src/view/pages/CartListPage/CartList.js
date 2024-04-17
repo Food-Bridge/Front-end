@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import './CartList.scss';
 import { SlPresent } from 'react-icons/sl';
 import { CiDeliveryTruck } from 'react-icons/ci';
@@ -16,7 +16,10 @@ import {
   setMenuData,
 } from '../../../redux/reducers/cartSlice';
 import { useNavigate } from 'react-router-dom';
-import { selectAddresses, selectDefaultId } from '../../../redux/reducers/addressSlice';
+import {
+  selectAddresses,
+  selectDefaultId,
+} from '../../../redux/reducers/addressSlice';
 
 export default function CartList() {
   const navigate = useNavigate();
@@ -26,12 +29,13 @@ export default function CartList() {
   const store = useSelector(selectStore);
   const menu = useSelector(selectMenu);
   const address = useSelector(selectAddresses);
-  const defaultId = useSelector(selectDefaultId)
+  const defaultId = useSelector(selectDefaultId);
 
   const totalValue = menu.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
   const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
   const totalPrice = totalValue + deliveryFee;
   const [deliverClass, setDeliverClass] = useState('cartlist-selectBtn');
@@ -56,11 +60,22 @@ export default function CartList() {
   };
 
   const handleDeleteMenuAll = () => {
-    dispatch(deleteMenu());
+    Swal.fire({
+      icon: 'warning',
+      title: '전체 삭제',
+      html: '모든 메뉴를 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+      confirmButtonColor: '#ca0000',
+      cancelButtonColor: 'black',
+    }).then((res) => {
+      res.isConfirmed && dispatch(deleteMenu());
+    });
   };
 
   const handleDeleteMenu = (indexToDelete) => {
-    const updatedMenu = menu.filter((index) => index !== indexToDelete);
+    const updatedMenu = menu.filter((_, index) => index !== indexToDelete);
     updatedMenu.length > 0
       ? dispatch(setMenuData(updatedMenu))
       : dispatch(deleteMenu());
@@ -90,18 +105,30 @@ export default function CartList() {
   };
 
   const handleGoToPay = () => {
-    if (address.length > 0 && defaultId) {
-      navigate('/payment/');
+    if (totalValue >= store.minimumOrderPrice) {
+      if (address.length > 0 && defaultId) {
+        navigate('/payment/');
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: '알림',
+          html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
+          showCancelButton: false,
+          confirmButtonText: '확인',
+          confirmButtonColor: 'black',
+        }).then((res) => {
+          res.confirmed && navigate('/users/address/');
+        });
+      }
     } else {
       Swal.fire({
-        icon: 'info',
+        icon: 'warning',
         title: '알림',
-        html: '결제를 위해 주소를 등록해주세요.<br>기본 주소를 설정해주세요.',
+        html: '총 주문 금액이 최소 주문 금액 보다 적습니다.',
         showCancelButton: false,
         confirmButtonText: '확인',
-        confirmButtonColor: 'black'
+        confirmButtonColor: 'black',
       });
-      navigate('/users/address/');
     }
   };
 
@@ -112,11 +139,11 @@ export default function CartList() {
   const handleClickAdd = () => {
     navigate(`/restaurant/${store.id}/`);
   };
-
+console.log(menu)
   return (
     <>
       <h1 className='cartlist-header'>주문하기</h1>
-      {isMenuIn ? (
+      {isMenuIn && menu.length > 0 && !isNaN(totalPrice) ? (
         <div className='cartlist-list'>
           <div className='cartlist-info'>
             <div className='cartlist-store'>
@@ -156,6 +183,7 @@ export default function CartList() {
             {menu.map((item, index) => {
               return (
                 <PaymentMenu
+                  key={index}
                   item={item}
                   index={index}
                   onDelete={handleDeleteMenu}
@@ -191,7 +219,10 @@ export default function CartList() {
             <div className='cartlist-price'>
               <h2 className='cartlist-title'>결제 예정 금액</h2>
               <p className='cartlist-value'>
-                {totalPrice.toLocaleString('ko-KR')}원
+                {isDeliver
+                  ? totalPrice.toLocaleString('ko-KR')
+                  : totalValue.toLocaleString('ko-KR')}
+                원
               </p>
             </div>
           </div>

@@ -12,7 +12,11 @@ function LogoBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const handleBackClick = () => {
-    navigate(-1);
+    if (window.location.pathname === '/') {
+      navigate('/');
+    } else {
+      navigate(-1);
+    }
   };
 
   const handleHomeClick = () => {

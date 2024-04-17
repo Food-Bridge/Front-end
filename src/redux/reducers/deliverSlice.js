@@ -1,26 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
+const initialState = {
+  deliverList: [],
+  deliverInfo: {
+    id: 0,
+    restaurantName: '',
+    created: '',
+    prepareTime: 0,
+    deliverTime: 0,
+    totalTime: 0,
+    showMyListDeliver: false,
+  },
+};
 
 const DeliverSlice = createSlice({
   name: 'deliver',
-  initialState: {
-    deliverList: [],
-    deliverInfo: {
-      restaurantName: '',
-      created: '',
-      deliverState: 0,
-      prepareTime: 0,
-      deliverTime: 0,
-      showMyListDeliver: false,
-    },
-  },
+  initialState,
   reducers: {
-    setDeliverList(state, action) {
-      state.deliverList = action.payload;
+    addDeliverList(state) {
+      state.deliverList.push(state.deliverInfo);
+    },
+    deleteDeliverList(state, action) {
+      state.deliverList = state.deliverList.filter(
+        (item) => item.id !== action.payload
+      );
     },
     setDeliverInfo(state, action) {
       state.deliverInfo = action.payload;
+    },
+    setDeliverId(state, action) {
+      state.deliverInfo.id = action.payload;
     },
     setRestaurantName(state, action) {
       state.deliverInfo.restaurantName = action.payload;
@@ -28,16 +37,16 @@ const DeliverSlice = createSlice({
     setCreated(state, action) {
       state.deliverInfo.created = action.payload;
     },
-    setDeliverState(state, action) {
-      state.deliverInfo.deliverState = action.payload;
-    },
     setPrepareTime(state, action) {
       state.deliverInfo.prepareTime = action.payload;
     },
     setDeliverTime(state, action) {
       state.deliverInfo.deliverTime = action.payload;
     },
-    setShowMyListDeliver(state, action) {
+    setTotalTime(state, action) {
+      state.deliverInfo.totalTime = action.payload;
+    },
+    showMyListDeliver(state, action) {
       state.deliverInfo.showMyListDeliver = action.payload;
     },
   },
@@ -45,27 +54,20 @@ const DeliverSlice = createSlice({
 
 export const selectDeliverList = (state) => state.deliver.deliverList;
 export const selectDeliverInfo = (state) => state.deliver.deliverInfo;
-export const selectRestaurantName = (state) =>
-  state.deliver.deliverInfo.restaurantName;
-export const selectCreated = (state) => state.deliver.deliverInfo.created;
-export const selectDeliverState = (state) =>
-  state.deliver.deliverInfo.deliverState;
-export const selectPrepareTime = (state) =>
-  state.deliver.deliverInfo.prepareTime;
-export const selectDeliverTime = (state) =>
-  state.deliver.deliverInfo.deliverTime;
 export const selectShowMyListDeliver = (state) =>
   state.deliver.deliverInfo.showMyListDeliver;
 
 export const {
-  setDeliverList,
+  addDeliverList,
+  deleteDeliverList,
+  setDeliverId,
   setDeliverInfo,
   setRestaurantName,
   setCreated,
-  setDeliverState,
   setPrepareTime,
   setDeliverTime,
-  setShowMyListDeliver,
+  setTotalTime,
+  showMyListDeliver,
 } = DeliverSlice.actions;
 
 const deliverReducer = DeliverSlice.reducer;

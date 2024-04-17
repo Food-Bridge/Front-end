@@ -51,12 +51,12 @@ export default function MenuBlock({
           <div className='menublock-title'>
             {popular && (
               <div className='menublock-tag'>
-                <p className='menublock-tag-title'>인기</p>
+                <p className='menublock-tagText'>인기</p>
               </div>
             )}
             {main && (
               <div className='menublock-tag'>
-                <p className='menublock-tag-title'>메인</p>
+                <p className='menublock-tagText'>메인</p>
               </div>
             )}
             <h1 className='menublock-name'>{title}</h1>

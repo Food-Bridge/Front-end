@@ -2,7 +2,7 @@ import './MyStore.scss';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance.js';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import StoreDeliverTogo from '../../components/StoreDeliverTogo/StoreDeliverTogo.js';
 import MenuBlock from '../../components/MenuBlock/MenuBlock.js';
 import ImageSlider from '../../components/ImageSlider/ImageSlider.js';
@@ -12,6 +12,7 @@ import RateStars from '../../components/RateStars/RateStars.js';
 import { CiPhone } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
 import { selectOwner } from '../../../redux/reducers/authSlice.js';
+import Loading from '../../components/Loading/Loading.js';
 
 export default function MyStore() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function MyStore() {
   const [data, setData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [menuData, setMenuData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +29,7 @@ export default function MyStore() {
       setData(res.data);
       setSliderData(res.data.image);
       setMenuData(menuRes.data);
+      setLoading(false);
     };
     fetchData();
   }, [owner]);
@@ -42,13 +45,14 @@ export default function MyStore() {
       html: data.phone_number.replace(/^02(\d{3,4})-?(\d{4})$/, '02-$1-$2'),
       showCancelButton: false,
       confirmButtonText: '확인',
-      confirmButtonColor: 'black'
+      confirmButtonColor: 'black',
     });
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className='store'>
-
       <div className='store-img'>
         {sliderData && sliderData.length > 0 && (
           <ImageSlider slides={[sliderData]} />

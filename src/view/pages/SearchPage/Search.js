@@ -24,12 +24,10 @@ export default function Search() {
 
   useEffect(() => {
     const fetchRank = async () => {
-      const res = await axiosInstance.get(
-      '/search/search-ranking/'
-    );
-    setRankData(res.data)
-    }
-    fetchRank()
+      const res = await axiosInstance.get('/search/search-ranking/');
+      setRankData(res.data);
+    };
+    fetchRank();
   }, []);
 
   return (
@@ -47,25 +45,26 @@ export default function Search() {
           <div className='search-content'>
             <h1 className='search-title'>인기 검색어</h1>
             <div className='search-popular'>
-              {rankData && rankData.map((el, index) => {
-                return (
-                  index < 10 && (
-                    <button
-                      key={'button_' + index}
-                      onClick={() => handleSearch(el.keyword)}
-                    >
-                      <SearchRank
-                        key={'searchRank_' + index}
-                        rank={index + 1}
-                        text={el.keyword}
-                        type='up'
-                      />
-                    </button>
-                  )
-                );
-              })}
+              {rankData &&
+                rankData.map((el, index) => {
+                  return (
+                    index < 10 && (
+                      <button
+                        key={'button_' + index}
+                        onClick={() => handleSearch(el.keyword)}
+                      >
+                        <SearchRank
+                          key={'searchRank_' + index}
+                          rank={index + 1}
+                          text={el.keyword}
+                          type='up'
+                        />
+                      </button>
+                    )
+                  );
+                })}
             </div>
-            <h1 className='search-title'>실시간 인기 맛집</h1>
+            {/* <h1 className='search-title'>실시간 인기 맛집</h1>
             <div className='search-store'>
               {storeData.map((el, index) => {
                 return (
@@ -80,7 +79,7 @@ export default function Search() {
                   />
                 );
               })}
-            </div>
+            </div> */}
           </div>
         </div>
       )}

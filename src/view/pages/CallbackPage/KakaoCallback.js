@@ -14,8 +14,7 @@ const KakaoCallback = () => {
       const code = params.get('code');
       const grantType = 'authorization_code';
       const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
-      const REDIRECT_URI = 'http://127.0.0.1:3000/users/signin/callback/';
-
+      const REDIRECT_URI =  'https://foodbridge.vercel.app/users/signin/kakaoCallback/';
       const response = await axiosInstance.post(
         `https://kauth.kakao.com/oauth/token?grant_type=${grantType}&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`
       );
@@ -23,7 +22,6 @@ const KakaoCallback = () => {
       const res = await axiosInstance.post('/users/kakao/login/callback/', {
         access_token: token,
       });
-
       const { access, refresh } = res.data.token;
       dispatch(setTokens({ access, refresh }));
       navigate('/');

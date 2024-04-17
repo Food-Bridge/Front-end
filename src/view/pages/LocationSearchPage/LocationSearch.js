@@ -26,7 +26,7 @@ const LocationSearch = ({ complete }) => {
 
   return (
     <div>
-      <DaumPostCode onComplete={handleComplete} className='post-code' />;
+      <DaumPostCode onComplete={handleComplete} className='post-code' />
     </div>
   );
 };

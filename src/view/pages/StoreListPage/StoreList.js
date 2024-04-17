@@ -8,8 +8,10 @@ import StoreCard from '../../components/StoreCard/StoreCard';
 import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
+import Loading from '../../components/Loading/Loading';
 
 function StoreList() {
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [category, setCategory] = useState(0);
   const navigate = useNavigate();
@@ -23,12 +25,14 @@ function StoreList() {
     const fetchData = async () => {
       const res = await axiosInstance.get(url);
       category ? setData(res.data.results) : setData(res.data);
+      setLoading(false);
     };
     fetchData();
   }, [url]);
 
   return (
     <div className='StoreList'>
+      {loading && <Loading />}
       <div className='storeList-header'>
         <div className='storeList-searchBar'>
           <SearchBar />
@@ -40,9 +44,9 @@ function StoreList() {
           <MenuBar name={'menuBar-pageLine2'} />
         </div>
       </div>
-      <CategoryBar setCategory={setCategory} />
+      <CategoryBar category={category} setCategory={setCategory} />
       <div className='storeList-store'>
-        {data.length > 0 &&
+        {data.length > 0 ? (
           data.map((el) => (
             <button key={el.id} onClick={() => handleClickStore(el.id)}>
               <StoreCard
@@ -50,11 +54,16 @@ function StoreList() {
                 className={el.className}
                 storeName={el.name}
                 minimumPrice={el.minimumOrderPrice}
-                deliverPrice={el.delivertyFee}
+                deliverPrice={el.deliveryFee}
                 storeScore={el.averageRating}
               />
             </button>
-          ))}
+          ))
+        ) : (
+          <p className='storeList-nothing'>
+            해당 조건의 매장이 존재하지 않습니다.
+          </p>
+        )}
       </div>
     </div>
   );
