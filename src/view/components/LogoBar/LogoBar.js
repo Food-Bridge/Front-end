@@ -5,7 +5,7 @@ import './LogoBar.scss';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
-import logoImg from '../../../data/foodbridge.jpg';
+import logoImg from '../../../data/foodbridge.svg';
 
 function LogoBar() {
   const navigate = useNavigate();
