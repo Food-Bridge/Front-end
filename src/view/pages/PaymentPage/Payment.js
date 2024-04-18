@@ -60,7 +60,7 @@ export default function Payment() {
     };
     menuList.push(menuInfo);
 
-    const optionList = menu.options.map((option) => ({
+    const optionList = menu.option.map((option) => ({
       option_id: option.id,
       option_name: option.name,
       price: option.price,
@@ -155,7 +155,7 @@ export default function Payment() {
             <h2 className='payment-storeName'>{store.name}</h2>
           </div>
           <div className='payment-deliver'>
-            {isDeliver ? <FaTruck size='30' /> : <GoGift size='20' />}
+            {isDeliver ? <FaTruck size='24' /> : <GoGift size='24' />}
             <h2 className='payment-deliverTime'>
               {isDeliver
                 ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정`
@@ -168,10 +168,9 @@ export default function Payment() {
             <div className='payment-addressGroup'>
               <div className='payment-addressGroup-header'>
                 <h3 className='payment-addressNickname'>
-                  <FaHome size='20' />
-                  {defaultAddress.nickname
-                    ? defaultAddress.nickname
-                    : defaultAddress.detail_address}
+                  <FaHome size='24' />
+                  {defaultAddress.nickname ? defaultAddress.nickname : 
+                  ''}
                 </h3>
                 <button
                   className='payment-addressEdit'

@@ -152,9 +152,9 @@ console.log(menu)
             </div>
             <div className='cartlist-deliver'>
               {isDeliver ? (
-                <FaTruck size='30' />
+                <FaTruck size='24' />
               ) : (
-                <IoGiftOutline size='20' />
+                <IoGiftOutline size='24' />
               )}
               <h2 className='cartlist-deliverTime'>
                 {isDeliver
