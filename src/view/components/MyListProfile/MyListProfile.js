@@ -5,9 +5,10 @@ import PlusInfo from '../PlusInfo/PlusInfo';
 import Swal from 'sweetalert2';
 import Loading from '../../components/Loading/Loading';
 import ImageUploader from '../../../api/compress';
+import { useGetId } from '../../../api/useGetId';
 
 export default function MyListProfile({ handleLogout }) {
-  const [userEmail, setuserEmail] = useState(null)
+  const userId = useGetId();
   const [userNickname, setUserNickname] = useState("null")
   const [userImg, setUserImg] = useState(null)
   const [changeImg, setChangeImg] = useState(userImg)
@@ -25,7 +26,6 @@ export default function MyListProfile({ handleLogout }) {
       setUserNickname(res.data.nickname)
       setUserImg(res.data.image)
       setImageDisplay(res.data.image)
-      setuserEmail(res.data.user)
       const orderRes = await axiosInstance.get('/order/');
       setOrderNum(orderRes.data.length);
       const reviewRes = await axiosInstance.get('/review/');
@@ -46,8 +46,8 @@ export default function MyListProfile({ handleLogout }) {
   const handleChangeNickname = async () => {
     try {
       const formData = new FormData();
-      formData.append('user', userEmail);
-      formData.append('nickname', userNickname);
+      formData.append('user', userId);
+      formData.append('nickname', changeNickname);
       if (changeImg)
         formData.append('image', changeImg);
       await axiosInstance.put('/users/profile/', formData);
