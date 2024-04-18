@@ -77,7 +77,7 @@ const PostComment = ({ data, postId }) => {
       <div className='postComment-frame'>
         <div className='postComment-top'>
           <div className='postComment-userInfo'>
-            {data.author_profile.image ? <img
+            {data.author_profile && data.author_profile.image && data.author_profile.image.length > 0 ? <img
               className='postComment-profile'
               src={data.author_profile.image}
               alt='프로필이미지'
@@ -88,11 +88,11 @@ const PostComment = ({ data, postId }) => {
             />}
 
             <div className='postComment-userName'>
-              {data.author_profile.nickname ? data.author_profile.nickname : '닉네임'}
+              {data.author_profile && data.author_profile.nickname ? data.author_profile.nickname : '닉네임'}
             </div>
           </div>
           <div className='postComment-headerRight'>
-            {currentUser === data.author_profile.user &&
+            {data.author_profile && currentUser === data.author_profile.user &&
               <>
                 <button
                   className='postComment-button'
