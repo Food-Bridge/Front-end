@@ -41,6 +41,7 @@ export default function Store() {
       const likeRes = isLoggedIn && (await axiosInstance.get('/like/'));
       setMenuData(menuRes.data);
       isLoggedIn && setLikeData(likeRes.data.liked_restaurants_ids);
+      localStorage.setItem('cachedMenuData', JSON.stringify(menuRes.data));
     };
     if (!cachedData[resId]) {
       fetchResData();
