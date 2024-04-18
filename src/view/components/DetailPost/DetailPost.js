@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { IoIosHeart } from '@react-icons/all-files/io/IoIosHeart';
 import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
 import { AiOutlineDelete } from '@react-icons/all-files/ai/AiOutlineDelete';
-import { IoEyeOutline } from '@react-icons/all-files/io5/IoEyeOutline';
 import { FaRegComment } from '@react-icons/all-files/fa/FaRegComment';
 import { GoPencil } from '@react-icons/all-files/go/GoPencil';
 import Swal from 'sweetalert2';
 import { useGetId } from '../../../api/useGetId';
+import { FaImage } from '@react-icons/all-files/fa/FaImage';
+import ImageUploader from '../../../api/compress';
 
 function DetailPost({ data }) {
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ function DetailPost({ data }) {
   });
 
   const currentUser = useGetId();
-
   const userLike = data.like_users.some((user) => user.id === currentUser);
   const [isLiked, setIsLiked] = useState(userLike);
   const [likesCount, setLikesCount] = useState(data.likes_count);
@@ -31,9 +31,9 @@ function DetailPost({ data }) {
   const [updateContent, setUpdateContent] = useState(data.content);
   const [updateTitle, setUpdateTitle] = useState(data.title);
   const imageCheck = data._img.length > 0
-  const [updateImage, setUpdateImage] = useState(imageCheck ? data._img[0].image : null);
+  const [updateImage, setUpdateImage] = useState(null);
   const [imageDisplay, setImageDisplay] = useState(imageCheck ? data._img[0].image : null);
-
+  const [basicImg, setBasicImg] = useState(imageCheck ? data._img[0].image : null);
 
 
   const handleLike = async () => {
@@ -79,6 +79,9 @@ function DetailPost({ data }) {
 
   const onEdit = () => {
     setEditBtn(!editBtn);
+    setImageDisplay(basicImg);
+    setUpdateTitle(data.title);
+    setUpdateContent(data.content);
   }
 
   const onContentChange = (e) => {
@@ -88,16 +91,6 @@ function DetailPost({ data }) {
   const onTitleChange = (e) => {
     setUpdateTitle(e.target.value);
   }
-  const onChangeImage = (e) => {
-    const file = e.target.files[0];
-    setUpdateImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageDisplay(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
 
   const handleEditPost = async (e) => {
     e.preventDefault();
@@ -105,7 +98,7 @@ function DetailPost({ data }) {
       const formData = new FormData();
       formData.append('title', updateTitle);
       formData.append('content', updateContent);
-      if (updateImage) {
+      if (updateImage !== null) {
         formData.append('img', updateImage);
       }
       await axiosInstance.patch(`/community/${data.id}/`, formData,
@@ -115,9 +108,9 @@ function DetailPost({ data }) {
           }
         })
       setEditBtn(!editBtn)
-      if (updateImage) {
-        setUpdateImage(URL.createObjectURL(updateImage));
-        setImageDisplay(URL.createObjectURL(updateImage));
+      if (updateImage !== null) {
+        setBasicImg(imageDisplay);
+        setUpdateImage(null);
       }
     } catch (error) {
       console.log(error);
@@ -158,7 +151,6 @@ function DetailPost({ data }) {
                   />
                 )}
               </button>
-
               {isUserPost && (<>
                 <button className='detailPost-deleted' onClick={onEdit}>
                   <GoPencil size='24' />
@@ -177,22 +169,24 @@ function DetailPost({ data }) {
             className='editContent'
             onChange={onContentChange}
             value={updateContent} />
-          <label htmlFor="updateFile">
-            <IoIosHeart className='detailPost-icon' size='18' />
+          <label htmlFor="file">
+            <FaImage className='postUpload-photoIcon' size={20} />
           </label>
-          <input
-            id="updateFile"
-            className='editImg'
-            type='file'
-            accept='image/*'
-            onChange={onChangeImage} />
+          <div style={{ display: 'none' }}>
+            <ImageUploader
+              size='1.5'
+              setImage={setUpdateImage}
+              setImageDisplay={setImageDisplay}
+              length='1000'
+            />
+          </div>
           {imageDisplay && (
             <img className='detailPost-image' src={imageDisplay} alt='DisplayImage' />
           )}
         </> : <>
           <h1 className='detailPost-title'>{updateTitle}</h1>
           {imageDisplay && (
-            <img className='detailPost-image' src={imageDisplay} alt='DisplayImage' />
+            <img className='detailPost-image' src={basicImg} alt='DisplayImage' />
           )}
 
           <p className='detailPost-text'>{updateContent}</p>
@@ -200,8 +194,6 @@ function DetailPost({ data }) {
             <div className='detailPost-icons'>
               <IoIosHeart className='detailPost-icon' size='18' />
               <p className='detailPost-numData'>{likesCount}</p>
-              <IoEyeOutline className='detailPost-icon' size='18' />
-              <p className='detailPost-numData'>{data.views}</p>
               <FaRegComment className='detailPost-icon' />
               <p className='detailPost-numData'>{data.comment_count}</p>
             </div>
