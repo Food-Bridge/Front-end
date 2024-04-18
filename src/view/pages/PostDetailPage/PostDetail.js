@@ -8,7 +8,7 @@ import PostCommentInput from '../../components/PostCommentInput/PostCommentInput
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
-import { useGetId } from '../../../api/useGetId';
+
 
 function PostDetail() {
   const navigate = useNavigate();
@@ -16,25 +16,6 @@ function PostDetail() {
   const [postData, setPostData] = useState([]);
   const [commentData, setCommentData] = useState([]);
   const { id } = useParams();
-  const userId = useGetId();
-
-  const onPostClick = () => {
-    const currentDate = new Date();
-    const expiresDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
-    const expiresGMT = expiresDate.toGMTString();
-    const cookieKey = `user_${userId}_hit`;
-    const regex = new RegExp("(?:^|; )" + cookieKey + "(?:(?:=([^;]*))|;|$)");
-    const existingCookie = document.cookie.match(regex);
-    if (existingCookie) {
-      const ids = existingCookie[1].split('|');
-      if (!ids.includes(id)) {
-        const updatedValue = existingCookie[1] ? existingCookie[1] + "|" + id : id;
-        document.cookie = `${cookieKey}=${updatedValue}; expires=${expiresGMT}; path=/`;
-      }
-    } else {
-      document.cookie = `${cookieKey}=${id}; expires=${expiresGMT}; path=/`;
-    }
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +39,6 @@ function PostDetail() {
         );
     };
     fetchData();
-    onPostClick();
   }, [id]);
 
   return (
