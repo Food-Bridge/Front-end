@@ -40,18 +40,18 @@ function PostCard({ post }) {
         </header>
 
         <div className='postCard-section'>
-          {post.img.length > 0 && (
+          {post._img.length > 0 && (
             <div className='postCard-img'>
               <img
                 className='postCard-imgSize'
-                src={post.img[0].image}
+                src={post._img[0].image}
                 alt='게시물 이미지'
               />
             </div>
           )}
           <div
             className={
-              post.img.length > 0
+              post._img.length > 0
                 ? 'postCard-contents'
                 : 'postCard-contents noImage'
             }
