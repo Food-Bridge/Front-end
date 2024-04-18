@@ -74,7 +74,7 @@ export default function MainPage() {
                       navigate(`/restaurant/${store.id}`);
                     }}
                   >
-                    <img className='main-storeImg' src={store.image} />
+                    <img className='main-storeImg' src={store.image} alt='MainStoreImg' />
                   </button>
                 );
               })
@@ -110,8 +110,8 @@ export default function MainPage() {
             <PlusInfo text='더보기' arrow='true' onClick={handleClickCoupon} />
           </div>
           <div className='main-group'>
-            <img className='main-couponImg' src={coupon1} />
-            <img className='main-couponImg' src={coupon2} />
+            <img className='main-couponImg' src={coupon1} alt='coupon' />
+            <img className='main-couponImg' src={coupon2} alt='coupon' />
           </div>
         </>
       )}
