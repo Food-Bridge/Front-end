@@ -1,7 +1,6 @@
 import React from 'react';
 import './PostCard.scss';
 import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
-import { IoEyeOutline } from '@react-icons/all-files/io5/IoEyeOutline';
 import { FaRegComment } from '@react-icons/all-files/fa/FaRegComment';
 
 function PostCard({ post }) {
@@ -18,7 +17,7 @@ function PostCard({ post }) {
       <div className='postCard-frame'>
         <header className='postCard-header'>
           <div className='postCard-userInfo'>
-            <img className='postCard-userIcon' src={post.author_info.image} />
+            <img className='postCard-userIcon' src={post.author_info.image} alt='userImg' />
             <div className='postCard-userName'>
               {post.author_info.nickname ? post.author_info.nickname : '닉네임'}
             </div>
@@ -29,12 +28,6 @@ function PostCard({ post }) {
               <h1 className='postCard-fontSize'>
                 <IoIosHeartEmpty className='postCard-likeIcon' />
                 {post.likes_count}
-              </h1>
-            </div>
-            <div className='postCard-viewCount'>
-              <h1 className='postCard-fontSize'>
-                <IoEyeOutline className='postCard-viewIcon' />
-                {post.views}
               </h1>
             </div>
             <div className='postCard-commentCount'>
