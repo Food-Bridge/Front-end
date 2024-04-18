@@ -22,9 +22,10 @@ function StoreList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(url);
-      category ? setData(res.data.results) : setData(res.data);
+      const res = await axiosInstance.get(`/restaurant/`);
+      setData(res.data);
       setLoading(false);
+      localStorage.setItem('cachedData', JSON.stringify(res.data));
     };
     fetchData();
   }, [url, category]);

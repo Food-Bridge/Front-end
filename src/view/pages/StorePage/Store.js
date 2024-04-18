@@ -19,7 +19,6 @@ export default function Store() {
   const { resId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [storeImg, setStoreImg] = useState('');
   const [menuData, setMenuData] = useState([]);
   const [likeData, setLikeData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,17 +26,32 @@ export default function Store() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const cachedData = JSON.parse(localStorage.getItem('cachedData')) || {};
+    const fetchResData = async () => {
       const res = await axiosInstance.get(`/restaurant/${resId}/`);
+      setData(res.data);
+      setLoading(false);
+      localStorage.setItem(
+        'cachedData',
+        JSON.stringify({ ...cachedData, [resId]: res.data })
+      );
+    };
+    const fetchMenuLikeData = async () => {
       const menuRes = await axiosInstance.get(`/restaurant/${resId}/menu/`);
       const likeRes = isLoggedIn && (await axiosInstance.get('/like/'));
-      setData(res.data);
-      setStoreImg(res.data.image);
       setMenuData(menuRes.data);
       isLoggedIn && setLikeData(likeRes.data.liked_restaurants_ids);
-      setLoading(false);
     };
-    fetchData();
+    if (!cachedData[resId]) {
+      fetchResData();
+    } else {
+      const cachedResData = Object.values(cachedData).find(
+        (item) => item.id === parseInt(resId)
+      );
+      setData(cachedResData);
+      setLoading(false);
+    }
+    fetchMenuLikeData();
   }, [resId, isLoggedIn]);
 
   useEffect(() => {
@@ -71,7 +85,7 @@ export default function Store() {
         <Loading />
       ) : (
         <>
-          <img className='store-img' src={storeImg} alt='매장사진' />
+          <img className='store-img' src={data.image} alt='매장사진' />
           <div className='store-main'>
             <div className='store-title'>
               <h1 className='store-name'>{data.name}</h1>
