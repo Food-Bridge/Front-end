@@ -21,12 +21,16 @@ const AddressSlice = createSlice({
         address.nickname = nickname;
       }
     },
+    deleteAllAddresses(state) {
+      state.addresses = [];
+      state.defaultId = null;
+    },
   },
 });
 
 export const selectAddresses = (state) => state.address.addresses;
 export const selectDefaultId = (state) => state.address.defaultId;
-export const { updateAddresses, setDefaultId, editAddressNickname } =
+export const { updateAddresses, setDefaultId, editAddressNickname, deleteAllAddresses } =
   AddressSlice.actions;
 
 export const fetchAddresses = () => async (dispatch) => {
@@ -57,7 +61,7 @@ export const editAddressesNicknames = (update) => async (dispatch) => {
   await axiosInstance.patch(`/users/address/${id}/`, {
     nickname: nickname,
   });
-  dispatch(fetchAddresses())
+  dispatch(fetchAddresses());
 };
 
 export const deleteAddress = (id) => async (dispatch, getState) => {

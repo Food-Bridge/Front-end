@@ -151,7 +151,11 @@ export default function Payment() {
       <div className='payment-list'>
         <div className='payment-info'>
           <div className='payment-store'>
-            <img className='payment-storeImg' src={store.image} alt='매장 이미지'/>
+            <img
+              className='payment-storeImg'
+              src={store.image}
+              alt='매장 이미지'
+            />
             <h2 className='payment-storeName'>{store.name}</h2>
           </div>
           <div className='payment-deliver'>
@@ -169,8 +173,7 @@ export default function Payment() {
               <div className='payment-addressGroup-header'>
                 <h3 className='payment-addressNickname'>
                   <FaHome size='24' />
-                  {defaultAddress.nickname ? defaultAddress.nickname : 
-                  ''}
+                  {defaultAddress.nickname ? defaultAddress.nickname : ''}
                 </h3>
                 <button
                   className='payment-addressEdit'
@@ -191,12 +194,14 @@ export default function Payment() {
             <input
               className='payment-storeRequest-input'
               placeholder='예) 소스는 따로 담아주세요.'
+              aria-label='가게 요청사항'
               onChange={(e) => setStoreRequest(e.target.value)}
             />
             <div className='payment-disposable'>
               <input
                 className='payment-checkbox'
                 type='checkbox'
+                aria-label='일회용품 받기'
                 onChange={() => setDisposable(!disposable)}
               ></input>
               <p className='payment-disposableText'>일회용 수저, 포크 받기</p>
@@ -208,6 +213,7 @@ export default function Payment() {
               <input
                 className='payment-deliverRequest-input'
                 placeholder='예) 문 앞에 놔주세요.'
+                aria-label='배달 요청사항'
                 onChange={(e) => setDeliverRequest(e.target.value)}
               />
             </div>
@@ -217,7 +223,7 @@ export default function Payment() {
         <div className='payment-method'>
           <PaymentMethod click={setPaymentMethod} selected={paymentMethod} />
           <div className='payment-coupon'>
-            <h3 className='payment-couponTitle'>쿠폰 사용</h3>
+            <h1 className='payment-couponTitle'>쿠폰 사용</h1>
             <button
               className='payment-couponCodeBox'
               onClick={() => showCouponList(!couponList)}
