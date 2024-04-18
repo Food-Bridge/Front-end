@@ -60,7 +60,7 @@ export default function Payment() {
     };
     menuList.push(menuInfo);
 
-    const optionList = menu.options.map((option) => ({
+    const optionList = menu.option.map((option) => ({
       option_id: option.id,
       option_name: option.name,
       price: option.price,
