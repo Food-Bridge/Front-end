@@ -19,6 +19,7 @@ export default function CommunityCard({ post }) {
         <header className='communityCard-header'>
           <div className='communityCard-profile'>
             <img
+              rel="preload"
               className='communityCard-profileImg'
               src={post.author_info.image}
               alt='userimage'
@@ -39,6 +40,7 @@ export default function CommunityCard({ post }) {
         <div className='communityCard-box'>
           {imageCheck && (
             <img
+              rel="preload"
               className='communityCard-image'
               src={post._img[0].image}
               alt='게시물 이미지'

@@ -5,36 +5,34 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import PostCard from '../../components/PostCard/PostCard';
 import { GoPencil } from '@react-icons/all-files/go/GoPencil';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchPostData,
-  selectDailyPost,
-  selectLatestPost,
-  selectWeeklyPost,
-} from '../../../redux/reducers/communitySlice';
 import Loading from '../../components/Loading/Loading';
+import axiosInstance from '../../../api/instance';
 
 function CommuPost({ title }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [postData, setPostData] = useState([]);
-  const weekly = useSelector(selectWeeklyPost);
-  const daily = useSelector(selectDailyPost);
-  const latest = useSelector(selectLatestPost);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchPostData()).then(() => {
-      if (title === '주간 인기') {
-        setPostData(weekly);
-      } else if (title === '일간 인기') {
-        setPostData(daily);
-      } else if (title === '최신') {
-        setPostData(latest);
+    const fetchData = async () => {
+      try {
+        if (title === '주간 인기') {
+          const weeklyResponse = await axiosInstance.get('/community/weekly/');
+          setPostData(weeklyResponse.data);
+        } else if (title === '일간 인기') {
+          const dailyResponse = await axiosInstance.get('/community/daily/');
+          setPostData(dailyResponse.data);
+        } else if (title === '최신') {
+          const latestResponse = await axiosInstance.get('/community/latest/');
+          setPostData(latestResponse.data);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.log("Failed to fetch post data", error);
       }
-      setLoading(false)
-    });
-  }, []);
+    };
+    fetchData();
+  }, [title]);
 
   const handleEditClick = () => {
     navigate('/postUpload/');
