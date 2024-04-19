@@ -6,6 +6,7 @@ import { selectIsSeller } from './redux/reducers/authSlice';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './redux/store';
+import { CacheContextProvider } from './api/cacheContext';
 
 import CouponList from './view/pages/CouponListPage/CouponList';
 import LogoBar from './view/components/LogoBar/LogoBar';
@@ -42,84 +43,86 @@ import OptionUpload from './view/pages/OptionUploadPage/OptionUpload';
 function App() {
   const isSeller = useSelector(selectIsSeller);
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <div className='App'>
-          <Router>
-            <LogoBar />
-            <Routes>
+    <CacheContextProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <div className='App'>
+            <Router>
+              <LogoBar />
+              <Routes>
               // 메인
-              <Route path='/' element={<MainPage />} />
-              <Route path='search/' element={<Search />} />
+                <Route path='/' element={<MainPage />} />
+                <Route path='search/' element={<Search />} />
               // 유저 로그인
-              <Route path='users/signin/' element={<SignIn />} />
-              <Route path='users/signup/' element={<SignUp />} />
-              <Route
-                path='users/signin/kakaoCallback/'
-                element={<KakaoCallback />}
-              />
-              <Route
-                path='users/signin/googleCallback'
-                element={<GoogleCallback />}
-              />
+                <Route path='users/signin/' element={<SignIn />} />
+                <Route path='users/signup/' element={<SignUp />} />
+                <Route
+                  path='users/signin/kakaoCallback/'
+                  element={<KakaoCallback />}
+                />
+                <Route
+                  path='users/signin/googleCallback'
+                  element={<GoogleCallback />}
+                />
               // 유저 정보
-              <Route path='users/' element={<MyList />} />
-              <Route path='users/review' element={<MyReview />} />
-              <Route path='users/coupon/' element={<CouponList />} />
-              <Route path='users/address/' element={<Location />} />
-              <Route path='users/likes/' element={<StoreLikes />} />
+                <Route path='users/' element={<MyList />} />
+                <Route path='users/review' element={<MyReview />} />
+                <Route path='users/coupon/' element={<CouponList />} />
+                <Route path='users/address/' element={<Location />} />
+                <Route path='users/likes/' element={<StoreLikes />} />
               // 식당 정보
-              <Route path='restaurant/:resId/' element={<Store />} />
-              <Route
-                path='restaurant/:resId/:menuId'
-                element={<StoreOption />}
-              />
-              <Route
-                path='restaurant/:resId/review/'
-                element={<StoreReview />}
-              />
-              <Route path='restaurant/' element={<StoreList />} />
-              <Route
-                path='restaurant/reviewUpload/'
-                element={<ReviewUpload />}
-              />
-              <Route path='optionUpload' element={<OptionUpload />} />
+                <Route path='restaurant/:resId/' element={<Store />} />
+                <Route
+                  path='restaurant/:resId/:menuId'
+                  element={<StoreOption />}
+                />
+                <Route
+                  path='restaurant/:resId/review/'
+                  element={<StoreReview />}
+                />
+                <Route path='restaurant/' element={<StoreList />} />
+                <Route
+                  path='restaurant/reviewUpload/'
+                  element={<ReviewUpload />}
+                />
+                <Route path='optionUpload' element={<OptionUpload />} />
               // 주문 정보
-              <Route path='cart/' element={<CartList />} />
-              <Route path='orderlist/' element={<OrderList />} />
-              <Route path='payment/' element={<Payment />} />
+                <Route path='cart/' element={<CartList />} />
+                <Route path='orderlist/' element={<OrderList />} />
+                <Route path='payment/' element={<Payment />} />
               // 커뮤니티
-              <Route path='commu/' element={<Community />} />
-              <Route
-                path='commuPostWeek/'
-                element={<CommuPost title={'주간 인기'} />}
-              />
-              <Route
-                path='commuPostDay/'
-                element={<CommuPost title={'일간 인기'} />}
-              />
-              <Route
-                path='commuPostNew/'
-                element={<CommuPost title={'최신'} />}
-              />
-              <Route path='postCard/:id' element={<PostDetail />} />
-              <Route path='postUpload/' element={<PostUpload />} />
-              <Route path='poster/' element={<Poster />} />
+                <Route path='commu/' element={<Community />} />
+                <Route
+                  path='commuPostWeek/'
+                  element={<CommuPost title={'주간 인기'} />}
+                />
+                <Route
+                  path='commuPostDay/'
+                  element={<CommuPost title={'일간 인기'} />}
+                />
+                <Route
+                  path='commuPostNew/'
+                  element={<CommuPost title={'최신'} />}
+                />
+                <Route path='postCard/:id' element={<PostDetail />} />
+                <Route path='postUpload/' element={<PostUpload />} />
+                <Route path='poster/' element={<Poster />} />
               //판매자 페이지
-              {isSeller && (
-                <>
-                  <Route path='myStore/' element={<MyStore />} />
-                  <Route path='myStore/:menuId' element={<MyStoreOption />} />
-                  <Route path='storeUpload/' element={<StoreUpload />} />
-                  <Route path='menuUpload/' element={<MenuUpload />} />
-                  <Route path='optionUpload/:menuId/:type' element={<OptionUpload />} />
-                </>
-              )}
-            </Routes>
-          </Router>
-        </div>
-      </PersistGate>
-    </Provider>
+                {isSeller && (
+                  <>
+                    <Route path='myStore/' element={<MyStore />} />
+                    <Route path='myStore/:menuId' element={<MyStoreOption />} />
+                    <Route path='storeUpload/' element={<StoreUpload />} />
+                    <Route path='menuUpload/' element={<MenuUpload />} />
+                    <Route path='optionUpload/:menuId/:type' element={<OptionUpload />} />
+                  </>
+                )}
+              </Routes>
+            </Router>
+          </div>
+        </PersistGate>
+      </Provider>
+    </CacheContextProvider>
   );
 }
 
