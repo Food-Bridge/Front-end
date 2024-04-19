@@ -129,7 +129,7 @@ function DetailPost({ data }) {
     <div className='DetailPost'>
       <header className='detailPost-header'>
         <div className='detailPost-profile'>
-          <img className='detailPost-profileImg' src={data.author_info.image} alt='프로필 이미지' />
+          <img rel="preload" className='detailPost-profileImg' src={data.author_info.image} alt='프로필 이미지' />
           <p className='detailPost-profileName'>
             {data.author_info.nickname || '닉네임'}
           </p>
@@ -181,12 +181,12 @@ function DetailPost({ data }) {
             />
           </div>
           {imageDisplay && (
-            <img className='detailPost-image' src={imageDisplay} alt='DisplayImage' />
+            <img rel="preload" className='detailPost-image' src={imageDisplay} alt='DisplayImage' />
           )}
         </> : <>
           <h1 className='detailPost-title'>{updateTitle}</h1>
           {imageDisplay && (
-            <img className='detailPost-image' src={basicImg} alt='DisplayImage' />
+            <img rel="preload" className='detailPost-image' src={basicImg} alt='DisplayImage' />
           )}
 
           <p className='detailPost-text'>{updateContent}</p>

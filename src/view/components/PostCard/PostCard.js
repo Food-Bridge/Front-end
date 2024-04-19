@@ -17,7 +17,7 @@ function PostCard({ post }) {
       <div className='postCard-frame'>
         <header className='postCard-header'>
           <div className='postCard-userInfo'>
-            <img className='postCard-userIcon' src={post.author_info.image} alt='userImg' />
+            <img rel="preload" className='postCard-userIcon' src={post.author_info.image} alt='userImg' />
             <div className='postCard-userName'>
               {post.author_info.nickname ? post.author_info.nickname : '닉네임'}
             </div>
@@ -43,6 +43,7 @@ function PostCard({ post }) {
           {post._img.length > 0 && (
             <div className='postCard-img'>
               <img
+                rel="preload"
                 className='postCard-imgSize'
                 src={post._img[0].image}
                 alt='게시물 이미지'

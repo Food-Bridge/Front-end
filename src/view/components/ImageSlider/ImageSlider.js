@@ -47,6 +47,7 @@ export default function ImageSlider({ mini, slides }) {
           >
             {index === current && (
               <img
+                rel="preload"
                 src={slide}
                 alt='음식사진'
                 className={
