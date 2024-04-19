@@ -9,26 +9,59 @@ import CommunityCard from '../../components/CommunityCard/CommunityCard';
 import { GoPencil } from '@react-icons/all-files/go/GoPencil';
 import PlusInfo from '../../components/PlusInfo/PlusInfo';
 import Loading from '../../components/Loading/Loading'
-import {
-  fetchPostData,
-  selectDailyPost,
-  selectLatestPost,
-  selectWeeklyPost,
-} from '../../../redux/reducers/communitySlice';
-import { useDispatch, useSelector } from 'react-redux';
+import axiosInstance from '../../../api/instance';
+
 
 function Community() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const weekly = useSelector(selectWeeklyPost);
-  const daily = useSelector(selectDailyPost);
-  const latest = useSelector(selectLatestPost);
+
+  const [latest, setLatest] = useState()
+  const [weekly, setWeekly] = useState()
+  const [daily, setDaily] = useState()
   const [loading, setLoading] = useState(true);
+
+  const fetchLatest = async () => {
+    try {
+      const latestResponse = await axiosInstance.get('/community/latest/');
+      setLatest(latestResponse.data)
+      setLoading(false);
+    } catch (error) {
+      console.log("Failed to fetch post data", error);
+    }
+  };
+  const fetchWeekly = async () => {
+    try {
+      const weeklyResponse = await axiosInstance.get('/community/weekly/');
+      setWeekly(weeklyResponse.data)
+      setLoading(false);
+    } catch (error) {
+      console.log("Failed to fetch post data", error);
+    }
+  };
+  const fetchDaily = async () => {
+    try {
+      const dailyResponse = await axiosInstance.get('/community/daily/');
+      setDaily(dailyResponse.data)
+      setLoading(false);
+    } catch (error) {
+      console.log("Failed to fetch post data", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLatest();
+  }, [latest]);
+  useEffect(() => {
+    fetchWeekly();
+  }, [weekly]);
+  useEffect(() => {
+    fetchDaily();
+  }, [daily]);
+
 
   const handleEditClick = () => {
     navigate('/postUpload/');
   };
-
   const handleMoreClick = () => {
     navigate('/commuPostWeek');
   };
@@ -40,11 +73,6 @@ function Community() {
   };
 
   const visiblePostCount = 2;
-
-  useEffect(() => {
-    dispatch(fetchPostData());
-    setLoading(false);
-  }, []);
 
   return (
     <div className='Community'>
@@ -67,10 +95,10 @@ function Community() {
           </button>
         </div>
         <div className='community-weekMiniPost'>
-          {weekly.length > 0 ? (
+          {weekly && weekly.length > 0 ? (
             weekly
               .slice(0, visiblePostCount)
-              .map((post) => <CommunityCard post={post} />)
+              .map((post) => <CommunityCard post={post} key={post.id} />)
           ) : (
             <p className='community-nothing'>
               {loading ? '로딩중입니다.' : '게시물이 존재하지 않습니다.'}
@@ -84,10 +112,10 @@ function Community() {
           <PlusInfo text='더보기' arrow='true' onClick={handleMoreClick2} />
         </div>
         <div className='community-dailyMiniPost'>
-          {daily.length > 0 ? (
+          {daily && daily.length > 0 ? (
             daily
               .slice(0, visiblePostCount)
-              .map((post) => <CommunityCard post={post} />)
+              .map((post) => <CommunityCard post={post} key={post.id} />)
           ) : (
             <p className='community-nothing'>
               {loading ? '로딩중입니다.' : '게시물이 존재하지 않습니다.'}
@@ -101,10 +129,10 @@ function Community() {
           <PlusInfo text='더보기' arrow='true' onClick={handleMoreClick3} />
         </div>
         <div className='community-newestMiniPost'>
-          {latest.length > 0 ? (
+          {latest && latest.length > 0 ? (
             latest
               .slice(0, visiblePostCount)
-              .map((post) => <CommunityCard post={post} />)
+              .map((post) => <CommunityCard post={post} key={post.id} />)
           ) : (
             <p className='community-nothing'>
               {loading ? '로딩중입니다.' : '게시물이 존재하지 않습니다.'}
