@@ -24,19 +24,17 @@ export default function StoreOption() {
   const isRequiredCount =
     option && menuData.required_options_count === option.length;
 
-  const price =
+    const price =
     menuData.price +
     (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
     (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0);
 
   const menuInfo = {
-    id: menuData.id,
-    image: menuData.image,
-    name: menuData.name,
-    option: option,
-    sOption: sOption,
+    menu_id: menuData.id,
+    menu_name: menuData.name,
+    option_list: option,
+    soption_list: sOption,
     price: price,
-    restaurant: menuData.restaurant,
   };
 
   useEffect(() => {
@@ -56,7 +54,6 @@ export default function StoreOption() {
   const handleOptionChange = (selectedOption) => {
     setOption(selectedOption);
   };
-
   const handleSOptionChange = (selectedSOption) => {
     setSOption(selectedSOption);
   };

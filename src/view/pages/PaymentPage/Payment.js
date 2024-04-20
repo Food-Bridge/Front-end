@@ -6,12 +6,6 @@ import { FaHome } from '@react-icons/all-files/fa/FaHome';
 import { FaTruck } from '@react-icons/all-files/fa/FaTruck';
 import { RiArrowDropDownFill } from '@react-icons/all-files/ri/RiArrowDropDownFill';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectMenu,
-  selectStore,
-  selectIsDeliver,
-  deleteMenu,
-} from '../../../redux/reducers/cartSlice';
 import PaymentMethod from '../../components/PaymentMethod/PaymentMethod';
 import {
   selectAddresses,
@@ -30,10 +24,16 @@ import {
   setTotalTime,
 } from '../../../redux/reducers/deliverSlice';
 import Loading from '../../components/Loading/Loading';
+import {
+  deleteMenu,
+  selectIsDeliver,
+  selectMenu,
+  selectStore,
+} from '../../../redux/reducers/cartSlice';
 
 export default function Payment() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [storeRequest, setStoreRequest] = useState('');
   const [disposable, setDisposable] = useState(false);
@@ -43,7 +43,7 @@ export default function Payment() {
   const [couponList, showCouponList] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState({ discount_price: 0 });
   const isDeliver = useSelector(selectIsDeliver);
-  const store = useSelector(selectStore);
+  const resData = useSelector(selectStore);
   const menuData = useSelector(selectMenu);
   const defaultId = useSelector(selectDefaultId);
   const address = useSelector(selectAddresses);
@@ -51,32 +51,32 @@ export default function Payment() {
   const menuList = [];
   const optionLists = [];
 
+  const deleteCartData = async () => {
+    await axiosInstance.delete('/cart/');
+    dispatch(deleteMenu());
+  };
+
   menuData.forEach((menu) => {
     const menuInfo = {
-      menu_id: menu.id,
-      menu_name: menu.name,
+      menu_id: menu.menu_id,
+      menu_name: menu.menu_name,
       price: menu.price,
       quantity: menu.quantity,
     };
     menuList.push(menuInfo);
 
-    const optionList = menu.option.map((option) => ({
-      option_id: option.id,
-      option_name: option.name,
-      price: option.price,
+    const optionList = menu.option_list.map((option) => ({
+      ...option,
       quantity: 1,
     }));
     optionLists.push(optionList);
 
-    const sOptionList =
-      menu.sOption.length > 0
-        ? menu.sOption.map((option) => ({
-            option_id: option.id,
-            option_name: option.name,
-            price: option.price,
-            quantity: 1,
-          }))
-        : [];
+    const sOptionList = menu.sOption_list
+      ? menu.sOption_list.map((option) => ({
+          ...option,
+          quantity: 1,
+        }))
+      : [];
     optionLists.push(sOptionList);
   });
 
@@ -84,7 +84,7 @@ export default function Payment() {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
+  const deliveryFee = resData.deliveryFee ? resData.deliveryFee : 0;
   const totalPrice = totalValue + deliveryFee - selectedCoupon.discount_price;
 
   const handleClickCoupon = (el) => {
@@ -114,7 +114,7 @@ export default function Payment() {
       disposable_request: disposable,
       is_deliver: isDeliver,
       payment_method: paymentMethod,
-      restaurant: store.id,
+      restaurant: resData.id,
       order_state: 'order_complete',
     };
     await axiosInstance.post('/order/', data).then((res) => {
@@ -138,7 +138,7 @@ export default function Payment() {
         confirmButtonText: '확인',
         confirmButtonColor: 'black',
       }).then((res) => {
-        dispatch(deleteMenu());
+        deleteCartData();
         res.isConfirmed && navigate('/');
       });
     });
@@ -153,17 +153,17 @@ export default function Payment() {
           <div className='payment-store'>
             <img
               className='payment-storeImg'
-              src={store.image}
+              src={resData.image}
               alt='매장 이미지'
             />
-            <h2 className='payment-storeName'>{store.name}</h2>
+            <h2 className='payment-storeName'>{resData.name}</h2>
           </div>
           <div className='payment-deliver'>
             {isDeliver ? <FaTruck size='24' /> : <GoGift size='24' />}
             <h2 className='payment-deliverTime'>
               {isDeliver
-                ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정`
-                : `${store.minPickupTime}분 후 픽업 가능`}
+                ? `${resData.minDeliveryTimeMinutes}~${resData.maxDeliveryTimeMinutes}분 후 도착 예정`
+                : `${resData.minPickupTime}분 후 픽업 가능`}
             </h2>
           </div>
         </div>

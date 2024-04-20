@@ -1,25 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CartAddBtn.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectIsMenuIn,
-  addMenu,
-  deleteMenu,
-  setCurrentStore,
-  setMenuData,
-  selectMenu,
-} from '../../../redux/reducers/cartSlice';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
+import axiosInstance from '../../../api/instance';
 
-const CartAddBtn = ({menuData, data, isRequiredCount }) => {
+const CartAddBtn = ({ menuData, data, isRequiredCount }) => {
   const navigate = useNavigate();
-  const menu = useSelector(selectMenu);
-  const isMenuIn = useSelector(selectIsMenuIn);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const dispatch = useDispatch();
+  const [menu, setMenu] = useState([]);
+  const [restaurant, setRestaurant] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const deliveryFee = data.deliveryFee ? data.deliveryFee : 0;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get('/cart/');
+      setMenu(res.data.cart_list ? res.data.cart_list : []);
+      setRestaurant(res.data.restaurant ? res.data.restaurant : 0);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+      const totalValue =
+        menu && menu.reduce((acc, item) => acc + item.price * item.quantity, 0);
+      await axiosInstance.post('/cart/', {
+        restaurant: data.id,
+        cart_list: menu,
+        total_price: totalValue + deliveryFee,
+      });
+    };
+    menu.length > 0 && fetchCartData();
+  }, [menu, deliveryFee, data.id]);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -32,6 +47,10 @@ const CartAddBtn = ({menuData, data, isRequiredCount }) => {
   };
 
   const handleAddCart = () => {
+    const deleteCartData = async () => {
+      await axiosInstance.delete('/cart/');
+    };
+
     if (!isLoggedIn) {
       Swal.fire({
         icon: 'warning',
@@ -51,30 +70,28 @@ const CartAddBtn = ({menuData, data, isRequiredCount }) => {
         confirmButtonColor: 'black',
       });
     } else {
-      if (isMenuIn && menu[0]?.restaurant === menuData.restaurant) {
+      if (menu && menu.length > 0 && restaurant === menuData.restaurant) {
         const existingMenuItem = menu.find(
           (item) =>
-            item.id === menuData.id &&
-            arraysEqual(item.option, menuData.option) &&
-            arraysEqual(item.sOption, menuData.sOption)
+            item.menu_id === menuData.menu_id &&
+            arraysEqual(item.option_list, menuData.option_list) &&
+            arraysEqual(item.sOption_list, menuData.sOption_list)
         );
         if (existingMenuItem !== undefined) {
           const updatedMenu = menu.map((item) =>
-            item.id === existingMenuItem.id &&
-            item.option === existingMenuItem.option &&
-            item.sOption === existingMenuItem.sOption
+            item.menu_id === existingMenuItem.menu_id &&
+            item.option_list === existingMenuItem.option_list &&
+            item.sOption_list === existingMenuItem.sOption_list
               ? { ...item, quantity: item.quantity + quantity }
               : item
           );
-          dispatch(setMenuData(updatedMenu));
+          setMenu(updatedMenu);
         } else {
-          dispatch(setMenuData([...menu, { ...menuData, quantity }]));
+          setMenu([...menu, { ...menuData, quantity }]);
         }
-        dispatch(addMenu());
         navigate(-1);
       } else {
-        dispatch(setCurrentStore(data));
-        if (isMenuIn) {
+        if (menu && menu.length > 0) {
           Swal.fire({
             icon: 'warning',
             title: '알림',
@@ -86,12 +103,11 @@ const CartAddBtn = ({menuData, data, isRequiredCount }) => {
             cancelButtonColor: 'black',
           }).then((res) => {
             if (res.isConfirmed) {
-              dispatch(deleteMenu());
+              deleteCartData();
             }
           });
         } else {
-          dispatch(setMenuData([{ ...menuData, quantity }]));
-          dispatch(addMenu());
+          setMenu([{ ...menuData, quantity: quantity }]);
           navigate(-1);
         }
       }

@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Basket.scss';
 
 import { IoMdBasket } from '@react-icons/all-files/io/IoMdBasket';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectMenu } from '../../../redux/reducers/cartSlice';
 import { selectIsLoggedIn } from '../../../redux/reducers/authSlice';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import axiosInstance from '../../../api/instance';
 
 export default function Basket() {
   const navigate = useNavigate();
-  const menu = useSelector(selectMenu);
-  const isLoggedIn = useSelector(selectIsLoggedIn)
-  const count = menu.length;
+  const [menu, setMenu] = useState([]);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const count = menu ? menu.length : 0;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get('/cart/');
+      setMenu(res.data.cart_list);
+    };
+    fetchData();
+  }, []);
 
   const handleOpenBasket = () => {
     if (!isLoggedIn) {

@@ -5,38 +5,76 @@ import { IoGiftOutline } from '@react-icons/all-files/io5/IoGiftOutline';
 import { FaTruck } from '@react-icons/all-files/fa/FaTruck';
 import PaymentMenu from '../../components/PaymentMenu/PaymentMenu';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectIsMenuIn,
-  selectMenu,
-  selectStore,
-  selectIsDeliver,
-  setDeliver,
-  setPickUp,
-  deleteMenu,
-  setMenuData,
-} from '../../../redux/reducers/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import {
   selectAddresses,
   selectDefaultId,
 } from '../../../redux/reducers/addressSlice';
+import axiosInstance from '../../../api/instance';
+import {
+  deleteMenu,
+  selectIsDeliver,
+  selectMenu,
+  selectMenuImg,
+  selectStore,
+  setCurrentStore,
+  setDeliver,
+  setMenuData,
+  setMenuImg,
+  setPickUp,
+} from '../../../redux/reducers/cartSlice';
+import Loading from '../../components/Loading/Loading';
 
 export default function CartList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isMenuIn = useSelector(selectIsMenuIn);
-  const isDeliver = useSelector(selectIsDeliver);
-  const store = useSelector(selectStore);
-  const menu = useSelector(selectMenu);
   const address = useSelector(selectAddresses);
   const defaultId = useSelector(selectDefaultId);
+  const isDeliver = useSelector(selectIsDeliver);
+  const menu = useSelector(selectMenu);
+  const resData = useSelector(selectStore);
+  const menuImg = useSelector(selectMenuImg)
+  const [restaurant, setRestaurant] = useState(0);
+  const [totalValue, setTotalValue] = useState(0);
+  const [deliveryFee, setDeliveryFee] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const totalValue = menu.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axiosInstance.get('/cart/');
+      setRestaurant(res.data.restaurant);
+      dispatch(setMenuImg(res.data.menu_image))
+      dispatch(setMenuData(res.data.cart_list));      setLoading(false);
+    };
+    fetchData();
+  }, [dispatch]);
 
-  const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
+  useEffect(() => {
+    if (!restaurant) return;
+    const cachedData = JSON.parse(localStorage.getItem('cachedData')) || {};
+    const fetchResData = async () => {
+      const res = await axiosInstance.get(`/restaurant/${restaurant}/`);
+      dispatch(setCurrentStore(res.data));
+    };
+    if (!cachedData[restaurant]) {
+      fetchResData();
+    } else {
+      const cachedResData = Object.values(cachedData).find(
+        (item) => item.id === parseInt(restaurant)
+      );
+      dispatch(setCurrentStore(cachedResData));
+    }
+  }, [dispatch, restaurant]);
+
+  useEffect(() => {
+    if (resData && menu && menu.length > 0) {
+      setTotalValue(
+        menu.reduce((acc, item) => acc + item.price * item.quantity, 0)
+      );
+      setDeliveryFee(resData.deliveryFee ? resData.deliveryFee : 0);
+    }
+  }, [menu, resData]);
+
   const totalPrice = totalValue + deliveryFee;
   const [deliverClass, setDeliverClass] = useState('cartlist-selectBtn');
   const [pickUpClass, setPickUpClass] = useState('cartlist-selectBtn');
@@ -59,6 +97,20 @@ export default function CartList() {
     dispatch(setPickUp());
   };
 
+  const deleteCartData = async () => {
+    await axiosInstance.delete('/cart/');
+    dispatch(deleteMenu());
+  };
+
+  const handleAddCart = async (updatedMenu) => {
+    await axiosInstance.post('/cart/', {
+      cart_list: updatedMenu,
+      restaurant: restaurant,
+      total_price: totalValue + deliveryFee,
+    });
+    dispatch(setMenuData(updatedMenu));
+  };
+
   const handleDeleteMenuAll = () => {
     Swal.fire({
       icon: 'warning',
@@ -69,16 +121,14 @@ export default function CartList() {
       cancelButtonText: '취소',
       confirmButtonColor: '#ca0000',
       cancelButtonColor: 'black',
-    }).then((res) => {
-      res.isConfirmed && dispatch(deleteMenu());
+    }).then(async (res) => {
+      res.isConfirmed && deleteCartData();
     });
   };
 
   const handleDeleteMenu = (indexToDelete) => {
     const updatedMenu = menu.filter((_, index) => index !== indexToDelete);
-    updatedMenu.length > 0
-      ? dispatch(setMenuData(updatedMenu))
-      : dispatch(deleteMenu());
+    updatedMenu.length > 0 ? handleAddCart(updatedMenu) : deleteCartData();
   };
 
   const handleIncreaseQuantity = (index) => {
@@ -87,7 +137,7 @@ export default function CartList() {
       ...updatedMenu[index],
       quantity: updatedMenu[index].quantity + 1,
     };
-    dispatch(setMenuData(updatedMenu));
+    handleAddCart(updatedMenu);
   };
 
   const handleDecreaseQuantity = (index) => {
@@ -100,12 +150,12 @@ export default function CartList() {
         ...updatedMenu[index],
         quantity: updatedMenu[index].quantity - 1,
       };
-      dispatch(setMenuData(updatedMenu));
+      handleAddCart(updatedMenu);
     }
   };
 
   const handleGoToPay = () => {
-    if (totalValue >= store.minimumOrderPrice) {
+    if (totalValue >= resData.minimumOrderPrice) {
       if (address.length > 0 && defaultId) {
         navigate('/payment/');
       } else {
@@ -137,29 +187,33 @@ export default function CartList() {
   };
 
   const handleClickAdd = () => {
-    navigate(`/restaurant/${store.id}/`);
+    navigate(`/restaurant/${restaurant}/`);
   };
-console.log(menu)
-  return (
+
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <h1 className='cartlist-header'>주문하기</h1>
-      {isMenuIn && menu.length > 0 && !isNaN(totalPrice) ? (
+      {menu && !isNaN(totalPrice) ? (
         <div className='cartlist-list'>
           <div className='cartlist-info'>
             <div className='cartlist-store'>
-              <img className='cartlist-storeImg' src={store.image} alt='매장 이미지'/>
-              <h2 className='cartlist-storeName'>{store.name}</h2>
+              <img
+                className='cartlist-storeImg'
+                src={resData && resData.image}
+                alt='매장 이미지'
+              />
+              <h2 className='cartlist-storeName'>{resData && resData.name}</h2>
             </div>
             <div className='cartlist-deliver'>
-              {isDeliver ? (
-                <FaTruck size='24' />
-              ) : (
-                <IoGiftOutline size='24' />
-              )}
+              {isDeliver ? <FaTruck size='24' /> : <IoGiftOutline size='24' />}
               <h2 className='cartlist-deliverTime'>
                 {isDeliver
-                  ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정`
-                  : `${store.minPickupTime}분 후 픽업 가능`}
+                  ? `${resData && resData.minDeliveryTimeMinutes}~${
+                      resData && resData.maxDeliveryTimeMinutes
+                    }분 후 도착 예정`
+                  : `${resData && resData.minPickupTime}분 후 픽업 가능`}
               </h2>
             </div>
           </div>
@@ -180,18 +234,19 @@ console.log(menu)
             </button>
           </div>
           <div className='cartlist-menu'>
-            {menu.map((item, index) => {
-              return (
-                <PaymentMenu
-                  key={index}
-                  item={item}
-                  index={index}
-                  onDelete={handleDeleteMenu}
-                  onIncrease={handleIncreaseQuantity}
-                  onDecrease={handleDecreaseQuantity}
-                />
-              );
-            })}
+            {menu &&
+              menu.map((item, index) => {
+                return (
+                  <PaymentMenu
+                    key={index}
+                    item={item}
+                    index={index}
+                    onDelete={handleDeleteMenu}
+                    onIncrease={handleIncreaseQuantity}
+                    onDecrease={handleDecreaseQuantity}
+                  />
+                );
+              })}
           </div>
           <div className='cartlist-add'>
             <button className='cartlist-addBtn' onClick={handleClickAdd}>
