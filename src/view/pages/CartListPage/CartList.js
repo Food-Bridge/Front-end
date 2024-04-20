@@ -15,7 +15,6 @@ import {
   deleteMenu,
   selectIsDeliver,
   selectMenu,
-  selectMenuImg,
   selectStore,
   setCurrentStore,
   setDeliver,
