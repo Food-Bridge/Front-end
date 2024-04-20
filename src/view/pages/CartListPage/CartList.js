@@ -33,7 +33,6 @@ export default function CartList() {
   const isDeliver = useSelector(selectIsDeliver);
   const menu = useSelector(selectMenu);
   const resData = useSelector(selectStore);
-  const menuImg = useSelector(selectMenuImg)
   const [restaurant, setRestaurant] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
   const [deliveryFee, setDeliveryFee] = useState(0);
