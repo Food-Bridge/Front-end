@@ -50,13 +50,9 @@ function Community() {
 
   useEffect(() => {
     fetchLatest();
-  }, [latest]);
-  useEffect(() => {
-    fetchWeekly();
-  }, [weekly]);
-  useEffect(() => {
     fetchDaily();
-  }, [daily]);
+    fetchWeekly();
+  }, []);
 
 
   const handleEditClick = () => {
