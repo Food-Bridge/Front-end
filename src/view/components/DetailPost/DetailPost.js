@@ -24,7 +24,7 @@ function DetailPost({ data }) {
   });
 
   const currentUser = useGetId();
-  const userLike = data.like_users.some((user) => user.id === currentUser);
+  const userLike = data.like_users.some((user) => user === currentUser);
   const [isLiked, setIsLiked] = useState(userLike);
   const [likesCount, setLikesCount] = useState(data.likes_count);
   const [editBtn, setEditBtn] = useState(false);

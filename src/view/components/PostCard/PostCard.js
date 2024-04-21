@@ -1,7 +1,6 @@
 import React from 'react';
 import './PostCard.scss';
 import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty';
-import { FaRegComment } from '@react-icons/all-files/fa/FaRegComment';
 
 function PostCard({ post }) {
   const created = new Date(post.created_at);
@@ -12,6 +11,7 @@ function PostCard({ post }) {
     hour: '2-digit',
     minute: '2-digit',
   });
+
   return (
     <div className='PostCard'>
       <div className='postCard-frame'>
@@ -28,12 +28,6 @@ function PostCard({ post }) {
               <h1 className='postCard-fontSize'>
                 <IoIosHeartEmpty className='postCard-likeIcon' />
                 {post.likes_count}
-              </h1>
-            </div>
-            <div className='postCard-commentCount'>
-              <h1 className='postCard-fontSize'>
-                <FaRegComment className='postCard-commentIcon' />
-                {post.comment_count}
               </h1>
             </div>
           </div>
