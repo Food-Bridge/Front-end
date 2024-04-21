@@ -21,8 +21,7 @@ export default function CommunityCard({ post }) {
             <img
               rel="preload"
               className='communityCard-profileImg'
-              src={post.author_info.image}
-              alt='userimage'
+              src={post.author_info.image} alt='프로필 이미지'
             />
             <p className='communityCard-profileName'>
               {post.author_info.nickname ? post.author_info.nickname : '닉네임'}

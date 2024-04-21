@@ -13,7 +13,6 @@ function PostCommentInput({ id }) {
     axiosInstance
       .post(`/community/${id}/comment/create/`, {
         content,
-        content,
       })
       .then(
         Swal.fire({

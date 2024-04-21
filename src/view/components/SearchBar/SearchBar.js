@@ -47,7 +47,7 @@ function SearchBar() {
     if (!isLoggedIn) {
       Swal.fire({
         icon: 'warning',
-        text: '알림',
+        title: '알림',
         text: '로그인이 필요합니다.',
         showCancelButton: false,
         confirmButtonText: '로그인하기',
@@ -62,7 +62,7 @@ function SearchBar() {
     if (!isLoggedIn) {
       Swal.fire({
         icon: 'warning',
-        text: '알림',
+        title: '알림',
         text: '로그인이 필요합니다.',
         showCancelButton: false,
         confirmButtonText: '로그인하기',

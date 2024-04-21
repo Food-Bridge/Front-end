@@ -44,7 +44,7 @@ export default function MyStoreOption() {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [menuId, owner]);
 
   const handleAddOption = () => {
     navigate(`/optionUpload/${menuId}/option`);

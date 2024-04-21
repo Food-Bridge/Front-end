@@ -10,7 +10,7 @@ function CategoryBar({category, setCategory}) {
           {dataArr.map((el, index) => {
             return (
               <Category
-                selected = {category == el.id}
+                selected = {category === el.id}
                 category={el.category}
                 key={index}
                 image={el.image}

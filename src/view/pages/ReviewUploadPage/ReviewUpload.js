@@ -100,7 +100,7 @@ function ReviewUpload() {
         />
         <div className='reviewUpload-etcIcons'>
           <div className='reviewUpload-photo'>
-            <img className='reviewUpload-img' src={imageDisplay} />
+            <img className='reviewUpload-img' src={imageDisplay} alt='리뷰 이미지'/>
             <input
               className='reviewUpload-imgUpload'
               id='file'

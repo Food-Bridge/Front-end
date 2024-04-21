@@ -2,6 +2,8 @@ import React from 'react';
 import './PaymentMenu.scss';
 
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectMenuImg } from '../../../redux/reducers/cartSlice';
 
 export default function PaymentMenu({
   onIncrease,
@@ -11,18 +13,21 @@ export default function PaymentMenu({
   index,
 }) {
   const navigate = useNavigate();
-
+  const id = item.menu_id;
+  const menuImg = useSelector(selectMenuImg);
+  const image = menuImg[item.menu_id];
+  console.log(item);
   const handleClickOption = () => {
-    navigate(`/restaurant/${item.restaurant}/${item.id}`);
+    navigate(`/restaurant/${item.restaurant}/${id}`);
     onDelete(index);
   };
-
+  console.log(item.option_list);
   return (
     <div className='paymentMenu'>
-      <img src={item.image} className='paymentMenu-image' />
+      <img src={image} className='paymentMenu-image' alt='메뉴 이미지' />
       <div className='paymentMenu-content'>
         <div className='paymentMenu-header'>
-          <h1 className='paymentMenu-title'>{item.name}</h1>
+          <h1 className='paymentMenu-title'>{item.menu_name}</h1>
           <button
             className='paymentMenu-delete'
             onClick={() => onDelete(index)}
@@ -32,11 +37,18 @@ export default function PaymentMenu({
         </div>
 
         <p className='paymentMenu-detail'>
-          {(item.option.length > 0 || item.sOption.length > 0) && ' 옵션 : '}
-          {item.option.map((option) => option.name).join(' / ')}{' '}
-          {item.option.length > 0 && item.sOption.length > 0 && ' / '}
-          {item.sOption.map((sOption) => sOption.name).join(' / ')}
+          {item.option_list && item.option_list.length > 0 && ' 옵션 : '}
+          {item.option_list &&
+            item.option_list.map((option) => option.option_name).join(' / ')}
+          {item.option_list &&
+            item.option_list.length > 0 &&
+            item.soption_list &&
+            item.soption_list.length > 0 &&
+            ' / '}
+          {item.soption_list &&
+            item.soption_list.map((soption) => soption.option_name).join(' / ')}
         </p>
+
         <p className='paymentMenu-price'>
           {(item.price * item.quantity).toLocaleString('ko-KR')}원
         </p>

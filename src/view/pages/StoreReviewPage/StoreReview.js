@@ -23,7 +23,7 @@ export default function StoreReview() {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [resId]);
 
   function roundRates(number) {
     return Math.round(number * 2) / 2;

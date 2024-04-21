@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PostDetail.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';

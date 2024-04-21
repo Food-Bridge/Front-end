@@ -2,69 +2,63 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../api/instance';
 import { useParams } from 'react-router-dom';
 import './StoreOption.scss';
-import Loading from '../../components/Loading/Loading';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import CartAddBtn from '../../components/CartAddBtn/CartAddBtn';
 
 export default function StoreOption() {
   const { resId, menuId } = useParams();
-  const [data, setData] = useState([]);
-  const [menuData, setMenuData] = useState([]);
+  const cachedData = JSON.parse(localStorage.getItem('cachedData')) || {};
+  const cachedMenuData =
+    JSON.parse(localStorage.getItem('cachedMenuData')) || {};
+  const data = Object.values(cachedData).find(
+    (item) => item.id === parseInt(resId)
+  );
+  const menuData = Object.values(cachedMenuData).find(
+    (item) => item.id === parseInt(menuId)
+  );
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
   const [option, setOption] = useState([]);
   const [sOption, setSOption] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const isRequiredCount = option && menuData.required_options_count === option.length;
+  const isRequiredCount =
+    option && menuData.required_options_count === option.length;
 
-  const price =
+    const price =
     menuData.price +
     (option ? option.reduce((a, b) => a + b.price, 0) : 0) +
     (sOption ? sOption.reduce((a, b) => a + b.price, 0) : 0);
 
-    const menuInfo = {
-      id: menuData.id,
-      image: menuData.image,
-      name: menuData.name,
-      option: option,
-      sOption: sOption,
-      price: price,
-      restaurant: menuData.restaurant
-    };
+  const menuInfo = {
+    menu_id: menuData.id,
+    menu_name: menuData.name,
+    option_list: option,
+    soption_list: sOption,
+    price: price,
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await axiosInstance.get(`/restaurant/${resId}`);
-      const menuRes = await axiosInstance.get(
-        `/restaurant/${resId}/menu/${menuId}`
-      );
+    const fetchOptionData = async () => {
       const optionRes = await axiosInstance.get(
         `/restaurant/${resId}/menu/${menuId}/options`
       );
       const sOptionRes = await axiosInstance.get(
         `restaurant/${resId}/menu/${menuId}/soptions`
       );
-      setData(res.data);
-      setMenuData(menuRes.data);
       setOptionData(optionRes.data);
       setSOptionData(sOptionRes.data);
-      setLoading(false);
     };
-    fetchData();
+    fetchOptionData();
   }, [resId, menuId]);
 
   const handleOptionChange = (selectedOption) => {
     setOption(selectedOption);
   };
-
   const handleSOptionChange = (selectedSOption) => {
     setSOption(selectedSOption);
   };
 
-  return loading ? (
-    <Loading />
-  ) : (
+  return (
     <div className='storeOption'>
       <img src={menuData.image} alt='메뉴이미지' className='storeOption-img' />
       <div className='storeOption-title'>

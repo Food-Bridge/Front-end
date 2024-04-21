@@ -6,12 +6,6 @@ import { FaHome } from '@react-icons/all-files/fa/FaHome';
 import { FaTruck } from '@react-icons/all-files/fa/FaTruck';
 import { RiArrowDropDownFill } from '@react-icons/all-files/ri/RiArrowDropDownFill';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectMenu,
-  selectStore,
-  selectIsDeliver,
-  deleteMenu,
-} from '../../../redux/reducers/cartSlice';
 import PaymentMethod from '../../components/PaymentMethod/PaymentMethod';
 import {
   selectAddresses,
@@ -30,10 +24,16 @@ import {
   setTotalTime,
 } from '../../../redux/reducers/deliverSlice';
 import Loading from '../../components/Loading/Loading';
+import {
+  deleteMenu,
+  selectIsDeliver,
+  selectMenu,
+  selectStore,
+} from '../../../redux/reducers/cartSlice';
 
 export default function Payment() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [storeRequest, setStoreRequest] = useState('');
   const [disposable, setDisposable] = useState(false);
@@ -43,7 +43,7 @@ export default function Payment() {
   const [couponList, showCouponList] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState({ discount_price: 0 });
   const isDeliver = useSelector(selectIsDeliver);
-  const store = useSelector(selectStore);
+  const resData = useSelector(selectStore);
   const menuData = useSelector(selectMenu);
   const defaultId = useSelector(selectDefaultId);
   const address = useSelector(selectAddresses);
@@ -51,32 +51,32 @@ export default function Payment() {
   const menuList = [];
   const optionLists = [];
 
+  const deleteCartData = async () => {
+    await axiosInstance.delete('/cart/');
+    dispatch(deleteMenu());
+  };
+
   menuData.forEach((menu) => {
     const menuInfo = {
-      menu_id: menu.id,
-      menu_name: menu.name,
+      menu_id: menu.menu_id,
+      menu_name: menu.menu_name,
       price: menu.price,
       quantity: menu.quantity,
     };
     menuList.push(menuInfo);
 
-    const optionList = menu.options.map((option) => ({
-      option_id: option.id,
-      option_name: option.name,
-      price: option.price,
+    const optionList = menu.option_list.map((option) => ({
+      ...option,
       quantity: 1,
     }));
     optionLists.push(optionList);
 
-    const sOptionList =
-      menu.sOption.length > 0
-        ? menu.sOption.map((option) => ({
-            option_id: option.id,
-            option_name: option.name,
-            price: option.price,
-            quantity: 1,
-          }))
-        : [];
+    const sOptionList = menu.sOption_list
+      ? menu.sOption_list.map((option) => ({
+          ...option,
+          quantity: 1,
+        }))
+      : [];
     optionLists.push(sOptionList);
   });
 
@@ -84,7 +84,7 @@ export default function Payment() {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const deliveryFee = store.deliveryFee ? store.deliveryFee : 0;
+  const deliveryFee = resData.deliveryFee ? resData.deliveryFee : 0;
   const totalPrice = totalValue + deliveryFee - selectedCoupon.discount_price;
 
   const handleClickCoupon = (el) => {
@@ -114,7 +114,7 @@ export default function Payment() {
       disposable_request: disposable,
       is_deliver: isDeliver,
       payment_method: paymentMethod,
-      restaurant: store.id,
+      restaurant: resData.id,
       order_state: 'order_complete',
     };
     await axiosInstance.post('/order/', data).then((res) => {
@@ -138,7 +138,7 @@ export default function Payment() {
         confirmButtonText: '확인',
         confirmButtonColor: 'black',
       }).then((res) => {
-        dispatch(deleteMenu());
+        deleteCartData();
         res.isConfirmed && navigate('/');
       });
     });
@@ -151,15 +151,19 @@ export default function Payment() {
       <div className='payment-list'>
         <div className='payment-info'>
           <div className='payment-store'>
-            <img className='payment-storeImg' src={store.image} />
-            <h2 className='payment-storeName'>{store.name}</h2>
+            <img
+              className='payment-storeImg'
+              src={resData.image}
+              alt='매장 이미지'
+            />
+            <h2 className='payment-storeName'>{resData.name}</h2>
           </div>
           <div className='payment-deliver'>
-            {isDeliver ? <FaTruck size='30' /> : <GoGift size='20' />}
+            {isDeliver ? <FaTruck size='24' /> : <GoGift size='24' />}
             <h2 className='payment-deliverTime'>
               {isDeliver
-                ? `${store.minDeliveryTimeMinutes}~${store.maxDeliveryTimeMinutes}분 후 도착 예정`
-                : `${store.minPickupTime}분 후 픽업 가능`}
+                ? `${resData.minDeliveryTimeMinutes}~${resData.maxDeliveryTimeMinutes}분 후 도착 예정`
+                : `${resData.minPickupTime}분 후 픽업 가능`}
             </h2>
           </div>
         </div>
@@ -168,10 +172,8 @@ export default function Payment() {
             <div className='payment-addressGroup'>
               <div className='payment-addressGroup-header'>
                 <h3 className='payment-addressNickname'>
-                  <FaHome size='20' />
-                  {defaultAddress.nickname
-                    ? defaultAddress.nickname
-                    : defaultAddress.detail_address}
+                  <FaHome size='24' />
+                  {defaultAddress.nickname ? defaultAddress.nickname : ''}
                 </h3>
                 <button
                   className='payment-addressEdit'
@@ -192,12 +194,14 @@ export default function Payment() {
             <input
               className='payment-storeRequest-input'
               placeholder='예) 소스는 따로 담아주세요.'
+              aria-label='가게 요청사항'
               onChange={(e) => setStoreRequest(e.target.value)}
             />
             <div className='payment-disposable'>
               <input
                 className='payment-checkbox'
                 type='checkbox'
+                aria-label='일회용품 받기'
                 onChange={() => setDisposable(!disposable)}
               ></input>
               <p className='payment-disposableText'>일회용 수저, 포크 받기</p>
@@ -209,6 +213,7 @@ export default function Payment() {
               <input
                 className='payment-deliverRequest-input'
                 placeholder='예) 문 앞에 놔주세요.'
+                aria-label='배달 요청사항'
                 onChange={(e) => setDeliverRequest(e.target.value)}
               />
             </div>
@@ -218,7 +223,7 @@ export default function Payment() {
         <div className='payment-method'>
           <PaymentMethod click={setPaymentMethod} selected={paymentMethod} />
           <div className='payment-coupon'>
-            <h3 className='payment-couponTitle'>쿠폰 사용</h3>
+            <h1 className='payment-couponTitle'>쿠폰 사용</h1>
             <button
               className='payment-couponCodeBox'
               onClick={() => showCouponList(!couponList)}

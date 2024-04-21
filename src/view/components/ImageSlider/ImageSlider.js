@@ -21,7 +21,7 @@ export default function ImageSlider({ mini, slides }) {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [current, length]);
+  });
 
   if (!Array.isArray(slides) || slides.length <= 0) {
     return null;
