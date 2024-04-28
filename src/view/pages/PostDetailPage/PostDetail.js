@@ -39,7 +39,7 @@ function PostDetail() {
         );
     };
     fetchData();
-  }, [id]);
+  }, [id, navigate]);
 
   return (
     <div className='PostDetail'>

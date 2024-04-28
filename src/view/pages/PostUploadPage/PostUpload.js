@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './PostUpload.scss';
 import { FaImage } from '@react-icons/all-files/fa/FaImage';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,6 @@ function PostUpload() {
   const onChangeContent = (event) => {
     setContent(event.target.value);
   };
-
 
   const handleUploadBlog = async () => {
     formData.append('title', title);
@@ -79,7 +78,11 @@ function PostUpload() {
         <div className='postUpload-etcIcons'>
           <div className='postUpload-photo'>
             {imageDisplay && (
-              <img className='postUpload-img' src={imageDisplay} alt='DisplayImage' />
+              <img
+                className='postUpload-img'
+                src={imageDisplay}
+                alt='DisplayImage'
+              />
             )}
             <div style={{ display: 'none' }}>
               <ImageUploader
@@ -89,7 +92,7 @@ function PostUpload() {
                 length='1000'
               />
             </div>
-            <label htmlFor="file">
+            <label htmlFor='file'>
               <FaImage className='postUpload-photoIcon' />
             </label>
           </div>

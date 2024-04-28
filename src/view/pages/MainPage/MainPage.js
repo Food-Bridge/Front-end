@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import './MainPage.scss';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
@@ -74,7 +73,11 @@ export default function MainPage() {
                       navigate(`/restaurant/${store.id}`);
                     }}
                   >
-                    <img className='main-storeImg' src={store.image} alt='매장 이미지' />
+                    <img
+                      className='main-storeImg'
+                      src={store.image}
+                      alt='매장 이미지'
+                    />
                   </button>
                 );
               })
@@ -97,7 +100,7 @@ export default function MainPage() {
           {postData.length > 0 ? (
             <div className='main-group main-postData'>
               {postData.map((post) => {
-                return <CommunityCard post={post} />;
+                return <CommunityCard key={post.id} post={post} />;
               })}
             </div>
           ) : (

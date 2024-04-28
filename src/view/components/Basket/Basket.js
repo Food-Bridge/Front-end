@@ -19,8 +19,8 @@ export default function Basket() {
       const res = await axiosInstance.get('/cart/');
       setMenu(res.data.cart_list);
     };
-    fetchData();
-  }, []);
+    isLoggedIn && fetchData();
+  }, [isLoggedIn]);
 
   const handleOpenBasket = () => {
     if (!isLoggedIn) {

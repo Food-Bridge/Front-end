@@ -10,10 +10,12 @@ const axiosInstance = axios.create({
 const refreshToken = async () => {
   try {
     const refresh = sessionStorage.getItem('refresh');
-    const response = await axios.post(REFRESH_URL, { refresh: refresh });
-    const access = response.data.access;
-    document.cookie = `accessToken=${access}; httpOnly; path=/`;
-    return access;
+    if (refresh) {
+      const response = await axios.post(REFRESH_URL, { refresh: refresh });
+      const access = response.data.access;
+      document.cookie = `accessToken=${access}; httpOnly; path=/`;
+      return access;
+    }
   } catch (error) {
     Swal.fire({
       icon: 'warning',
@@ -21,8 +23,10 @@ const refreshToken = async () => {
       html: '다시 로그인해주세요.',
       showCancelButton: false,
       confirmButtonText: '확인',
-    }).then(() => {
-      window.location.href = '/users/signin';
+    }).then((res) => {
+      if (res.isConfirmed) {
+        window.location.href = '/users/signin';
+      }
     });
     return Promise.reject(error);
   }
@@ -43,13 +47,15 @@ axiosInstance.interceptors.request.use(async (config) => {
         html: '다시 로그인해주세요.',
         showCancelButton: false,
         confirmButtonText: '확인',
-      }).then(() => {
-        window.location.href = '/users/signin';
+      }).then((res) => {
+        if (res.isConfirmed) {
+          window.location.href = '/users/signin';
+        }
       });
       return Promise.reject(error);
     }
   }
-  return config
+  return config;
 });
 
 axiosInstance.interceptors.response.use(
@@ -75,8 +81,10 @@ axiosInstance.interceptors.response.use(
           html: '다시 로그인해주세요.',
           showCancelButton: false,
           confirmButtonText: '확인',
-        }).then(() => {
-          window.location.href = '/users/signin';
+        }).then((res) => {
+          if (res.isConfirmed) {
+            window.location.href = '/users/signin';
+          }
         });
         return Promise.reject(error);
       }
