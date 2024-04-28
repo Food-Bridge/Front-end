@@ -204,9 +204,11 @@
 <br>
 
 <h1 id="4">4. 기술 특이점</h1>
+
 ```
 사용자 친화적인 사이트를 만들기 위해 성능 개선표를 작성해 페이지별 성능과 접근성 등을 개선했습니다
 ```
+
 <p  align="center">
   <img width="500" src="https://github.com/UMC-Project/Front-end/assets/135521917/1410543b-0f37-4e40-aa0f-93392894c7f8"/>
   <img width="500" src="https://github.com/UMC-Project/Front-end/assets/135521917/319bb9d7-2c58-4af3-aa32-a8fd3d65f078"/>
