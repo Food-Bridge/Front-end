@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PostDetail.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import MenuBar from '../../components/MenuBar/MenuBar';
@@ -8,11 +8,7 @@ import PostCommentInput from '../../components/PostCommentInput/PostCommentInput
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
-import axios from 'axios';
-import { useGetId } from '../../../api/useGetId';
 
-
-axios.defaults.withCredentials = true;
 
 function PostDetail() {
   const navigate = useNavigate();
@@ -21,41 +17,14 @@ function PostDetail() {
   const [commentData, setCommentData] = useState([]);
   const { id } = useParams();
 
-
   useEffect(() => {
     const fetchData = async () => {
       await axiosInstance
         .get(`/community/${id}/`)
         .then(async (res) => {
-
-          const setCookieHeader = res.headers['Set-Cookie'];
-          console.log(res.headers);
-          console.log(res.headers);
-          console.log(setCookieHeader);
-          if (setCookieHeader) {
-            const cookieValue = setCookieHeader;
-            console.log(cookieValue);
-            document.cookie = `${cookieValue}; httpOnly; path=/`;
-          }
-
           setPostData(res.data);
-          await axiosInstance
-            .get(`/community/${id}/comment/`)
-            .then((res) => {
-              setCommentData(res.data);
-              setLoading(false)
-            })
-            .catch((error) =>
-              Swal.fire({
-                icon: 'warning',
-                title: '알림',
-                html: '오류가 발생했습니다.<br>다시 시도해주세요.',
-                confirmButtonText: '확인',
-                confirmButtonColor: 'black',
-              }).then((res) => {
-                res.isConfirmed && navigate('/commu/');
-              })
-            );
+          setCommentData(res.data.comments);
+          setLoading(false)
         })
         .catch((error) =>
           Swal.fire({
@@ -70,7 +39,6 @@ function PostDetail() {
         );
     };
     fetchData();
-
   }, [id]);
 
   return (

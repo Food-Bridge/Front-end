@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { CiLocationOn } from 'react-icons/ci';
-import { CiClock2 } from 'react-icons/ci';
-import { HiOutlineXMark } from 'react-icons/hi2';
+import React from 'react';
+import { MdLocationOn } from '@react-icons/all-files/md/MdLocationOn';
+import { FaRegClock } from '@react-icons/all-files/fa/FaRegClock';
+import { IoMdClose } from '@react-icons/all-files/io/IoMdClose';
 import './MyListDeliver.scss';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import {
-  deleteDeliverList,
-  setDeliverListState,
-} from '../../../redux/reducers/deliverSlice';
+import { deleteDeliverList } from '../../../redux/reducers/deliverSlice';
 
 export default function MyListDeliver({ data }) {
   const dispatch = useDispatch();
@@ -19,7 +16,7 @@ export default function MyListDeliver({ data }) {
   );
   let deliverState;
   if (restTime <= 0) {
-    deliverState = 2
+    deliverState = 2;
     if (restTime <= -10) {
       dispatch(deleteDeliverList(data.id));
     }
@@ -50,7 +47,7 @@ export default function MyListDeliver({ data }) {
     <div className='mylistDeliver'>
       <div className='mylistDeliver-header'>
         <button className='mylistDeliver-cancel' onClick={handleDeleteData}>
-          <HiOutlineXMark size='30' />
+          <IoMdClose size='30' />
         </button>
         <h2 className='mylistDeliver-title-text'>
           {data.restaurantName} 배달 현황
@@ -65,7 +62,7 @@ export default function MyListDeliver({ data }) {
               }`}
             >
               <h3 className='mylistDeliver-status-title'>주문 접수</h3>
-              <CiLocationOn size='24' />
+              <MdLocationOn size='24' />
             </div>
             <div
               className={`mylistDeliver-status-stage ${
@@ -73,7 +70,7 @@ export default function MyListDeliver({ data }) {
               }`}
             >
               <h3 className='mylistDeliver-status-title'>배달 시작</h3>
-              <CiLocationOn size='24' />
+              <MdLocationOn size='24' />
             </div>
             <div
               className={`mylistDeliver-status-stage ${
@@ -81,7 +78,7 @@ export default function MyListDeliver({ data }) {
               }`}
             >
               <h3 className='mylistDeliver-status-title'>도착 완료</h3>
-              <CiLocationOn size='24' />
+              <MdLocationOn size='24' />
             </div>
           </div>
           <progress
@@ -93,7 +90,7 @@ export default function MyListDeliver({ data }) {
         <div className='mylistDeliver-time'>
           <h3 className='mylistDeliver-time-title'>남은 시간</h3>
           <div className='mylistDeliver-time-group'>
-            {restTime > 0 && <CiClock2 size='24' />}
+            {restTime > 0 && <FaRegClock size='24' />}
             <p className='mylistDeliver-time-minute'>
               {restTime > 0 ? `${restTime}분` : '도착완료'}
             </p>

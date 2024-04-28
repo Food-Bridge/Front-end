@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import './PostUpload.scss';
-import { CiImageOn } from 'react-icons/ci';
+import { FaImage } from '@react-icons/all-files/fa/FaImage';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
+import ImageUploader from '../../../api/compress';
 
 function PostUpload() {
   const navigate = useNavigate();
@@ -12,11 +13,6 @@ function PostUpload() {
   const [image, setImage] = useState(null);
   const [imageDisplay, setImageDisplay] = useState(null);
   const formData = new FormData();
-  const imageInput = useRef();
-
-  const onCickImageUpload = () => {
-    imageInput.current.click();
-  };
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -26,15 +22,6 @@ function PostUpload() {
     setContent(event.target.value);
   };
 
-  const onChangeImage = (event) => {
-    const file = event.target.files[0];
-    setImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageDisplay(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const handleUploadBlog = async () => {
     formData.append('title', title);
@@ -92,17 +79,19 @@ function PostUpload() {
         <div className='postUpload-etcIcons'>
           <div className='postUpload-photo'>
             {imageDisplay && (
-              <img className='postUpload-img' src={imageDisplay} />
+              <img className='postUpload-img' src={imageDisplay} alt='DisplayImage' />
             )}
-            <input
-              ref={imageInput}
-              className='postUpload-imgUpload'
-              type='file'
-              onChange={onChangeImage}
-            />
-            <button onClick={onCickImageUpload}>
-              <CiImageOn className='postUpload-photoIcon' />
-            </button>
+            <div style={{ display: 'none' }}>
+              <ImageUploader
+                size='1.5'
+                setImage={setImage}
+                setImageDisplay={setImageDisplay}
+                length='1000'
+              />
+            </div>
+            <label htmlFor="file">
+              <FaImage className='postUpload-photoIcon' />
+            </label>
           </div>
         </div>
       </div>

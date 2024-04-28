@@ -27,7 +27,12 @@ export default function MenuCheckBox({
     setIds(updatedIds);
     onOptionChange(
       updatedIds.map((id) => {
-        return data.find((opt) => opt.id === id);
+        const option = data.find((opt) => opt.id === id);
+        return {
+          option_id: option.id,
+          option_name: option.name,
+          price: option.price,
+        };
       })
     );
   };
@@ -74,6 +79,7 @@ export default function MenuCheckBox({
             <input
               className='menuCheckBox-button'
               type='checkbox'
+              aria-label='옵션 버튼'
               checked={ids.includes(option.id)}
               onChange={() => handleButtonClick(option)}
             />

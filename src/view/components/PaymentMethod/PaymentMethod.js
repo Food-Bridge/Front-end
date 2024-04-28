@@ -16,6 +16,7 @@ const PaymentMethod = ({ selected, click }) => {
               type='radio'
               name='react-tips'
               value='credit_card'
+              aria-label='신용카드 결제'
               checked={selected === 'credit_card'}
               onChange={handleOptionChange}
               className='paymentMethod-directRadio'
@@ -27,6 +28,7 @@ const PaymentMethod = ({ selected, click }) => {
               type='radio'
               name='react-tips'
               value='cash'
+              aria-label='현금 결제'
               checked={selected === 'cash'}
               onChange={handleOptionChange}
               className='paymentMethod-directRadio'

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ImageSlider.scss';
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward';
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack';
 
 export default function ImageSlider({ mini, slides }) {
   const [current, setCurrent] = useState(0);
@@ -20,7 +21,7 @@ export default function ImageSlider({ mini, slides }) {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [current, length]);
+  });
 
   if (!Array.isArray(slides) || slides.length <= 0) {
     return null;
@@ -44,7 +45,16 @@ export default function ImageSlider({ mini, slides }) {
             className={index === current ? 'slide active' : 'slide'}
             key={index}
           >
-            {index === current && <img src={slide} className={mini ? 'imageSlider-image mini' : 'imageSlider-image'} />}
+            {index === current && (
+              <img
+                rel="preload"
+                src={slide}
+                alt='음식사진'
+                className={
+                  mini ? 'imageSlider-image mini' : 'imageSlider-image'
+                }
+              />
+            )}
           </div>
         );
       })}

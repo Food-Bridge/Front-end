@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import './ReviewUpload.scss';
-import { CiImageOn } from 'react-icons/ci';
+import { FaImage } from '@react-icons/all-files/fa/FaImage';
+import { FaStar } from '@react-icons/all-files/fa/FaStar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Rate from 'rc-rate';
 import 'rc-rate/assets/index.css';
-import { FaStar } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 function ReviewUpload() {
@@ -100,7 +100,7 @@ function ReviewUpload() {
         />
         <div className='reviewUpload-etcIcons'>
           <div className='reviewUpload-photo'>
-            <img className='reviewUpload-img' src={imageDisplay} />
+            <img className='reviewUpload-img' src={imageDisplay} alt='리뷰 이미지'/>
             <input
               className='reviewUpload-imgUpload'
               id='file'
@@ -110,7 +110,7 @@ function ReviewUpload() {
               ref={imageInput}
             />
             <button onClick={handleImageUpload}>
-              <CiImageOn className='reviewUpload-photoIcon' />
+              <FaImage className='reviewUpload-photoIcon' />
             </button>
           </div>
         </div>

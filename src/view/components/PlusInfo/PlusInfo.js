@@ -1,6 +1,6 @@
 import './PlusInfo.scss';
 
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward';
 
 export default function PlusInfo({ text, arrow, onClick }) {
   return (

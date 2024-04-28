@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './SearchBar.scss';
-import { CiLocationOn, CiHeart } from 'react-icons/ci';
-import { RiArrowDropDownFill } from 'react-icons/ri';
-import { IoIosSearch } from 'react-icons/io';
+import {MdLocationOn} from '@react-icons/all-files/md/MdLocationOn'
+import { IoIosHeartEmpty} from '@react-icons/all-files/io/IoIosHeartEmpty'
+import { RiArrowDropDownFill } from '@react-icons/all-files/ri/RiArrowDropDownFill';
+import { IoIosSearch } from '@react-icons/all-files/io/IoIosSearch';
 import { useNavigate } from 'react-router-dom';
 import Basket from '../Basket/Basket';
 import Swal from 'sweetalert2';
@@ -46,7 +47,7 @@ function SearchBar() {
     if (!isLoggedIn) {
       Swal.fire({
         icon: 'warning',
-        text: '알림',
+        title: '알림',
         text: '로그인이 필요합니다.',
         showCancelButton: false,
         confirmButtonText: '로그인하기',
@@ -61,7 +62,7 @@ function SearchBar() {
     if (!isLoggedIn) {
       Swal.fire({
         icon: 'warning',
-        text: '알림',
+        title: '알림',
         text: '로그인이 필요합니다.',
         showCancelButton: false,
         confirmButtonText: '로그인하기',
@@ -79,8 +80,9 @@ function SearchBar() {
           <button
             className='searchBar-location'
             onClick={handleToggleLocationList}
+            aria-label='주소 선택'
           >
-            <CiLocationOn className='searchBar-locaIcon' />
+            <MdLocationOn className='searchBar-locaIcon' />
             <h1 className='searchBar-locaName'>
               {isLoggedIn
                 ? defaultId && addresses.length > 0
@@ -96,13 +98,14 @@ function SearchBar() {
             <RiArrowDropDownFill className='searchBar-arrowIcon' />
           </button>
           <div className='searchBar-input'>
-            <button className='searchBar-inputBox' onClick={handleSearchClick}>
+            <button className='searchBar-inputBox'
+            aria-label='검색창' onClick={handleSearchClick}>
               <IoIosSearch className='searchBar-searchIcon' />
             </button>
           </div>
           <div className='searchBar-etcIcon'>
-            <button onClick={handleClickLikes}>
-              <CiHeart className='searchBar-heartIcon' />
+            <button onClick={handleClickLikes} aria-label='즐겨찾기'>
+              <IoIosHeartEmpty className='searchBar-heartIcon' />
             </button>
             <Basket />
           </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './PostCommentInput.scss';
-import { LuSend } from 'react-icons/lu';
+import { FiSend } from '@react-icons/all-files/fi/FiSend';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
 
@@ -12,7 +12,6 @@ function PostCommentInput({ id }) {
   const handlePostComment = () => {
     axiosInstance
       .post(`/community/${id}/comment/create/`, {
-        content,
         content,
       })
       .then(
@@ -36,7 +35,7 @@ function PostCommentInput({ id }) {
           placeholder='댓글을 입력해주세요'
         />
         <button className='postDetail-sendIcon' onClick={handlePostComment}>
-          <LuSend size='20' />
+          <FiSend size='20' />
         </button>
       </div>
     </>

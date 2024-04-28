@@ -177,10 +177,10 @@ function SignUp() {
                 )}
               </div>
               <div className='signUp-userNameForm'>
-                <h1 className='signUp-userNameText'>닉네임</h1>
+                <h1 className='signUp-userNameText'>이름</h1>
                 <input
                   type='text'
-                  placeholder=' 닉네임 3글자 이상'
+                  placeholder=' 이름 3글자 이상'
                   className='singUp-userNameInput'
                   value={userNameValue}
                   onChange={saveUserData(setUserName)}

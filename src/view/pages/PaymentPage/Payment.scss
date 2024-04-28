@@ -47,6 +47,9 @@
         display: flex;
         align-items: center;
         font-size: 16px;
+        * {
+          margin-right: 5px;
+        }
       }
       .payment-addressEdit {
         border-radius: 50px;

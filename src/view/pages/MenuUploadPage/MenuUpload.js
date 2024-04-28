@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './MenuUpload.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectOwner, setOwner } from '../../../redux/reducers/authSlice';
+import { useSelector } from 'react-redux';
+import { selectOwner } from '../../../redux/reducers/authSlice';
 import axiosInstance from '../../../api/instance';
 import Swal from 'sweetalert2';
+import BrowserImageCompression from '../../../api/compress';
+
 
 function MenuUpload() {
   const location = useLocation();
@@ -19,16 +21,6 @@ function MenuUpload() {
   const owner = useSelector(selectOwner);
   const navigate = useNavigate();
 
-  const handleSetImage = (event) => {
-    const file = event.target.files[0];
-    setImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageDisplay(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
   const handleAddMenus = async () => {
     try {
       const formData = new FormData();
@@ -37,7 +29,7 @@ function MenuUpload() {
       formData.append('content', content);
       formData.append('price', price);
       formData.append('is_main', isMain);
-      formData.append('is_popular', isPopular)
+      formData.append('is_popular', isPopular);
       if (id !== null) {
         await axiosInstance.patch(
           `/restaurant/${owner}/menu/${id}/`,
@@ -85,7 +77,7 @@ function MenuUpload() {
       setImage(res.data.image);
     };
     typeof id === 'number' && fetchData();
-  }, []);
+  }, [id, owner]);
 
   return (
     <div className='MenuUpload'>
@@ -96,6 +88,7 @@ function MenuUpload() {
           <input
             className='menuUpload-checkBox'
             type='checkbox'
+            aria-label='메인 메뉴'
             checked={isMain}
             onChange={() => {
               setIsMain(!isMain);
@@ -107,6 +100,7 @@ function MenuUpload() {
           <input
             className='menuUpload-checkBox'
             type='checkbox'
+            aria-label='인기 메뉴'
             checked={isPopular}
             onChange={() => {
               setIsPopular(!isPopular);
@@ -115,47 +109,43 @@ function MenuUpload() {
         </div>
       </div>
       <div className='menuUpload-fieldFrame'>
-        {/* 메뉴 이름 */}
         <div className='menuUpload-name'>
           <h1 className='menuUpload-title'>메뉴 이름</h1>
           <input
             className='menuUpload-menuName'
             type='text'
+            aria-label='메뉴이름'
             placeholder={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-
-        {/* 메뉴 금액 */}
         <div className='menuUpload-menuPrice'>
           <h1 className='menuUpload-menuTitle'>메뉴 금액</h1>
           <input
             className='menuUpload-priceInput'
             type='number'
+            aria-label='메뉴 금액'
             placeholder={price ? price : '숫자만 입력해주세요'}
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-
-        {/* 메뉴 설명 */}
         <div className='menuUpload-description'>
           <h1 className='menuUpload-title'>메뉴 설명</h1>
           <textarea
             className='menuUpload-storeDescription'
             type='text'
+            aria-label='메뉴 설명'
             placeholder={content}
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
-
-        {/* 메뉴 이미지 */}
         <div className='menuUpload-image'>
           <h1 className='menuUpload-title'>메뉴 이미지 등록</h1>
-          <img className='menuUpload-imageDisplay' src={imageDisplay} />
-          <input
+          <img className='menuUpload-imageDisplay' src={imageDisplay} alt='이미지 프리뷰'/>
+          <BrowserImageCompression
             className='menuUpload-imageInput'
-            type='file'
-            onChange={handleSetImage}
+            setImage={setImage}
+            setImageDisplay={setImageDisplay}size='0.5' length='300'
           />
         </div>
       </div>

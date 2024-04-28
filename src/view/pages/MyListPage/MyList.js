@@ -2,8 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  selectProfile,
-  setProfile,
   deleteTokens,
   logout,
 } from '../../../redux/reducers/authSlice';
@@ -21,37 +19,21 @@ import MyListDeliver from '../../components/MyListDeliver/MyListDeliver';
 import MyListMain from '../../components/MyListMain/MyListMain';
 import './MyList.scss';
 import MyListProfile from '../../components/MyListProfile/MyListProfile';
+import { selectDeliverList } from '../../../redux/reducers/deliverSlice';
 import Swal from 'sweetalert2';
 
-import { CiDiscount1, CiGift } from 'react-icons/ci';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { GoMegaphone } from 'react-icons/go';
-import { RiQuestionAnswerLine, RiCustomerService2Fill } from 'react-icons/ri';
-import { selectDeliverList } from '../../../redux/reducers/deliverSlice';
+import { FiPercent } from '@react-icons/all-files/fi/FiPercent';
+import { GoGift } from '@react-icons/all-files/go/GoGift';
+import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline';
+import { GoMegaphone } from '@react-icons/all-files/go/GoMegaphone';
+import { RiQuestionAnswerLine } from '@react-icons/all-files/ri/RiQuestionAnswerLine';
+import { RiCustomerService2Fill } from '@react-icons/all-files/ri/RiCustomerService2Fill';
 
 export default function MyList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const profile = useSelector(selectProfile);
   const deliverList = useSelector(selectDeliverList);
-  const onChangeImage = async (event) => {
-    const { files } = event.target;
-    const uploadFile = files[0];
-    const formData = new FormData();
-    formData.append('image', uploadFile);
-    profile.nickname && formData.append('nickname', profile.nickname);
 
-    const res = await axiosInstance.patch('/users/profile/', formData);
-    dispatch(setProfile({ image: res.data.image, nickname: profile.nickname }));
-    Swal.fire({
-      icon: 'info',
-      title: '프로필 변경',
-      text: '프로필을 변경하였습니다.',
-      showCancelButton: false,
-      confirmButtonText: '확인',
-      confirmButtonColor: 'black',
-    });
-  };
   const handleLogout = async () => {
     await axiosInstance.post('/users/logout/', {
       refresh: sessionStorage.getItem('refreshToken'),
@@ -91,7 +73,6 @@ export default function MyList() {
   return (
     <div className='mylist'>
       <MyListProfile
-        onChangeImage={onChangeImage}
         handleLogout={handleLogout}
       />
       <MyListMain />
@@ -104,12 +85,12 @@ export default function MyList() {
         )}
       <div className='mylistBlocks-row'>
         <MyListBlock
-          icon={<CiDiscount1 size='35' />}
+          icon={<FiPercent size='35' />}
           text='할인쿠폰'
           press={handleOpenCoupon}
         />
         <MyListBlock
-          icon={<CiGift size='35' />}
+          icon={<GoGift size='35' />}
           text='이벤트'
           press={handleClickButton}
         />

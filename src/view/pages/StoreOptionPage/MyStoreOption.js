@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './StoreOption.scss';
 import axiosInstance from '../../../api/instance';
-import { useLocation, useNavigate } from 'react-router-dom';
-import './MyStoreOption.scss';
+import { useNavigate, useParams } from 'react-router-dom';
 import MenuOptionBtn from '../../components/MenuOptionBtn/MenuOptionBtn';
 import MenuCheckBox from '../../components/MenuCheckBox/MenuCheckBox';
 import Loading from '../../components/Loading/Loading';
@@ -9,10 +9,9 @@ import { useSelector } from 'react-redux';
 import { selectOwner } from '../../../redux/reducers/authSlice';
 
 export default function MyStoreOption() {
+  const { menuId } = useParams();
   const owner = useSelector(selectOwner);
   const navigate = useNavigate();
-  const location = useLocation();
-  const menuId = location.state.id;
   const [menuData, setMenuData] = useState([]);
   const [optionData, setOptionData] = useState([]);
   const [sOptionData, setSOptionData] = useState([]);
@@ -45,21 +44,21 @@ export default function MyStoreOption() {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [menuId, owner]);
 
   const handleAddOption = () => {
-    navigate('/optionUpload/', { state: { id: menuId, type: 'option' } });
+    navigate(`/optionUpload/${menuId}/option`);
   };
 
   const handleAddSOption = () => {
-    navigate('/optionUpload/', { state: { id: menuId, type: 'soption' } });
+    navigate(`/optionUpload/${menuId}/soption`);
   };
 
   return loading ? (
     <Loading />
   ) : (
     <div className='storeOption'>
-      <img src={menuData.image} className='storeOption-img' />
+      <img src={menuData.image} className='storeOption-img' alt='메뉴 이미지' />
       <div className='storeOption-title'>
         {menuData.is_popular && (
           <div className='storeOption-tag'>

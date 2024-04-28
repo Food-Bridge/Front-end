@@ -1,6 +1,6 @@
 import React from 'react';
 import './OrderReceipt.scss';
-import { HiMiniXMark } from 'react-icons/hi2';
+import { IoMdClose } from '@react-icons/all-files/io/IoMdClose';
 
 export default function OrderReceipt({ order, closeModal, created }) {
   const menu = order.menu_list;
@@ -11,7 +11,7 @@ export default function OrderReceipt({ order, closeModal, created }) {
       <div className='orderReceipt-frame'>
         <header className='orderReceipt-header'>
           <button className='orderReceipt-back' onClick={closeModal}>
-            <HiMiniXMark size='30' />
+            <IoMdClose size='30' />
           </button>
           <h1 className='orderReceipt-title'>영수증</h1>
         </header>

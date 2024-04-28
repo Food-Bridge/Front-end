@@ -1,12 +1,12 @@
 import React from 'react';
 import './CommunityCard.scss';
-import { CiHeart } from 'react-icons/ci';
-import { IoEyeOutline } from 'react-icons/io5';
+import { IoIosHeartEmpty } from '@react-icons/all-files/io/IoIosHeartEmpty'
 import { useNavigate } from 'react-router-dom';
 
 export default function CommunityCard({ post }) {
   const navigate = useNavigate();
   const id = post.id;
+  const imageCheck = post._img && post._img.length > 0;
   const handleClickCard = () => {
     navigate(`/postCard/${id}`);
   };
@@ -19,8 +19,9 @@ export default function CommunityCard({ post }) {
         <header className='communityCard-header'>
           <div className='communityCard-profile'>
             <img
+              rel="preload"
               className='communityCard-profileImg'
-              src={post.author_info.image}
+              src={post.author_info.image} alt='프로필 이미지'
             />
             <p className='communityCard-profileName'>
               {post.author_info.nickname ? post.author_info.nickname : '닉네임'}
@@ -29,29 +30,24 @@ export default function CommunityCard({ post }) {
           <div className='communityCard-icons'>
             <div className='communityCard-likeCount'>
               <h1 className='communityCard-fontSize'>
-                <CiHeart className='communityCard-likeIcon' />
+                <IoIosHeartEmpty className='communityCard-likeIcon' />
                 {post.likes_count}
-              </h1>
-            </div>
-            <div className='communityCard-viewCount'>
-              <h1 className='communityCard-fontSize'>
-                <IoEyeOutline className='communityCard-viewIcon' />
-                {post.views}
               </h1>
             </div>
           </div>
         </header>
         <div className='communityCard-box'>
-          {post.img.length > 0 && (
+          {imageCheck && (
             <img
+              rel="preload"
               className='communityCard-image'
-              src={post.img[0].image}
+              src={post._img[0].image}
               alt='게시물 이미지'
             />
           )}
           <div
             className={
-              post.img.length > 0
+              imageCheck
                 ? 'communityCard-content'
                 : 'communityCard-content noImage'
             }

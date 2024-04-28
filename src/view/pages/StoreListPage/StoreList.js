@@ -9,7 +9,6 @@ import { SliderImgData } from '../../../data/StoreListSliderImg/SliderImgData';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/instance';
 import Loading from '../../components/Loading/Loading';
-
 function StoreList() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -23,12 +22,13 @@ function StoreList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axiosInstance.get(url);
-      category ? setData(res.data.results) : setData(res.data);
+      const res = await axiosInstance.get(`/restaurant/`);
+      setData(res.data);
       setLoading(false);
+      localStorage.setItem('cachedData', JSON.stringify(res.data));
     };
     fetchData();
-  }, [url]);
+  }, [url, category]);
 
   return (
     <div className='StoreList'>

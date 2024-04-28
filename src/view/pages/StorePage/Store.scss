@@ -1,16 +1,15 @@
 .store {
   width: 600px;
   .store-img {
-    margin-top: 10px;
+    margin: 10px 0;
     width: 600px;
     height: 300px;
-    overflow: hidden;
-    margin-bottom: 20px;
     background-color: #c6c6c6;
+    object-fit: cover;
   }
 
   .store-main {
-    margin: 20px 0;
+    margin-bottom: 20px;
 
     .store-title {
       margin: 0 20px;
@@ -23,15 +22,17 @@
       }
 
       .store-icon {
-        * {
-          margin-left: 10px;
-        }
+        width: 70px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
     }
     .store-rate {
       margin: 5px 20px;
       font-size: 14px;
-      color: #8d8d8d;
+      color: #5c5c5c;
     }
     .store-detailContainer {
       display: flex;
@@ -65,6 +66,14 @@
     .store-menuTitle {
       font-size: 18px;
       margin-bottom: 10px;
+    }
+    .store-menuAdd {
+      width: 300px;
+      height: 50px;
+      background-color: black;
+      color: white;
+      margin: 30px 150px;
+      font-size: 16px;
     }
   }
 }

@@ -15,10 +15,12 @@ export default function MenuOptionBtn({
   const owner = useSelector(selectOwner);
   const isSeller = useSelector(selectIsSeller);
   const [selectedOption, setSelectedOption] = useState([]);
-  
+
   const handleOptionChange = (option) => {
     setSelectedOption(option);
-    onOptionChange([option]);
+    onOptionChange([
+      { option_id: option.id, option_name: option.name, price: option.price },
+    ]);
   };
 
   const handleDeleteOption = (optionId) => {
@@ -63,6 +65,7 @@ export default function MenuOptionBtn({
             <input
               className='menuOptionBtn-button'
               type='radio'
+              aria-label='옵션 버튼'
               value={option.name}
               checked={selectedOption === option}
               onChange={() => handleOptionChange(option)}

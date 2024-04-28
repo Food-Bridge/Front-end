@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './Coupon.scss';
-import { TfiDownload } from 'react-icons/tfi';
+import { IoDownloadOutline } from '@react-icons/all-files/io5/IoDownloadOutline';
 import axiosInstance from '../../../api/instance';
 
-export default function Coupon({ data, downloaded }) {;
-  const [download, setDownload] = useState(downloaded)
+export default function Coupon({ data, downloaded }) {
+  const [download, setDownload] = useState(downloaded);
 
   const downloadCoupon = () => {
     setDownload(true);
@@ -36,11 +36,11 @@ export default function Coupon({ data, downloaded }) {;
       </div>
       {download ? (
         <div className='coupon-right downloaded'>
-          <TfiDownload size='35' />
+          <IoDownloadOutline size='35' />
         </div>
       ) : (
         <button className='coupon-right' onClick={downloadCoupon}>
-          <TfiDownload size='35' />
+          <IoDownloadOutline size='35' />
         </button>
       )}
     </div>

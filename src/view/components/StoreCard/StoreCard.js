@@ -1,9 +1,8 @@
 import React from 'react';
 import './StoreCard.scss';
-import { IoIosStar } from 'react-icons/io';
+import { IoIosStar } from '@react-icons/all-files/io/IoIosStar';
 
 function StoreCard({
-  className,
   img,
   storeName,
   minimumPrice,
@@ -38,13 +37,13 @@ function StoreCard({
             <div className='storeCard-leastPrice'>
               <p className='storeCard-leastTitle'>최소주문금액 &nbsp;</p>
               <p className='storeCard-leastCount'>
-                &nbsp;{minimumPrice.toLocaleString('ko-KR')}원&nbsp;&nbsp;
+                &nbsp;{minimumPrice && minimumPrice.toLocaleString('ko-KR')}원&nbsp;&nbsp;
               </p>
             </div>
             <div className='storeCard-deliverPrice'>
               <p className='storeCard-deliverTitle'>배달팁 &nbsp;</p>
               <p className='storeCard-deliverCount'>
-                &nbsp;{deliverPrice.toLocaleString('ko-KR')}원&nbsp;&nbsp;
+                &nbsp;{deliverPrice && deliverPrice.toLocaleString('ko-KR')}원&nbsp;&nbsp;
               </p>
             </div>
           </div>
