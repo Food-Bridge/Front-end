@@ -124,12 +124,12 @@
 <h3>2. 회원가입/로그인 페이지</h3>
 
 ```
-사이트의 주요 기능 이용을 위해 회원가입 및 로그인이 필요합니다. 자체 로그인 외에도 카카오, 구글 소셜 로그인이 가능합니다.
+사이트의 주요 기능 이용을 위해 회원가입 및 로그인이 필요합니다.<br>자체 로그인 외에도 카카오, 구글 소셜 로그인이 가능합니다.
 ```
 
 <p  align="center">
-  <img width="500" src="https://github.com/UMC-Project/Front-end/assets/135521917/3c2c7045-2408-4760-b73e-08a6a0d6e99d"/>
-  <img width="500" src="https://github.com/UMC-Project/Front-end/assets/135521917/98d36aef-f9b5-4d76-958e-66acdfd6e618"/>
+  <img width="400" src="https://github.com/UMC-Project/Front-end/assets/135521917/3c2c7045-2408-4760-b73e-08a6a0d6e99d"/>
+  <img width="400" src="https://github.com/UMC-Project/Front-end/assets/135521917/98d36aef-f9b5-4d76-958e-66acdfd6e618"/>
 </p>
 
 <h3>3. 배달 / 포장 페이지</h3>
