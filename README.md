@@ -226,7 +226,7 @@
 ### 💻서비스 아키텍처
 
 <p  align="center">
-  <img width="500" src="https://github.com/UMC-Project/Front-end/assets/135521917/f691648c-50b0-4d4b-b9a3-7692546c67d9"/>
+  <img width="900" src="https://github.com/UMC-Project/Front-end/assets/135521917/f691648c-50b0-4d4b-b9a3-7692546c67d9"/>
 </p>
 
 <br>
