@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/instance';
+import { logout } from './authSlice';
 
 const AddressSlice = createSlice({
   name: 'address',
@@ -34,7 +35,9 @@ export const { updateAddresses, setDefaultId, editAddressNickname, deleteAllAddr
   AddressSlice.actions;
 
 export const fetchAddresses = () => async (dispatch) => {
-  const res = await axiosInstance.get('/users/address/');
+  const res = await axiosInstance.get('/users/address/').catch((error) => {
+    dispatch(logout())
+  });
   dispatch(updateAddresses(res.data));
   const newDefaultAddress = res.data.find(
     (address) => address.is_default === true
