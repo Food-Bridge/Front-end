@@ -198,7 +198,7 @@
 ```
 
 <p  align="center">
-  <img width="500" src="https://github.com/UMC-Project/Front-end/assets/135521917/1410543b-0f37-4e40-aa0f-93392894c7f8"/>
+  <img width="500" src="https://github.com/Food-Bridge/Front-end/assets/135521917/f170d936-6b49-4245-8391-c5d8f0b3d011"/>
   <img width="500" src="https://github.com/UMC-Project/Front-end/assets/135521917/319bb9d7-2c58-4af3-aa32-a8fd3d65f078"/>
 </p>
 
