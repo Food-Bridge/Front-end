@@ -39,11 +39,6 @@
       </a>
     </td>
     <td align="center">
-      <a href="" target="_blank">
-        ..
-      </a>
-    </td>
-    <td align="center">
       <a href="https://github.com/NewJiSoo" target="_blank">
         신지수
       </a>
