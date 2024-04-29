@@ -17,7 +17,7 @@
 
 <br>
 
-### 👩‍🔧팀원 소개
+### 👩‍🔧 팀원 소개
 
 <table >
   <tr>
@@ -46,7 +46,7 @@
   </tr>
 </table>
 
-### 🤴역할
+### 🤴 역할
 
 <p align="center">
   <img src="https://github.com/UMC-Project/Front-end/assets/135521917/3d583c12-f8b0-48ee-afd2-4db6e1e9e825" alt="역할" />
@@ -83,7 +83,7 @@
 </table>
 <br>
 
-### 📋기술 스택
+### 📋 기술 스택
 
 ```
 - React
@@ -204,12 +204,15 @@
 
 <h1 id="5">5. 설계 문서</h1>
 
-### 🎨Figma
+### 🎨 Figma
 
-<img width="900" src="/src/data/FoodBridgeDesign.png">
+<p  align="center">
+<img width="900" src="/src/data/FoodBridgeDesign.png"/>
+</p>
 
 <br>
-### 💻서비스 아키텍처
+
+### 💻 서비스 아키텍처
 
 <p  align="center">
   <img width="900" src="https://github.com/UMC-Project/Front-end/assets/135521917/f691648c-50b0-4d4b-b9a3-7692546c67d9"/>
@@ -219,7 +222,7 @@
 
 <h1 id="6">6. 협업 및 컨벤션</h1>
 
-### 🛠협업 도구
+### 🛠 협업 도구
 
 ```
 - Notion
@@ -230,7 +233,7 @@
 
 <br>
 
-### 📢커밋 컨벤션
+### 📢 커밋 컨벤션
 
 **Type**
 
